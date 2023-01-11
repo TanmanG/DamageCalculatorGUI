@@ -243,7 +243,7 @@
             this.EncounterStatisticsGroupBox.Size = new System.Drawing.Size(176, 209);
             this.EncounterStatisticsGroupBox.TabIndex = 9;
             this.EncounterStatisticsGroupBox.TabStop = false;
-            this.EncounterStatisticsGroupBox.Text = "Encounter Statistics";
+            this.EncounterStatisticsGroupBox.Text = "Encounter Damage Statistics";
             // 
             // EncounterStatisticLowerQuartileLabel
             // 

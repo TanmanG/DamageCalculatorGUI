@@ -101,46 +101,13 @@ namespace DamageCalculatorGUI
                                                         damageDiceDOT: damageDiceDOT,
                                                         bonusDamageDOT: bonusDamageDOT);
 
-            // Get Median
-            int sum = 0;
-            foreach (KeyValuePair<int, int> pair in damageStats.damageBins)
-            {
-                sum += pair.Value; // Store the number of values total
-            }
-            int quarterPercentile = (int)((float)sum * 0.25f);
-            int quarterPercentileFinal = 0;
-           
-            int halfPercentile = (int)((float)sum * 0.50f);
-            int halfPercentileFinal = 0;
-
-            int threeQuarterPercentile = (int)((float)sum * 0.75f);
-            int threeQuarterPercentileFinal = 0;
-            foreach (KeyValuePair<int, int> pair in damageStats.damageBins)
-            {
-                quarterPercentile -= pair.Value;
-                if (quarterPercentile <= 0 && quarterPercentileFinal == 0)
-                {
-                    quarterPercentileFinal = pair.Key;
-                }
-
-                halfPercentile -= pair.Value;
-                if (halfPercentile <= 0 && halfPercentileFinal == 0)
-                {
-                    halfPercentileFinal = pair.Key;
-                }
-
-                threeQuarterPercentile -= pair.Value;
-                if (threeQuarterPercentile <= 0 && threeQuarterPercentileFinal == 0)
-                {
-                    threeQuarterPercentileFinal = pair.Key;
-                }
-            }
+            Tuple<int, int, int> percentiles = HelperFunctions.ComputePercentiles(damageStats.damageBins);
 
             // Update Encounter Statistics
             EncounterStatisticsMeanTextBox.Text = Math.Round(damageStats.averageEncounterDamage, 2).ToString();
-            EncounterStatisticsMedianTextBox.Text = halfPercentileFinal.ToString();
-            EncounterStatisticsUpperQuartileTextBox.Text = threeQuarterPercentileFinal.ToString();
-            EncounterStatisticsLowerQuartileBoxTextBox.Text = quarterPercentileFinal.ToString();
+            EncounterStatisticsMedianTextBox.Text = percentiles.Item2.ToString();
+            EncounterStatisticsUpperQuartileTextBox.Text = percentiles.Item3.ToString();
+            EncounterStatisticsLowerQuartileBoxTextBox.Text = percentiles.Item1.ToString();
 
 
             // Update Misc Statistics

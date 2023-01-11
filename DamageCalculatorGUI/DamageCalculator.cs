@@ -398,6 +398,15 @@ namespace DamageCalculatorGUI
                 damageTotal += damageThisEncounter;
             }
 
+            // Fill in holes in damageBins
+            for (int damageIndex = 0; damageIndex < damageBins.OrderByDescending(kvp => kvp.Key).First().Key; damageIndex++)
+            {
+                if (!damageBins.ContainsKey(damageIndex))
+                {
+                    damageBins.Add(damageIndex, 0);
+                }
+            }
+
             return new(damageBins: damageBins,
                         hits: hits,
                         misses: misses,

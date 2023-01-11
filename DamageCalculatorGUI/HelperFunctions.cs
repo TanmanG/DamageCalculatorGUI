@@ -39,5 +39,43 @@ namespace DamageCalculatorGUI
 
             return new(damage, damageCrit, damagePluses);
         }
+
+        public static Tuple<int, int, int> ComputePercentiles(Dictionary<int, int> damageBins)
+        {
+            // Declare & Initialize Base Percentiles
+            int halfPercentileFinal = default; // (Median)
+            int quarterPercentileFinal = default;
+            int threeQuarterPercentileFinal = default;
+
+            // Compute the total for finding the target number weight
+            int sum = 0;
+            for (int index = 0; index < damageBins.OrderByDescending(kvp => kvp.Key).First().Key; index++)
+            { // Iterate through the dictionary, storing the weighted sum
+                sum += index * damageBins[index]; // Damage val * number of damage values
+            }
+
+            // Compute Required Weights for each percentile bracket
+            float halfPercentileWeight = sum * 0.5f;
+            float quarterPercentileWeight = sum * 0.25f;
+            float threeQuarterPercentileWeight = 3 * quarterPercentileWeight;
+
+            // Compute the percentiles
+            for (int damageIndex = 0; damageIndex < damageBins.Count; damageIndex++)
+            {
+                quarterPercentileWeight -= damageBins[damageIndex] * damageIndex;
+                if (quarterPercentileWeight <= 0 && quarterPercentileFinal == default)
+                    quarterPercentileFinal = damageIndex;
+
+                halfPercentileWeight -= damageBins[damageIndex] * damageIndex;
+                if (halfPercentileWeight <= 0 && halfPercentileFinal == default)
+                    halfPercentileFinal = damageIndex;
+
+                threeQuarterPercentileWeight -= damageBins[damageIndex] * damageIndex;
+                if (threeQuarterPercentileWeight <= 0 && threeQuarterPercentileFinal == default)
+                    threeQuarterPercentileFinal = damageIndex;
+            }
+
+            return new(quarterPercentileFinal, halfPercentileFinal, threeQuarterPercentileFinal);
+        }
     }
 }
