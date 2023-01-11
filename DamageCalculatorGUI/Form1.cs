@@ -1,4 +1,7 @@
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using static DamageCalculatorGUI.DamageCalculator;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DamageCalculatorGUI
 {
@@ -8,87 +11,218 @@ namespace DamageCalculatorGUI
         public DamageStats damageStats = new();
 
         // Damage Computation Variables
-        int number_of_encounters;
-        int rounds_per_encounter;
-        int actions_per_round;
-        int reloadSize;
-        int reload;
-        int longReload;
-        int draw;
-        List<Tuple<Tuple<int, int>, Tuple<int, int>>>? damageDice; // List of <X, Y> <M, N> where XDY, on crit MDN
-        List<Tuple<int, int>>? bonusDamage; // Tuple List of normal and crit strike bonus damage
-        int bonusToHit; // Bonus added to-hit.
-        int AC; // AC to test against. Tie attack roll hits.
-        int critThreshhold; // Raw attack roll at and above this critically strike.
-        int MAPmodifier; // Modifier applied to MAP. By default 0 and thus -5, -10.
-        int engagementRange; // Range to start the combat encounter at.
-        int moveSpeed; // Distance covered by Stride.
-        bool seekFavorableRange; // Whether to Stride to an optimal firing position before firing.
-        int range; // Range increment. Past this and for every increment thereafter applies stacking -2 penalty to-hit.
-        int volley; // Minimum range increment. Firing within this applies a -2 penalty to-hit.
-        List<Tuple<Tuple<int, int>, Tuple<int, int>>>? damageDiceDOT; // DOT damage to apply on a hit/crit.
-        List<Tuple<int, int>>? bonusDamageDOT;
+        static int number_of_encounters;
+        static int rounds_per_encounter;
+        static int actions_per_round;
+        static int reloadSize;
+        static int reload;
+        static int longReload;
+        static int draw;
+        static List<Tuple<Tuple<int, int>, Tuple<int, int>>>? damageDice; // List of <X, Y> <M, N> where XDY, on crit MDN
+        static List<Tuple<int, int>>? bonusDamage; // Tuple List of normal and crit strike bonus damage
+        static int bonusToHit; // Bonus added to-hit.
+        static int AC; // AC to test against. Tie attack roll hits.
+        static int critThreshhold; // Raw attack roll at and above this critically strike.
+        static int MAPmodifier; // Modifier applied to MAP. By default 0 and thus -5, -10.
+        static int engagementRange; // Range to start the combat encounter at.
+        static int moveSpeed; // Distance covered by Stride.
+        static bool seekFavorableRange; // Whether to Stride to an optimal firing position before firing.
+        static int range; // Range increment. Past this and for every increment thereafter applies stacking -2 penalty to-hit.
+        static int volley; // Minimum range increment. Firing within this applies a -2 penalty to-hit.
+        static List<Tuple<Tuple<int, int>, Tuple<int, int>>>? damageDiceDOT; // DOT damage to apply on a hit/crit.
+        static List<Tuple<int, int>>? bonusDamageDOT = new();
+
+        /// <summary>
+        /// Reset saved settings.
+        /// </summary>
+        private static void DefaultDamageStats()
+        {
+            number_of_encounters = 10000;
+            rounds_per_encounter = 6;
+            actions_per_round = 3;
+            reloadSize = 0;
+            reload = 1;
+            longReload = 0;
+            draw = 1;
+            damageDice = new() { new(new(1, 8), new(1, 12)) };
+            bonusDamage = null;
+            bonusToHit = 100;
+            AC = 21;
+            critThreshhold = 20;
+            MAPmodifier = 0;
+            engagementRange = 30;
+            moveSpeed = 25;
+            seekFavorableRange = false;
+            range = 1000;
+            volley = 0;
+            damageDiceDOT = null;
+            bonusDamageDOT = null;
+        }
 
         public Form1()
         {
             InitializeComponent();
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            DefaultDamageStats();
+
+            // Enable Carat Hiding
+            EncounterStatisticsMeanTextBox.GotFocus += new EventHandler(TextBox_GotFocusDisableCarat);
+            EncounterStatisticsMedianTextBox.GotFocus += new EventHandler(TextBox_GotFocusDisableCarat);
+            EncounterStatisticsUpperQuartileTextBox.GotFocus += new EventHandler(TextBox_GotFocusDisableCarat);
+            EncounterStatisticsLowerQuartileBoxTextBox.GotFocus += new EventHandler(TextBox_GotFocusDisableCarat);
+            MiscStatisticsRoundDamageMeanTextBox.GotFocus += new EventHandler(TextBox_GotFocusDisableCarat);
+            MiscStatisticsAttackDamageMeanTextBox.GotFocus += new EventHandler(TextBox_GotFocusDisableCarat);
+            MiscStatisticsAccuracyMeanTextBox.GotFocus += new EventHandler(TextBox_GotFocusDisableCarat);
+        }
+
         private void CalculateDamageStatsButton_Click(object sender, EventArgs e)
         {
-            damageStats = DamageCalculator.CalculateAverageDamage(number_of_encounters: 100,
-                                                        rounds_per_encounter: 6,
-                                                        actions_per_round: 3,
-                                                        reload: 1,
-                                                        draw: 1,
-                                                        damageDice: new()
-                                                        { // List of damage dice
-                                                            new( // Damage Dice Pair
-                                                                new(1, 8), // Normal Damage
-                                                                new(1, 12)  // Crit Damage
-                                                                ),
-                                                        },
-                                                        bonusToHit: 12);
+            damageStats = CalculateAverageDamage(number_of_encounters: number_of_encounters,
+                                                        rounds_per_encounter: rounds_per_encounter,
+                                                        actions_per_round: actions_per_round,
+                                                        reloadSize: reloadSize,
+                                                        reload: reload,
+                                                        longReload: longReload,
+                                                        draw: draw,
+                                                        damageDice: damageDice,
+                                                        bonusDamage: bonusDamage,
+                                                        bonusToHit: bonusToHit,
+                                                        AC: AC,
+                                                        critThreshhold: critThreshhold,
+                                                        MAPmodifier: MAPmodifier,
+                                                        engagementRange: engagementRange,
+                                                        moveSpeed: moveSpeed,
+                                                        seekFavorableRange: seekFavorableRange,
+                                                        range: range,
+                                                        volley: volley,
+                                                        damageDiceDOT: damageDiceDOT,
+                                                        bonusDamageDOT: bonusDamageDOT);
 
-            AverageDamageEncounterTextbox.Text = Math.Round(damageStats.averageEncounterDamage, 2).ToString();
-            AverageDamageRoundTextbox.Text = Math.Round(damageStats.averageRoundDamage, 2).ToString();
-            AverageDamageAttackTextbox.Text = Math.Round(damageStats.averageHitDamage, 2).ToString();
-            AverageAccuracyTextbox.Text = (Math.Round(damageStats.averageAccuracy, 4) * 100).ToString() + "%";
+            // Get Median
+            int sum = 0;
+            foreach (KeyValuePair<int, int> pair in damageStats.damageBins)
+            {
+                sum += pair.Value; // Store the number of values total
+            }
+            int quarterPercentile = (int)((float)sum * 0.25f);
+            int quarterPercentileFinal = 0;
+           
+            int halfPercentile = (int)((float)sum * 0.50f);
+            int halfPercentileFinal = 0;
+
+            int threeQuarterPercentile = (int)((float)sum * 0.75f);
+            int threeQuarterPercentileFinal = 0;
+            foreach (KeyValuePair<int, int> pair in damageStats.damageBins)
+            {
+                quarterPercentile -= pair.Value;
+                if (quarterPercentile <= 0 && quarterPercentileFinal == 0)
+                {
+                    quarterPercentileFinal = pair.Key;
+                }
+
+                halfPercentile -= pair.Value;
+                if (halfPercentile <= 0 && halfPercentileFinal == 0)
+                {
+                    halfPercentileFinal = pair.Key;
+                }
+
+                threeQuarterPercentile -= pair.Value;
+                if (threeQuarterPercentile <= 0 && threeQuarterPercentileFinal == 0)
+                {
+                    threeQuarterPercentileFinal = pair.Key;
+                }
+            }
+
+            // Update Encounter Statistics
+            EncounterStatisticsMeanTextBox.Text = Math.Round(damageStats.averageEncounterDamage, 2).ToString();
+            EncounterStatisticsMedianTextBox.Text = halfPercentileFinal.ToString();
+            EncounterStatisticsUpperQuartileTextBox.Text = threeQuarterPercentileFinal.ToString();
+            EncounterStatisticsLowerQuartileBoxTextBox.Text = quarterPercentileFinal.ToString();
+
+
+            // Update Misc Statistics
+            MiscStatisticsRoundDamageMeanTextBox.Text = Math.Round(damageStats.averageRoundDamage, 2).ToString();
+            MiscStatisticsAttackDamageMeanTextBox.Text = Math.Round(damageStats.averageHitDamage, 2).ToString();
+            MiscStatisticsAccuracyMeanTextBox.Text = (Math.Round(damageStats.averageAccuracy, 4) * 100).ToString() + "%";
+
         }
 
-        // Damage Dice Text Box
-        private void DamageDiceTextBox_Enter(object sender, EventArgs e)
+        private void DamageListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Check if box is unmodified
-            if (DamageDiceTextBox.Text.Equals("Ex. 2D4+1"))
+
+        }
+
+        /// <summary>
+        /// Filter normal digit entry out for TextBoxes.
+        /// </summary>
+        private void TextBox_KeyPressFilterToDigits(object sender, KeyPressEventArgs e)
+        {
+            TextBox? textBox = sender as TextBox;
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
-                DamageDiceTextBox.Text = string.Empty;
+                if (!e.KeyChar.Equals('+') && !e.KeyChar.Equals('-') || textBox?.Text.Count(x => (x.Equals('+') || x.Equals('-'))) >= 1)
+                {
+                    e.Handled = true;
+                }
             }
         }
 
-        private void DamageDiceListBox_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Filter non-digits and non-sign characters out of pasted entries using regex.
+        /// </summary>
+        private void TextBox_TextChangedFilterToDigitsAndSign(object sender, EventArgs e)
         {
-            // Check if auto-populating is safe
-            if(DamageDiceTextBox.Text.Equals("Ex. 2D4+2") 
-                || DamageDiceTextBox.Text.Equals(string.Empty))
-            {
-                DamageDiceTextBox.Text = DamageDiceListBox.SelectedItem?.ToString();
-            }
-        }
+            TextBox textBox = sender as TextBox;
 
-        private void DamageDiceAddButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DamageDiceListBox_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            DamageDiceTextBox.Text = DamageDiceListBox.SelectedItem?.ToString();
-        }
-
-        private void DamageDiceGroupBox_Leave(object sender, EventArgs e)
-        {
+            int currSelectStart = textBox.SelectionStart;
             
+            // Strip characters out of pasted text
+            textBox.Text = DigitSignRegex().Replace(input: textBox.Text, "");
+            for (int index = textBox.Text.Length - 1; index > 0; index--)
+            {
+                if (textBox.Text.Length == 0)
+                    break;
+                // To-do: fix pasting this: +6bb26+-3hyh2-g=
+                // Breaks the progam when pasted into CriticaL Min
+                if (textBox.Text[index].Equals('+') || textBox.Text[index].Equals('-'))
+                {
+                    textBox.Text = textBox.Text.Remove(startIndex: index, count: 1); // Remove any pluses/minuses after the first
+                }
+            }
+
+            textBox.SelectionStart = Math.Clamp((textBox.Text.Length > 0) 
+                                                    ? currSelectStart
+                                                    : currSelectStart, 
+                                                0, 
+                                                (textBox.Text.Length > 0) 
+                                                    ? textBox.Text.Length
+                                                    : 0);
+        }
+
+        /// <summary>
+        /// Filter digits out of pasted entries using regex.
+        /// </summary>
+        private void TextBox_TextChangedFilterToDigits(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            int currSelectStart = textBox.SelectionStart;
+
+            // Strip characters out of pasted text
+            textBox.Text = Regex.Replace(input: textBox.Text, pattern: "[^0-9]", replacement: "");
+        }
+
+
+        [System.Text.RegularExpressions.GeneratedRegex("[^0-9-+]")]
+        private static partial System.Text.RegularExpressions.Regex DigitSignRegex();
+        
+        [DllImport("user32.dll")] static extern bool HideCaret(IntPtr hWnd);
+        void TextBox_GotFocusDisableCarat(object sender, EventArgs e)
+        {
+            HideCaret((sender as TextBox).Handle);
         }
     }
 }
