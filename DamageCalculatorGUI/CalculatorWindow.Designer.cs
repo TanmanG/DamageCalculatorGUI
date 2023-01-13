@@ -1,6 +1,6 @@
 ﻿namespace DamageCalculatorGUI
 {
-    partial class Form1
+    partial class CalculatorWindow
     {
         /// <summary>
         ///  Required designer variable.
@@ -167,9 +167,9 @@
             this.MiscStatisticsGroupBox.Controls.Add(this.MiscStatisticsRoundDamageMeanLabel);
             this.MiscStatisticsGroupBox.Controls.Add(this.MiscStatisticsAttackDamageMeanTextBox);
             this.MiscStatisticsGroupBox.Controls.Add(this.MiscStatisticsRoundDamageMeanTextBox);
-            this.MiscStatisticsGroupBox.Location = new System.Drawing.Point(618, 228);
+            this.MiscStatisticsGroupBox.Location = new System.Drawing.Point(618, 227);
             this.MiscStatisticsGroupBox.Name = "MiscStatisticsGroupBox";
-            this.MiscStatisticsGroupBox.Size = new System.Drawing.Size(176, 178);
+            this.MiscStatisticsGroupBox.Size = new System.Drawing.Size(176, 181);
             this.MiscStatisticsGroupBox.TabIndex = 8;
             this.MiscStatisticsGroupBox.TabStop = false;
             this.MiscStatisticsGroupBox.Text = "Misc Statistics";
@@ -206,9 +206,9 @@
             this.MiscStatisticsRoundDamageMeanLabel.AutoSize = true;
             this.MiscStatisticsRoundDamageMeanLabel.Location = new System.Drawing.Point(6, 19);
             this.MiscStatisticsRoundDamageMeanLabel.Name = "MiscStatisticsRoundDamageMeanLabel";
-            this.MiscStatisticsRoundDamageMeanLabel.Size = new System.Drawing.Size(122, 15);
+            this.MiscStatisticsRoundDamageMeanLabel.Size = new System.Drawing.Size(168, 15);
             this.MiscStatisticsRoundDamageMeanLabel.TabIndex = 2;
-            this.MiscStatisticsRoundDamageMeanLabel.Text = "Round Damage Mean";
+            this.MiscStatisticsRoundDamageMeanLabel.Text = "Combat Round Damage Mean";
             // 
             // MiscStatisticsAttackDamageMeanTextBox
             // 
@@ -238,7 +238,7 @@
             this.EncounterStatisticsGroupBox.Controls.Add(this.EncounterStatisticsMeanLabel);
             this.EncounterStatisticsGroupBox.Controls.Add(this.EncounterStatisticsMedianTextBox);
             this.EncounterStatisticsGroupBox.Controls.Add(this.EncounterStatisticsMeanTextBox);
-            this.EncounterStatisticsGroupBox.Location = new System.Drawing.Point(618, 13);
+            this.EncounterStatisticsGroupBox.Location = new System.Drawing.Point(618, 12);
             this.EncounterStatisticsGroupBox.Name = "EncounterStatisticsGroupBox";
             this.EncounterStatisticsGroupBox.Size = new System.Drawing.Size(176, 209);
             this.EncounterStatisticsGroupBox.TabIndex = 9;
@@ -351,6 +351,7 @@
             // 
             this.ReachVolleyIncrementTextBox.Enabled = false;
             this.ReachVolleyIncrementTextBox.Location = new System.Drawing.Point(6, 79);
+            this.ReachVolleyIncrementTextBox.MaxLength = 6;
             this.ReachVolleyIncrementTextBox.Name = "ReachVolleyIncrementTextBox";
             this.ReachVolleyIncrementTextBox.ReadOnly = true;
             this.ReachVolleyIncrementTextBox.Size = new System.Drawing.Size(128, 23);
@@ -362,6 +363,7 @@
             // 
             this.ReachRangeIncrementTextBox.Enabled = false;
             this.ReachRangeIncrementTextBox.Location = new System.Drawing.Point(6, 34);
+            this.ReachRangeIncrementTextBox.MaxLength = 6;
             this.ReachRangeIncrementTextBox.Name = "ReachRangeIncrementTextBox";
             this.ReachRangeIncrementTextBox.ReadOnly = true;
             this.ReachRangeIncrementTextBox.Size = new System.Drawing.Size(128, 23);
@@ -426,6 +428,7 @@
             // 
             this.DistanceMovementSpeedTextBox.Enabled = false;
             this.DistanceMovementSpeedTextBox.Location = new System.Drawing.Point(6, 79);
+            this.DistanceMovementSpeedTextBox.MaxLength = 6;
             this.DistanceMovementSpeedTextBox.Name = "DistanceMovementSpeedTextBox";
             this.DistanceMovementSpeedTextBox.ReadOnly = true;
             this.DistanceMovementSpeedTextBox.Size = new System.Drawing.Size(128, 23);
@@ -437,6 +440,7 @@
             // 
             this.DistanceEngagementRangeTextBox.Enabled = false;
             this.DistanceEngagementRangeTextBox.Location = new System.Drawing.Point(6, 34);
+            this.DistanceEngagementRangeTextBox.MaxLength = 6;
             this.DistanceEngagementRangeTextBox.Name = "DistanceEngagementRangeTextBox";
             this.DistanceEngagementRangeTextBox.ReadOnly = true;
             this.DistanceEngagementRangeTextBox.Size = new System.Drawing.Size(128, 23);
@@ -503,6 +507,7 @@
             // AmmunitionDrawLengthTextBox
             // 
             this.AmmunitionDrawLengthTextBox.Location = new System.Drawing.Point(6, 165);
+            this.AmmunitionDrawLengthTextBox.MaxLength = 6;
             this.AmmunitionDrawLengthTextBox.Name = "AmmunitionDrawLengthTextBox";
             this.AmmunitionDrawLengthTextBox.Size = new System.Drawing.Size(94, 23);
             this.AmmunitionDrawLengthTextBox.TabIndex = 5;
@@ -532,6 +537,7 @@
             // 
             this.AmmunitionLongReloadTextBox.Enabled = false;
             this.AmmunitionLongReloadTextBox.Location = new System.Drawing.Point(6, 122);
+            this.AmmunitionLongReloadTextBox.MaxLength = 6;
             this.AmmunitionLongReloadTextBox.Name = "AmmunitionLongReloadTextBox";
             this.AmmunitionLongReloadTextBox.ReadOnly = true;
             this.AmmunitionLongReloadTextBox.Size = new System.Drawing.Size(94, 23);
@@ -544,6 +550,7 @@
             // 
             this.AmmunitionMagazineSizeTextBox.Enabled = false;
             this.AmmunitionMagazineSizeTextBox.Location = new System.Drawing.Point(6, 79);
+            this.AmmunitionMagazineSizeTextBox.MaxLength = 6;
             this.AmmunitionMagazineSizeTextBox.Name = "AmmunitionMagazineSizeTextBox";
             this.AmmunitionMagazineSizeTextBox.ReadOnly = true;
             this.AmmunitionMagazineSizeTextBox.Size = new System.Drawing.Size(94, 23);
@@ -554,6 +561,7 @@
             // AmmunitionReloadTextBox
             // 
             this.AmmunitionReloadTextBox.Location = new System.Drawing.Point(6, 36);
+            this.AmmunitionReloadTextBox.MaxLength = 6;
             this.AmmunitionReloadTextBox.Name = "AmmunitionReloadTextBox";
             this.AmmunitionReloadTextBox.Size = new System.Drawing.Size(94, 23);
             this.AmmunitionReloadTextBox.TabIndex = 1;
@@ -609,6 +617,7 @@
             // AttackMAPModifierTextBox
             // 
             this.AttackMAPModifierTextBox.Location = new System.Drawing.Point(6, 165);
+            this.AttackMAPModifierTextBox.MaxLength = 6;
             this.AttackMAPModifierTextBox.Name = "AttackMAPModifierTextBox";
             this.AttackMAPModifierTextBox.Size = new System.Drawing.Size(111, 23);
             this.AttackMAPModifierTextBox.TabIndex = 4;
@@ -621,13 +630,14 @@
             this.AttackCriticalHitMinimumLabel.AutoSize = true;
             this.AttackCriticalHitMinimumLabel.Location = new System.Drawing.Point(6, 62);
             this.AttackCriticalHitMinimumLabel.Name = "AttackCriticalHitMinimumLabel";
-            this.AttackCriticalHitMinimumLabel.Size = new System.Drawing.Size(90, 15);
+            this.AttackCriticalHitMinimumLabel.Size = new System.Drawing.Size(78, 15);
             this.AttackCriticalHitMinimumLabel.TabIndex = 1;
-            this.AttackCriticalHitMinimumLabel.Text = "Critical Hit Min.";
+            this.AttackCriticalHitMinimumLabel.Text = "Crit At/Below";
             // 
             // AttackACTextBox
             // 
             this.AttackACTextBox.Location = new System.Drawing.Point(6, 121);
+            this.AttackACTextBox.MaxLength = 6;
             this.AttackACTextBox.Name = "AttackACTextBox";
             this.AttackACTextBox.Size = new System.Drawing.Size(111, 23);
             this.AttackACTextBox.TabIndex = 3;
@@ -638,6 +648,7 @@
             // AttackCriticalHitMinimumTextBox
             // 
             this.AttackCriticalHitMinimumTextBox.Location = new System.Drawing.Point(6, 79);
+            this.AttackCriticalHitMinimumTextBox.MaxLength = 6;
             this.AttackCriticalHitMinimumTextBox.Name = "AttackCriticalHitMinimumTextBox";
             this.AttackCriticalHitMinimumTextBox.Size = new System.Drawing.Size(111, 23);
             this.AttackCriticalHitMinimumTextBox.TabIndex = 2;
@@ -648,6 +659,7 @@
             // AttackBonusToHitTextBox
             // 
             this.AttackBonusToHitTextBox.Location = new System.Drawing.Point(6, 36);
+            this.AttackBonusToHitTextBox.MaxLength = 6;
             this.AttackBonusToHitTextBox.Name = "AttackBonusToHitTextBox";
             this.AttackBonusToHitTextBox.Size = new System.Drawing.Size(111, 23);
             this.AttackBonusToHitTextBox.TabIndex = 1;
@@ -700,6 +712,7 @@
             // EncounterActionsPerRoundTextBox
             // 
             this.EncounterActionsPerRoundTextBox.Location = new System.Drawing.Point(6, 122);
+            this.EncounterActionsPerRoundTextBox.MaxLength = 6;
             this.EncounterActionsPerRoundTextBox.Name = "EncounterActionsPerRoundTextBox";
             this.EncounterActionsPerRoundTextBox.Size = new System.Drawing.Size(127, 23);
             this.EncounterActionsPerRoundTextBox.TabIndex = 3;
@@ -718,6 +731,7 @@
             // EncounterRoundsPerEncounterTextBox
             // 
             this.EncounterRoundsPerEncounterTextBox.Location = new System.Drawing.Point(6, 79);
+            this.EncounterRoundsPerEncounterTextBox.MaxLength = 6;
             this.EncounterRoundsPerEncounterTextBox.Name = "EncounterRoundsPerEncounterTextBox";
             this.EncounterRoundsPerEncounterTextBox.Size = new System.Drawing.Size(127, 23);
             this.EncounterRoundsPerEncounterTextBox.TabIndex = 2;
@@ -727,6 +741,7 @@
             // EncounterNumberOfEncountersTextBox
             // 
             this.EncounterNumberOfEncountersTextBox.Location = new System.Drawing.Point(6, 36);
+            this.EncounterNumberOfEncountersTextBox.MaxLength = 10;
             this.EncounterNumberOfEncountersTextBox.Name = "EncounterNumberOfEncountersTextBox";
             this.EncounterNumberOfEncountersTextBox.Size = new System.Drawing.Size(127, 23);
             this.EncounterNumberOfEncountersTextBox.TabIndex = 1;
@@ -847,6 +862,7 @@
             // 
             this.DamageBleedDieBonusTextBox.Enabled = false;
             this.DamageBleedDieBonusTextBox.Location = new System.Drawing.Point(313, 130);
+            this.DamageBleedDieBonusTextBox.MaxLength = 3;
             this.DamageBleedDieBonusTextBox.Name = "DamageBleedDieBonusTextBox";
             this.DamageBleedDieBonusTextBox.ReadOnly = true;
             this.DamageBleedDieBonusTextBox.Size = new System.Drawing.Size(25, 23);
@@ -879,6 +895,7 @@
             // 
             this.DamageBleedDieSizeTextBox.Enabled = false;
             this.DamageBleedDieSizeTextBox.Location = new System.Drawing.Point(269, 130);
+            this.DamageBleedDieSizeTextBox.MaxLength = 3;
             this.DamageBleedDieSizeTextBox.Name = "DamageBleedDieSizeTextBox";
             this.DamageBleedDieSizeTextBox.ReadOnly = true;
             this.DamageBleedDieSizeTextBox.Size = new System.Drawing.Size(25, 23);
@@ -890,6 +907,7 @@
             // 
             this.DamageBleedDieCountTextBox.Enabled = false;
             this.DamageBleedDieCountTextBox.Location = new System.Drawing.Point(225, 130);
+            this.DamageBleedDieCountTextBox.MaxLength = 3;
             this.DamageBleedDieCountTextBox.Name = "DamageBleedDieCountTextBox";
             this.DamageBleedDieCountTextBox.ReadOnly = true;
             this.DamageBleedDieCountTextBox.Size = new System.Drawing.Size(25, 23);
@@ -967,6 +985,7 @@
             // 
             this.DamageCriticalBleedDieBonusTextBox.Enabled = false;
             this.DamageCriticalBleedDieBonusTextBox.Location = new System.Drawing.Point(313, 175);
+            this.DamageCriticalBleedDieBonusTextBox.MaxLength = 3;
             this.DamageCriticalBleedDieBonusTextBox.Name = "DamageCriticalBleedDieBonusTextBox";
             this.DamageCriticalBleedDieBonusTextBox.ReadOnly = true;
             this.DamageCriticalBleedDieBonusTextBox.Size = new System.Drawing.Size(25, 23);
@@ -979,6 +998,7 @@
             // 
             this.DamageCriticalDieBonusTextBox.Enabled = false;
             this.DamageCriticalDieBonusTextBox.Location = new System.Drawing.Point(313, 77);
+            this.DamageCriticalDieBonusTextBox.MaxLength = 3;
             this.DamageCriticalDieBonusTextBox.Name = "DamageCriticalDieBonusTextBox";
             this.DamageCriticalDieBonusTextBox.ReadOnly = true;
             this.DamageCriticalDieBonusTextBox.Size = new System.Drawing.Size(25, 23);
@@ -991,6 +1011,7 @@
             // 
             this.DamageCriticalBleedDieSizeTextBox.Enabled = false;
             this.DamageCriticalBleedDieSizeTextBox.Location = new System.Drawing.Point(269, 175);
+            this.DamageCriticalBleedDieSizeTextBox.MaxLength = 3;
             this.DamageCriticalBleedDieSizeTextBox.Name = "DamageCriticalBleedDieSizeTextBox";
             this.DamageCriticalBleedDieSizeTextBox.ReadOnly = true;
             this.DamageCriticalBleedDieSizeTextBox.Size = new System.Drawing.Size(25, 23);
@@ -1002,6 +1023,7 @@
             // 
             this.DamageCriticalDieSizeTextBox.Enabled = false;
             this.DamageCriticalDieSizeTextBox.Location = new System.Drawing.Point(269, 77);
+            this.DamageCriticalDieSizeTextBox.MaxLength = 3;
             this.DamageCriticalDieSizeTextBox.Name = "DamageCriticalDieSizeTextBox";
             this.DamageCriticalDieSizeTextBox.ReadOnly = true;
             this.DamageCriticalDieSizeTextBox.Size = new System.Drawing.Size(25, 23);
@@ -1013,6 +1035,7 @@
             // 
             this.DamageCriticalBleedDieCountTextBox.Enabled = false;
             this.DamageCriticalBleedDieCountTextBox.Location = new System.Drawing.Point(225, 175);
+            this.DamageCriticalBleedDieCountTextBox.MaxLength = 3;
             this.DamageCriticalBleedDieCountTextBox.Name = "DamageCriticalBleedDieCountTextBox";
             this.DamageCriticalBleedDieCountTextBox.ReadOnly = true;
             this.DamageCriticalBleedDieCountTextBox.Size = new System.Drawing.Size(25, 23);
@@ -1024,6 +1047,7 @@
             // 
             this.DamageCriticalDieCountTextBox.Enabled = false;
             this.DamageCriticalDieCountTextBox.Location = new System.Drawing.Point(225, 77);
+            this.DamageCriticalDieCountTextBox.MaxLength = 3;
             this.DamageCriticalDieCountTextBox.Name = "DamageCriticalDieCountTextBox";
             this.DamageCriticalDieCountTextBox.ReadOnly = true;
             this.DamageCriticalDieCountTextBox.Size = new System.Drawing.Size(25, 23);
@@ -1074,6 +1098,7 @@
             // DamageDieBonusTextBox
             // 
             this.DamageDieBonusTextBox.Location = new System.Drawing.Point(313, 32);
+            this.DamageDieBonusTextBox.MaxLength = 3;
             this.DamageDieBonusTextBox.Name = "DamageDieBonusTextBox";
             this.DamageDieBonusTextBox.Size = new System.Drawing.Size(25, 23);
             this.DamageDieBonusTextBox.TabIndex = 8;
@@ -1084,6 +1109,7 @@
             // DamageDieSizeTextBox
             // 
             this.DamageDieSizeTextBox.Location = new System.Drawing.Point(269, 32);
+            this.DamageDieSizeTextBox.MaxLength = 3;
             this.DamageDieSizeTextBox.Name = "DamageDieSizeTextBox";
             this.DamageDieSizeTextBox.Size = new System.Drawing.Size(25, 23);
             this.DamageDieSizeTextBox.TabIndex = 7;
@@ -1093,6 +1119,7 @@
             // DamageDieCountTextBox
             // 
             this.DamageDieCountTextBox.Location = new System.Drawing.Point(225, 32);
+            this.DamageDieCountTextBox.MaxLength = 3;
             this.DamageDieCountTextBox.Name = "DamageDieCountTextBox";
             this.DamageDieCountTextBox.Size = new System.Drawing.Size(25, 23);
             this.DamageDieCountTextBox.TabIndex = 6;
@@ -1103,14 +1130,12 @@
             // 
             this.DamageListBox.FormattingEnabled = true;
             this.DamageListBox.ItemHeight = 15;
-            this.DamageListBox.Items.AddRange(new object[] {
-            "1D4+1 (2D4+2)  🗡 1D2+1 (2D4+2)",
-            "2D2 🗡 1"});
             this.DamageListBox.Location = new System.Drawing.Point(6, 22);
             this.DamageListBox.Name = "DamageListBox";
             this.DamageListBox.Size = new System.Drawing.Size(214, 124);
             this.DamageListBox.TabIndex = 1;
             this.DamageListBox.SelectedIndexChanged += new System.EventHandler(this.DamageListBox_SelectedIndexChanged);
+            this.DamageListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.DamageListBox_MouseDoubleClick);
             // 
             // DefaultSettingsButton
             // 
@@ -1120,7 +1145,7 @@
             this.DefaultSettingsButton.TabIndex = 10;
             this.DefaultSettingsButton.Text = "Revert Default";
             this.DefaultSettingsButton.UseVisualStyleBackColor = true;
-            this.DefaultSettingsButton.Click += new System.EventHandler(this.CalculateDamageStatsButton_Click);
+            this.DefaultSettingsButton.Click += new System.EventHandler(this.DefaultSettingsButton_Click);
             // 
             // Form1
             // 

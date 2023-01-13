@@ -39,9 +39,9 @@ namespace DamageCalculatorGUI
                     stats.damageBins.Add(i, 0);
 
             // Print Stats
-            Console.WriteLine("Encounter: " + stats.averageEncounterDamage);
-            Console.WriteLine("Round: " + stats.averageRoundDamage);
-            Console.WriteLine("Hit: " + stats.averageHitDamage);
+            Console.WriteLine("Encounter: " + stats.average_encounter_damage);
+            Console.WriteLine("Round: " + stats.average_round_damage);
+            Console.WriteLine("Hit: " + stats.average_hit_damage);
             stats.damageBins.OrderBy(x => x.Key).ToList().ForEach(x => Console.Write(x.Value + ","));
         }
         public struct DamageStats
@@ -54,15 +54,15 @@ namespace DamageCalculatorGUI
             // Total number of crits through the simulation.
             public int crits = 0;
             // Total damage through the encounter.
-            public int damageTotal = 0;
+            public int damage_total = 0;
             // Average damage per encounter.
-            public double averageEncounterDamage = 0;
+            public double average_encounter_damage = 0;
             // Average damage per round.
-            public double averageRoundDamage = 0;
+            public double average_round_damage = 0;
             // Average damage per hit.
-            public double averageHitDamage = 0;
+            public double average_hit_damage = 0;
             // Average accuracy.
-            public double averageAccuracy = 0;
+            public double average_accuracy = 0;
 
             public DamageStats()
             {
@@ -70,11 +70,11 @@ namespace DamageCalculatorGUI
                 hits = 0;
                 misses = 0;
                 crits = 0;
-                damageTotal = 0;
-                averageEncounterDamage = 0;
-                averageRoundDamage = 0;
-                averageHitDamage = 0;
-                averageAccuracy = 0;
+                damage_total = 0;
+                average_encounter_damage = 0;
+                average_round_damage = 0;
+                average_hit_damage = 0;
+                average_accuracy = 0;
             }
             public DamageStats(Dictionary<int, int> damageBins, int hits, int misses, int crits, int damageTotal, double averageEncounterDamage, double averageRoundDamage, double averageHitDamage, double averageAccuracy)
             {
@@ -82,11 +82,11 @@ namespace DamageCalculatorGUI
                 this.hits = hits;
                 this.misses = misses;
                 this.crits = crits;
-                this.damageTotal = damageTotal;
-                this.averageEncounterDamage = averageEncounterDamage;
-                this.averageRoundDamage = averageRoundDamage;
-                this.averageHitDamage = averageHitDamage;
-                this.averageAccuracy = averageAccuracy;
+                this.damage_total = damageTotal;
+                this.average_encounter_damage = averageEncounterDamage;
+                this.average_round_damage = averageRoundDamage;
+                this.average_hit_damage = averageHitDamage;
+                this.average_accuracy = averageAccuracy;
             }
         }
 
@@ -381,6 +381,7 @@ namespace DamageCalculatorGUI
             }
 
             // Fill in holes in damageBins
+            if (damageBins.Count > 0)
             for (int damageIndex = 0; damageIndex < damageBins.OrderByDescending(kvp => kvp.Key).First().Key; damageIndex++)
             {
                 if (!damageBins.ContainsKey(damageIndex))
