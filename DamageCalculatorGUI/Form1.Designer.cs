@@ -257,7 +257,7 @@
             // EncounterStatisticsUpperQuartileLabel
             // 
             this.EncounterStatisticsUpperQuartileLabel.AutoSize = true;
-            this.EncounterStatisticsUpperQuartileLabel.Location = new System.Drawing.Point(6, 107);
+            this.EncounterStatisticsUpperQuartileLabel.Location = new System.Drawing.Point(6, 63);
             this.EncounterStatisticsUpperQuartileLabel.Name = "EncounterStatisticsUpperQuartileLabel";
             this.EncounterStatisticsUpperQuartileLabel.Size = new System.Drawing.Size(84, 15);
             this.EncounterStatisticsUpperQuartileLabel.TabIndex = 2;
@@ -275,7 +275,7 @@
             // EncounterStatisticsMedianLabel
             // 
             this.EncounterStatisticsMedianLabel.AutoSize = true;
-            this.EncounterStatisticsMedianLabel.Location = new System.Drawing.Point(6, 63);
+            this.EncounterStatisticsMedianLabel.Location = new System.Drawing.Point(6, 107);
             this.EncounterStatisticsMedianLabel.Name = "EncounterStatisticsMedianLabel";
             this.EncounterStatisticsMedianLabel.Size = new System.Drawing.Size(47, 15);
             this.EncounterStatisticsMedianLabel.TabIndex = 2;
@@ -283,7 +283,7 @@
             // 
             // EncounterStatisticsUpperQuartileTextBox
             // 
-            this.EncounterStatisticsUpperQuartileTextBox.Location = new System.Drawing.Point(6, 125);
+            this.EncounterStatisticsUpperQuartileTextBox.Location = new System.Drawing.Point(6, 81);
             this.EncounterStatisticsUpperQuartileTextBox.Name = "EncounterStatisticsUpperQuartileTextBox";
             this.EncounterStatisticsUpperQuartileTextBox.ReadOnly = true;
             this.EncounterStatisticsUpperQuartileTextBox.Size = new System.Drawing.Size(162, 23);
@@ -292,7 +292,7 @@
             // 
             // EncounterStatisticsMedianTextBox
             // 
-            this.EncounterStatisticsMedianTextBox.Location = new System.Drawing.Point(6, 81);
+            this.EncounterStatisticsMedianTextBox.Location = new System.Drawing.Point(6, 125);
             this.EncounterStatisticsMedianTextBox.Name = "EncounterStatisticsMedianTextBox";
             this.EncounterStatisticsMedianTextBox.ReadOnly = true;
             this.EncounterStatisticsMedianTextBox.Size = new System.Drawing.Size(162, 23);
@@ -377,6 +377,7 @@
             this.ReachVolleyIncrementCheckBox.Size = new System.Drawing.Size(15, 14);
             this.ReachVolleyIncrementCheckBox.TabIndex = 3;
             this.ReachVolleyIncrementCheckBox.UseVisualStyleBackColor = true;
+            this.ReachVolleyIncrementCheckBox.CheckedChanged += new System.EventHandler(this.ReachVolleyIncrementCheckBox_CheckedChanged);
             // 
             // ReachRangeIncrementCheckBox
             // 
@@ -386,6 +387,7 @@
             this.ReachRangeIncrementCheckBox.Size = new System.Drawing.Size(15, 14);
             this.ReachRangeIncrementCheckBox.TabIndex = 1;
             this.ReachRangeIncrementCheckBox.UseVisualStyleBackColor = true;
+            this.ReachRangeIncrementCheckBox.CheckedChanged += new System.EventHandler(this.ReachRangeIncrementCheckBox_CheckedChanged);
             // 
             // DistanceGroupBox
             // 
@@ -450,6 +452,7 @@
             this.DistanceMovementSpeedCheckBox.Size = new System.Drawing.Size(15, 14);
             this.DistanceMovementSpeedCheckBox.TabIndex = 3;
             this.DistanceMovementSpeedCheckBox.UseVisualStyleBackColor = true;
+            this.DistanceMovementSpeedCheckBox.CheckedChanged += new System.EventHandler(this.DistanceMovementSpeedCheckBox_CheckedChanged);
             // 
             // DistanceEngagementRangeCheckBox
             // 
@@ -459,6 +462,7 @@
             this.DistanceEngagementRangeCheckBox.Size = new System.Drawing.Size(15, 14);
             this.DistanceEngagementRangeCheckBox.TabIndex = 1;
             this.DistanceEngagementRangeCheckBox.UseVisualStyleBackColor = true;
+            this.DistanceEngagementRangeCheckBox.CheckedChanged += new System.EventHandler(this.DistanceEngagementRangeCheckBox_CheckedChanged);
             // 
             // AmmunitionGroupBox
             // 
@@ -504,6 +508,7 @@
             this.AmmunitionDrawLengthTextBox.TabIndex = 5;
             this.AmmunitionDrawLengthTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.AmmunitionDrawLengthTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            this.AmmunitionDrawLengthTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
             // 
             // AmmunitionLongReloadLabel
             // 
@@ -533,6 +538,7 @@
             this.AmmunitionLongReloadTextBox.TabIndex = 4;
             this.AmmunitionLongReloadTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.AmmunitionLongReloadTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            this.AmmunitionLongReloadTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
             // 
             // AmmunitionMagazineSizeTextBox
             // 
@@ -553,6 +559,7 @@
             this.AmmunitionReloadTextBox.TabIndex = 1;
             this.AmmunitionReloadTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.AmmunitionReloadTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            this.AmmunitionReloadTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
             // 
             // AmmunitionMagazineSizeCheckBox
             // 
@@ -562,6 +569,7 @@
             this.AmmunitionMagazineSizeCheckBox.Size = new System.Drawing.Size(15, 14);
             this.AmmunitionMagazineSizeCheckBox.TabIndex = 2;
             this.AmmunitionMagazineSizeCheckBox.UseVisualStyleBackColor = true;
+            this.AmmunitionMagazineSizeCheckBox.CheckedChanged += new System.EventHandler(this.AmmunitionMagazineSizeCheckBox_CheckedChanged);
             // 
             // AttackGroupBox
             // 
@@ -606,6 +614,7 @@
             this.AttackMAPModifierTextBox.TabIndex = 4;
             this.AttackMAPModifierTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.AttackMAPModifierTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            this.AttackMAPModifierTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
             // 
             // AttackCriticalHitMinimumLabel
             // 
@@ -624,6 +633,7 @@
             this.AttackACTextBox.TabIndex = 3;
             this.AttackACTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.AttackACTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            this.AttackACTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
             // 
             // AttackCriticalHitMinimumTextBox
             // 
@@ -633,6 +643,7 @@
             this.AttackCriticalHitMinimumTextBox.TabIndex = 2;
             this.AttackCriticalHitMinimumTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.AttackCriticalHitMinimumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            this.AttackCriticalHitMinimumTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
             // 
             // AttackBonusToHitTextBox
             // 
@@ -642,6 +653,7 @@
             this.AttackBonusToHitTextBox.TabIndex = 1;
             this.AttackBonusToHitTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.AttackBonusToHitTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            this.AttackBonusToHitTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
             // 
             // AttackBonusToHitLabel
             // 
@@ -819,6 +831,7 @@
             this.DamageCriticalBleedDieCheckBox.Size = new System.Drawing.Size(15, 14);
             this.DamageCriticalBleedDieCheckBox.TabIndex = 17;
             this.DamageCriticalBleedDieCheckBox.UseVisualStyleBackColor = true;
+            this.DamageCriticalBleedDieCheckBox.CheckedChanged += new System.EventHandler(this.DamageCriticalBleedDieCheckBox_CheckedChanged);
             // 
             // DamageSaveButton
             // 
@@ -828,15 +841,19 @@
             this.DamageSaveButton.TabIndex = 5;
             this.DamageSaveButton.Text = "Save";
             this.DamageSaveButton.UseVisualStyleBackColor = true;
+            this.DamageSaveButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DamageSaveButton_MouseClick);
             // 
             // DamageBleedDieBonusTextBox
             // 
+            this.DamageBleedDieBonusTextBox.Enabled = false;
             this.DamageBleedDieBonusTextBox.Location = new System.Drawing.Point(313, 130);
             this.DamageBleedDieBonusTextBox.Name = "DamageBleedDieBonusTextBox";
+            this.DamageBleedDieBonusTextBox.ReadOnly = true;
             this.DamageBleedDieBonusTextBox.Size = new System.Drawing.Size(25, 23);
             this.DamageBleedDieBonusTextBox.TabIndex = 16;
             this.DamageBleedDieBonusTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.DamageBleedDieBonusTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            this.DamageBleedDieBonusTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
             // 
             // DamageBleedDieCheckBox
             // 
@@ -846,6 +863,7 @@
             this.DamageBleedDieCheckBox.Size = new System.Drawing.Size(15, 14);
             this.DamageBleedDieCheckBox.TabIndex = 13;
             this.DamageBleedDieCheckBox.UseVisualStyleBackColor = true;
+            this.DamageBleedDieCheckBox.CheckedChanged += new System.EventHandler(this.DamageBleedDieCheckBox_CheckedChanged);
             // 
             // DamageCriticalDieCheckBox
             // 
@@ -855,11 +873,14 @@
             this.DamageCriticalDieCheckBox.Size = new System.Drawing.Size(15, 14);
             this.DamageCriticalDieCheckBox.TabIndex = 9;
             this.DamageCriticalDieCheckBox.UseVisualStyleBackColor = true;
+            this.DamageCriticalDieCheckBox.CheckedChanged += new System.EventHandler(this.DamageCriticalDieCheckBox_CheckedChanged);
             // 
             // DamageBleedDieSizeTextBox
             // 
+            this.DamageBleedDieSizeTextBox.Enabled = false;
             this.DamageBleedDieSizeTextBox.Location = new System.Drawing.Point(269, 130);
             this.DamageBleedDieSizeTextBox.Name = "DamageBleedDieSizeTextBox";
+            this.DamageBleedDieSizeTextBox.ReadOnly = true;
             this.DamageBleedDieSizeTextBox.Size = new System.Drawing.Size(25, 23);
             this.DamageBleedDieSizeTextBox.TabIndex = 15;
             this.DamageBleedDieSizeTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
@@ -867,8 +888,10 @@
             // 
             // DamageBleedDieCountTextBox
             // 
+            this.DamageBleedDieCountTextBox.Enabled = false;
             this.DamageBleedDieCountTextBox.Location = new System.Drawing.Point(225, 130);
             this.DamageBleedDieCountTextBox.Name = "DamageBleedDieCountTextBox";
+            this.DamageBleedDieCountTextBox.ReadOnly = true;
             this.DamageBleedDieCountTextBox.Size = new System.Drawing.Size(25, 23);
             this.DamageBleedDieCountTextBox.TabIndex = 14;
             this.DamageBleedDieCountTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
@@ -945,26 +968,31 @@
             this.DamageCriticalBleedDieBonusTextBox.Enabled = false;
             this.DamageCriticalBleedDieBonusTextBox.Location = new System.Drawing.Point(313, 175);
             this.DamageCriticalBleedDieBonusTextBox.Name = "DamageCriticalBleedDieBonusTextBox";
+            this.DamageCriticalBleedDieBonusTextBox.ReadOnly = true;
             this.DamageCriticalBleedDieBonusTextBox.Size = new System.Drawing.Size(25, 23);
             this.DamageCriticalBleedDieBonusTextBox.TabIndex = 20;
             this.DamageCriticalBleedDieBonusTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.DamageCriticalBleedDieBonusTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            this.DamageCriticalBleedDieBonusTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
             // 
             // DamageCriticalDieBonusTextBox
             // 
             this.DamageCriticalDieBonusTextBox.Enabled = false;
             this.DamageCriticalDieBonusTextBox.Location = new System.Drawing.Point(313, 77);
             this.DamageCriticalDieBonusTextBox.Name = "DamageCriticalDieBonusTextBox";
+            this.DamageCriticalDieBonusTextBox.ReadOnly = true;
             this.DamageCriticalDieBonusTextBox.Size = new System.Drawing.Size(25, 23);
             this.DamageCriticalDieBonusTextBox.TabIndex = 12;
             this.DamageCriticalDieBonusTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.DamageCriticalDieBonusTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            this.DamageCriticalDieBonusTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
             // 
             // DamageCriticalBleedDieSizeTextBox
             // 
             this.DamageCriticalBleedDieSizeTextBox.Enabled = false;
             this.DamageCriticalBleedDieSizeTextBox.Location = new System.Drawing.Point(269, 175);
             this.DamageCriticalBleedDieSizeTextBox.Name = "DamageCriticalBleedDieSizeTextBox";
+            this.DamageCriticalBleedDieSizeTextBox.ReadOnly = true;
             this.DamageCriticalBleedDieSizeTextBox.Size = new System.Drawing.Size(25, 23);
             this.DamageCriticalBleedDieSizeTextBox.TabIndex = 19;
             this.DamageCriticalBleedDieSizeTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
@@ -975,6 +1003,7 @@
             this.DamageCriticalDieSizeTextBox.Enabled = false;
             this.DamageCriticalDieSizeTextBox.Location = new System.Drawing.Point(269, 77);
             this.DamageCriticalDieSizeTextBox.Name = "DamageCriticalDieSizeTextBox";
+            this.DamageCriticalDieSizeTextBox.ReadOnly = true;
             this.DamageCriticalDieSizeTextBox.Size = new System.Drawing.Size(25, 23);
             this.DamageCriticalDieSizeTextBox.TabIndex = 11;
             this.DamageCriticalDieSizeTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
@@ -985,6 +1014,7 @@
             this.DamageCriticalBleedDieCountTextBox.Enabled = false;
             this.DamageCriticalBleedDieCountTextBox.Location = new System.Drawing.Point(225, 175);
             this.DamageCriticalBleedDieCountTextBox.Name = "DamageCriticalBleedDieCountTextBox";
+            this.DamageCriticalBleedDieCountTextBox.ReadOnly = true;
             this.DamageCriticalBleedDieCountTextBox.Size = new System.Drawing.Size(25, 23);
             this.DamageCriticalBleedDieCountTextBox.TabIndex = 18;
             this.DamageCriticalBleedDieCountTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
@@ -995,6 +1025,7 @@
             this.DamageCriticalDieCountTextBox.Enabled = false;
             this.DamageCriticalDieCountTextBox.Location = new System.Drawing.Point(225, 77);
             this.DamageCriticalDieCountTextBox.Name = "DamageCriticalDieCountTextBox";
+            this.DamageCriticalDieCountTextBox.ReadOnly = true;
             this.DamageCriticalDieCountTextBox.Size = new System.Drawing.Size(25, 23);
             this.DamageCriticalDieCountTextBox.TabIndex = 10;
             this.DamageCriticalDieCountTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
@@ -1017,6 +1048,7 @@
             this.DamageAddButton.TabIndex = 4;
             this.DamageAddButton.Text = "Add";
             this.DamageAddButton.UseVisualStyleBackColor = true;
+            this.DamageAddButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DamageAddButton_MouseClick);
             // 
             // DamageDeleteButton
             // 
@@ -1026,6 +1058,7 @@
             this.DamageDeleteButton.TabIndex = 3;
             this.DamageDeleteButton.Text = "Delete Selected";
             this.DamageDeleteButton.UseVisualStyleBackColor = true;
+            this.DamageDeleteButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DamageDeleteButton_MouseClick);
             // 
             // DamageEditButton
             // 
@@ -1036,6 +1069,7 @@
             this.DamageEditButton.TabIndex = 2;
             this.DamageEditButton.Text = "Edit Selected";
             this.DamageEditButton.UseVisualStyleBackColor = true;
+            this.DamageEditButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DamageEditButton_MouseClick);
             // 
             // DamageDieBonusTextBox
             // 
@@ -1045,6 +1079,7 @@
             this.DamageDieBonusTextBox.TabIndex = 8;
             this.DamageDieBonusTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.DamageDieBonusTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            this.DamageDieBonusTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
             // 
             // DamageDieSizeTextBox
             // 

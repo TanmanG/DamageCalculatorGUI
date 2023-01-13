@@ -23,8 +23,8 @@ namespace DamageCalculatorGUI
                                                         damageDice: new()
                                                         { // List of damage dice
                                                             new( // Damage Dice Pair
-                                                                new(1, 20), // Normal Damage
-                                                                new(1, 40)  // Crit Damage
+                                                                new(1, 20, 0), // Normal Damage
+                                                                new(1, 40, 0)  // Crit Damage
                                                                 ),
                                                         });
 
@@ -114,39 +114,21 @@ namespace DamageCalculatorGUI
         /// <param name="damageDiceDOT">(Optional) Damage dice for any DOT effects. Default 0s.</param>
         /// <returns>Struct containing all the data from this computation.</returns>
         public static DamageStats CalculateAverageDamage(int number_of_encounters, int rounds_per_encounter, int actions_per_round, // Round parameters
-                                    List<Tuple<Tuple<int, int>, Tuple<int, int>>> damageDice, // List of <X, Y> <M, N> where XDY, on crit MDN
+                                    List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>> damageDice, // List of <X, Y, Z> <M, N, O> where XDY+Z, on crit MDN+O
                                     int reload, int longReload = 0, int reloadSize = 0, int draw = 1, // Reload parameters
-                                    List<Tuple<int, int>>? bonusDamage = null, int bonusToHit = 0, // Bonus to damage per damage dice
+                                    int bonusToHit = 0, // Bonus to damage per damage dice
                                     int AC = 21, int critThreshhold = 20, int MAPmodifier = 0,
                                     int engagementRange = 30, int moveSpeed = 25, bool seekFavorableRange = false,
                                     int range = 1000, int volley = 0, // Range stats of the weapon
-                                    List<Tuple<Tuple<int, int>, Tuple<int, int>>>? damageDiceDOT = null, // Same as damage, but for DOT effects)
-                                    List<Tuple<int, int>>? bonusDamageDOT = null) // Same as damage, but for DOT effects)
+                                    List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>>? damageDiceDOT = null) // Same as damage, but for DOT effects)
+                                    
         {
             if (damageDiceDOT is null)
             {
                 damageDiceDOT = new();
                 for (int i = 0; i < damageDice.Count; i++)
                 {
-                    damageDiceDOT.Add(new(new(0, 0), new(0, 0))); // Zero out the DOT list
-                }
-            }
-
-            if (bonusDamage is null)
-            {
-                bonusDamage = new();
-                for (int i = 0; i < damageDice.Count; i++)
-                {
-                    bonusDamage.Add(new(0, 0)); // Zero out the DOT list
-                }
-            }
-
-            if (bonusDamageDOT is null)
-            {
-                bonusDamageDOT = new();
-                for (int i = 0; i < damageDiceDOT.Count; i++)
-                {
-                    bonusDamageDOT.Add(new(0, 0)); // Zero out the DOT list
+                    damageDiceDOT.Add(new(new(0, 0, 0), new(0, 0, 0))); // Zero out the DOT list
                 }
             }
 
@@ -323,15 +305,15 @@ namespace DamageCalculatorGUI
                                     // Base Damage
                                     for (int damageDiceIndex = 0; damageDiceIndex < damageDice.Count; damageDiceIndex++)
                                     { // Roll damage for each damage dice block
-                                        Tuple<int, int> currDamageDie = damageDice[damageDiceIndex].Item2;
-                                        attackDamage += RollD(currDamageDie.Item1, currDamageDie.Item2) + bonusDamage[damageDiceIndex].Item2;
+                                        Tuple<int, int, int> currDamageDie = damageDice[damageDiceIndex].Item2;
+                                        attackDamage += RollD(currDamageDie.Item1, currDamageDie.Item2) + currDamageDie.Item3;
                                     }
 
                                     // DOT Damage
                                     for (int damageDiceDOTIndex = 0; damageDiceDOTIndex < damageDiceDOT.Count; damageDiceDOTIndex++)
                                     {
-                                        Tuple<int, int> currDamageDieDOT = damageDiceDOT[damageDiceDOTIndex].Item2;
-                                        dotEffects.Add(RollD(currDamageDieDOT.Item1, currDamageDieDOT.Item2) + bonusDamageDOT[damageDiceDOTIndex].Item2);
+                                        Tuple<int, int, int> currDamageDieDOT = damageDiceDOT[damageDiceDOTIndex].Item2;
+                                        dotEffects.Add(RollD(currDamageDieDOT.Item1, currDamageDieDOT.Item2) + currDamageDieDOT.Item3);
                                     }
 
                                     // Double damage for the crit
@@ -343,15 +325,15 @@ namespace DamageCalculatorGUI
                                     // Base Damage
                                     for (int damageDiceIndex = 0; damageDiceIndex < damageDice.Count; damageDiceIndex++)
                                     { // Roll damage for each damage dice type
-                                        Tuple<int, int> currDamageDie = damageDice[damageDiceIndex].Item1;
-                                        attackDamage += RollD(currDamageDie.Item1, currDamageDie.Item2) + bonusDamage[damageDiceIndex].Item1;
+                                        Tuple<int, int, int> currDamageDie = damageDice[damageDiceIndex].Item1;
+                                        attackDamage += RollD(currDamageDie.Item1, currDamageDie.Item2) + currDamageDie.Item3;
                                     }
 
                                     // Apply DOT Damage
                                     for (int damageDiceDOTIndex = 0; damageDiceDOTIndex < damageDiceDOT.Count; damageDiceDOTIndex++)
                                     {
-                                        Tuple<int, int> currDamageDieDOT = damageDiceDOT[damageDiceDOTIndex].Item1;
-                                        dotEffects.Add(RollD(currDamageDieDOT.Item1, currDamageDieDOT.Item2) + bonusDamageDOT[damageDiceDOTIndex].Item1);
+                                        Tuple<int, int, int> currDamageDieDOT = damageDiceDOT[damageDiceDOTIndex].Item1;
+                                        dotEffects.Add(RollD(currDamageDieDOT.Item1, currDamageDieDOT.Item2) + currDamageDieDOT.Item3);
                                     }
                                 }
                                 damageThisRound += attackDamage;
