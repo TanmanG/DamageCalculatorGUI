@@ -51,9 +51,6 @@ namespace DamageCalculatorGUI
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
 
-            // Set Version
-            VersionLabel.Text = "PFK V" + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion;
-
             // Enable Carat Hiding
             AddCaretHidingEvents();
 
