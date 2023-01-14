@@ -17,4 +17,8 @@
     <Content Include="PickingsForKurtulmak.ico" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ScottPlot.WinForms" Version="4.1.60" />
+  </ItemGroup>
+
 </Project>

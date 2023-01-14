@@ -129,8 +129,11 @@
             this.DefaultSettingsButton = new System.Windows.Forms.Button();
             this.AttackErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.HelpToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.HelpButton = new System.Windows.Forms.Button();
+            this.HelpModeButton = new System.Windows.Forms.Button();
             this.VersionLabel = new System.Windows.Forms.Label();
+            this.PrimaryTabControl = new System.Windows.Forms.TabControl();
+            this.CalculatorTabPage = new System.Windows.Forms.TabPage();
+            this.DamageDistributionScottPlot = new ScottPlot.FormsPlot();
             this.MiscStatisticsGroupBox.SuspendLayout();
             this.EncounterStatisticsGroupBox.SuspendLayout();
             this.SettingsGroupBox.SuspendLayout();
@@ -141,11 +144,13 @@
             this.EncounterGroupBox.SuspendLayout();
             this.DamageGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AttackErrorProvider)).BeginInit();
+            this.PrimaryTabControl.SuspendLayout();
+            this.CalculatorTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // CalculateDamageStatsButton
             // 
-            this.CalculateDamageStatsButton.Location = new System.Drawing.Point(673, 414);
+            this.CalculateDamageStatsButton.Location = new System.Drawing.Point(31, 171);
             this.CalculateDamageStatsButton.Name = "CalculateDamageStatsButton";
             this.CalculateDamageStatsButton.Size = new System.Drawing.Size(113, 27);
             this.CalculateDamageStatsButton.TabIndex = 7;
@@ -178,11 +183,12 @@
             this.MiscStatisticsGroupBox.Controls.Add(this.MiscStatisticsAttackDamageMeanLabel);
             this.MiscStatisticsGroupBox.Controls.Add(this.MiscStatisticsAccuracyMeanTextBox);
             this.MiscStatisticsGroupBox.Controls.Add(this.MiscStatisticsRoundDamageMeanLabel);
+            this.MiscStatisticsGroupBox.Controls.Add(this.CalculateDamageStatsButton);
             this.MiscStatisticsGroupBox.Controls.Add(this.MiscStatisticsAttackDamageMeanTextBox);
             this.MiscStatisticsGroupBox.Controls.Add(this.MiscStatisticsRoundDamageMeanTextBox);
-            this.MiscStatisticsGroupBox.Location = new System.Drawing.Point(618, 227);
+            this.MiscStatisticsGroupBox.Location = new System.Drawing.Point(794, 7);
             this.MiscStatisticsGroupBox.Name = "MiscStatisticsGroupBox";
-            this.MiscStatisticsGroupBox.Size = new System.Drawing.Size(176, 181);
+            this.MiscStatisticsGroupBox.Size = new System.Drawing.Size(176, 226);
             this.MiscStatisticsGroupBox.TabIndex = 8;
             this.MiscStatisticsGroupBox.TabStop = false;
             this.MiscStatisticsGroupBox.Text = "Misc Statistics";
@@ -254,9 +260,9 @@
             this.EncounterStatisticsGroupBox.Controls.Add(this.EncounterStatisticsMeanLabel);
             this.EncounterStatisticsGroupBox.Controls.Add(this.EncounterStatisticsMedianTextBox);
             this.EncounterStatisticsGroupBox.Controls.Add(this.EncounterStatisticsMeanTextBox);
-            this.EncounterStatisticsGroupBox.Location = new System.Drawing.Point(618, 12);
+            this.EncounterStatisticsGroupBox.Location = new System.Drawing.Point(612, 6);
             this.EncounterStatisticsGroupBox.Name = "EncounterStatisticsGroupBox";
-            this.EncounterStatisticsGroupBox.Size = new System.Drawing.Size(176, 209);
+            this.EncounterStatisticsGroupBox.Size = new System.Drawing.Size(176, 227);
             this.EncounterStatisticsGroupBox.TabIndex = 9;
             this.EncounterStatisticsGroupBox.TabStop = false;
             this.EncounterStatisticsGroupBox.Text = "Encounter Damage Statistics";
@@ -331,7 +337,7 @@
             this.SettingsGroupBox.Controls.Add(this.AttackGroupBox);
             this.SettingsGroupBox.Controls.Add(this.EncounterGroupBox);
             this.SettingsGroupBox.Controls.Add(this.DamageGroupBox);
-            this.SettingsGroupBox.Location = new System.Drawing.Point(12, 12);
+            this.SettingsGroupBox.Location = new System.Drawing.Point(6, 6);
             this.SettingsGroupBox.Name = "SettingsGroupBox";
             this.SettingsGroupBox.Size = new System.Drawing.Size(600, 396);
             this.SettingsGroupBox.TabIndex = 4;
@@ -884,7 +890,7 @@
             // DamageCriticalBleedDieLabel
             // 
             this.DamageCriticalBleedDieLabel.AutoSize = true;
-            this.DamageCriticalBleedDieLabel.Location = new System.Drawing.Point(239, 157);
+            this.DamageCriticalBleedDieLabel.Location = new System.Drawing.Point(237, 157);
             this.DamageCriticalBleedDieLabel.Name = "DamageCriticalBleedDieLabel";
             this.DamageCriticalBleedDieLabel.Size = new System.Drawing.Size(101, 15);
             this.DamageCriticalBleedDieLabel.TabIndex = 1;
@@ -894,7 +900,7 @@
             // DamageBleedDieLabel
             // 
             this.DamageBleedDieLabel.AutoSize = true;
-            this.DamageBleedDieLabel.Location = new System.Drawing.Point(239, 111);
+            this.DamageBleedDieLabel.Location = new System.Drawing.Point(237, 111);
             this.DamageBleedDieLabel.Name = "DamageBleedDieLabel";
             this.DamageBleedDieLabel.Size = new System.Drawing.Size(79, 15);
             this.DamageBleedDieLabel.TabIndex = 1;
@@ -904,7 +910,7 @@
             // DamageCriticalDieLabel
             // 
             this.DamageCriticalDieLabel.AutoSize = true;
-            this.DamageCriticalDieLabel.Location = new System.Drawing.Point(239, 59);
+            this.DamageCriticalDieLabel.Location = new System.Drawing.Point(237, 59);
             this.DamageCriticalDieLabel.Name = "DamageCriticalDieLabel";
             this.DamageCriticalDieLabel.Size = new System.Drawing.Size(69, 15);
             this.DamageCriticalDieLabel.TabIndex = 1;
@@ -936,7 +942,7 @@
             // DamageCriticalBleedDieCheckBox
             // 
             this.DamageCriticalBleedDieCheckBox.AutoSize = true;
-            this.DamageCriticalBleedDieCheckBox.Location = new System.Drawing.Point(225, 158);
+            this.DamageCriticalBleedDieCheckBox.Location = new System.Drawing.Point(223, 158);
             this.DamageCriticalBleedDieCheckBox.Name = "DamageCriticalBleedDieCheckBox";
             this.DamageCriticalBleedDieCheckBox.Size = new System.Drawing.Size(15, 14);
             this.DamageCriticalBleedDieCheckBox.TabIndex = 17;
@@ -969,7 +975,7 @@
             // DamageBleedDieCheckBox
             // 
             this.DamageBleedDieCheckBox.AutoSize = true;
-            this.DamageBleedDieCheckBox.Location = new System.Drawing.Point(225, 112);
+            this.DamageBleedDieCheckBox.Location = new System.Drawing.Point(223, 112);
             this.DamageBleedDieCheckBox.Name = "DamageBleedDieCheckBox";
             this.DamageBleedDieCheckBox.Size = new System.Drawing.Size(15, 14);
             this.DamageBleedDieCheckBox.TabIndex = 13;
@@ -979,7 +985,7 @@
             // DamageCriticalDieCheckBox
             // 
             this.DamageCriticalDieCheckBox.AutoSize = true;
-            this.DamageCriticalDieCheckBox.Location = new System.Drawing.Point(225, 60);
+            this.DamageCriticalDieCheckBox.Location = new System.Drawing.Point(223, 60);
             this.DamageCriticalDieCheckBox.Name = "DamageCriticalDieCheckBox";
             this.DamageCriticalDieCheckBox.Size = new System.Drawing.Size(15, 14);
             this.DamageCriticalDieCheckBox.TabIndex = 9;
@@ -1235,7 +1241,7 @@
             // 
             // DefaultSettingsButton
             // 
-            this.DefaultSettingsButton.Location = new System.Drawing.Point(12, 414);
+            this.DefaultSettingsButton.Location = new System.Drawing.Point(6, 408);
             this.DefaultSettingsButton.Name = "DefaultSettingsButton";
             this.DefaultSettingsButton.Size = new System.Drawing.Size(113, 27);
             this.DefaultSettingsButton.TabIndex = 10;
@@ -1252,39 +1258,68 @@
             // 
             this.HelpToolTip.AutomaticDelay = 0;
             // 
-            // HelpButton
+            // HelpModeButton
             // 
-            this.HelpButton.Location = new System.Drawing.Point(131, 414);
-            this.HelpButton.Name = "HelpButton";
-            this.HelpButton.Size = new System.Drawing.Size(115, 27);
-            this.HelpButton.TabIndex = 11;
-            this.HelpButton.Text = "Enable Help Mode";
-            this.HelpButton.UseVisualStyleBackColor = true;
-            this.HelpButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.HelpButton_MouseClick);
+            this.HelpModeButton.Location = new System.Drawing.Point(125, 408);
+            this.HelpModeButton.Name = "HelpModeButton";
+            this.HelpModeButton.Size = new System.Drawing.Size(115, 27);
+            this.HelpModeButton.TabIndex = 11;
+            this.HelpModeButton.Text = "Enable Help Mode";
+            this.HelpModeButton.UseVisualStyleBackColor = true;
+            this.HelpModeButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.HelpButton_MouseClick);
             // 
             // VersionLabel
             // 
             this.VersionLabel.ForeColor = System.Drawing.Color.Gray;
-            this.VersionLabel.Location = new System.Drawing.Point(567, 416);
+            this.VersionLabel.Location = new System.Drawing.Point(862, 410);
             this.VersionLabel.Name = "VersionLabel";
             this.VersionLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.VersionLabel.Size = new System.Drawing.Size(100, 23);
             this.VersionLabel.TabIndex = 12;
-            this.VersionLabel.Text = "PFK V1.1";
+            this.VersionLabel.Text = "PFK V1.2";
             this.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // PrimaryTabControl
+            // 
+            this.PrimaryTabControl.Controls.Add(this.CalculatorTabPage);
+            this.PrimaryTabControl.Location = new System.Drawing.Point(0, 0);
+            this.PrimaryTabControl.Multiline = true;
+            this.PrimaryTabControl.Name = "PrimaryTabControl";
+            this.PrimaryTabControl.SelectedIndex = 0;
+            this.PrimaryTabControl.Size = new System.Drawing.Size(984, 471);
+            this.PrimaryTabControl.TabIndex = 0;
+            // 
+            // CalculatorTabPage
+            // 
+            this.CalculatorTabPage.Controls.Add(this.VersionLabel);
+            this.CalculatorTabPage.Controls.Add(this.SettingsGroupBox);
+            this.CalculatorTabPage.Controls.Add(this.HelpModeButton);
+            this.CalculatorTabPage.Controls.Add(this.DefaultSettingsButton);
+            this.CalculatorTabPage.Controls.Add(this.EncounterStatisticsGroupBox);
+            this.CalculatorTabPage.Controls.Add(this.MiscStatisticsGroupBox);
+            this.CalculatorTabPage.Controls.Add(this.DamageDistributionScottPlot);
+            this.CalculatorTabPage.Location = new System.Drawing.Point(4, 24);
+            this.CalculatorTabPage.Name = "CalculatorTabPage";
+            this.CalculatorTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.CalculatorTabPage.Size = new System.Drawing.Size(976, 443);
+            this.CalculatorTabPage.TabIndex = 0;
+            this.CalculatorTabPage.Text = "Calculator";
+            this.CalculatorTabPage.UseVisualStyleBackColor = true;
+            // 
+            // DamageDistributionScottPlot
+            // 
+            this.DamageDistributionScottPlot.Location = new System.Drawing.Point(612, 239);
+            this.DamageDistributionScottPlot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.DamageDistributionScottPlot.Name = "DamageDistributionScottPlot";
+            this.DamageDistributionScottPlot.Size = new System.Drawing.Size(358, 163);
+            this.DamageDistributionScottPlot.TabIndex = 13;
             // 
             // CalculatorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 453);
-            this.Controls.Add(this.VersionLabel);
-            this.Controls.Add(this.HelpButton);
-            this.Controls.Add(this.SettingsGroupBox);
-            this.Controls.Add(this.EncounterStatisticsGroupBox);
-            this.Controls.Add(this.MiscStatisticsGroupBox);
-            this.Controls.Add(this.DefaultSettingsButton);
-            this.Controls.Add(this.CalculateDamageStatsButton);
+            this.ClientSize = new System.Drawing.Size(983, 470);
+            this.Controls.Add(this.PrimaryTabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CalculatorWindow";
             this.Text = "Pickings for Kurtulmak";
@@ -1308,6 +1343,8 @@
             this.DamageGroupBox.ResumeLayout(false);
             this.DamageGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AttackErrorProvider)).EndInit();
+            this.PrimaryTabControl.ResumeLayout(false);
+            this.CalculatorTabPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1413,7 +1450,10 @@
         private Label TanmanGLabel;
         private Label DevelopedByLabel;
         private ToolTip HelpToolTip;
-        private Button HelpButton;
+        private Button HelpModeButton;
         private Label VersionLabel;
+        private TabControl PrimaryTabControl;
+        private TabPage CalculatorTabPage;
+        private ScottPlot.FormsPlot DamageDistributionScottPlot;
     }
 }

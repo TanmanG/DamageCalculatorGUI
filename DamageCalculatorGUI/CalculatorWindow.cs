@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using ScottPlot.Drawing.Colormaps;
+using ScottPlot;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using static DamageCalculatorGUI.DamageCalculator;
@@ -39,7 +41,6 @@ namespace DamageCalculatorGUI
         {
             InitializeComponent();
         }
-
         private void CalculatorWindowLoad(object sender, EventArgs e)
         {
             // Default Settings
@@ -58,6 +59,36 @@ namespace DamageCalculatorGUI
 
             // Generate and store label hashes
             StoreLabelHashes();
+
+            // Add a timer to the graph to render it regularly
+
+        }
+
+        private void UpdateGraph()
+        {
+            // To-do: Add buttons for adding additional plots to the graph. Maybe interactivity to view each weapon?
+            // Clear the Plot
+            DamageDistributionScottPlot.Plot.Clear();
+
+            // Get the maximum value in the list
+            int maxKey = damageStats.damageBins.Keys.Max();
+            // Convert the damage bins into an array
+            double[] graphBins = Enumerable.Range(0, maxKey + 1)
+                .Select(i => damageStats.damageBins.ContainsKey(i) ? damageStats.damageBins[i] : 0)
+                .Select(i => (double)i)
+                .ToArray();
+            // Generate and store the edges of each bin
+            double[] binEdges = Enumerable.Range(0, graphBins.Length).Select(x => (double)x).ToArray();
+
+            // Render the Plot
+            ScottPlot.Plottable.BarPlot plot = DamageDistributionScottPlot.Plot.AddBar(values: graphBins, positions: binEdges);
+            // Configure the Plot
+            plot.BarWidth = 1;
+            DamageDistributionScottPlot.Plot.YAxis.Label("Occurances");
+            DamageDistributionScottPlot.Plot.XAxis.Label("Damage");
+            DamageDistributionScottPlot.Plot.SetAxisLimits(yMin: 0, xMin: 0, xMax: maxKey, yMax: damageStats.damageBins.Values.Max() * 1.2);
+            DamageDistributionScottPlot.Plot.SetOuterViewLimits(yMin: 0, xMin: 0, xMax: maxKey, yMax: damageStats.damageBins.Values.Max() * 1.2);
+            DamageDistributionScottPlot.Plot.Legend(location: ScottPlot.Alignment.UpperLeft);
         }
         private void AddCaretHidingEvents()
         {
@@ -158,7 +189,6 @@ namespace DamageCalculatorGUI
 
         private void CalculateDamageStatsButton_Click(object sender, EventArgs e)
         {
-            // To-do: Add help question-marks
             // Update Data
             try
             { // Check for exception
@@ -193,9 +223,15 @@ namespace DamageCalculatorGUI
                                                         range: range,
                                                         volley: volley,
                                                         damageDiceDOT: damage_dice_DOT);
-            
+
+            // Update Graph
+            UpdateGraph();
+
             // Compute 25th, 50th, and 75th Percentiles then update the GUI with them
             UpdateStatisticsGUI(HelperFunctions.ComputePercentiles(damageStats.damageBins));
+
+            // Visually Update Graph
+            DamageDistributionScottPlot.Render();
         }
         
         private void UpdateStatisticsGUI(Tuple<int, int, int> percentiles)
@@ -781,7 +817,7 @@ namespace DamageCalculatorGUI
                 damage_dice_DOT.Insert(index: index, item: currBleedDie); // Store the bleed damage
             }
         }
-        private string CreateDamageListBoxString(Tuple<Tuple<int, int, int>, Tuple<int, int, int>> currDamageDie, 
+        private static string CreateDamageListBoxString(Tuple<Tuple<int, int, int>, Tuple<int, int, int>> currDamageDie, 
                                                     Tuple<Tuple<int, int, int>, Tuple<int, int, int>> currBleedDie)
         {
             // Store references to each dice/bonus
@@ -936,13 +972,13 @@ namespace DamageCalculatorGUI
             if (help_mode_enabled)
             { // Disable help mode
                 help_mode_enabled = false;
-                HelpButton.Text = "Enable Help Mode";
+                HelpModeButton.Text = "Enable Help Mode";
                 Cursor = Cursors.Default;
             }
             else
             { // Enable help mode
                 help_mode_enabled = true;
-                HelpButton.Text = "Disable Help Mode";
+                HelpModeButton.Text = "Disable Help Mode";
                 Cursor = Cursors.Help;
             }
         }
@@ -954,5 +990,6 @@ namespace DamageCalculatorGUI
                 HelpToolTip.SetToolTip(sender as Control, label_hashes[sender.GetHashCode()]);
             }
         }
+
     }
 }
