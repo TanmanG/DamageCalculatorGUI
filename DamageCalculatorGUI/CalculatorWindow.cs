@@ -82,7 +82,7 @@ namespace DamageCalculatorGUI
             // Configure the Plot
             plot.BarWidth = 1;
             DamageDistributionScottPlot.Plot.YAxis.Label("Occurances");
-            DamageDistributionScottPlot.Plot.XAxis.Label("Damage");
+            DamageDistributionScottPlot.Plot.XAxis.Label("Encounter Damage");
             DamageDistributionScottPlot.Plot.SetAxisLimits(yMin: 0, xMin: 0, xMax: maxKey, yMax: damageStats.damageBins.Values.Max() * 1.2);
             DamageDistributionScottPlot.Plot.SetOuterViewLimits(yMin: 0, xMin: 0, xMax: maxKey, yMax: damageStats.damageBins.Values.Max() * 1.2);
             DamageDistributionScottPlot.Plot.Legend(location: ScottPlot.Alignment.UpperLeft);
@@ -822,17 +822,17 @@ namespace DamageCalculatorGUI
             // Base Base Bools
             bool hasBaseBonus = currDamageDie.Item1.Item3 != 0;
             // Bleed Critical Bools
-            bool hasCriticalCount = currDamageDie.Item2.Item1 != 0;
-            bool hasCriticalSides = currDamageDie.Item2.Item2 != 0;
-            bool hasCriticalBonus = currDamageDie.Item2.Item3 != 0;
+            bool hasCriticalCount = currDamageDie.Item2.Item1 != currDamageDie.Item1.Item1;
+            bool hasCriticalSides = currDamageDie.Item2.Item2 != currDamageDie.Item1.Item2;
+            bool hasCriticalBonus = currDamageDie.Item2.Item3 != currDamageDie.Item1.Item3;
             // Bleed Base Bools
             bool hasBaseBleedCount = currBleedDie.Item1.Item1 != 0;
             bool hasBaseBleedSides = currBleedDie.Item1.Item2 != 0;
             bool hasBaseBleedBonus = currBleedDie.Item1.Item3 != 0;
             // Bleed Critical Bools
-            bool hasCriticalBleedCount = currBleedDie.Item2.Item1 != 0;
-            bool hasCriticalBleedSides = currBleedDie.Item2.Item2 != 0;
-            bool hasCriticalBleedBonus = currBleedDie.Item2.Item3 != 0;
+            bool hasCriticalBleedCount = currBleedDie.Item2.Item1 != currBleedDie.Item1.Item1;
+            bool hasCriticalBleedSides = currBleedDie.Item2.Item2 != currBleedDie.Item1.Item2;
+            bool hasCriticalBleedBonus = currBleedDie.Item2.Item3 != currBleedDie.Item1.Item3;
             // Store signs of each bonus
             string[] signs = new string[4] { (currDamageDie.Item1.Item3 < 0) ? "" : "+",
                                         (currDamageDie.Item2.Item3 < 0) ? "" : "+",
@@ -885,7 +885,7 @@ namespace DamageCalculatorGUI
             int damageCritCount = (DamageCriticalDieCheckBox.Checked
                                     && DamageCriticalDieCountTextBox.Text.Length > 0)
                                         ? int.Parse(DamageCriticalDieCountTextBox.Text)
-                                        : 0;
+                                        : damageCount;
 
             // Count of the bleed die
             int bleedCount = (DamageBleedDieCheckBox.Checked
@@ -896,7 +896,7 @@ namespace DamageCalculatorGUI
             int bleedCritCount = (DamageCriticalBleedDieCheckBox.Checked
                                     && DamageCriticalBleedDieCountTextBox.Text.Length > 0)
                                         ? int.Parse(DamageCriticalBleedDieCountTextBox.Text)
-                                        : 0;
+                                        : bleedCount;
 
             // DIE SIZE
             // Size of the damage die
@@ -907,7 +907,7 @@ namespace DamageCalculatorGUI
             int damageCritSides = (DamageCriticalDieCheckBox.Checked
                                     && DamageCriticalDieSizeTextBox.Text.Length > 0)
                                         ? int.Parse(DamageCriticalDieSizeTextBox.Text)
-                                        : 0;
+                                        : damageSides;
             // Size of the bleed die
             int bleedSides = (DamageBleedDieCheckBox.Checked
                                 && DamageBleedDieSizeTextBox.Text.Length > 0)
@@ -917,7 +917,7 @@ namespace DamageCalculatorGUI
             int bleedCritSides = (DamageCriticalBleedDieCheckBox.Checked
                                     && DamageCriticalBleedDieSizeTextBox.Text.Length > 0)
                                         ? int.Parse(DamageCriticalBleedDieSizeTextBox.Text)
-                                        : 0;
+                                        : bleedSides;
 
             // DIE BONUS
             // Bonus to the damage die
@@ -928,7 +928,7 @@ namespace DamageCalculatorGUI
             int damageCritBonus = (DamageCriticalDieCheckBox.Checked
                                     && DamageCriticalDieBonusTextBox.Text.Length > 0)
                                         ? int.Parse(DamageCriticalDieBonusTextBox.Text)
-                                        : 0;
+                                        : damageBonus;
             // Bonus to the bleed die
             int bleedBonus = (DamageBleedDieCheckBox.Checked
                                 && DamageBleedDieBonusTextBox.Text.Length > 0)
@@ -938,7 +938,7 @@ namespace DamageCalculatorGUI
             int bleedCritBonus = (DamageCriticalBleedDieCheckBox.Checked
                                     && DamageCriticalBleedDieBonusTextBox.Text.Length > 0)
                                         ? int.Parse(DamageCriticalBleedDieBonusTextBox.Text)
-                                        : 0;
+                                        : bleedBonus;
 
             return new(new(damageCount, damageSides, damageBonus), new(damageCritCount, damageCritSides, damageCritBonus), // Normal damage
                         new(bleedCount, bleedSides, bleedBonus), new(bleedCritCount, bleedCritSides, bleedCritBonus)); // Bleed damage

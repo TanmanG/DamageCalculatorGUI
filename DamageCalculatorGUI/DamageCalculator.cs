@@ -299,7 +299,7 @@ namespace DamageCalculatorGUI
                             if (attackRoll + bonusToHit - MAPpenalty - rangePenalty >= AC)
                             { // Attack hit
                                 hits++;
-                                if (attackRoll >= critThreshhold || attackRoll + bonusToHit - MAPpenalty - rangePenalty >= AC + 10)
+                                if (attackRoll >= critThreshhold || (attackRoll + bonusToHit - MAPpenalty - rangePenalty - 10 >= AC))
                                 { // Attack was a crit
                                     crits++;
                                     // Base Damage
