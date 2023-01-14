@@ -299,7 +299,7 @@ namespace DamageCalculatorGUI
                             if (attackRoll + bonusToHit - MAPpenalty - rangePenalty >= AC)
                             { // Attack hit
                                 hits++;
-                                if (attackRoll >= critThreshhold)
+                                if (attackRoll >= critThreshhold || attackRoll + bonusToHit - MAPpenalty - rangePenalty >= AC + 10)
                                 { // Attack was a crit
                                     crits++;
                                     // Base Damage
@@ -313,6 +313,7 @@ namespace DamageCalculatorGUI
                                     for (int damageDiceDOTIndex = 0; damageDiceDOTIndex < damageDiceDOT.Count; damageDiceDOTIndex++)
                                     {
                                         Tuple<int, int, int> currDamageDieDOT = damageDiceDOT[damageDiceDOTIndex].Item2;
+                                        
                                         dotEffects.Add(RollD(currDamageDieDOT.Item1, currDamageDieDOT.Item2) + currDamageDieDOT.Item3);
                                     }
 
@@ -355,8 +356,6 @@ namespace DamageCalculatorGUI
                         }
                         // End of action
                     }
-                    // End of round
-                    damageThisEncounter += damageThisRound;
 
                     // Flat DC 15 save against any active DOT effects
                     for (int i = 0; i < dotEffects.Count; i++)
@@ -370,6 +369,9 @@ namespace DamageCalculatorGUI
                             damageThisRound += dotEffects[i];
                         }
                     }
+
+                    // End of round
+                    damageThisEncounter += damageThisRound;
                 }
                 // End of encounter
                 // Store damage in the respective bin

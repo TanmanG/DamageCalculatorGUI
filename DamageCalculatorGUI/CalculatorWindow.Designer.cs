@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalculatorWindow));
             this.CalculateDamageStatsButton = new System.Windows.Forms.Button();
             this.EncounterStatisticsMeanLabel = new System.Windows.Forms.Label();
             this.EncounterStatisticsMeanTextBox = new System.Windows.Forms.TextBox();
@@ -39,13 +41,18 @@
             this.MiscStatisticsAttackDamageMeanTextBox = new System.Windows.Forms.TextBox();
             this.MiscStatisticsRoundDamageMeanTextBox = new System.Windows.Forms.TextBox();
             this.EncounterStatisticsGroupBox = new System.Windows.Forms.GroupBox();
-            this.EncounterStatisticLowerQuartileLabel = new System.Windows.Forms.Label();
+            this.EncounterStatisticsLowerQuartileLabel = new System.Windows.Forms.Label();
             this.EncounterStatisticsUpperQuartileLabel = new System.Windows.Forms.Label();
             this.EncounterStatisticsLowerQuartileBoxTextBox = new System.Windows.Forms.TextBox();
             this.EncounterStatisticsMedianLabel = new System.Windows.Forms.Label();
             this.EncounterStatisticsUpperQuartileTextBox = new System.Windows.Forms.TextBox();
             this.EncounterStatisticsMedianTextBox = new System.Windows.Forms.TextBox();
             this.SettingsGroupBox = new System.Windows.Forms.GroupBox();
+            this.Email2Label = new System.Windows.Forms.Label();
+            this.Email1Label = new System.Windows.Forms.Label();
+            this.SubmitBugsInquiriesLabel = new System.Windows.Forms.Label();
+            this.TanmanGLabel = new System.Windows.Forms.Label();
+            this.DevelopedByLabel = new System.Windows.Forms.Label();
             this.ReachGroupBox = new System.Windows.Forms.GroupBox();
             this.ReachRangeIncrementLabel = new System.Windows.Forms.Label();
             this.ReachVolleyIncrementLabel = new System.Windows.Forms.Label();
@@ -120,6 +127,10 @@
             this.DamageDieCountTextBox = new System.Windows.Forms.TextBox();
             this.DamageListBox = new System.Windows.Forms.ListBox();
             this.DefaultSettingsButton = new System.Windows.Forms.Button();
+            this.AttackErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.HelpToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.HelpButton = new System.Windows.Forms.Button();
+            this.VersionLabel = new System.Windows.Forms.Label();
             this.MiscStatisticsGroupBox.SuspendLayout();
             this.EncounterStatisticsGroupBox.SuspendLayout();
             this.SettingsGroupBox.SuspendLayout();
@@ -129,6 +140,7 @@
             this.AttackGroupBox.SuspendLayout();
             this.EncounterGroupBox.SuspendLayout();
             this.DamageGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AttackErrorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // CalculateDamageStatsButton
@@ -149,6 +161,7 @@
             this.EncounterStatisticsMeanLabel.Size = new System.Drawing.Size(37, 15);
             this.EncounterStatisticsMeanLabel.TabIndex = 2;
             this.EncounterStatisticsMeanLabel.Text = "Mean";
+            this.EncounterStatisticsMeanLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // EncounterStatisticsMeanTextBox
             // 
@@ -182,6 +195,7 @@
             this.MiscStatisticsAccuracyMeanLabel.Size = new System.Drawing.Size(89, 15);
             this.MiscStatisticsAccuracyMeanLabel.TabIndex = 2;
             this.MiscStatisticsAccuracyMeanLabel.Text = "Accuracy Mean";
+            this.MiscStatisticsAccuracyMeanLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // MiscStatisticsAttackDamageMeanLabel
             // 
@@ -191,6 +205,7 @@
             this.MiscStatisticsAttackDamageMeanLabel.Size = new System.Drawing.Size(121, 15);
             this.MiscStatisticsAttackDamageMeanLabel.TabIndex = 2;
             this.MiscStatisticsAttackDamageMeanLabel.Text = "Attack Damage Mean";
+            this.MiscStatisticsAttackDamageMeanLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // MiscStatisticsAccuracyMeanTextBox
             // 
@@ -209,6 +224,7 @@
             this.MiscStatisticsRoundDamageMeanLabel.Size = new System.Drawing.Size(168, 15);
             this.MiscStatisticsRoundDamageMeanLabel.TabIndex = 2;
             this.MiscStatisticsRoundDamageMeanLabel.Text = "Combat Round Damage Mean";
+            this.MiscStatisticsRoundDamageMeanLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // MiscStatisticsAttackDamageMeanTextBox
             // 
@@ -230,7 +246,7 @@
             // 
             // EncounterStatisticsGroupBox
             // 
-            this.EncounterStatisticsGroupBox.Controls.Add(this.EncounterStatisticLowerQuartileLabel);
+            this.EncounterStatisticsGroupBox.Controls.Add(this.EncounterStatisticsLowerQuartileLabel);
             this.EncounterStatisticsGroupBox.Controls.Add(this.EncounterStatisticsUpperQuartileLabel);
             this.EncounterStatisticsGroupBox.Controls.Add(this.EncounterStatisticsLowerQuartileBoxTextBox);
             this.EncounterStatisticsGroupBox.Controls.Add(this.EncounterStatisticsMedianLabel);
@@ -245,14 +261,15 @@
             this.EncounterStatisticsGroupBox.TabStop = false;
             this.EncounterStatisticsGroupBox.Text = "Encounter Damage Statistics";
             // 
-            // EncounterStatisticLowerQuartileLabel
+            // EncounterStatisticsLowerQuartileLabel
             // 
-            this.EncounterStatisticLowerQuartileLabel.AutoSize = true;
-            this.EncounterStatisticLowerQuartileLabel.Location = new System.Drawing.Point(6, 151);
-            this.EncounterStatisticLowerQuartileLabel.Name = "EncounterStatisticLowerQuartileLabel";
-            this.EncounterStatisticLowerQuartileLabel.Size = new System.Drawing.Size(84, 15);
-            this.EncounterStatisticLowerQuartileLabel.TabIndex = 2;
-            this.EncounterStatisticLowerQuartileLabel.Text = "Lower Quartile";
+            this.EncounterStatisticsLowerQuartileLabel.AutoSize = true;
+            this.EncounterStatisticsLowerQuartileLabel.Location = new System.Drawing.Point(6, 151);
+            this.EncounterStatisticsLowerQuartileLabel.Name = "EncounterStatisticsLowerQuartileLabel";
+            this.EncounterStatisticsLowerQuartileLabel.Size = new System.Drawing.Size(84, 15);
+            this.EncounterStatisticsLowerQuartileLabel.TabIndex = 2;
+            this.EncounterStatisticsLowerQuartileLabel.Text = "Lower Quartile";
+            this.EncounterStatisticsLowerQuartileLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // EncounterStatisticsUpperQuartileLabel
             // 
@@ -262,6 +279,7 @@
             this.EncounterStatisticsUpperQuartileLabel.Size = new System.Drawing.Size(84, 15);
             this.EncounterStatisticsUpperQuartileLabel.TabIndex = 2;
             this.EncounterStatisticsUpperQuartileLabel.Text = "Upper Quartile";
+            this.EncounterStatisticsUpperQuartileLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // EncounterStatisticsLowerQuartileBoxTextBox
             // 
@@ -280,6 +298,7 @@
             this.EncounterStatisticsMedianLabel.Size = new System.Drawing.Size(47, 15);
             this.EncounterStatisticsMedianLabel.TabIndex = 2;
             this.EncounterStatisticsMedianLabel.Text = "Median";
+            this.EncounterStatisticsMedianLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // EncounterStatisticsUpperQuartileTextBox
             // 
@@ -301,6 +320,11 @@
             // 
             // SettingsGroupBox
             // 
+            this.SettingsGroupBox.Controls.Add(this.Email2Label);
+            this.SettingsGroupBox.Controls.Add(this.Email1Label);
+            this.SettingsGroupBox.Controls.Add(this.SubmitBugsInquiriesLabel);
+            this.SettingsGroupBox.Controls.Add(this.TanmanGLabel);
+            this.SettingsGroupBox.Controls.Add(this.DevelopedByLabel);
             this.SettingsGroupBox.Controls.Add(this.ReachGroupBox);
             this.SettingsGroupBox.Controls.Add(this.DistanceGroupBox);
             this.SettingsGroupBox.Controls.Add(this.AmmunitionGroupBox);
@@ -313,6 +337,59 @@
             this.SettingsGroupBox.TabIndex = 4;
             this.SettingsGroupBox.TabStop = false;
             this.SettingsGroupBox.Text = "Settings";
+            // 
+            // Email2Label
+            // 
+            this.Email2Label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.Email2Label.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Email2Label.Location = new System.Drawing.Point(481, 336);
+            this.Email2Label.Name = "Email2Label";
+            this.Email2Label.Size = new System.Drawing.Size(75, 15);
+            this.Email2Label.TabIndex = 11;
+            this.Email2Label.Text = "@gmail.com";
+            this.Email2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Email1Label
+            // 
+            this.Email1Label.AutoSize = true;
+            this.Email1Label.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.Email1Label.Location = new System.Drawing.Point(470, 321);
+            this.Email1Label.Name = "Email1Label";
+            this.Email1Label.Size = new System.Drawing.Size(107, 15);
+            this.Email1Label.TabIndex = 10;
+            this.Email1Label.Text = "mangomango.dev";
+            this.Email1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // SubmitBugsInquiriesLabel
+            // 
+            this.SubmitBugsInquiriesLabel.AutoSize = true;
+            this.SubmitBugsInquiriesLabel.Location = new System.Drawing.Point(459, 304);
+            this.SubmitBugsInquiriesLabel.Name = "SubmitBugsInquiriesLabel";
+            this.SubmitBugsInquiriesLabel.Size = new System.Drawing.Size(127, 15);
+            this.SubmitBugsInquiriesLabel.TabIndex = 9;
+            this.SubmitBugsInquiriesLabel.Text = "Submit Bugs/Inquiries:";
+            this.SubmitBugsInquiriesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // TanmanGLabel
+            // 
+            this.TanmanGLabel.AutoSize = true;
+            this.TanmanGLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.TanmanGLabel.Location = new System.Drawing.Point(487, 266);
+            this.TanmanGLabel.Name = "TanmanGLabel";
+            this.TanmanGLabel.Size = new System.Drawing.Size(59, 15);
+            this.TanmanGLabel.TabIndex = 8;
+            this.TanmanGLabel.Text = "TanmanG";
+            this.TanmanGLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // DevelopedByLabel
+            // 
+            this.DevelopedByLabel.AutoSize = true;
+            this.DevelopedByLabel.Location = new System.Drawing.Point(479, 251);
+            this.DevelopedByLabel.Name = "DevelopedByLabel";
+            this.DevelopedByLabel.Size = new System.Drawing.Size(82, 15);
+            this.DevelopedByLabel.TabIndex = 7;
+            this.DevelopedByLabel.Text = "Developed by:";
+            this.DevelopedByLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ReachGroupBox
             // 
@@ -337,6 +414,7 @@
             this.ReachRangeIncrementLabel.Size = new System.Drawing.Size(97, 15);
             this.ReachRangeIncrementLabel.TabIndex = 1;
             this.ReachRangeIncrementLabel.Text = "Range Increment";
+            this.ReachRangeIncrementLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // ReachVolleyIncrementLabel
             // 
@@ -346,6 +424,7 @@
             this.ReachVolleyIncrementLabel.Size = new System.Drawing.Size(95, 15);
             this.ReachVolleyIncrementLabel.TabIndex = 1;
             this.ReachVolleyIncrementLabel.Text = "Volley Increment";
+            this.ReachVolleyIncrementLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // ReachVolleyIncrementTextBox
             // 
@@ -414,6 +493,7 @@
             this.DistanceEngagementRangeLabel.Size = new System.Drawing.Size(110, 15);
             this.DistanceEngagementRangeLabel.TabIndex = 1;
             this.DistanceEngagementRangeLabel.Text = "Engagement Range";
+            this.DistanceEngagementRangeLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // DistanceMovementSpeedLabel
             // 
@@ -423,6 +503,7 @@
             this.DistanceMovementSpeedLabel.Size = new System.Drawing.Size(100, 15);
             this.DistanceMovementSpeedLabel.TabIndex = 1;
             this.DistanceMovementSpeedLabel.Text = "Movement Speed";
+            this.DistanceMovementSpeedLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // DistanceMovementSpeedTextBox
             // 
@@ -494,6 +575,7 @@
             this.AmmunitionMagazineSizeLabel.Size = new System.Drawing.Size(81, 15);
             this.AmmunitionMagazineSizeLabel.TabIndex = 1;
             this.AmmunitionMagazineSizeLabel.Text = "Magazine Size";
+            this.AmmunitionMagazineSizeLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // AmmunitionDrawLengthLabel
             // 
@@ -503,6 +585,7 @@
             this.AmmunitionDrawLengthLabel.Size = new System.Drawing.Size(74, 15);
             this.AmmunitionDrawLengthLabel.TabIndex = 1;
             this.AmmunitionDrawLengthLabel.Text = "Draw Length";
+            this.AmmunitionDrawLengthLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // AmmunitionDrawLengthTextBox
             // 
@@ -523,6 +606,7 @@
             this.AmmunitionLongReloadLabel.Size = new System.Drawing.Size(73, 15);
             this.AmmunitionLongReloadLabel.TabIndex = 1;
             this.AmmunitionLongReloadLabel.Text = "Long Reload";
+            this.AmmunitionLongReloadLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // AmmunitionReloadLabel
             // 
@@ -532,6 +616,7 @@
             this.AmmunitionReloadLabel.Size = new System.Drawing.Size(43, 15);
             this.AmmunitionReloadLabel.TabIndex = 1;
             this.AmmunitionReloadLabel.Text = "Reload";
+            this.AmmunitionReloadLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // AmmunitionLongReloadTextBox
             // 
@@ -604,6 +689,7 @@
             this.AttackMAPModifierLabel.Size = new System.Drawing.Size(81, 15);
             this.AttackMAPModifierLabel.TabIndex = 1;
             this.AttackMAPModifierLabel.Text = "MAP Modifier";
+            this.AttackMAPModifierLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // AttackACLabel
             // 
@@ -613,6 +699,7 @@
             this.AttackACLabel.Size = new System.Drawing.Size(23, 15);
             this.AttackACLabel.TabIndex = 1;
             this.AttackACLabel.Text = "AC";
+            this.AttackACLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // AttackMAPModifierTextBox
             // 
@@ -633,6 +720,7 @@
             this.AttackCriticalHitMinimumLabel.Size = new System.Drawing.Size(78, 15);
             this.AttackCriticalHitMinimumLabel.TabIndex = 1;
             this.AttackCriticalHitMinimumLabel.Text = "Crit At/Below";
+            this.AttackCriticalHitMinimumLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // AttackACTextBox
             // 
@@ -675,6 +763,7 @@
             this.AttackBonusToHitLabel.Size = new System.Drawing.Size(74, 15);
             this.AttackBonusToHitLabel.TabIndex = 1;
             this.AttackBonusToHitLabel.Text = "Bonus To Hit";
+            this.AttackBonusToHitLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // EncounterGroupBox
             // 
@@ -699,6 +788,7 @@
             this.EncounterActionsPerRoundLabel.Size = new System.Drawing.Size(105, 15);
             this.EncounterActionsPerRoundLabel.TabIndex = 1;
             this.EncounterActionsPerRoundLabel.Text = "Actions per Round";
+            this.EncounterActionsPerRoundLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // EncounterRoundsPerEncounterLabel
             // 
@@ -708,6 +798,7 @@
             this.EncounterRoundsPerEncounterLabel.Size = new System.Drawing.Size(124, 15);
             this.EncounterRoundsPerEncounterLabel.TabIndex = 1;
             this.EncounterRoundsPerEncounterLabel.Text = "Rounds per Encounter";
+            this.EncounterRoundsPerEncounterLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // EncounterActionsPerRoundTextBox
             // 
@@ -727,6 +818,7 @@
             this.EncounterNumberOfEncountersLabel.Size = new System.Drawing.Size(127, 15);
             this.EncounterNumberOfEncountersLabel.TabIndex = 1;
             this.EncounterNumberOfEncountersLabel.Text = "Number of Encounters";
+            this.EncounterNumberOfEncountersLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // EncounterRoundsPerEncounterTextBox
             // 
@@ -797,6 +889,7 @@
             this.DamageCriticalBleedDieLabel.Size = new System.Drawing.Size(101, 15);
             this.DamageCriticalBleedDieLabel.TabIndex = 1;
             this.DamageCriticalBleedDieLabel.Text = "Crit Bleed Die Size";
+            this.DamageCriticalBleedDieLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // DamageBleedDieLabel
             // 
@@ -806,6 +899,7 @@
             this.DamageBleedDieLabel.Size = new System.Drawing.Size(79, 15);
             this.DamageBleedDieLabel.TabIndex = 1;
             this.DamageBleedDieLabel.Text = "Bleed Die SIze";
+            this.DamageBleedDieLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // DamageCriticalDieLabel
             // 
@@ -815,6 +909,7 @@
             this.DamageCriticalDieLabel.Size = new System.Drawing.Size(69, 15);
             this.DamageCriticalDieLabel.TabIndex = 1;
             this.DamageCriticalDieLabel.Text = "Crit Die Size";
+            this.DamageCriticalDieLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // DamageBleedDieSizeDLabel
             // 
@@ -1063,6 +1158,7 @@
             this.DamageDieSizeLabel.Size = new System.Drawing.Size(47, 15);
             this.DamageDieSizeLabel.TabIndex = 1;
             this.DamageDieSizeLabel.Text = "Die Size";
+            this.DamageDieSizeLabel.MouseEnter += new System.EventHandler(this.AttackBonusToHitLabel_MouseHover);
             // 
             // DamageAddButton
             // 
@@ -1147,24 +1243,58 @@
             this.DefaultSettingsButton.UseVisualStyleBackColor = true;
             this.DefaultSettingsButton.Click += new System.EventHandler(this.DefaultSettingsButton_Click);
             // 
-            // Form1
+            // AttackErrorProvider
+            // 
+            this.AttackErrorProvider.BlinkRate = 125;
+            this.AttackErrorProvider.ContainerControl = this;
+            // 
+            // HelpToolTip
+            // 
+            this.HelpToolTip.AutomaticDelay = 0;
+            // 
+            // HelpButton
+            // 
+            this.HelpButton.Location = new System.Drawing.Point(131, 414);
+            this.HelpButton.Name = "HelpButton";
+            this.HelpButton.Size = new System.Drawing.Size(115, 27);
+            this.HelpButton.TabIndex = 11;
+            this.HelpButton.Text = "Enable Help Mode";
+            this.HelpButton.UseVisualStyleBackColor = true;
+            this.HelpButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.HelpButton_MouseClick);
+            // 
+            // VersionLabel
+            // 
+            this.VersionLabel.ForeColor = System.Drawing.Color.Gray;
+            this.VersionLabel.Location = new System.Drawing.Point(567, 416);
+            this.VersionLabel.Name = "VersionLabel";
+            this.VersionLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.VersionLabel.Size = new System.Drawing.Size(100, 23);
+            this.VersionLabel.TabIndex = 12;
+            this.VersionLabel.Text = "PFK V1.1";
+            this.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // CalculatorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 453);
+            this.Controls.Add(this.VersionLabel);
+            this.Controls.Add(this.HelpButton);
             this.Controls.Add(this.SettingsGroupBox);
             this.Controls.Add(this.EncounterStatisticsGroupBox);
             this.Controls.Add(this.MiscStatisticsGroupBox);
             this.Controls.Add(this.DefaultSettingsButton);
             this.Controls.Add(this.CalculateDamageStatsButton);
-            this.Name = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "CalculatorWindow";
             this.Text = "Pickings for Kurtulmak";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.CalculatorWindowLoad);
             this.MiscStatisticsGroupBox.ResumeLayout(false);
             this.MiscStatisticsGroupBox.PerformLayout();
             this.EncounterStatisticsGroupBox.ResumeLayout(false);
             this.EncounterStatisticsGroupBox.PerformLayout();
             this.SettingsGroupBox.ResumeLayout(false);
+            this.SettingsGroupBox.PerformLayout();
             this.ReachGroupBox.ResumeLayout(false);
             this.ReachGroupBox.PerformLayout();
             this.DistanceGroupBox.ResumeLayout(false);
@@ -1177,6 +1307,7 @@
             this.EncounterGroupBox.PerformLayout();
             this.DamageGroupBox.ResumeLayout(false);
             this.DamageGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AttackErrorProvider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1194,7 +1325,7 @@
         private TextBox MiscStatisticsAttackDamageMeanTextBox;
         private TextBox MiscStatisticsRoundDamageMeanTextBox;
         private GroupBox EncounterStatisticsGroupBox;
-        private Label EncounterStatisticLowerQuartileLabel;
+        private Label EncounterStatisticsLowerQuartileLabel;
         private Label EncounterStatisticsUpperQuartileLabel;
         private TextBox EncounterStatisticsLowerQuartileBoxTextBox;
         private Label EncounterStatisticsMedianLabel;
@@ -1275,5 +1406,14 @@
         private TextBox AttackACTextBox;
         private TextBox AttackCriticalHitMinimumTextBox;
         private TextBox AttackBonusToHitTextBox;
+        private ErrorProvider AttackErrorProvider;
+        private Label Email2Label;
+        private Label Email1Label;
+        private Label SubmitBugsInquiriesLabel;
+        private Label TanmanGLabel;
+        private Label DevelopedByLabel;
+        private ToolTip HelpToolTip;
+        private Button HelpButton;
+        private Label VersionLabel;
     }
 }

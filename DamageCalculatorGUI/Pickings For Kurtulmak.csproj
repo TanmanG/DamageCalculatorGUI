@@ -6,6 +6,15 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Authors>TanmanG</Authors>
+    <Version>$(VersionPrefix)</Version>
+    <Title>Pickings for Kurtulmak</Title>
+    <PackageIcon>PickingsForKurtulmak.png</PackageIcon>
+    <ApplicationIcon>PickingsForKurtulmak.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="PickingsForKurtulmak.ico" />
+  </ItemGroup>
 
 </Project>
