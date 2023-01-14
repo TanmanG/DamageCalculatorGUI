@@ -11,6 +11,9 @@
     <Title>Pickings for Kurtulmak</Title>
     <PackageIcon>PickingsForKurtulmak.png</PackageIcon>
     <ApplicationIcon>PickingsForKurtulmak.ico</ApplicationIcon>
+    <PackageProjectUrl>https://www.patreon.com/PickingsForKurtulmak</PackageProjectUrl>
+    <AssemblyVersion>1.2.2</AssemblyVersion>
+    <FileVersion>1.2.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

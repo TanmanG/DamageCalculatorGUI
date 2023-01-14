@@ -1276,7 +1276,7 @@
             this.VersionLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.VersionLabel.Size = new System.Drawing.Size(100, 23);
             this.VersionLabel.TabIndex = 12;
-            this.VersionLabel.Text = "PFK V1.2.1-proto";
+            this.VersionLabel.Text = "PFK V1.2.2";
             this.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // PrimaryTabControl
