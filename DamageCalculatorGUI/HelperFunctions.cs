@@ -1,9 +1,18 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Security.AccessControl;
+using System.Text.RegularExpressions;
 
 namespace DamageCalculatorGUI
 {
     internal class HelperFunctions
     {
+        public static T GetRandomEnum<T>() where T : Enum
+        {
+            return (T)(object)DamageCalculator.random.Next(upperBound: Enum.GetNames(typeof(T)).Length);
+        }
+        public static bool IsControlDown()
+        {
+            return (Control.ModifierKeys & Keys.Control) == Keys.Control;
+        }
         public static Tuple<Tuple<int, int, int>, Tuple<int, int, int>> ParseDiceValues(string str)
         {
             string count_d_sides_regex = @"((?<!\()\d+[d]\d+)";
