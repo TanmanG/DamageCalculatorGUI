@@ -1257,6 +1257,9 @@
             // HelpToolTip
             // 
             this.HelpToolTip.AutomaticDelay = 0;
+            this.HelpToolTip.AutoPopDelay = 50000;
+            this.HelpToolTip.InitialDelay = 0;
+            this.HelpToolTip.ReshowDelay = 0;
             // 
             // HelpModeButton
             // 

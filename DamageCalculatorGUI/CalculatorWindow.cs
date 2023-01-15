@@ -105,8 +105,8 @@ namespace DamageCalculatorGUI
             // Ammunition
             label_hashes.Add(AmmunitionReloadLabel.GetHashCode(), "The number of Interact actions required to re-chamber a weapon after firing. I.e. a 3 action round would compose of Strike, Reload 1, Strike or Strike, Reload 2.");
             label_hashes.Add(AmmunitionMagazineSizeLabel.GetHashCode(), "The number of Strike actions that can be done before requiring a Long Reload.");
-            label_hashes.Add(AmmunitionLongReloadLabel.GetHashCode(), "The number of Interact actions required to replenish the weapon's Magazine Size to max. Includes one complementary Reload.");
-            label_hashes.Add(AmmunitionDrawLengthLabel.GetHashCode(), "The number of Interact actions required to draw the weapon. I.e. a 3 action round would compose of Draw, Strike, Reload 1.");
+            label_hashes.Add(AmmunitionLongReloadLabel.GetHashCode(), "The number of Interact actions required to replenish the weapon's Magazine Size to max. Includes one complementary Reload. I.e. two 3 action rounds would compose of Strike, Reload 1, Strike then Long Reload 2, Strike");
+            label_hashes.Add(AmmunitionDrawLengthLabel.GetHashCode(), "The number of Interact actions required to draw the weapon. I.e. a 3 action round would compose of Draw 1, Strike, Reload 1.");
             // Damage
             label_hashes.Add(DamageDieSizeLabel.GetHashCode(), "The base damage of this weapon on hit. Represented by [X]d[Y]+[Z], such that a Y sided die will be rolled X times with a flat Z added (or subtracted if negative).");
             label_hashes.Add(DamageCriticalDieLabel.GetHashCode(), "The upgraded die quantity, size, and/or flat bonus from Critical Strikes. Represented in vanilla Pathfinder 2E as Brutal Critical.");
