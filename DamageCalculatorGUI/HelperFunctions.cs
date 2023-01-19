@@ -57,36 +57,39 @@ namespace DamageCalculatorGUI
         public static Tuple<int, int, int> ComputePercentiles(Dictionary<int, int> damageBins)
         {
             // Declare & Initialize Base Percentiles
-            int halfPercentileFinal = default; // (Median)
-            int quarterPercentileFinal = default;
-            int threeQuarterPercentileFinal = default;
+            int halfPercentileFinal = -1; // (Median)
+            int quarterPercentileFinal = -1;
+            int threeQuarterPercentileFinal = -1;
 
             // Compute the total for finding the target number weight
             int sum = 0;
-            for (int index = 0; index < damageBins.OrderByDescending(kvp => kvp.Key).First().Key; index++)
+            for (int index = 0; index < damageBins.Count; index++)
             { // Iterate through the dictionary, storing the weighted sum
-                sum += index * damageBins[index]; // Damage val * number of damage values
+                sum += damageBins[index]; // Damage val * number of damage values
             }
 
             // Compute Required Weights for each percentile bracket
-            float halfPercentileWeight = sum * 0.5f;
-            float quarterPercentileWeight = sum * 0.25f;
-            float threeQuarterPercentileWeight = 3 * quarterPercentileWeight;
+            float quarterPercentileWeight = sum / 4;
+            float halfPercentileWeight = sum / 2;
+            float threeQuarterPercentileWeight = sum * 3 / 4;
 
             // Compute the percentiles
-            for (int damageIndex = 0; damageIndex < damageBins.Count; damageIndex++)
+            for (int binIndex = 0; binIndex < damageBins.Count; binIndex++)
             {
-                quarterPercentileWeight -= damageBins[damageIndex] * damageIndex;
-                if (quarterPercentileWeight <= 0 && quarterPercentileFinal == default)
-                    quarterPercentileFinal = damageIndex;
+                // 25th Percentile
+                quarterPercentileWeight -= damageBins[binIndex]; // Reduce weight until...
+                if (quarterPercentileWeight <= 0 && quarterPercentileFinal == -1) // At or below 0, then...
+                    quarterPercentileFinal = binIndex; // Store the index of when we've hit the quarter percentile.
 
-                halfPercentileWeight -= damageBins[damageIndex] * damageIndex;
-                if (halfPercentileWeight <= 0 && halfPercentileFinal == default)
-                    halfPercentileFinal = damageIndex;
+                // 50th Percentile
+                halfPercentileWeight -= damageBins[binIndex];
+                if (halfPercentileWeight <= 0 && halfPercentileFinal == -1)
+                    halfPercentileFinal = binIndex;
 
-                threeQuarterPercentileWeight -= damageBins[damageIndex] * damageIndex;
-                if (threeQuarterPercentileWeight <= 0 && threeQuarterPercentileFinal == default)
-                    threeQuarterPercentileFinal = damageIndex;
+                // 75th Percentile
+                threeQuarterPercentileWeight -= damageBins[binIndex];
+                if (threeQuarterPercentileWeight <= 0 && threeQuarterPercentileFinal == -1)
+                    threeQuarterPercentileFinal = binIndex;
             }
 
             return new(quarterPercentileFinal, halfPercentileFinal, threeQuarterPercentileFinal);

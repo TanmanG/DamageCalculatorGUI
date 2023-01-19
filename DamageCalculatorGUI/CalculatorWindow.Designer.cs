@@ -34,13 +34,15 @@
             this.CalculatorEncounterStatisticsMeanLabel = new System.Windows.Forms.Label();
             this.CalculatorEncounterStatisticsMeanTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorMiscStatisticsGroupBox = new System.Windows.Forms.GroupBox();
-            this.CalculatorMiscStatisticsCalculateStatsProgressBars = new System.Windows.Forms.ProgressBar();
             this.CalculatorMiscStatisticsAccuracyMeanLabel = new System.Windows.Forms.Label();
             this.CalculatorMiscStatisticsAttackDamageMeanLabel = new System.Windows.Forms.Label();
             this.CalculatorMiscStatisticsAccuracyMeanTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorMiscStatisticsRoundDamageMeanLabel = new System.Windows.Forms.Label();
             this.CalculatorMiscStatisticsAttackDamageMeanTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorMiscStatisticsRoundDamageMeanTextBox = new System.Windows.Forms.TextBox();
+            this.CalculatorMBCLabel = new System.Windows.Forms.Label();
+            this.CalculatorWarningLabel = new System.Windows.Forms.Label();
+            this.CalculatorMiscStatisticsCalculateStatsProgressBars = new System.Windows.Forms.ProgressBar();
             this.CalculatorEncounterStatisticsGroupBox = new System.Windows.Forms.GroupBox();
             this.CalculatorEncounterStatisticsLowerQuartileLabel = new System.Windows.Forms.Label();
             this.CalculatorEncounterStatisticsUpperQuartileLabel = new System.Windows.Forms.Label();
@@ -63,13 +65,15 @@
             this.CalculatorActionActionsPerRoundLabel = new System.Windows.Forms.Label();
             this.CalculatorActionExtraLimitedActionsReloadLabel = new System.Windows.Forms.Label();
             this.CalculatorActionActionsPerRoundTextBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.CalculatorEmail1Label = new System.Windows.Forms.Label();
             this.CalculatorReachGroupBox = new System.Windows.Forms.GroupBox();
             this.CalculatorReachRangeIncrementLabel = new System.Windows.Forms.Label();
             this.CalculatorReachMovementSpeedLabel = new System.Windows.Forms.Label();
             this.CalculatorReachMovementSpeedTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorReachVolleyIncrementLabel = new System.Windows.Forms.Label();
             this.CalculatorReachVolleyIncrementTextBox = new System.Windows.Forms.TextBox();
-            this.CalculatorReachMovementSpeedCheckBoCalculatorx = new System.Windows.Forms.CheckBox();
+            this.CalculatorReachMovementSpeedCheckBox = new System.Windows.Forms.CheckBox();
             this.CalculatorReachRangeIncrementTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorReachVolleyIncrementCheckBox = new System.Windows.Forms.CheckBox();
             this.CalculatorReachRangeIncrementCheckBox = new System.Windows.Forms.CheckBox();
@@ -83,6 +87,8 @@
             this.CalculatorAmmunitionMagazineSizeTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorAmmunitionReloadTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorAmmunitionMagazineSizeCheckBox = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.CalculatorSubmitBugsInquiriesLabel = new System.Windows.Forms.Label();
             this.CalculatorAttackGroupBox = new System.Windows.Forms.GroupBox();
             this.CalculatorAttackMAPModifierLabel = new System.Windows.Forms.Label();
             this.CalculatorAttackACLabel = new System.Windows.Forms.Label();
@@ -93,13 +99,14 @@
             this.CalculatorAttackBonusToHitTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorAttackBonusToHitLabel = new System.Windows.Forms.Label();
             this.CalculatorEncounterGroupBox = new System.Windows.Forms.GroupBox();
-            this.CalculatorDistanceEngagementRangeLabel = new System.Windows.Forms.Label();
-            this.CalculatorDistanceEngagementRangeTextBox = new System.Windows.Forms.TextBox();
+            this.CalculatorEncounterEngagementRangeLabel = new System.Windows.Forms.Label();
+            this.CalculatorEncounterEngagementRangeTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorEncounterRoundsPerEncounterLabel = new System.Windows.Forms.Label();
-            this.CalculatorDistanceEngagementRangeCheckBox = new System.Windows.Forms.CheckBox();
+            this.CalculatorEncounterEngagementRangeCheckBox = new System.Windows.Forms.CheckBox();
             this.CalculatorEncounterNumberOfEncountersLabel = new System.Windows.Forms.Label();
             this.CalculatorEncounterRoundsPerEncounterTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorEncounterNumberOfEncountersTextBox = new System.Windows.Forms.TextBox();
+            this.CalculatorTanmanGLabel = new System.Windows.Forms.Label();
             this.CalculatorDamageGroupBox = new System.Windows.Forms.GroupBox();
             this.CalculatorDamageCriticalBleedDieLabel = new System.Windows.Forms.Label();
             this.CalculatorDamageBleedDieLabel = new System.Windows.Forms.Label();
@@ -133,17 +140,29 @@
             this.CalculatorDamageDieSizeTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorDamageDieCountTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorDamageListBox = new System.Windows.Forms.ListBox();
-            this.CalculatorEmail1Label = new System.Windows.Forms.Label();
-            this.CalculatorSubmitBugsInquiriesLabel = new System.Windows.Forms.Label();
-            this.CalculatorTanmanGLabel = new System.Windows.Forms.Label();
             this.CalculatorDevelopedByLabel = new System.Windows.Forms.Label();
             this.CalculatorDefaultSettingsButton = new System.Windows.Forms.Button();
-            this.CalculatorAttackErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.CalculatorErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.CalculatorHelpToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.CalculatorHelpModeButton = new System.Windows.Forms.Button();
             this.CalculatorVersionLabel = new System.Windows.Forms.Label();
             this.PrimaryTabControl = new System.Windows.Forms.TabControl();
             this.CalculatorTabPage = new System.Windows.Forms.TabPage();
+            this.CalculatorBatchComputePopupPanel = new System.Windows.Forms.Panel();
+            this.CalculatorBatchComputePopupGroupBox = new System.Windows.Forms.GroupBox();
+            this.CalculatorBatchComputePopupDashLabel = new System.Windows.Forms.Label();
+            this.CalculatorBatchComputePopupEndValueNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.CalculatorBatchComputePopupLayerNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.CalculatorBatchComputePopupStepSizeNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.CalculatorBatchComputePopupStartValueNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.CalculatorBatchComputePopupEndValueLabel = new System.Windows.Forms.Label();
+            this.CalculatorBatchComputePopupLayerLabel = new System.Windows.Forms.Label();
+            this.CalculatorBatchComputePopupStepSizeLabel = new System.Windows.Forms.Label();
+            this.CalculatorBatchComputePopupStartLabel = new System.Windows.Forms.Label();
+            this.CalculatorBatchComputePopupSaveButton = new System.Windows.Forms.Button();
+            this.CalculatorBatchComputePopupXButton = new System.Windows.Forms.Button();
+            this.CalculatorLWGEFLabel = new System.Windows.Forms.Label();
+            this.CalculatorBatchComputeButton = new System.Windows.Forms.Button();
             this.CalculatorDamageDistributionScottPlot = new ScottPlot.FormsPlot();
             this.GeneratorTabPage = new System.Windows.Forms.TabPage();
             this.GeneratorGenerationSettingsGroupBox = new System.Windows.Forms.GroupBox();
@@ -181,9 +200,15 @@
             this.CalculatorAttackGroupBox.SuspendLayout();
             this.CalculatorEncounterGroupBox.SuspendLayout();
             this.CalculatorDamageGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CalculatorAttackErrorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CalculatorErrorProvider)).BeginInit();
             this.PrimaryTabControl.SuspendLayout();
             this.CalculatorTabPage.SuspendLayout();
+            this.CalculatorBatchComputePopupPanel.SuspendLayout();
+            this.CalculatorBatchComputePopupGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupEndValueNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupLayerNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupStepSizeNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupStartValueNumericUpDown)).BeginInit();
             this.GeneratorTabPage.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.GeneratorEnabledWeaponTypesGroupBox.SuspendLayout();
@@ -193,10 +218,10 @@
             // 
             // CalculatorCalculateDamageStatsButton
             // 
-            this.CalculatorCalculateDamageStatsButton.Location = new System.Drawing.Point(30, 164);
+            this.CalculatorCalculateDamageStatsButton.Location = new System.Drawing.Point(480, 334);
             this.CalculatorCalculateDamageStatsButton.Name = "CalculatorCalculateDamageStatsButton";
             this.CalculatorCalculateDamageStatsButton.Size = new System.Drawing.Size(113, 27);
-            this.CalculatorCalculateDamageStatsButton.TabIndex = 7;
+            this.CalculatorCalculateDamageStatsButton.TabIndex = 0;
             this.CalculatorCalculateDamageStatsButton.Text = "Calculate Stats";
             this.CalculatorCalculateDamageStatsButton.UseVisualStyleBackColor = true;
             this.CalculatorCalculateDamageStatsButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CalculateDamageStatsButton_MouseClick);
@@ -223,29 +248,18 @@
             // 
             // CalculatorMiscStatisticsGroupBox
             // 
-            this.CalculatorMiscStatisticsGroupBox.Controls.Add(this.CalculatorMiscStatisticsCalculateStatsProgressBars);
             this.CalculatorMiscStatisticsGroupBox.Controls.Add(this.CalculatorMiscStatisticsAccuracyMeanLabel);
             this.CalculatorMiscStatisticsGroupBox.Controls.Add(this.CalculatorMiscStatisticsAttackDamageMeanLabel);
             this.CalculatorMiscStatisticsGroupBox.Controls.Add(this.CalculatorMiscStatisticsAccuracyMeanTextBox);
             this.CalculatorMiscStatisticsGroupBox.Controls.Add(this.CalculatorMiscStatisticsRoundDamageMeanLabel);
-            this.CalculatorMiscStatisticsGroupBox.Controls.Add(this.CalculatorCalculateDamageStatsButton);
             this.CalculatorMiscStatisticsGroupBox.Controls.Add(this.CalculatorMiscStatisticsAttackDamageMeanTextBox);
             this.CalculatorMiscStatisticsGroupBox.Controls.Add(this.CalculatorMiscStatisticsRoundDamageMeanTextBox);
             this.CalculatorMiscStatisticsGroupBox.Location = new System.Drawing.Point(794, 6);
             this.CalculatorMiscStatisticsGroupBox.Name = "CalculatorMiscStatisticsGroupBox";
             this.CalculatorMiscStatisticsGroupBox.Size = new System.Drawing.Size(176, 227);
-            this.CalculatorMiscStatisticsGroupBox.TabIndex = 8;
+            this.CalculatorMiscStatisticsGroupBox.TabIndex = 3;
             this.CalculatorMiscStatisticsGroupBox.TabStop = false;
             this.CalculatorMiscStatisticsGroupBox.Text = "Misc Statistics";
-            // 
-            // CalculatorMiscStatisticsCalculateStatsProgressBars
-            // 
-            this.CalculatorMiscStatisticsCalculateStatsProgressBars.Location = new System.Drawing.Point(6, 197);
-            this.CalculatorMiscStatisticsCalculateStatsProgressBars.MarqueeAnimationSpeed = 150;
-            this.CalculatorMiscStatisticsCalculateStatsProgressBars.Maximum = 1000;
-            this.CalculatorMiscStatisticsCalculateStatsProgressBars.Name = "CalculatorMiscStatisticsCalculateStatsProgressBars";
-            this.CalculatorMiscStatisticsCalculateStatsProgressBars.Size = new System.Drawing.Size(162, 23);
-            this.CalculatorMiscStatisticsCalculateStatsProgressBars.TabIndex = 8;
             // 
             // CalculatorMiscStatisticsAccuracyMeanLabel
             // 
@@ -304,6 +318,39 @@
             this.CalculatorMiscStatisticsRoundDamageMeanTextBox.TabIndex = 2;
             this.CalculatorMiscStatisticsRoundDamageMeanTextBox.TabStop = false;
             // 
+            // CalculatorMBCLabel
+            // 
+            this.CalculatorMBCLabel.AutoSize = true;
+            this.CalculatorMBCLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.CalculatorMBCLabel.Location = new System.Drawing.Point(469, 405);
+            this.CalculatorMBCLabel.Name = "CalculatorMBCLabel";
+            this.CalculatorMBCLabel.Size = new System.Drawing.Size(147, 15);
+            this.CalculatorMBCLabel.TabIndex = 16;
+            this.CalculatorMBCLabel.Text = "Many Batch Computation";
+            this.CalculatorMBCLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.CalculatorMBCLabel.Visible = false;
+            // 
+            // CalculatorWarningLabel
+            // 
+            this.CalculatorWarningLabel.AutoSize = true;
+            this.CalculatorWarningLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.CalculatorWarningLabel.Location = new System.Drawing.Point(382, 410);
+            this.CalculatorWarningLabel.Name = "CalculatorWarningLabel";
+            this.CalculatorWarningLabel.Size = new System.Drawing.Size(72, 21);
+            this.CalculatorWarningLabel.TabIndex = 15;
+            this.CalculatorWarningLabel.Text = "Warning:";
+            this.CalculatorWarningLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.CalculatorWarningLabel.Visible = false;
+            // 
+            // CalculatorMiscStatisticsCalculateStatsProgressBars
+            // 
+            this.CalculatorMiscStatisticsCalculateStatsProgressBars.Location = new System.Drawing.Point(480, 367);
+            this.CalculatorMiscStatisticsCalculateStatsProgressBars.MarqueeAnimationSpeed = 150;
+            this.CalculatorMiscStatisticsCalculateStatsProgressBars.Maximum = 1000;
+            this.CalculatorMiscStatisticsCalculateStatsProgressBars.Name = "CalculatorMiscStatisticsCalculateStatsProgressBars";
+            this.CalculatorMiscStatisticsCalculateStatsProgressBars.Size = new System.Drawing.Size(112, 23);
+            this.CalculatorMiscStatisticsCalculateStatsProgressBars.TabIndex = 8;
+            // 
             // CalculatorEncounterStatisticsGroupBox
             // 
             this.CalculatorEncounterStatisticsGroupBox.Controls.Add(this.CalculatorEncounterStatisticsLowerQuartileLabel);
@@ -317,7 +364,7 @@
             this.CalculatorEncounterStatisticsGroupBox.Location = new System.Drawing.Point(612, 6);
             this.CalculatorEncounterStatisticsGroupBox.Name = "CalculatorEncounterStatisticsGroupBox";
             this.CalculatorEncounterStatisticsGroupBox.Size = new System.Drawing.Size(176, 227);
-            this.CalculatorEncounterStatisticsGroupBox.TabIndex = 9;
+            this.CalculatorEncounterStatisticsGroupBox.TabIndex = 2;
             this.CalculatorEncounterStatisticsGroupBox.TabStop = false;
             this.CalculatorEncounterStatisticsGroupBox.Text = "Encounter Damage Statistics";
             // 
@@ -380,16 +427,24 @@
             // 
             // CalculatorSettingsGroupBox
             // 
+            this.CalculatorSettingsGroupBox.Controls.Add(this.CalculatorMiscStatisticsCalculateStatsProgressBars);
             this.CalculatorSettingsGroupBox.Controls.Add(this.CalculatorActionGroupBox);
+            this.CalculatorSettingsGroupBox.Controls.Add(this.CalculatorCalculateDamageStatsButton);
+            this.CalculatorSettingsGroupBox.Controls.Add(this.label8);
+            this.CalculatorSettingsGroupBox.Controls.Add(this.CalculatorEmail1Label);
             this.CalculatorSettingsGroupBox.Controls.Add(this.CalculatorReachGroupBox);
             this.CalculatorSettingsGroupBox.Controls.Add(this.CalculatorAmmunitionGroupBox);
+            this.CalculatorSettingsGroupBox.Controls.Add(this.label7);
+            this.CalculatorSettingsGroupBox.Controls.Add(this.CalculatorSubmitBugsInquiriesLabel);
             this.CalculatorSettingsGroupBox.Controls.Add(this.CalculatorAttackGroupBox);
             this.CalculatorSettingsGroupBox.Controls.Add(this.CalculatorEncounterGroupBox);
+            this.CalculatorSettingsGroupBox.Controls.Add(this.CalculatorTanmanGLabel);
             this.CalculatorSettingsGroupBox.Controls.Add(this.CalculatorDamageGroupBox);
+            this.CalculatorSettingsGroupBox.Controls.Add(this.CalculatorDevelopedByLabel);
             this.CalculatorSettingsGroupBox.Location = new System.Drawing.Point(6, 6);
             this.CalculatorSettingsGroupBox.Name = "CalculatorSettingsGroupBox";
             this.CalculatorSettingsGroupBox.Size = new System.Drawing.Size(600, 396);
-            this.CalculatorSettingsGroupBox.TabIndex = 4;
+            this.CalculatorSettingsGroupBox.TabIndex = 1;
             this.CalculatorSettingsGroupBox.TabStop = false;
             this.CalculatorSettingsGroupBox.Text = "Settings";
             // 
@@ -437,23 +492,47 @@
             // CalculatorActionExtraLimitedActionsDrawNumericUpDown
             // 
             this.CalculatorActionExtraLimitedActionsDrawNumericUpDown.Location = new System.Drawing.Point(62, 90);
+            this.CalculatorActionExtraLimitedActionsDrawNumericUpDown.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
             this.CalculatorActionExtraLimitedActionsDrawNumericUpDown.Name = "CalculatorActionExtraLimitedActionsDrawNumericUpDown";
             this.CalculatorActionExtraLimitedActionsDrawNumericUpDown.Size = new System.Drawing.Size(50, 23);
-            this.CalculatorActionExtraLimitedActionsDrawNumericUpDown.TabIndex = 4;
+            this.CalculatorActionExtraLimitedActionsDrawNumericUpDown.TabIndex = 2;
+            this.CalculatorActionExtraLimitedActionsDrawNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ClearError);
+            this.CalculatorActionExtraLimitedActionsDrawNumericUpDown.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
+            this.CalculatorActionExtraLimitedActionsDrawNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_ClearError);
             // 
             // CalculatorActionExtraLimitedActionsLongReloadNumericUpDown
             // 
             this.CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Location = new System.Drawing.Point(62, 131);
+            this.CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
             this.CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Name = "CalculatorActionExtraLimitedActionsLongReloadNumericUpDown";
             this.CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Size = new System.Drawing.Size(105, 23);
-            this.CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.TabIndex = 3;
+            this.CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.TabIndex = 5;
+            this.CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ClearError);
+            this.CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
+            this.CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_ClearError);
             // 
             // CalculatorActionExtraLimitedActionsStrideNumericUpDown
             // 
             this.CalculatorActionExtraLimitedActionsStrideNumericUpDown.Location = new System.Drawing.Point(118, 90);
+            this.CalculatorActionExtraLimitedActionsStrideNumericUpDown.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
             this.CalculatorActionExtraLimitedActionsStrideNumericUpDown.Name = "CalculatorActionExtraLimitedActionsStrideNumericUpDown";
             this.CalculatorActionExtraLimitedActionsStrideNumericUpDown.Size = new System.Drawing.Size(50, 23);
             this.CalculatorActionExtraLimitedActionsStrideNumericUpDown.TabIndex = 3;
+            this.CalculatorActionExtraLimitedActionsStrideNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ClearError);
+            this.CalculatorActionExtraLimitedActionsStrideNumericUpDown.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
+            this.CalculatorActionExtraLimitedActionsStrideNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_ClearError);
             // 
             // CalculatorActionExtraLimitedActionsStrikeLabel
             // 
@@ -468,9 +547,17 @@
             // CalculatorActionExtraLimitedActionsStrikeNumericUpDown
             // 
             this.CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Location = new System.Drawing.Point(6, 90);
+            this.CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
             this.CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Name = "CalculatorActionExtraLimitedActionsStrikeNumericUpDown";
             this.CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Size = new System.Drawing.Size(50, 23);
             this.CalculatorActionExtraLimitedActionsStrikeNumericUpDown.TabIndex = 1;
+            this.CalculatorActionExtraLimitedActionsStrikeNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ClearError);
+            this.CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
+            this.CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_ClearError);
             // 
             // CalculatorActionExtraLimitedActionsLongReloadLabel
             // 
@@ -495,9 +582,17 @@
             // CalculatorActionExtraLimitedActionsReloadNumericUpDown
             // 
             this.CalculatorActionExtraLimitedActionsReloadNumericUpDown.Location = new System.Drawing.Point(6, 131);
+            this.CalculatorActionExtraLimitedActionsReloadNumericUpDown.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
             this.CalculatorActionExtraLimitedActionsReloadNumericUpDown.Name = "CalculatorActionExtraLimitedActionsReloadNumericUpDown";
             this.CalculatorActionExtraLimitedActionsReloadNumericUpDown.Size = new System.Drawing.Size(50, 23);
-            this.CalculatorActionExtraLimitedActionsReloadNumericUpDown.TabIndex = 2;
+            this.CalculatorActionExtraLimitedActionsReloadNumericUpDown.TabIndex = 4;
+            this.CalculatorActionExtraLimitedActionsReloadNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ClearError);
+            this.CalculatorActionExtraLimitedActionsReloadNumericUpDown.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
+            this.CalculatorActionExtraLimitedActionsReloadNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_ClearError);
             // 
             // CalculatorActionActionsPerRoundLabel
             // 
@@ -526,8 +621,31 @@
             this.CalculatorActionActionsPerRoundTextBox.Name = "CalculatorActionActionsPerRoundTextBox";
             this.CalculatorActionActionsPerRoundTextBox.Size = new System.Drawing.Size(161, 23);
             this.CalculatorActionActionsPerRoundTextBox.TabIndex = 0;
+            this.CalculatorActionActionsPerRoundTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorActionActionsPerRoundTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorActionActionsPerRoundTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label8.Location = new System.Drawing.Point(501, 312);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(75, 15);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "@gmail.com";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // CalculatorEmail1Label
+            // 
+            this.CalculatorEmail1Label.AutoSize = true;
+            this.CalculatorEmail1Label.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.CalculatorEmail1Label.Location = new System.Drawing.Point(485, 296);
+            this.CalculatorEmail1Label.Name = "CalculatorEmail1Label";
+            this.CalculatorEmail1Label.Size = new System.Drawing.Size(107, 15);
+            this.CalculatorEmail1Label.TabIndex = 10;
+            this.CalculatorEmail1Label.Text = "mangomango.dev";
+            this.CalculatorEmail1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // CalculatorReachGroupBox
             // 
@@ -536,7 +654,7 @@
             this.CalculatorReachGroupBox.Controls.Add(this.CalculatorReachMovementSpeedTextBox);
             this.CalculatorReachGroupBox.Controls.Add(this.CalculatorReachVolleyIncrementLabel);
             this.CalculatorReachGroupBox.Controls.Add(this.CalculatorReachVolleyIncrementTextBox);
-            this.CalculatorReachGroupBox.Controls.Add(this.CalculatorReachMovementSpeedCheckBoCalculatorx);
+            this.CalculatorReachGroupBox.Controls.Add(this.CalculatorReachMovementSpeedCheckBox);
             this.CalculatorReachGroupBox.Controls.Add(this.CalculatorReachRangeIncrementTextBox);
             this.CalculatorReachGroupBox.Controls.Add(this.CalculatorReachVolleyIncrementCheckBox);
             this.CalculatorReachGroupBox.Controls.Add(this.CalculatorReachRangeIncrementCheckBox);
@@ -576,6 +694,7 @@
             this.CalculatorReachMovementSpeedTextBox.ReadOnly = true;
             this.CalculatorReachMovementSpeedTextBox.Size = new System.Drawing.Size(128, 23);
             this.CalculatorReachMovementSpeedTextBox.TabIndex = 6;
+            this.CalculatorReachMovementSpeedTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorReachMovementSpeedTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorReachMovementSpeedTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
@@ -598,18 +717,19 @@
             this.CalculatorReachVolleyIncrementTextBox.ReadOnly = true;
             this.CalculatorReachVolleyIncrementTextBox.Size = new System.Drawing.Size(128, 23);
             this.CalculatorReachVolleyIncrementTextBox.TabIndex = 4;
+            this.CalculatorReachVolleyIncrementTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorReachVolleyIncrementTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorReachVolleyIncrementTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
-            // CalculatorReachMovementSpeedCheckBoCalculatorx
+            // CalculatorReachMovementSpeedCheckBox
             // 
-            this.CalculatorReachMovementSpeedCheckBoCalculatorx.AutoSize = true;
-            this.CalculatorReachMovementSpeedCheckBoCalculatorx.Location = new System.Drawing.Point(4, 108);
-            this.CalculatorReachMovementSpeedCheckBoCalculatorx.Name = "CalculatorReachMovementSpeedCheckBoCalculatorx";
-            this.CalculatorReachMovementSpeedCheckBoCalculatorx.Size = new System.Drawing.Size(15, 14);
-            this.CalculatorReachMovementSpeedCheckBoCalculatorx.TabIndex = 5;
-            this.CalculatorReachMovementSpeedCheckBoCalculatorx.UseVisualStyleBackColor = true;
-            this.CalculatorReachMovementSpeedCheckBoCalculatorx.CheckedChanged += new System.EventHandler(this.DistanceMovementSpeedCheckBox_CheckedChanged);
+            this.CalculatorReachMovementSpeedCheckBox.AutoSize = true;
+            this.CalculatorReachMovementSpeedCheckBox.Location = new System.Drawing.Point(4, 108);
+            this.CalculatorReachMovementSpeedCheckBox.Name = "CalculatorReachMovementSpeedCheckBox";
+            this.CalculatorReachMovementSpeedCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.CalculatorReachMovementSpeedCheckBox.TabIndex = 5;
+            this.CalculatorReachMovementSpeedCheckBox.UseVisualStyleBackColor = true;
+            this.CalculatorReachMovementSpeedCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckChangedToggleTextBoxes);
             // 
             // CalculatorReachRangeIncrementTextBox
             // 
@@ -620,6 +740,7 @@
             this.CalculatorReachRangeIncrementTextBox.ReadOnly = true;
             this.CalculatorReachRangeIncrementTextBox.Size = new System.Drawing.Size(128, 23);
             this.CalculatorReachRangeIncrementTextBox.TabIndex = 2;
+            this.CalculatorReachRangeIncrementTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorReachRangeIncrementTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorReachRangeIncrementTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
@@ -631,7 +752,7 @@
             this.CalculatorReachVolleyIncrementCheckBox.Size = new System.Drawing.Size(15, 14);
             this.CalculatorReachVolleyIncrementCheckBox.TabIndex = 3;
             this.CalculatorReachVolleyIncrementCheckBox.UseVisualStyleBackColor = true;
-            this.CalculatorReachVolleyIncrementCheckBox.CheckedChanged += new System.EventHandler(this.ReachVolleyIncrementCheckBox_CheckedChanged);
+            this.CalculatorReachVolleyIncrementCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckChangedToggleTextBoxes);
             // 
             // CalculatorReachRangeIncrementCheckBox
             // 
@@ -641,7 +762,7 @@
             this.CalculatorReachRangeIncrementCheckBox.Size = new System.Drawing.Size(15, 14);
             this.CalculatorReachRangeIncrementCheckBox.TabIndex = 1;
             this.CalculatorReachRangeIncrementCheckBox.UseVisualStyleBackColor = true;
-            this.CalculatorReachRangeIncrementCheckBox.CheckedChanged += new System.EventHandler(this.ReachRangeIncrementCheckBox_CheckedChanged);
+            this.CalculatorReachRangeIncrementCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckChangedToggleTextBoxes);
             // 
             // CalculatorAmmunitionGroupBox
             // 
@@ -688,6 +809,7 @@
             this.CalculatorAmmunitionDrawLengthTextBox.Name = "CalculatorAmmunitionDrawLengthTextBox";
             this.CalculatorAmmunitionDrawLengthTextBox.Size = new System.Drawing.Size(94, 23);
             this.CalculatorAmmunitionDrawLengthTextBox.TabIndex = 5;
+            this.CalculatorAmmunitionDrawLengthTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorAmmunitionDrawLengthTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.CalculatorAmmunitionDrawLengthTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             this.CalculatorAmmunitionDrawLengthTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
@@ -721,6 +843,7 @@
             this.CalculatorAmmunitionLongReloadTextBox.ReadOnly = true;
             this.CalculatorAmmunitionLongReloadTextBox.Size = new System.Drawing.Size(94, 23);
             this.CalculatorAmmunitionLongReloadTextBox.TabIndex = 4;
+            this.CalculatorAmmunitionLongReloadTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorAmmunitionLongReloadTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.CalculatorAmmunitionLongReloadTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             this.CalculatorAmmunitionLongReloadTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
@@ -734,6 +857,7 @@
             this.CalculatorAmmunitionMagazineSizeTextBox.ReadOnly = true;
             this.CalculatorAmmunitionMagazineSizeTextBox.Size = new System.Drawing.Size(94, 23);
             this.CalculatorAmmunitionMagazineSizeTextBox.TabIndex = 3;
+            this.CalculatorAmmunitionMagazineSizeTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorAmmunitionMagazineSizeTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorAmmunitionMagazineSizeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
@@ -744,6 +868,7 @@
             this.CalculatorAmmunitionReloadTextBox.Name = "CalculatorAmmunitionReloadTextBox";
             this.CalculatorAmmunitionReloadTextBox.Size = new System.Drawing.Size(94, 23);
             this.CalculatorAmmunitionReloadTextBox.TabIndex = 1;
+            this.CalculatorAmmunitionReloadTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorAmmunitionReloadTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.CalculatorAmmunitionReloadTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             this.CalculatorAmmunitionReloadTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
@@ -756,7 +881,27 @@
             this.CalculatorAmmunitionMagazineSizeCheckBox.Size = new System.Drawing.Size(15, 14);
             this.CalculatorAmmunitionMagazineSizeCheckBox.TabIndex = 2;
             this.CalculatorAmmunitionMagazineSizeCheckBox.UseVisualStyleBackColor = true;
-            this.CalculatorAmmunitionMagazineSizeCheckBox.CheckedChanged += new System.EventHandler(this.AmmunitionMagazineSizeCheckBox_CheckedChanged);
+            this.CalculatorAmmunitionMagazineSizeCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckChangedToggleTextBoxes);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(496, 281);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(82, 15);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "or Inquiries at:";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // CalculatorSubmitBugsInquiriesLabel
+            // 
+            this.CalculatorSubmitBugsInquiriesLabel.AutoSize = true;
+            this.CalculatorSubmitBugsInquiriesLabel.Location = new System.Drawing.Point(504, 266);
+            this.CalculatorSubmitBugsInquiriesLabel.Name = "CalculatorSubmitBugsInquiriesLabel";
+            this.CalculatorSubmitBugsInquiriesLabel.Size = new System.Drawing.Size(62, 15);
+            this.CalculatorSubmitBugsInquiriesLabel.TabIndex = 9;
+            this.CalculatorSubmitBugsInquiriesLabel.Text = "Send Bugs";
+            this.CalculatorSubmitBugsInquiriesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // CalculatorAttackGroupBox
             // 
@@ -802,6 +947,7 @@
             this.CalculatorAttackMAPModifierTextBox.Name = "CalculatorAttackMAPModifierTextBox";
             this.CalculatorAttackMAPModifierTextBox.Size = new System.Drawing.Size(111, 23);
             this.CalculatorAttackMAPModifierTextBox.TabIndex = 4;
+            this.CalculatorAttackMAPModifierTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorAttackMAPModifierTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.CalculatorAttackMAPModifierTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             this.CalculatorAttackMAPModifierTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
@@ -823,6 +969,7 @@
             this.CalculatorAttackACTextBox.Name = "CalculatorAttackACTextBox";
             this.CalculatorAttackACTextBox.Size = new System.Drawing.Size(111, 23);
             this.CalculatorAttackACTextBox.TabIndex = 3;
+            this.CalculatorAttackACTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorAttackACTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.CalculatorAttackACTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             this.CalculatorAttackACTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
@@ -834,6 +981,7 @@
             this.CalculatorAttackCriticalHitMinimumTextBox.Name = "CalculatorAttackCriticalHitMinimumTextBox";
             this.CalculatorAttackCriticalHitMinimumTextBox.Size = new System.Drawing.Size(111, 23);
             this.CalculatorAttackCriticalHitMinimumTextBox.TabIndex = 2;
+            this.CalculatorAttackCriticalHitMinimumTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorAttackCriticalHitMinimumTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.CalculatorAttackCriticalHitMinimumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             this.CalculatorAttackCriticalHitMinimumTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
@@ -845,6 +993,7 @@
             this.CalculatorAttackBonusToHitTextBox.Name = "CalculatorAttackBonusToHitTextBox";
             this.CalculatorAttackBonusToHitTextBox.Size = new System.Drawing.Size(111, 23);
             this.CalculatorAttackBonusToHitTextBox.TabIndex = 1;
+            this.CalculatorAttackBonusToHitTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorAttackBonusToHitTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.CalculatorAttackBonusToHitTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             this.CalculatorAttackBonusToHitTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
@@ -861,10 +1010,10 @@
             // 
             // CalculatorEncounterGroupBox
             // 
-            this.CalculatorEncounterGroupBox.Controls.Add(this.CalculatorDistanceEngagementRangeLabel);
-            this.CalculatorEncounterGroupBox.Controls.Add(this.CalculatorDistanceEngagementRangeTextBox);
+            this.CalculatorEncounterGroupBox.Controls.Add(this.CalculatorEncounterEngagementRangeLabel);
+            this.CalculatorEncounterGroupBox.Controls.Add(this.CalculatorEncounterEngagementRangeTextBox);
             this.CalculatorEncounterGroupBox.Controls.Add(this.CalculatorEncounterRoundsPerEncounterLabel);
-            this.CalculatorEncounterGroupBox.Controls.Add(this.CalculatorDistanceEngagementRangeCheckBox);
+            this.CalculatorEncounterGroupBox.Controls.Add(this.CalculatorEncounterEngagementRangeCheckBox);
             this.CalculatorEncounterGroupBox.Controls.Add(this.CalculatorEncounterNumberOfEncountersLabel);
             this.CalculatorEncounterGroupBox.Controls.Add(this.CalculatorEncounterRoundsPerEncounterTextBox);
             this.CalculatorEncounterGroupBox.Controls.Add(this.CalculatorEncounterNumberOfEncountersTextBox);
@@ -875,27 +1024,28 @@
             this.CalculatorEncounterGroupBox.TabStop = false;
             this.CalculatorEncounterGroupBox.Text = "Encounter";
             // 
-            // CalculatorDistanceEngagementRangeLabel
+            // CalculatorEncounterEngagementRangeLabel
             // 
-            this.CalculatorDistanceEngagementRangeLabel.AutoSize = true;
-            this.CalculatorDistanceEngagementRangeLabel.Location = new System.Drawing.Point(18, 107);
-            this.CalculatorDistanceEngagementRangeLabel.Name = "CalculatorDistanceEngagementRangeLabel";
-            this.CalculatorDistanceEngagementRangeLabel.Size = new System.Drawing.Size(110, 15);
-            this.CalculatorDistanceEngagementRangeLabel.TabIndex = 1;
-            this.CalculatorDistanceEngagementRangeLabel.Text = "Engagement Range";
-            this.CalculatorDistanceEngagementRangeLabel.MouseEnter += new System.EventHandler(this.Control_MouseHoverShowTooltip);
+            this.CalculatorEncounterEngagementRangeLabel.AutoSize = true;
+            this.CalculatorEncounterEngagementRangeLabel.Location = new System.Drawing.Point(18, 107);
+            this.CalculatorEncounterEngagementRangeLabel.Name = "CalculatorEncounterEngagementRangeLabel";
+            this.CalculatorEncounterEngagementRangeLabel.Size = new System.Drawing.Size(110, 15);
+            this.CalculatorEncounterEngagementRangeLabel.TabIndex = 1;
+            this.CalculatorEncounterEngagementRangeLabel.Text = "Engagement Range";
+            this.CalculatorEncounterEngagementRangeLabel.MouseEnter += new System.EventHandler(this.Control_MouseHoverShowTooltip);
             // 
-            // CalculatorDistanceEngagementRangeTextBox
+            // CalculatorEncounterEngagementRangeTextBox
             // 
-            this.CalculatorDistanceEngagementRangeTextBox.Enabled = false;
-            this.CalculatorDistanceEngagementRangeTextBox.Location = new System.Drawing.Point(6, 124);
-            this.CalculatorDistanceEngagementRangeTextBox.MaxLength = 6;
-            this.CalculatorDistanceEngagementRangeTextBox.Name = "CalculatorDistanceEngagementRangeTextBox";
-            this.CalculatorDistanceEngagementRangeTextBox.ReadOnly = true;
-            this.CalculatorDistanceEngagementRangeTextBox.Size = new System.Drawing.Size(128, 23);
-            this.CalculatorDistanceEngagementRangeTextBox.TabIndex = 4;
-            this.CalculatorDistanceEngagementRangeTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
-            this.CalculatorDistanceEngagementRangeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            this.CalculatorEncounterEngagementRangeTextBox.Enabled = false;
+            this.CalculatorEncounterEngagementRangeTextBox.Location = new System.Drawing.Point(6, 124);
+            this.CalculatorEncounterEngagementRangeTextBox.MaxLength = 6;
+            this.CalculatorEncounterEngagementRangeTextBox.Name = "CalculatorEncounterEngagementRangeTextBox";
+            this.CalculatorEncounterEngagementRangeTextBox.ReadOnly = true;
+            this.CalculatorEncounterEngagementRangeTextBox.Size = new System.Drawing.Size(128, 23);
+            this.CalculatorEncounterEngagementRangeTextBox.TabIndex = 4;
+            this.CalculatorEncounterEngagementRangeTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
+            this.CalculatorEncounterEngagementRangeTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
+            this.CalculatorEncounterEngagementRangeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
             // CalculatorEncounterRoundsPerEncounterLabel
             // 
@@ -907,15 +1057,15 @@
             this.CalculatorEncounterRoundsPerEncounterLabel.Text = "Rounds per Encounter";
             this.CalculatorEncounterRoundsPerEncounterLabel.MouseEnter += new System.EventHandler(this.Control_MouseHoverShowTooltip);
             // 
-            // CalculatorDistanceEngagementRangeCheckBox
+            // CalculatorEncounterEngagementRangeCheckBox
             // 
-            this.CalculatorDistanceEngagementRangeCheckBox.AutoSize = true;
-            this.CalculatorDistanceEngagementRangeCheckBox.Location = new System.Drawing.Point(4, 108);
-            this.CalculatorDistanceEngagementRangeCheckBox.Name = "CalculatorDistanceEngagementRangeCheckBox";
-            this.CalculatorDistanceEngagementRangeCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.CalculatorDistanceEngagementRangeCheckBox.TabIndex = 3;
-            this.CalculatorDistanceEngagementRangeCheckBox.UseVisualStyleBackColor = true;
-            this.CalculatorDistanceEngagementRangeCheckBox.CheckedChanged += new System.EventHandler(this.DistanceEngagementRangeCheckBox_CheckedChanged);
+            this.CalculatorEncounterEngagementRangeCheckBox.AutoSize = true;
+            this.CalculatorEncounterEngagementRangeCheckBox.Location = new System.Drawing.Point(4, 108);
+            this.CalculatorEncounterEngagementRangeCheckBox.Name = "CalculatorEncounterEngagementRangeCheckBox";
+            this.CalculatorEncounterEngagementRangeCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.CalculatorEncounterEngagementRangeCheckBox.TabIndex = 3;
+            this.CalculatorEncounterEngagementRangeCheckBox.UseVisualStyleBackColor = true;
+            this.CalculatorEncounterEngagementRangeCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckChangedToggleTextBoxes);
             // 
             // CalculatorEncounterNumberOfEncountersLabel
             // 
@@ -934,6 +1084,7 @@
             this.CalculatorEncounterRoundsPerEncounterTextBox.Name = "CalculatorEncounterRoundsPerEncounterTextBox";
             this.CalculatorEncounterRoundsPerEncounterTextBox.Size = new System.Drawing.Size(127, 23);
             this.CalculatorEncounterRoundsPerEncounterTextBox.TabIndex = 2;
+            this.CalculatorEncounterRoundsPerEncounterTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorEncounterRoundsPerEncounterTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorEncounterRoundsPerEncounterTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
@@ -944,8 +1095,20 @@
             this.CalculatorEncounterNumberOfEncountersTextBox.Name = "CalculatorEncounterNumberOfEncountersTextBox";
             this.CalculatorEncounterNumberOfEncountersTextBox.Size = new System.Drawing.Size(127, 23);
             this.CalculatorEncounterNumberOfEncountersTextBox.TabIndex = 1;
+            this.CalculatorEncounterNumberOfEncountersTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorEncounterNumberOfEncountersTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorEncounterNumberOfEncountersTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
+            // 
+            // CalculatorTanmanGLabel
+            // 
+            this.CalculatorTanmanGLabel.AutoSize = true;
+            this.CalculatorTanmanGLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.CalculatorTanmanGLabel.Location = new System.Drawing.Point(504, 246);
+            this.CalculatorTanmanGLabel.Name = "CalculatorTanmanGLabel";
+            this.CalculatorTanmanGLabel.Size = new System.Drawing.Size(59, 15);
+            this.CalculatorTanmanGLabel.TabIndex = 8;
+            this.CalculatorTanmanGLabel.Text = "TanmanG";
+            this.CalculatorTanmanGLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // CalculatorDamageGroupBox
             // 
@@ -1048,7 +1211,7 @@
             this.CalculatorDamageCriticalBleedDieCheckBox.Size = new System.Drawing.Size(15, 14);
             this.CalculatorDamageCriticalBleedDieCheckBox.TabIndex = 17;
             this.CalculatorDamageCriticalBleedDieCheckBox.UseVisualStyleBackColor = true;
-            this.CalculatorDamageCriticalBleedDieCheckBox.CheckedChanged += new System.EventHandler(this.DamageCriticalBleedDieCheckBox_CheckedChanged);
+            this.CalculatorDamageCriticalBleedDieCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckChangedToggleTextBoxes);
             // 
             // CalculatorDamageSaveButton
             // 
@@ -1069,6 +1232,7 @@
             this.CalculatorDamageBleedDieBonusTextBox.ReadOnly = true;
             this.CalculatorDamageBleedDieBonusTextBox.Size = new System.Drawing.Size(25, 23);
             this.CalculatorDamageBleedDieBonusTextBox.TabIndex = 16;
+            this.CalculatorDamageBleedDieBonusTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorDamageBleedDieBonusTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.CalculatorDamageBleedDieBonusTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             this.CalculatorDamageBleedDieBonusTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
@@ -1081,7 +1245,7 @@
             this.CalculatorDamageBleedDieCheckBox.Size = new System.Drawing.Size(15, 14);
             this.CalculatorDamageBleedDieCheckBox.TabIndex = 13;
             this.CalculatorDamageBleedDieCheckBox.UseVisualStyleBackColor = true;
-            this.CalculatorDamageBleedDieCheckBox.CheckedChanged += new System.EventHandler(this.DamageBleedDieCheckBox_CheckedChanged);
+            this.CalculatorDamageBleedDieCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckChangedToggleTextBoxes);
             // 
             // CalculatorDamageCriticalDieCheckBox
             // 
@@ -1091,7 +1255,7 @@
             this.CalculatorDamageCriticalDieCheckBox.Size = new System.Drawing.Size(15, 14);
             this.CalculatorDamageCriticalDieCheckBox.TabIndex = 9;
             this.CalculatorDamageCriticalDieCheckBox.UseVisualStyleBackColor = true;
-            this.CalculatorDamageCriticalDieCheckBox.CheckedChanged += new System.EventHandler(this.DamageCriticalDieCheckBox_CheckedChanged);
+            this.CalculatorDamageCriticalDieCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckChangedToggleTextBoxes);
             // 
             // CalculatorDamageBleedDieSizeTextBox
             // 
@@ -1102,6 +1266,7 @@
             this.CalculatorDamageBleedDieSizeTextBox.ReadOnly = true;
             this.CalculatorDamageBleedDieSizeTextBox.Size = new System.Drawing.Size(25, 23);
             this.CalculatorDamageBleedDieSizeTextBox.TabIndex = 15;
+            this.CalculatorDamageBleedDieSizeTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorDamageBleedDieSizeTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorDamageBleedDieSizeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
@@ -1114,6 +1279,7 @@
             this.CalculatorDamageBleedDieCountTextBox.ReadOnly = true;
             this.CalculatorDamageBleedDieCountTextBox.Size = new System.Drawing.Size(25, 23);
             this.CalculatorDamageBleedDieCountTextBox.TabIndex = 14;
+            this.CalculatorDamageBleedDieCountTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorDamageBleedDieCountTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorDamageBleedDieCountTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
@@ -1192,6 +1358,7 @@
             this.CalculatorDamageCriticalBleedDieBonusTextBox.ReadOnly = true;
             this.CalculatorDamageCriticalBleedDieBonusTextBox.Size = new System.Drawing.Size(25, 23);
             this.CalculatorDamageCriticalBleedDieBonusTextBox.TabIndex = 20;
+            this.CalculatorDamageCriticalBleedDieBonusTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorDamageCriticalBleedDieBonusTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.CalculatorDamageCriticalBleedDieBonusTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             this.CalculatorDamageCriticalBleedDieBonusTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
@@ -1205,6 +1372,7 @@
             this.CalculatorDamageCriticalDieBonusTextBox.ReadOnly = true;
             this.CalculatorDamageCriticalDieBonusTextBox.Size = new System.Drawing.Size(25, 23);
             this.CalculatorDamageCriticalDieBonusTextBox.TabIndex = 12;
+            this.CalculatorDamageCriticalDieBonusTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorDamageCriticalDieBonusTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.CalculatorDamageCriticalDieBonusTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             this.CalculatorDamageCriticalDieBonusTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
@@ -1218,6 +1386,7 @@
             this.CalculatorDamageCriticalBleedDieSizeTextBox.ReadOnly = true;
             this.CalculatorDamageCriticalBleedDieSizeTextBox.Size = new System.Drawing.Size(25, 23);
             this.CalculatorDamageCriticalBleedDieSizeTextBox.TabIndex = 19;
+            this.CalculatorDamageCriticalBleedDieSizeTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorDamageCriticalBleedDieSizeTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorDamageCriticalBleedDieSizeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
@@ -1230,6 +1399,7 @@
             this.CalculatorDamageCriticalDieSizeTextBox.ReadOnly = true;
             this.CalculatorDamageCriticalDieSizeTextBox.Size = new System.Drawing.Size(25, 23);
             this.CalculatorDamageCriticalDieSizeTextBox.TabIndex = 11;
+            this.CalculatorDamageCriticalDieSizeTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorDamageCriticalDieSizeTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorDamageCriticalDieSizeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
@@ -1242,6 +1412,7 @@
             this.CalculatorDamageCriticalBleedDieCountTextBox.ReadOnly = true;
             this.CalculatorDamageCriticalBleedDieCountTextBox.Size = new System.Drawing.Size(25, 23);
             this.CalculatorDamageCriticalBleedDieCountTextBox.TabIndex = 18;
+            this.CalculatorDamageCriticalBleedDieCountTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorDamageCriticalBleedDieCountTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorDamageCriticalBleedDieCountTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
@@ -1254,6 +1425,7 @@
             this.CalculatorDamageCriticalDieCountTextBox.ReadOnly = true;
             this.CalculatorDamageCriticalDieCountTextBox.Size = new System.Drawing.Size(25, 23);
             this.CalculatorDamageCriticalDieCountTextBox.TabIndex = 10;
+            this.CalculatorDamageCriticalDieCountTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorDamageCriticalDieCountTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorDamageCriticalDieCountTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
@@ -1305,6 +1477,7 @@
             this.CalculatorDamageDieBonusTextBox.Name = "CalculatorDamageDieBonusTextBox";
             this.CalculatorDamageDieBonusTextBox.Size = new System.Drawing.Size(25, 23);
             this.CalculatorDamageDieBonusTextBox.TabIndex = 8;
+            this.CalculatorDamageDieBonusTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorDamageDieBonusTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndSign);
             this.CalculatorDamageDieBonusTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             this.CalculatorDamageDieBonusTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneSymbol);
@@ -1316,6 +1489,7 @@
             this.CalculatorDamageDieSizeTextBox.Name = "CalculatorDamageDieSizeTextBox";
             this.CalculatorDamageDieSizeTextBox.Size = new System.Drawing.Size(25, 23);
             this.CalculatorDamageDieSizeTextBox.TabIndex = 7;
+            this.CalculatorDamageDieSizeTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorDamageDieSizeTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorDamageDieSizeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
@@ -1326,6 +1500,7 @@
             this.CalculatorDamageDieCountTextBox.Name = "CalculatorDamageDieCountTextBox";
             this.CalculatorDamageDieCountTextBox.Size = new System.Drawing.Size(25, 23);
             this.CalculatorDamageDieCountTextBox.TabIndex = 6;
+            this.CalculatorDamageDieCountTextBox.Click += new System.EventHandler(this.TextBox_MouseClickShowBatchComputation);
             this.CalculatorDamageDieCountTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigits);
             this.CalculatorDamageDieCountTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPressFilterToDigits);
             // 
@@ -1337,45 +1512,12 @@
             this.CalculatorDamageListBox.Name = "CalculatorDamageListBox";
             this.CalculatorDamageListBox.Size = new System.Drawing.Size(214, 124);
             this.CalculatorDamageListBox.TabIndex = 1;
-            this.CalculatorDamageListBox.SelectedIndexChanged += new System.EventHandler(this.DamageListBox_SelectedIndexChanged);
             this.CalculatorDamageListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.DamageListBox_MouseDoubleClick);
-            // 
-            // CalculatorEmail1Label
-            // 
-            this.CalculatorEmail1Label.AutoSize = true;
-            this.CalculatorEmail1Label.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.CalculatorEmail1Label.Location = new System.Drawing.Point(373, 420);
-            this.CalculatorEmail1Label.Name = "CalculatorEmail1Label";
-            this.CalculatorEmail1Label.Size = new System.Drawing.Size(175, 15);
-            this.CalculatorEmail1Label.TabIndex = 10;
-            this.CalculatorEmail1Label.Text = "mangomango.dev@gmail.com";
-            this.CalculatorEmail1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // CalculatorSubmitBugsInquiriesLabel
-            // 
-            this.CalculatorSubmitBugsInquiriesLabel.AutoSize = true;
-            this.CalculatorSubmitBugsInquiriesLabel.Location = new System.Drawing.Point(393, 405);
-            this.CalculatorSubmitBugsInquiriesLabel.Name = "CalculatorSubmitBugsInquiriesLabel";
-            this.CalculatorSubmitBugsInquiriesLabel.Size = new System.Drawing.Size(127, 15);
-            this.CalculatorSubmitBugsInquiriesLabel.TabIndex = 9;
-            this.CalculatorSubmitBugsInquiriesLabel.Text = "Submit Bugs/Inquiries:";
-            this.CalculatorSubmitBugsInquiriesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // CalculatorTanmanGLabel
-            // 
-            this.CalculatorTanmanGLabel.AutoSize = true;
-            this.CalculatorTanmanGLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.CalculatorTanmanGLabel.Location = new System.Drawing.Point(269, 420);
-            this.CalculatorTanmanGLabel.Name = "CalculatorTanmanGLabel";
-            this.CalculatorTanmanGLabel.Size = new System.Drawing.Size(59, 15);
-            this.CalculatorTanmanGLabel.TabIndex = 8;
-            this.CalculatorTanmanGLabel.Text = "TanmanG";
-            this.CalculatorTanmanGLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // CalculatorDevelopedByLabel
             // 
             this.CalculatorDevelopedByLabel.AutoSize = true;
-            this.CalculatorDevelopedByLabel.Location = new System.Drawing.Point(261, 405);
+            this.CalculatorDevelopedByLabel.Location = new System.Drawing.Point(496, 231);
             this.CalculatorDevelopedByLabel.Name = "CalculatorDevelopedByLabel";
             this.CalculatorDevelopedByLabel.Size = new System.Drawing.Size(82, 15);
             this.CalculatorDevelopedByLabel.TabIndex = 7;
@@ -1387,15 +1529,15 @@
             this.CalculatorDefaultSettingsButton.Location = new System.Drawing.Point(6, 408);
             this.CalculatorDefaultSettingsButton.Name = "CalculatorDefaultSettingsButton";
             this.CalculatorDefaultSettingsButton.Size = new System.Drawing.Size(113, 27);
-            this.CalculatorDefaultSettingsButton.TabIndex = 10;
+            this.CalculatorDefaultSettingsButton.TabIndex = 4;
             this.CalculatorDefaultSettingsButton.Text = "Revert Default";
             this.CalculatorDefaultSettingsButton.UseVisualStyleBackColor = true;
             this.CalculatorDefaultSettingsButton.Click += new System.EventHandler(this.DefaultSettingsButton_Click);
             // 
-            // CalculatorAttackErrorProvider
+            // CalculatorErrorProvider
             // 
-            this.CalculatorAttackErrorProvider.BlinkRate = 125;
-            this.CalculatorAttackErrorProvider.ContainerControl = this;
+            this.CalculatorErrorProvider.BlinkRate = 125;
+            this.CalculatorErrorProvider.ContainerControl = this;
             // 
             // CalculatorHelpToolTip
             // 
@@ -1409,7 +1551,7 @@
             this.CalculatorHelpModeButton.Location = new System.Drawing.Point(125, 408);
             this.CalculatorHelpModeButton.Name = "CalculatorHelpModeButton";
             this.CalculatorHelpModeButton.Size = new System.Drawing.Size(115, 27);
-            this.CalculatorHelpModeButton.TabIndex = 11;
+            this.CalculatorHelpModeButton.TabIndex = 5;
             this.CalculatorHelpModeButton.Text = "Enable Help Mode";
             this.CalculatorHelpModeButton.UseVisualStyleBackColor = true;
             this.CalculatorHelpModeButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.HelpButton_MouseClick);
@@ -1417,10 +1559,10 @@
             // CalculatorVersionLabel
             // 
             this.CalculatorVersionLabel.ForeColor = System.Drawing.Color.Gray;
-            this.CalculatorVersionLabel.Location = new System.Drawing.Point(862, 410);
+            this.CalculatorVersionLabel.Location = new System.Drawing.Point(824, 410);
             this.CalculatorVersionLabel.Name = "CalculatorVersionLabel";
             this.CalculatorVersionLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.CalculatorVersionLabel.Size = new System.Drawing.Size(100, 23);
+            this.CalculatorVersionLabel.Size = new System.Drawing.Size(138, 23);
             this.CalculatorVersionLabel.TabIndex = 12;
             this.CalculatorVersionLabel.Text = "PFK V1.3-proto";
             this.CalculatorVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1438,14 +1580,15 @@
             // 
             // CalculatorTabPage
             // 
+            this.CalculatorTabPage.Controls.Add(this.CalculatorBatchComputePopupPanel);
+            this.CalculatorTabPage.Controls.Add(this.CalculatorLWGEFLabel);
+            this.CalculatorTabPage.Controls.Add(this.CalculatorMBCLabel);
+            this.CalculatorTabPage.Controls.Add(this.CalculatorBatchComputeButton);
             this.CalculatorTabPage.Controls.Add(this.CalculatorVersionLabel);
-            this.CalculatorTabPage.Controls.Add(this.CalculatorEmail1Label);
             this.CalculatorTabPage.Controls.Add(this.CalculatorSettingsGroupBox);
-            this.CalculatorTabPage.Controls.Add(this.CalculatorSubmitBugsInquiriesLabel);
             this.CalculatorTabPage.Controls.Add(this.CalculatorHelpModeButton);
-            this.CalculatorTabPage.Controls.Add(this.CalculatorTanmanGLabel);
-            this.CalculatorTabPage.Controls.Add(this.CalculatorDevelopedByLabel);
             this.CalculatorTabPage.Controls.Add(this.CalculatorDefaultSettingsButton);
+            this.CalculatorTabPage.Controls.Add(this.CalculatorWarningLabel);
             this.CalculatorTabPage.Controls.Add(this.CalculatorEncounterStatisticsGroupBox);
             this.CalculatorTabPage.Controls.Add(this.CalculatorMiscStatisticsGroupBox);
             this.CalculatorTabPage.Controls.Add(this.CalculatorDamageDistributionScottPlot);
@@ -1456,6 +1599,183 @@
             this.CalculatorTabPage.TabIndex = 0;
             this.CalculatorTabPage.Text = "Calculator";
             this.CalculatorTabPage.UseVisualStyleBackColor = true;
+            // 
+            // CalculatorBatchComputePopupPanel
+            // 
+            this.CalculatorBatchComputePopupPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CalculatorBatchComputePopupPanel.Controls.Add(this.CalculatorBatchComputePopupGroupBox);
+            this.CalculatorBatchComputePopupPanel.Location = new System.Drawing.Point(612, 239);
+            this.CalculatorBatchComputePopupPanel.Name = "CalculatorBatchComputePopupPanel";
+            this.CalculatorBatchComputePopupPanel.Size = new System.Drawing.Size(194, 120);
+            this.CalculatorBatchComputePopupPanel.TabIndex = 14;
+            this.CalculatorBatchComputePopupPanel.Visible = false;
+            // 
+            // CalculatorBatchComputePopupGroupBox
+            // 
+            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupDashLabel);
+            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupEndValueNumericUpDown);
+            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupLayerNumericUpDown);
+            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupStepSizeNumericUpDown);
+            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupStartValueNumericUpDown);
+            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupEndValueLabel);
+            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupLayerLabel);
+            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupStepSizeLabel);
+            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupStartLabel);
+            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupSaveButton);
+            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupXButton);
+            this.CalculatorBatchComputePopupGroupBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.CalculatorBatchComputePopupGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.CalculatorBatchComputePopupGroupBox.Name = "CalculatorBatchComputePopupGroupBox";
+            this.CalculatorBatchComputePopupGroupBox.Size = new System.Drawing.Size(185, 112);
+            this.CalculatorBatchComputePopupGroupBox.TabIndex = 2;
+            this.CalculatorBatchComputePopupGroupBox.TabStop = false;
+            this.CalculatorBatchComputePopupGroupBox.Text = "Batch Settings";
+            // 
+            // CalculatorBatchComputePopupDashLabel
+            // 
+            this.CalculatorBatchComputePopupDashLabel.AutoSize = true;
+            this.CalculatorBatchComputePopupDashLabel.Location = new System.Drawing.Point(86, 40);
+            this.CalculatorBatchComputePopupDashLabel.Name = "CalculatorBatchComputePopupDashLabel";
+            this.CalculatorBatchComputePopupDashLabel.Size = new System.Drawing.Size(12, 15);
+            this.CalculatorBatchComputePopupDashLabel.TabIndex = 3;
+            this.CalculatorBatchComputePopupDashLabel.Text = "-";
+            // 
+            // CalculatorBatchComputePopupEndValueNumericUpDown
+            // 
+            this.CalculatorBatchComputePopupEndValueNumericUpDown.Location = new System.Drawing.Point(104, 37);
+            this.CalculatorBatchComputePopupEndValueNumericUpDown.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.CalculatorBatchComputePopupEndValueNumericUpDown.Name = "CalculatorBatchComputePopupEndValueNumericUpDown";
+            this.CalculatorBatchComputePopupEndValueNumericUpDown.Size = new System.Drawing.Size(74, 23);
+            this.CalculatorBatchComputePopupEndValueNumericUpDown.TabIndex = 2;
+            this.CalculatorBatchComputePopupEndValueNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ClearError);
+            // 
+            // CalculatorBatchComputePopupLayerNumericUpDown
+            // 
+            this.CalculatorBatchComputePopupLayerNumericUpDown.Location = new System.Drawing.Point(104, 81);
+            this.CalculatorBatchComputePopupLayerNumericUpDown.Name = "CalculatorBatchComputePopupLayerNumericUpDown";
+            this.CalculatorBatchComputePopupLayerNumericUpDown.Size = new System.Drawing.Size(74, 23);
+            this.CalculatorBatchComputePopupLayerNumericUpDown.TabIndex = 2;
+            this.CalculatorBatchComputePopupLayerNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ClearError);
+            // 
+            // CalculatorBatchComputePopupStepSizeNumericUpDown
+            // 
+            this.CalculatorBatchComputePopupStepSizeNumericUpDown.Location = new System.Drawing.Point(6, 81);
+            this.CalculatorBatchComputePopupStepSizeNumericUpDown.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.CalculatorBatchComputePopupStepSizeNumericUpDown.Name = "CalculatorBatchComputePopupStepSizeNumericUpDown";
+            this.CalculatorBatchComputePopupStepSizeNumericUpDown.Size = new System.Drawing.Size(74, 23);
+            this.CalculatorBatchComputePopupStepSizeNumericUpDown.TabIndex = 2;
+            this.CalculatorBatchComputePopupStepSizeNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ClearError);
+            // 
+            // CalculatorBatchComputePopupStartValueNumericUpDown
+            // 
+            this.CalculatorBatchComputePopupStartValueNumericUpDown.Location = new System.Drawing.Point(6, 37);
+            this.CalculatorBatchComputePopupStartValueNumericUpDown.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.CalculatorBatchComputePopupStartValueNumericUpDown.Name = "CalculatorBatchComputePopupStartValueNumericUpDown";
+            this.CalculatorBatchComputePopupStartValueNumericUpDown.Size = new System.Drawing.Size(74, 23);
+            this.CalculatorBatchComputePopupStartValueNumericUpDown.TabIndex = 2;
+            this.CalculatorBatchComputePopupStartValueNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ClearError);
+            // 
+            // CalculatorBatchComputePopupEndValueLabel
+            // 
+            this.CalculatorBatchComputePopupEndValueLabel.AutoSize = true;
+            this.CalculatorBatchComputePopupEndValueLabel.Location = new System.Drawing.Point(104, 19);
+            this.CalculatorBatchComputePopupEndValueLabel.Name = "CalculatorBatchComputePopupEndValueLabel";
+            this.CalculatorBatchComputePopupEndValueLabel.Size = new System.Drawing.Size(58, 15);
+            this.CalculatorBatchComputePopupEndValueLabel.TabIndex = 1;
+            this.CalculatorBatchComputePopupEndValueLabel.Text = "End Value";
+            this.CalculatorBatchComputePopupEndValueLabel.MouseEnter += new System.EventHandler(this.Control_MouseHoverShowTooltip);
+            // 
+            // CalculatorBatchComputePopupLayerLabel
+            // 
+            this.CalculatorBatchComputePopupLayerLabel.AutoSize = true;
+            this.CalculatorBatchComputePopupLayerLabel.Location = new System.Drawing.Point(104, 63);
+            this.CalculatorBatchComputePopupLayerLabel.Name = "CalculatorBatchComputePopupLayerLabel";
+            this.CalculatorBatchComputePopupLayerLabel.Size = new System.Drawing.Size(61, 15);
+            this.CalculatorBatchComputePopupLayerLabel.TabIndex = 1;
+            this.CalculatorBatchComputePopupLayerLabel.Text = "Step Layer";
+            this.CalculatorBatchComputePopupLayerLabel.MouseEnter += new System.EventHandler(this.Control_MouseHoverShowTooltip);
+            // 
+            // CalculatorBatchComputePopupStepSizeLabel
+            // 
+            this.CalculatorBatchComputePopupStepSizeLabel.AutoSize = true;
+            this.CalculatorBatchComputePopupStepSizeLabel.Location = new System.Drawing.Point(6, 63);
+            this.CalculatorBatchComputePopupStepSizeLabel.Name = "CalculatorBatchComputePopupStepSizeLabel";
+            this.CalculatorBatchComputePopupStepSizeLabel.Size = new System.Drawing.Size(53, 15);
+            this.CalculatorBatchComputePopupStepSizeLabel.TabIndex = 1;
+            this.CalculatorBatchComputePopupStepSizeLabel.Text = "Step Size";
+            this.CalculatorBatchComputePopupStepSizeLabel.MouseEnter += new System.EventHandler(this.Control_MouseHoverShowTooltip);
+            // 
+            // CalculatorBatchComputePopupStartLabel
+            // 
+            this.CalculatorBatchComputePopupStartLabel.AutoSize = true;
+            this.CalculatorBatchComputePopupStartLabel.Location = new System.Drawing.Point(6, 19);
+            this.CalculatorBatchComputePopupStartLabel.Name = "CalculatorBatchComputePopupStartLabel";
+            this.CalculatorBatchComputePopupStartLabel.Size = new System.Drawing.Size(62, 15);
+            this.CalculatorBatchComputePopupStartLabel.TabIndex = 1;
+            this.CalculatorBatchComputePopupStartLabel.Text = "Start Value";
+            this.CalculatorBatchComputePopupStartLabel.MouseEnter += new System.EventHandler(this.Control_MouseHoverShowTooltip);
+            // 
+            // CalculatorBatchComputePopupSaveButton
+            // 
+            this.CalculatorBatchComputePopupSaveButton.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.CalculatorBatchComputePopupSaveButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.CalculatorBatchComputePopupSaveButton.Font = new System.Drawing.Font("BIZ UDPGothic", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.CalculatorBatchComputePopupSaveButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.CalculatorBatchComputePopupSaveButton.Location = new System.Drawing.Point(161, 0);
+            this.CalculatorBatchComputePopupSaveButton.Name = "CalculatorBatchComputePopupSaveButton";
+            this.CalculatorBatchComputePopupSaveButton.Size = new System.Drawing.Size(18, 18);
+            this.CalculatorBatchComputePopupSaveButton.TabIndex = 0;
+            this.CalculatorBatchComputePopupSaveButton.Text = "O";
+            this.CalculatorBatchComputePopupSaveButton.UseVisualStyleBackColor = false;
+            this.CalculatorBatchComputePopupSaveButton.Click += new System.EventHandler(this.CalculatorBatchComputePopupSaveButton_Click);
+            // 
+            // CalculatorBatchComputePopupXButton
+            // 
+            this.CalculatorBatchComputePopupXButton.BackColor = System.Drawing.Color.IndianRed;
+            this.CalculatorBatchComputePopupXButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.CalculatorBatchComputePopupXButton.Font = new System.Drawing.Font("BIZ UDPGothic", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.CalculatorBatchComputePopupXButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.CalculatorBatchComputePopupXButton.Location = new System.Drawing.Point(137, 0);
+            this.CalculatorBatchComputePopupXButton.Name = "CalculatorBatchComputePopupXButton";
+            this.CalculatorBatchComputePopupXButton.Size = new System.Drawing.Size(18, 18);
+            this.CalculatorBatchComputePopupXButton.TabIndex = 0;
+            this.CalculatorBatchComputePopupXButton.Text = "X";
+            this.CalculatorBatchComputePopupXButton.UseVisualStyleBackColor = false;
+            this.CalculatorBatchComputePopupXButton.Click += new System.EventHandler(this.CalculatorBatchComputePopupXButton_Click);
+            // 
+            // CalculatorLWGEFLabel
+            // 
+            this.CalculatorLWGEFLabel.AutoSize = true;
+            this.CalculatorLWGEFLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.CalculatorLWGEFLabel.Location = new System.Drawing.Point(454, 420);
+            this.CalculatorLWGEFLabel.Name = "CalculatorLWGEFLabel";
+            this.CalculatorLWGEFLabel.Size = new System.Drawing.Size(178, 15);
+            this.CalculatorLWGEFLabel.TabIndex = 16;
+            this.CalculatorLWGEFLabel.Text = "Layers Will Get Expensive Fast!";
+            this.CalculatorLWGEFLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.CalculatorLWGEFLabel.Visible = false;
+            // 
+            // CalculatorBatchComputeButton
+            // 
+            this.CalculatorBatchComputeButton.Location = new System.Drawing.Point(246, 408);
+            this.CalculatorBatchComputeButton.Name = "CalculatorBatchComputeButton";
+            this.CalculatorBatchComputeButton.Size = new System.Drawing.Size(130, 27);
+            this.CalculatorBatchComputeButton.TabIndex = 6;
+            this.CalculatorBatchComputeButton.Text = "Enable Batch Mode";
+            this.CalculatorBatchComputeButton.UseVisualStyleBackColor = true;
+            this.CalculatorBatchComputeButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CalculatorToggleBatchComputeButton_MouseClick);
             // 
             // CalculatorDamageDistributionScottPlot
             // 
@@ -1579,6 +1899,7 @@
             "Greatsword",
             "Greataxe",
             "Greatclub",
+            "Greatpick",
             "Polearm",
             "Spear",
             "Staff",
@@ -1687,10 +2008,10 @@
             // label1
             // 
             this.label1.ForeColor = System.Drawing.Color.Gray;
-            this.label1.Location = new System.Drawing.Point(862, 410);
+            this.label1.Location = new System.Drawing.Point(784, 410);
             this.label1.Name = "label1";
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label1.Size = new System.Drawing.Size(100, 23);
+            this.label1.Size = new System.Drawing.Size(178, 23);
             this.label1.TabIndex = 12;
             this.label1.Text = "PFK V1.3-proto";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1728,6 +2049,7 @@
             this.CalculatorEncounterStatisticsGroupBox.ResumeLayout(false);
             this.CalculatorEncounterStatisticsGroupBox.PerformLayout();
             this.CalculatorSettingsGroupBox.ResumeLayout(false);
+            this.CalculatorSettingsGroupBox.PerformLayout();
             this.CalculatorActionGroupBox.ResumeLayout(false);
             this.CalculatorActionGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CalculatorActionExtraLimitedActionsDrawNumericUpDown)).EndInit();
@@ -1745,10 +2067,17 @@
             this.CalculatorEncounterGroupBox.PerformLayout();
             this.CalculatorDamageGroupBox.ResumeLayout(false);
             this.CalculatorDamageGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CalculatorAttackErrorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CalculatorErrorProvider)).EndInit();
             this.PrimaryTabControl.ResumeLayout(false);
             this.CalculatorTabPage.ResumeLayout(false);
             this.CalculatorTabPage.PerformLayout();
+            this.CalculatorBatchComputePopupPanel.ResumeLayout(false);
+            this.CalculatorBatchComputePopupGroupBox.ResumeLayout(false);
+            this.CalculatorBatchComputePopupGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupEndValueNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupLayerNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupStepSizeNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupStartValueNumericUpDown)).EndInit();
             this.GeneratorTabPage.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -1788,7 +2117,7 @@
         private TextBox CalculatorEncounterRoundsPerEncounterTextBox;
         private TextBox CalculatorEncounterNumberOfEncountersTextBox;
         private TextBox CalculatorReachMovementSpeedTextBox;
-        private CheckBox CalculatorReachMovementSpeedCheckBoCalculatorx;
+        private CheckBox CalculatorReachMovementSpeedCheckBox;
         private GroupBox CalculatorDamageGroupBox;
         private Label CalculatorDamageCritDieSizeDLabel;
         private TextBox CalculatorDamageCriticalDieBonusTextBox;
@@ -1804,9 +2133,9 @@
         private TextBox CalculatorDamageDieCountTextBox;
         private ListBox CalculatorDamageListBox;
         private Label CalculatorReachMovementSpeedLabel;
-        private Label CalculatorDistanceEngagementRangeLabel;
-        private TextBox CalculatorDistanceEngagementRangeTextBox;
-        private CheckBox CalculatorDistanceEngagementRangeCheckBox;
+        private Label CalculatorEncounterEngagementRangeLabel;
+        private TextBox CalculatorEncounterEngagementRangeTextBox;
+        private CheckBox CalculatorEncounterEngagementRangeCheckBox;
         private Label CalculatorDamageDieSizeDLabel;
         private Label CalculatorDamageCritDieSizePLabel;
         private Label CalculatorDamageDieSizePLabel;
@@ -1852,7 +2181,7 @@
         private TextBox CalculatorAttackACTextBox;
         private TextBox CalculatorAttackCriticalHitMinimumTextBox;
         private TextBox CalculatorAttackBonusToHitTextBox;
-        private ErrorProvider CalculatorAttackErrorProvider;
+        private ErrorProvider CalculatorErrorProvider;
         private Label CalculatorEmail1Label;
         private Label CalculatorSubmitBugsInquiriesLabel;
         private Label CalculatorTanmanGLabel;
@@ -1900,5 +2229,24 @@
         private CheckBox checkBox3;
         private CheckBox checkBox2;
         private CheckBox checkBox1;
+        private Button CalculatorBatchComputeButton;
+        private Label CalculatorMBCLabel;
+        private Label CalculatorWarningLabel;
+        private Button CalculatorBatchComputePopupXButton;
+        private GroupBox CalculatorBatchComputePopupGroupBox;
+        private Panel CalculatorBatchComputePopupPanel;
+        private Label CalculatorBatchComputePopupStartLabel;
+        private NumericUpDown CalculatorBatchComputePopupStartValueNumericUpDown;
+        private Label CalculatorBatchComputePopupDashLabel;
+        private NumericUpDown CalculatorBatchComputePopupEndValueNumericUpDown;
+        private Label CalculatorBatchComputePopupEndValueLabel;
+        private NumericUpDown CalculatorBatchComputePopupStepSizeNumericUpDown;
+        private Label CalculatorBatchComputePopupStepSizeLabel;
+        private NumericUpDown CalculatorBatchComputePopupLayerNumericUpDown;
+        private Label CalculatorBatchComputePopupLayerLabel;
+        private Button CalculatorBatchComputePopupSaveButton;
+        private Label label8;
+        private Label label7;
+        private Label CalculatorLWGEFLabel;
     }
 }

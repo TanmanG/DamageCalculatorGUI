@@ -47,7 +47,7 @@ namespace DamageCalculatorGUI
         }
         public struct DamageStats
         {
-            public Dictionary<int, int> damageBins = new();
+            public Dictionary<int, int> damage_bins = new();
             // Total number of hits through the simulation.
             public int hits = 0;
             // Total number of misses through the simulation.
@@ -67,7 +67,7 @@ namespace DamageCalculatorGUI
 
             public DamageStats()
             {
-                damageBins = new();
+                damage_bins = new();
                 hits = 0;
                 misses = 0;
                 crits = 0;
@@ -79,7 +79,7 @@ namespace DamageCalculatorGUI
             }
             public DamageStats(Dictionary<int, int> damageBins, int hits, int misses, int crits, int damageTotal, double averageEncounterDamage, double averageRoundDamage, double averageHitDamage, double averageAccuracy)
             {
-                this.damageBins = damageBins;
+                this.damage_bins = damageBins;
                 this.hits = hits;
                 this.misses = misses;
                 this.crits = crits;
@@ -100,26 +100,6 @@ namespace DamageCalculatorGUI
         /// <summary>
         /// Computes and returns the stats of the simulation.
         /// </summary>
-        /// <param name="number_of_encounters">Number of encounters to simulate. Higher equates to more accurate results.</param>
-        /// <param name="rounds_per_encounter">Number of rounds in an encounter (typically 6-7).</param>
-        /// <param name="actions_per_round">Number of actions in round (typically 3).</param>
-        /// <param name="reload_size">Number of rounds in a magazine.</param>
-        /// <param name="reload">Number of actions required to rechamber the weapon.</param>
-        /// <param name="long_reload">Number of actions required to reload a magazine.</param>
-        /// <param name="draw">Number of actions required to unholster the weapon at the start of an encounter.</param>
-        /// <param name="damage_dice">XDY damage, NDM on crit damage.</param>
-        /// <param name="bonusDamage">(Optional) Bonus damage on hit for each damage dice. Default 0s.</param>
-        /// <param name="bonus_to_hit">(Optional) Bonus to-hit. Default 0.</param>
-        /// <param name="AC">(Optional) AC of the target being tested against.</param>
-        /// <param name="crit_threshhold">(Optional) Which natrual rolls will critically strike. Default 20.</param>
-        /// <param name="MAP_modifier">(Optional) Modifier to the MAP penalty (i.e. -1 equates to MAP of -4, -8). Default 0 (MAP 5, 10).</param>
-        /// <param name="engagement_range">(Optional) Starting range for the engagement. Default 30.</param>
-        /// <param name="move_speed">(Optional) Movement speed per Stride action. Default 25.</param>
-        /// <param name="range">(Optional) Range Increment of the weapon. Default 1000.</param>
-        /// <param name="seek_favorable_range">(Optional) Whether to try to Stride into range/out of volley.</param>
-        /// <param name="volley">(Optional) Volley increment of the weapon. Default 0.</param>
-        /// <param name="damage_dice_DOT">(Optional) Damage dice for any DOT effects. Default 0s.</param>
-        /// <returns>Struct containing all the data from this computation.</returns>
         public static DamageStats CalculateAverageDamage(IProgress<int> progress,
                                     int number_of_encounters, int rounds_per_encounter, // Round parameters
                                     List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>> damage_dice, // List of <X, Y, Z> <M, N, O> where XDY+Z, on crit MDN+O
@@ -162,7 +142,7 @@ namespace DamageCalculatorGUI
             bool rangeTooFar; // Whether the player is too far and needs to get closer
             int currentDistance; // Distance away from the target
             int rangePenalty; // Current penalty from distance
-            List<int> dotEffects = new(); // List of damage over time effects
+            Dictionary<int, int> dotEffects = new(); // Dictionary of damage over time effects and their origin index
             
 
             for (int currentEncounter = 0; currentEncounter < number_of_encounters; currentEncounter++)
@@ -377,13 +357,19 @@ namespace DamageCalculatorGUI
                                     for (int damageDiceDOTIndex = 0; damageDiceDOTIndex < damage_dice_DOT.Count; damageDiceDOTIndex++)
                                     {
                                         Tuple<int, int, int> currDamageDieDOT = damage_dice_DOT[damageDiceDOTIndex].Item2;
-                                        
-                                        dotEffects.Add(RollD(currDamageDieDOT.Item1, currDamageDieDOT.Item2) + currDamageDieDOT.Item3);
+
+                                        int dotDamageRollResult = (RollD(currDamageDieDOT.Item1, currDamageDieDOT.Item2) + currDamageDieDOT.Item3) * 2;
+                                        if (dotEffects.TryGetValue(damageDiceDOTIndex, out int activeDOTsize))
+                                        {
+                                            if (activeDOTsize > dotDamageRollResult)
+                                                dotEffects[damageDiceDOTIndex] = activeDOTsize;
+                                        }
+                                        else
+                                            dotEffects.Add(damageDiceDOTIndex, dotDamageRollResult);
                                     }
 
                                     // Double damage for the crit
                                     attackDamage *= 2;
-                                    dotEffects[^1] *= 2;
                                 }
                                 else
                                 { // Attack wasn't a crit
@@ -398,7 +384,15 @@ namespace DamageCalculatorGUI
                                     for (int damageDiceDOTIndex = 0; damageDiceDOTIndex < damage_dice_DOT.Count; damageDiceDOTIndex++)
                                     {
                                         Tuple<int, int, int> currDamageDieDOT = damage_dice_DOT[damageDiceDOTIndex].Item1;
-                                        dotEffects.Add(RollD(currDamageDieDOT.Item1, currDamageDieDOT.Item2) + currDamageDieDOT.Item3);
+                                        
+                                        int dotDamageRollResult = RollD(currDamageDieDOT.Item1, currDamageDieDOT.Item2) + currDamageDieDOT.Item3;
+                                        if (dotEffects.TryGetValue(damageDiceDOTIndex, out int activeDOTsize))
+                                        {
+                                            if (activeDOTsize > dotDamageRollResult)
+                                                dotEffects[damageDiceDOTIndex] = activeDOTsize;
+                                        }
+                                        else
+                                            dotEffects.Add(damageDiceDOTIndex, dotDamageRollResult);
                                     }
                                 }
                                 damageThisRound += attackDamage;
@@ -430,15 +424,18 @@ namespace DamageCalculatorGUI
                     // End of round
 
                     // Flat DC 15 save against any active DOT effects
-                    for (int i = dotEffects.Count - 1; i >= 0; i--)
-                    { // Iterate through DOT effects and apply poison for each
+                    List<int> dotEffectsSaved = new();
+                    foreach (KeyValuePair<int, int> dotEffect in dotEffects)
+                    { // Iterate through DOT effects, dealing damage and saving
                         // Apply poison
-                        damageThisRound += dotEffects[i];
+                        damageThisRound += dotEffect.Value;
                         if (RollD(20) >= 15)
                         { // Remove the current DOT effect
-                            dotEffects.RemoveAt(i);
+                            dotEffectsSaved.Add(dotEffect.Key);
                         }
                     }
+                    if (dotEffectsSaved.Count > 0)
+                        dotEffectsSaved.ForEach(x => dotEffects.Remove(x));
 
                     damageThisEncounter += damageThisRound;
                 }
@@ -451,7 +448,7 @@ namespace DamageCalculatorGUI
                 damageTotal += damageThisEncounter;
             }
 
-            // Fill in holes in damageBins
+            // Fill in holes in damage_bins
             if (damageBins.Count > 0)
             for (int damageIndex = 0; damageIndex < damageBins.OrderByDescending(kvp => kvp.Key).First().Key; damageIndex++)
             {

@@ -10,14 +10,30 @@
     <Version>$(VersionPrefix)</Version>
     <Title>Pickings for Kurtulmak</Title>
     <PackageIcon>PickingsForKurtulmak.png</PackageIcon>
-    <ApplicationIcon>PickingsForKurtulmak.ico</ApplicationIcon>
+    <ApplicationIcon>PFK_128.ico</ApplicationIcon>
     <PackageProjectUrl>https://www.patreon.com/PickingsForKurtulmak</PackageProjectUrl>
     <AssemblyVersion>1.2.2</AssemblyVersion>
     <FileVersion>1.2.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="PickingsForKurtulmak.ico" />
+    <None Remove="cross.cur" />
+    <None Remove="cross_exclaim.cur" />
+    <None Remove="cross_question.cur" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="PFK_128.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="PFK.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="cross_exclaim.cur" />
+    <EmbeddedResource Include="cross.cur" />
+    <EmbeddedResource Include="cross_question.cur" />
   </ItemGroup>
 
   <ItemGroup>
