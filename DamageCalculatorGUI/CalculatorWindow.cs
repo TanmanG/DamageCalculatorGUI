@@ -1352,6 +1352,13 @@ namespace DamageCalculatorGUI
 
             ClearError(sender as Control);
         }
+        // Filter out lone plus/minus
+        private void TextBox_LeaveClearLoneSymbol(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox.Text.Length == 1 && (textBox.Text[0].Equals('+') || textBox.Text[0].Equals('-')))
+                textBox.Text = string.Empty;
+        }
 
         [GeneratedRegex("[^0-9-+]")]
         private static partial Regex DigitSignRegex();
@@ -1665,14 +1672,6 @@ namespace DamageCalculatorGUI
                         new(damageCritCount, damageCritSize, damageCritBonus),
                         new(damageBleedCount, damageBleedSize, damageBleedBonus),
                         new(damageCritBleedCount, damageCritBleedSize, damageCritBleedBonus));
-        }
-
-
-        private void TextBox_LeaveClearLoneSymbol(object sender, EventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (textBox.Text.Length == 1 && (textBox.Text[0].Equals('+') || textBox.Text[0].Equals('-')))
-                textBox.Text = string.Empty;
         }
 
         private void DamageListBox_MouseDoubleClick(object sender, MouseEventArgs e)
