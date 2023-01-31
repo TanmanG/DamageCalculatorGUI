@@ -97,6 +97,7 @@ namespace DamageCalculatorGUI
             Success,
             CriticalSuccess
         };
+
         /// <summary>
         /// Computes and returns the stats of the simulation.
         /// </summary>
@@ -148,7 +149,7 @@ namespace DamageCalculatorGUI
             for (int currentEncounter = 0; currentEncounter < number_of_encounters; currentEncounter++)
             { // Iterate each encounter
                 // Set Progress on Bar
-                if (HelperFunctions.Mod(a: currentEncounter + 1, b: number_of_encounters / 1000) == 0)
+                if (progress != null && HelperFunctions.Mod(a: currentEncounter + 1, b: number_of_encounters / 1000) == 0)
                     // Update progress
                     progress.Report((currentEncounter + 1) * 1000 / number_of_encounters);
                 

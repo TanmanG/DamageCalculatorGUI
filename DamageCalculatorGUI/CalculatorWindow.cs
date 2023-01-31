@@ -1,8 +1,10 @@
 ﻿
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using static DamageCalculatorGUI.DamageCalculator;
 
 
@@ -61,15 +63,17 @@ namespace DamageCalculatorGUI
             damage_dice_DOT_count_critical,
             damage_dice_DOT_size_critical,
             damage_dice_DOT_bonus_critical,
-    }
+        }
 
     // Batch Setting, represents the batch configuration for the given value.
-    public struct BatchModeSettings
+        public struct BatchModeSettings
         {
             public int layer; // What layer to scale on. Equal means both iterate simultaneously, below means will iterate once every other layer finishes.
             public int start; // Initial value
-            public int end; // End value           
-            public int step; // Step size
+            public int end; // End value 
+            public List<int> steps; // Pattern of steps to be taken in total. Repeating list.
+            public int number_of_steps; // Number of times to be stepped in total.
+            public int step_direction; // Overall direction of steps
         }
         // Help Mode Variable
         public static bool help_mode_enabled;
@@ -155,7 +159,7 @@ namespace DamageCalculatorGUI
             
             if (!HelperFunctions.IsControlDown())
             {
-                if (computing_damage)
+                if (computing_damage) // Prevent double-computing
                     return;
 
                 // Update Data
@@ -167,30 +171,25 @@ namespace DamageCalculatorGUI
                     currEncounterSettings = GetDamageSimulationVariables(currEncounterSettings);
 
                     // Compute Damage Stats
-                    Progress<int> progress = new();
-                    progress.ProgressChanged += SetProgressBar;
-                    computing_damage = true;
-                    Task<DamageStats> computeDamage = Task.Run(() => CalculateAverageDamage(number_of_encounters: currEncounterSettings.number_of_encounters,
-                                                                rounds_per_encounter: currEncounterSettings.rounds_per_encounter,
-                                                                actions_per_round: currEncounterSettings.actions_per_round,
-                                                                reload_size: currEncounterSettings.magazine_size,
-                                                                reload: currEncounterSettings.reload,
-                                                                long_reload: currEncounterSettings.long_reload,
-                                                                draw: currEncounterSettings.draw,
-                                                                damage_dice: currEncounterSettings.damage_dice,
-                                                                bonus_to_hit: currEncounterSettings.bonus_to_hit,
-                                                                AC: currEncounterSettings.AC,
-                                                                crit_threshhold: currEncounterSettings.crit_threshhold,
-                                                                MAP_modifier: currEncounterSettings.MAP_modifier,
-                                                                engagement_range: currEncounterSettings.engagement_range,
-                                                                move_speed: currEncounterSettings.move_speed,
-                                                                seek_favorable_range: currEncounterSettings.seek_favorable_range,
-                                                                range: currEncounterSettings.range,
-                                                                volley: currEncounterSettings.volley,
-                                                                damage_dice_DOT: currEncounterSettings.damage_dice_DOT,
-                                                                progress: progress));
-                    damageStats = await computeDamage;
-                    computing_damage = false;
+                    damageStats = await ComputeAverageDamage_SINGLE(number_of_encounters: currEncounterSettings.number_of_encounters,
+                                                        rounds_per_encounter: currEncounterSettings.rounds_per_encounter,
+                                                        actions_per_round: currEncounterSettings.actions_per_round,
+                                                        reload_size: currEncounterSettings.magazine_size,
+                                                        reload: currEncounterSettings.reload,
+                                                        long_reload: currEncounterSettings.long_reload,
+                                                        draw: currEncounterSettings.draw,
+                                                        damage_dice: currEncounterSettings.damage_dice,
+                                                        bonus_to_hit: currEncounterSettings.bonus_to_hit,
+                                                        AC: currEncounterSettings.AC,
+                                                        crit_threshhold: currEncounterSettings.crit_threshhold,
+                                                        MAP_modifier: currEncounterSettings.MAP_modifier,
+                                                        engagement_range: currEncounterSettings.engagement_range,
+                                                        move_speed: currEncounterSettings.move_speed,
+                                                        seek_favorable_range: currEncounterSettings.seek_favorable_range,
+                                                        range: currEncounterSettings.range,
+                                                        volley: currEncounterSettings.volley,
+                                                        damage_dice_DOT: currEncounterSettings.damage_dice_DOT);
+
                     // Compute 25th, 50th, and 75th Percentiles
                     Tuple<int, int, int> percentiles = HelperFunctions.ComputePercentiles(damageStats.damage_bins);
                     /// Update the GUI with the percentiles
@@ -216,7 +215,6 @@ namespace DamageCalculatorGUI
                     Clipboard.SetText(string.Join(",", damageStats.damage_bins.OrderBy(x => x.Key).Select(x => x.Value)));
             }
         }
-
 
         private void AddCaretHidingEvents()
         {
@@ -282,7 +280,7 @@ namespace DamageCalculatorGUI
             CollectionAddFromControlHash(label_hashes_help, CalculatorBatchComputeButton, "Enable to swap cursor to batch compute mode, allowing you to compute variables at different values rather than just one. Select a entry box with the crosshair to open the batch compute settings popup.");
             CollectionAddFromControlHash(label_hashes_help, CalculatorBatchComputePopupStartLabel, "The value to start scaling this variable from for the given variable. This will be the first value of the selected variable, which will be increased by the value of \"step\" each computation iteration. I.e. Start 0, End 3, Step 1 will simulate the values: 0, 1, 2, 3.");
             CollectionAddFromControlHash(label_hashes_help, CalculatorBatchComputePopupEndValueLabel, "The value to end scaling this variable up to for the given variable. The variable will be iterated by Step until it reaches or exceeds this value, in the latter case will just round down to this. I.e. Start 2, End 7, Step 2 will simulate the values: 2, 4, 6, 7.");
-            CollectionAddFromControlHash(label_hashes_help, CalculatorBatchComputePopupStepSizeLabel, "The value to increase the variable by each iteration. This will start at Start, then end rounding down to End. Can be negative. I.e. Start 5, End 0, Step -2 will simulate the values: 5, 3, 1, 0.");
+            CollectionAddFromControlHash(label_hashes_help, CalculatorBatchComputePopupStepPatternLabel, "The value to increase the variable by each iteration. This will start at Start, then end rounding down to End. Can be negative. I.e. Start 5, End 0, Step -2 will simulate the values: 5, 3, 1, 0.");
             CollectionAddFromControlHash(label_hashes_help, CalculatorBatchComputePopupLayerLabel, "Lower values will be iterated after all layers above it have fully iterated from start to finish. Warning: This is extremely expensive to use, as computation increases exponentially with each new layer!");
         }
         private void StoreEntryBoxParentBatchHashes()
@@ -1243,6 +1241,57 @@ namespace DamageCalculatorGUI
 
         // DATA
         //
+        private async Task<DamageStats> ComputeAverageDamage_SINGLE(int number_of_encounters,
+                                                        int rounds_per_encounter,
+                                                        Actions actions_per_round,
+                                                        int reload_size,
+                                                        int reload,
+                                                        int long_reload,
+                                                        int draw,
+                                                        List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>> damage_dice,
+                                                        int bonus_to_hit,
+                                                        int AC,
+                                                        int crit_threshhold,
+                                                        int MAP_modifier,
+                                                        int engagement_range,
+                                                        int move_speed,
+                                                        bool seek_favorable_range,
+                                                        int range,
+                                                        int volley,
+                                                        List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>> damage_dice_DOT)
+        {
+            // Track Progress Bar
+            Progress<int> progress = new();
+            progress.ProgressChanged += SetProgressBar;
+
+            // Set the flag for actively computing damage
+            computing_damage = true;
+
+            // Compute the damage
+            Task<DamageStats> computeDamage = Task.Run(() => CalculateAverageDamage(number_of_encounters: number_of_encounters,
+                                                        rounds_per_encounter: rounds_per_encounter,
+                                                        actions_per_round: actions_per_round,
+                                                        reload_size: reload_size,
+                                                        reload: reload,
+                                                        long_reload: long_reload,
+                                                        draw: draw,
+                                                        damage_dice: damage_dice,
+                                                        bonus_to_hit: bonus_to_hit,
+                                                        AC: AC,
+                                                        crit_threshhold: crit_threshhold,
+                                                        MAP_modifier: MAP_modifier,
+                                                        engagement_range: engagement_range,
+                                                        move_speed: move_speed,
+                                                        seek_favorable_range: seek_favorable_range,
+                                                        range: range,
+                                                        volley: volley,
+                                                        damage_dice_DOT: damage_dice_DOT,
+                                                        progress: progress));
+            damageStats = await computeDamage;
+            computing_damage = false;
+
+            return damageStats;
+        }
         private EncounterSettings GetDamageSimulationVariables(EncounterSettings oldSettings)
         {
             EncounterSettings newSettings = new()
@@ -1288,12 +1337,11 @@ namespace DamageCalculatorGUI
         // Filter normal digit entry out for TextBoxes.
         private void TextBox_KeyPressFilterToDigits(object sender, KeyPressEventArgs e)
         {
-            Control control = sender as Control;
+            TextBox textBox = sender as TextBox;
 
-            if (CheckControlBatched(control_hash_to_setting[control.GetHashCode()]))
+            if (CheckControlBatched(control_hash_to_setting[textBox.GetHashCode()]))
                 return;
 
-            TextBox? textBox = sender as TextBox;
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 if (!e.KeyChar.Equals('+') && !e.KeyChar.Equals('-') || textBox?.Text.Count(x => (x.Equals('+') || x.Equals('-'))) >= 1)
@@ -1307,12 +1355,11 @@ namespace DamageCalculatorGUI
         // Filter non-digits and non-sign characters out of pasted entries using regex.
         private void TextBox_TextChangedFilterToDigitsAndSign(object sender, EventArgs e)
         {
-            Control control = sender as Control;
-
-            if (CheckControlBatched(control_hash_to_setting[control.GetHashCode()]))
-                return;
 
             TextBox textBox = sender as TextBox;
+
+            if (CheckControlBatched(control_hash_to_setting[textBox.GetHashCode()]))
+                return;
 
             int currSelectStart = textBox.SelectionStart;
             
@@ -1340,17 +1387,43 @@ namespace DamageCalculatorGUI
         private void TextBox_TextChangedFilterToDigits(object sender, EventArgs e)
         { // Filter only if the textbox isn't batched
 
-            Control control = sender as Control;
-
-            if (CheckControlBatched(control_hash_to_setting[control.GetHashCode()]))
-                return;
-
             TextBox textBox = sender as TextBox;
 
-            // Strip characters out of pasted text
-            textBox.Text = DigitsRegex().Replace(input: textBox.Text, replacement: "");
+            if (CheckControlBatched(control_hash_to_setting[textBox.GetHashCode()]))
+                return;
 
-            ClearError(sender as Control);
+            // Strip characters out of pasted text
+            textBox.Text = DigitRegex().Replace(input: textBox.Text, replacement: "");
+
+            ClearError(textBox);
+        }
+        private void TextBox_TextChangedFilterToDigitsAndCommaAndSign(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            int currSelectStart = textBox.SelectionStart;
+
+            // Strip characters out of pasted text
+            textBox.Text = DigitCommaSignRegex().Replace(input: textBox.Text, replacement: "");
+            textBox.Text = SingleCommaRegex().Replace(input: textBox.Text, replacement: "");
+            textBox.Text = SingleSignRegex().Replace(input: textBox.Text, replacement: "");
+            textBox.Text = SignIntoCommaRegex().Replace(input: textBox.Text, replacement: "");
+            Match matches = DigitSignDigitRegex().Match(input: textBox.Text);
+            if (matches.Length > 0)
+            {
+                textBox.Text = DigitSignDigitRegex().Replace(input: textBox.Text, replacement: ",$0");
+                currSelectStart++;
+            }
+
+            textBox.SelectionStart = Math.Clamp((textBox.Text.Length > 0)
+                                                    ? currSelectStart
+                                                    : currSelectStart,
+                                                0,
+                                                (textBox.Text.Length > 0)
+                                                    ? textBox.Text.Length
+                                                    : 0);
+
+            ClearError(textBox);
         }
         // Filter out lone plus/minus
         private void TextBox_LeaveClearLoneSymbol(object sender, EventArgs e)
@@ -1359,11 +1432,31 @@ namespace DamageCalculatorGUI
             if (textBox.Text.Length == 1 && (textBox.Text[0].Equals('+') || textBox.Text[0].Equals('-')))
                 textBox.Text = string.Empty;
         }
+        private void TextBox_LeaveClearLoneOrTrailingComma(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            while (textBox.Text.Length > 0 && (textBox.Text[^1].Equals(',') 
+                                                || textBox.Text[^1].Equals('-') 
+                                                || textBox.Text[^1].Equals('+')))
+                textBox.Text = textBox.Text[..(textBox.TextLength - 1)];
+        }
 
-        [GeneratedRegex("[^0-9-+]")]
+
+        [GeneratedRegex(@"([^\d\,\+\-])")] // abc or = etc
+        private static partial Regex DigitCommaSignRegex();
+        [GeneratedRegex(@"[^\d-+]")] // abc or =, etc
         private static partial Regex DigitSignRegex();
-        [GeneratedRegex("[^0-9]")]
-        private static partial Regex DigitsRegex();
+        [GeneratedRegex(@"(?<=[\d])[\+\-](?=[\d])")] // 25-15 or 1+62
+        private static partial Regex DigitSignDigitRegex();
+        [GeneratedRegex(@"[^\d]")] // abc or =-, etc
+        private static partial Regex DigitRegex();
+
+        [GeneratedRegex(@"\,(?=\,)")] // ,, or ,,,, etc
+        private static partial Regex SingleCommaRegex();
+        [GeneratedRegex(@"[\+\-](?=[\+\-])")] // -- or ++ etc
+        private static partial Regex SingleSignRegex();
+        [GeneratedRegex(@"[\+\-](?=[\,])")] // -, or +,
+        private static partial Regex SignIntoCommaRegex();
 
         // CARAT CONTROL
         [DllImport("user32.dll")] static extern bool HideCaret(IntPtr hWnd);
@@ -1817,7 +1910,7 @@ namespace DamageCalculatorGUI
         // Batch Menu Buttons
         private void CalculatorBatchComputePopupXButton_Click(object sender, EventArgs e)
         { // Close/Discard the current batch settings
-            SetControlAsBatched(batch_mode_selected, false);
+            SetControlAsBatched(batch_mode_selected, false, default);
 
             HideBatchPopup();
         }
@@ -1825,11 +1918,15 @@ namespace DamageCalculatorGUI
         { // Save the current batch settings
             try
             {
+                // Check it's safe to parse the fields
+                CheckBatchParseSafety();
+                BatchModeSettings settings = ReadBatchSettings();
+
                 // Check it's safe to compute
-                CheckBatchSafety();
+                CheckBatchLogicSafety(settings);
 
                 // Update the control
-                SetControlAsBatched(batch_mode_selected, true);
+                SetControlAsBatched(batch_mode_selected, true, settings);
 
                 // Reset the window after saving
                 HideBatchPopup();
@@ -1875,13 +1972,43 @@ namespace DamageCalculatorGUI
         // Batch Data
         private BatchModeSettings ReadBatchSettings()
         {
-            return new()
+            BatchModeSettings return_setting = new()
             {
                 layer = (int)CalculatorBatchComputePopupLayerNumericUpDown.Value,
                 start = (int)CalculatorBatchComputePopupStartValueNumericUpDown.Value,
                 end = (int)CalculatorBatchComputePopupEndValueNumericUpDown.Value,
-                step = (int)CalculatorBatchComputePopupStepSizeNumericUpDown.Value,
+                steps = GetIntListFromCommaString(CalculatorBatchComputePopupStepPatternTextBox.Text),
             };
+            return_setting.step_direction = Math.Sign(return_setting.steps.Sum());
+            return_setting.number_of_steps = GetNumberOfSteps(return_setting);
+            
+            return return_setting;
+        }
+        private static int GetNumberOfSteps(BatchModeSettings settings)
+        {
+            int current_step = 0;
+            int direction = settings.end < settings.start ? -1 : 1;
+
+            for (int currVal = settings.start; currVal * direction < settings.end * direction;)
+            { // Iterate until reached end value
+                for (int i = 0; i < settings.steps.Count; i++)
+                { // Iterate over each pattern value
+                    currVal += settings.steps[i] * direction;
+                    current_step++;
+                }
+
+                if (current_step > 50) // Prevent infinite/huge loops
+                    break;
+            }
+            return current_step;
+        }
+        private bool CheckControlBatched(EncounterSetting encounterSetting)
+        {
+            return batched_variables.ContainsKey(encounterSetting);
+        }
+        private static List<int> GetIntListFromCommaString(string str)
+        {
+            return str.Split(',').Select(int.Parse).ToList();
         }
 
         // Show Batch Computation Menu
@@ -1889,7 +2016,7 @@ namespace DamageCalculatorGUI
         { // Displays the given settings on the comptute popup
             CalculatorBatchComputePopupEndValueNumericUpDown.Value = settings.end;
             CalculatorBatchComputePopupStartValueNumericUpDown.Value = settings.start;
-            CalculatorBatchComputePopupStepSizeNumericUpDown.Value = settings.step;
+            CalculatorBatchComputePopupStepPatternTextBox.Text = string.Join(",", settings.steps.Select(x => x.ToString()));
             CalculatorBatchComputePopupLayerNumericUpDown.Value = settings.layer;
         }
         private void ShowBatchPopup(Control control)
@@ -1911,17 +2038,17 @@ namespace DamageCalculatorGUI
             CalculatorBatchComputePopupPanel.Visible = false;
             CalculatorBatchComputePopupStartValueNumericUpDown.Value = 0;
             CalculatorBatchComputePopupEndValueNumericUpDown.Value = 0;
-            CalculatorBatchComputePopupStepSizeNumericUpDown.Value = 0;
+            CalculatorBatchComputePopupStepPatternTextBox.Text = string.Empty;
             CalculatorBatchComputePopupLayerNumericUpDown.Value = 0;
         }
-        private void SetControlAsBatched(Control control, bool batched)
+        private void SetControlAsBatched(Control control, bool batched, BatchModeSettings settings)
         {
             EncounterSetting encounterSetting = control_hash_to_setting[batch_mode_selected.GetHashCode()];
 
             if (batched)
             {
                 // Save the Settings
-                batched_variables.Add(encounterSetting, ReadBatchSettings());
+                batched_variables.Add(encounterSetting, settings);
 
                 // Lock the Input on the Field
                 if (control is TextBox textBox)
@@ -1963,26 +2090,38 @@ namespace DamageCalculatorGUI
         }
 
         // BATCH COMPUTATION ERROR CHECKING
-        private void CheckBatchSafety()
+        private void CheckBatchParseSafety()
         { // Check and throw any errors found
             Exception ex = new();
 
             // Empty Data Exceptions
             // Attack Category
-            if (CalculatorBatchComputePopupEndValueNumericUpDown.Value < CalculatorBatchComputePopupStartValueNumericUpDown.Value
-                && CalculatorBatchComputePopupStepSizeNumericUpDown.Value > 0)
+            if (CalculatorBatchComputePopupStepPatternTextBox.TextLength == 0)
+            {
+                ex.Data.Add(531, "Missing Data Exception: Missing step pattern");
+            }
+
+            // Throw exception on problems
+            if (ex.Data.Count > 0)
+                throw ex;
+        }
+        private void CheckBatchLogicSafety(BatchModeSettings setting)
+        { // Check and throw any errors found
+            Exception ex = new();
+
+            // Empty Data Exceptions
+            // Attack Category
+            if (setting.end < setting.start && setting.step_direction > 0)
             {
                 ex.Data.Add(551, "Bad Data Combination Exception: End is smaller than Start with non-negative Step Size");
             }
-            if (CalculatorBatchComputePopupEndValueNumericUpDown.Value > CalculatorBatchComputePopupStartValueNumericUpDown.Value
-                && CalculatorBatchComputePopupStepSizeNumericUpDown.Value < 0)
+            if (setting.end > setting.start && setting.step_direction < 0)
             {
                 ex.Data.Add(552, "Bad Data Combination Exception: End is larger than Start with negative Step Size");
             }
-            if (CalculatorBatchComputePopupEndValueNumericUpDown.Value != CalculatorBatchComputePopupStartValueNumericUpDown.Value
-                && CalculatorBatchComputePopupStepSizeNumericUpDown.Value == 0)
+            if (setting.end != setting.start && setting.step_direction == 0)
             {
-                ex.Data.Add(541, "Bad Data Exception: Step size is zero");
+                ex.Data.Add(541, "Bad Data Exception: Net step size is zero");
             }
 
             // Throw exception on problems
@@ -1991,25 +2130,101 @@ namespace DamageCalculatorGUI
         }
         private void PushBatchErrorMessages(Exception ex)
         { // Push Error Codes to their respective boxes
+            ClearBatchErrorMessages();
             foreach (int errorCode in ex.Data.Keys)
             {
                 switch (errorCode)
                 {
+                    case 531:
+                        PushError(CalculatorBatchComputePopupStepPatternTextBox, "A step pattern is missing!");
+                        break;
                     case 551: // Push
-                        PushError(CalculatorBatchComputePopupStepSizeNumericUpDown, "The End value is smaller than the Start value with non-negative Step Size (infinite steps)!", true);
+                        PushError(CalculatorBatchComputePopupStepPatternTextBox, "The End value is smaller than the Start value with non-negative Step Size (infinite steps)!");
                         break;
                     case 552: // Push
-                        PushError(CalculatorBatchComputePopupStepSizeNumericUpDown, "The End value is larger than the Start value with negative Step Size (infinite steps)!", true);
+                        PushError(CalculatorBatchComputePopupStepPatternTextBox, "The End value is larger than the Start value with negative Step Size (infinite steps)!");
                         break;
                     case 541: // Push
-                        PushError(CalculatorBatchComputePopupStepSizeNumericUpDown, "Step size is zero (infinite steps)!", true);
+                        PushError(CalculatorBatchComputePopupStepPatternTextBox, "The net step size is zero (infinite steps)!");
                         break;
                 }
             }
         }
-        private bool CheckControlBatched(EncounterSetting encounterSetting)
+        private void ClearBatchErrorMessages()
         {
-            return batched_variables.ContainsKey(encounterSetting);
+            PushError(CalculatorBatchComputePopupStepPatternTextBox, "", replace: true);
+        }
+
+        // Batch Computation
+        public async Task<Array> ComputeAverageDamage_BATCH(Dictionary<EncounterSetting, BatchModeSettings> batched_vars, EncounterSettings encounter_settings)
+        {
+            // COMPUTATION FLAGS
+            // Track Progress Bar
+            Progress<int> progress = new();
+            progress.ProgressChanged += SetProgressBar;
+
+            // Set the flag for actively computing damage
+            computing_damage = true;
+
+
+            // BATCH COMPUTATION PREP
+            // Collect all batched settings into layers
+            SortedDictionary<int, List<Tuple<EncounterSetting, BatchModeSettings>>> binned_compute_layers = new();
+            foreach (var batched_var in batched_vars)
+            {
+                if (binned_compute_layers.TryGetValue(batched_var.Value.layer, out var bin))
+                { // Store the batched layer in the existing bin
+                    bin.Add(new(batched_var.Key, batched_var.Value));
+                }
+                else
+                { // Create a new bin for the given layer
+                    binned_compute_layers.Add(batched_var.Value.layer, new() { new(batched_var.Key, batched_var.Value) });
+                }
+            }
+            // Set number of dimensions
+            int dimensions = binned_compute_layers.Count;
+            // Create an array to hold all the damage stats
+            Array totalDamageStats = (Array)Activator.CreateInstance(typeof(DamageStats), 
+                                                                    binned_compute_layers.Select(x => x.Value // Get the total number of steps each layer
+                                                                                        .Sum(x => x.Item2.number_of_steps)));
+            // Create an array to track current index such that
+            // [X, Y, Z, ... END] represent the [LOWEST, SECOND LOWEST, THIRD LOWEST, ... HIGHEST] layers.
+            int[] indices = new int[dimensions];
+            int totalSize = indices.Aggregate((current, next) => current * next);
+
+            // BATCH COMPUTATION
+            // Start a do-while loop to iterate through all elements of the array
+            do
+            {
+                // How to access the current element of the array using the GetValue method
+                //DamageStats currDamage = await DamageCalculator.CalculateAverageDamage();
+
+                // How to set the current element of the array using the SetValue method
+                totalDamageStats.SetValue(default, indices);
+
+                // Increment the rightmost dimension (the last index), which will be the root iterator (highest layer)
+                indices[dimensions - 1]++;
+
+                // Loop to iterate the current dimension
+                for (int dimension_index = dimensions - 1; dimension_index > 0; dimension_index--)
+                {
+                    // If the current dimension is larger than its limit, iterate the next index down the line
+                    if (indices[dimension_index] >= totalDamageStats.GetLength(dimension_index)) // Check if the current index reached the back of the respective dimension
+                    { // End of current dimension reached
+                      // Cascade-revert all indices to the right of the current index, then iterate the next dimension
+                        for (int cascade_index = dimension_index; cascade_index < dimensions; cascade_index++)
+                        {
+                            indices[dimension_index] = 0;
+                        }
+
+                        // Iterate the next higher dimension if not at the frontmost index
+                        if (dimension_index != 0)
+                            indices[dimension_index - 1]++;
+                    }
+                }
+            } while (indices[0] < totalDamageStats.GetLength(0));
+
+            return totalDamageStats;
         }
 
     }

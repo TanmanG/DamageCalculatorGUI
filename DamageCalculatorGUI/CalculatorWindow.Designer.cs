@@ -150,14 +150,14 @@
             this.CalculatorTabPage = new System.Windows.Forms.TabPage();
             this.CalculatorBatchComputePopupPanel = new System.Windows.Forms.Panel();
             this.CalculatorBatchComputePopupGroupBox = new System.Windows.Forms.GroupBox();
+            this.CalculatorBatchComputePopupStepPatternTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorBatchComputePopupDashLabel = new System.Windows.Forms.Label();
             this.CalculatorBatchComputePopupEndValueNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.CalculatorBatchComputePopupLayerNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.CalculatorBatchComputePopupStepSizeNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.CalculatorBatchComputePopupStartValueNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.CalculatorBatchComputePopupEndValueLabel = new System.Windows.Forms.Label();
             this.CalculatorBatchComputePopupLayerLabel = new System.Windows.Forms.Label();
-            this.CalculatorBatchComputePopupStepSizeLabel = new System.Windows.Forms.Label();
+            this.CalculatorBatchComputePopupStepPatternLabel = new System.Windows.Forms.Label();
             this.CalculatorBatchComputePopupStartLabel = new System.Windows.Forms.Label();
             this.CalculatorBatchComputePopupSaveButton = new System.Windows.Forms.Button();
             this.CalculatorBatchComputePopupXButton = new System.Windows.Forms.Button();
@@ -207,7 +207,6 @@
             this.CalculatorBatchComputePopupGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupEndValueNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupLayerNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupStepSizeNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupStartValueNumericUpDown)).BeginInit();
             this.GeneratorTabPage.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -1612,14 +1611,14 @@
             // 
             // CalculatorBatchComputePopupGroupBox
             // 
+            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupStepPatternTextBox);
             this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupDashLabel);
             this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupEndValueNumericUpDown);
             this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupLayerNumericUpDown);
-            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupStepSizeNumericUpDown);
             this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupStartValueNumericUpDown);
             this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupEndValueLabel);
             this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupLayerLabel);
-            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupStepSizeLabel);
+            this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupStepPatternLabel);
             this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupStartLabel);
             this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupSaveButton);
             this.CalculatorBatchComputePopupGroupBox.Controls.Add(this.CalculatorBatchComputePopupXButton);
@@ -1630,6 +1629,15 @@
             this.CalculatorBatchComputePopupGroupBox.TabIndex = 2;
             this.CalculatorBatchComputePopupGroupBox.TabStop = false;
             this.CalculatorBatchComputePopupGroupBox.Text = "Batch Settings";
+            // 
+            // CalculatorBatchComputePopupStepPatternTextBox
+            // 
+            this.CalculatorBatchComputePopupStepPatternTextBox.Location = new System.Drawing.Point(6, 81);
+            this.CalculatorBatchComputePopupStepPatternTextBox.Name = "CalculatorBatchComputePopupStepPatternTextBox";
+            this.CalculatorBatchComputePopupStepPatternTextBox.Size = new System.Drawing.Size(74, 23);
+            this.CalculatorBatchComputePopupStepPatternTextBox.TabIndex = 4;
+            this.CalculatorBatchComputePopupStepPatternTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndCommaAndSign);
+            this.CalculatorBatchComputePopupStepPatternTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneOrTrailingComma);
             // 
             // CalculatorBatchComputePopupDashLabel
             // 
@@ -1660,19 +1668,6 @@
             this.CalculatorBatchComputePopupLayerNumericUpDown.Size = new System.Drawing.Size(74, 23);
             this.CalculatorBatchComputePopupLayerNumericUpDown.TabIndex = 2;
             this.CalculatorBatchComputePopupLayerNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ClearError);
-            // 
-            // CalculatorBatchComputePopupStepSizeNumericUpDown
-            // 
-            this.CalculatorBatchComputePopupStepSizeNumericUpDown.Location = new System.Drawing.Point(6, 81);
-            this.CalculatorBatchComputePopupStepSizeNumericUpDown.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.CalculatorBatchComputePopupStepSizeNumericUpDown.Name = "CalculatorBatchComputePopupStepSizeNumericUpDown";
-            this.CalculatorBatchComputePopupStepSizeNumericUpDown.Size = new System.Drawing.Size(74, 23);
-            this.CalculatorBatchComputePopupStepSizeNumericUpDown.TabIndex = 2;
-            this.CalculatorBatchComputePopupStepSizeNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ClearError);
             // 
             // CalculatorBatchComputePopupStartValueNumericUpDown
             // 
@@ -1707,15 +1702,15 @@
             this.CalculatorBatchComputePopupLayerLabel.Text = "Step Layer";
             this.CalculatorBatchComputePopupLayerLabel.MouseEnter += new System.EventHandler(this.Control_MouseHoverShowTooltip);
             // 
-            // CalculatorBatchComputePopupStepSizeLabel
+            // CalculatorBatchComputePopupStepPatternLabel
             // 
-            this.CalculatorBatchComputePopupStepSizeLabel.AutoSize = true;
-            this.CalculatorBatchComputePopupStepSizeLabel.Location = new System.Drawing.Point(6, 63);
-            this.CalculatorBatchComputePopupStepSizeLabel.Name = "CalculatorBatchComputePopupStepSizeLabel";
-            this.CalculatorBatchComputePopupStepSizeLabel.Size = new System.Drawing.Size(53, 15);
-            this.CalculatorBatchComputePopupStepSizeLabel.TabIndex = 1;
-            this.CalculatorBatchComputePopupStepSizeLabel.Text = "Step Size";
-            this.CalculatorBatchComputePopupStepSizeLabel.MouseEnter += new System.EventHandler(this.Control_MouseHoverShowTooltip);
+            this.CalculatorBatchComputePopupStepPatternLabel.AutoSize = true;
+            this.CalculatorBatchComputePopupStepPatternLabel.Location = new System.Drawing.Point(6, 63);
+            this.CalculatorBatchComputePopupStepPatternLabel.Name = "CalculatorBatchComputePopupStepPatternLabel";
+            this.CalculatorBatchComputePopupStepPatternLabel.Size = new System.Drawing.Size(53, 15);
+            this.CalculatorBatchComputePopupStepPatternLabel.TabIndex = 1;
+            this.CalculatorBatchComputePopupStepPatternLabel.Text = "Step Size";
+            this.CalculatorBatchComputePopupStepPatternLabel.MouseEnter += new System.EventHandler(this.Control_MouseHoverShowTooltip);
             // 
             // CalculatorBatchComputePopupStartLabel
             // 
@@ -2076,7 +2071,6 @@
             this.CalculatorBatchComputePopupGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupEndValueNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupLayerNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupStepSizeNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CalculatorBatchComputePopupStartValueNumericUpDown)).EndInit();
             this.GeneratorTabPage.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
@@ -2240,13 +2234,13 @@
         private Label CalculatorBatchComputePopupDashLabel;
         private NumericUpDown CalculatorBatchComputePopupEndValueNumericUpDown;
         private Label CalculatorBatchComputePopupEndValueLabel;
-        private NumericUpDown CalculatorBatchComputePopupStepSizeNumericUpDown;
-        private Label CalculatorBatchComputePopupStepSizeLabel;
+        private Label CalculatorBatchComputePopupStepPatternLabel;
         private NumericUpDown CalculatorBatchComputePopupLayerNumericUpDown;
         private Label CalculatorBatchComputePopupLayerLabel;
         private Button CalculatorBatchComputePopupSaveButton;
         private Label label8;
         private Label label7;
         private Label CalculatorLWGEFLabel;
+        private TextBox CalculatorBatchComputePopupStepPatternTextBox;
     }
 }
