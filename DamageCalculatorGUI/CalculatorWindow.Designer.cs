@@ -40,7 +40,7 @@
             this.CalculatorMiscStatisticsRoundDamageMeanLabel = new System.Windows.Forms.Label();
             this.CalculatorMiscStatisticsAttackDamageMeanTextBox = new System.Windows.Forms.TextBox();
             this.CalculatorMiscStatisticsRoundDamageMeanTextBox = new System.Windows.Forms.TextBox();
-            this.CalculatorMBCLabel = new System.Windows.Forms.Label();
+            this.CalculatorBCLGLabel = new System.Windows.Forms.Label();
             this.CalculatorWarningLabel = new System.Windows.Forms.Label();
             this.CalculatorMiscStatisticsCalculateStatsProgressBars = new System.Windows.Forms.ProgressBar();
             this.CalculatorEncounterStatisticsGroupBox = new System.Windows.Forms.GroupBox();
@@ -161,7 +161,7 @@
             this.CalculatorBatchComputePopupStartLabel = new System.Windows.Forms.Label();
             this.CalculatorBatchComputePopupSaveButton = new System.Windows.Forms.Button();
             this.CalculatorBatchComputePopupXButton = new System.Windows.Forms.Button();
-            this.CalculatorLWGEFLabel = new System.Windows.Forms.Label();
+            this.CalculatorEMELabel = new System.Windows.Forms.Label();
             this.CalculatorBatchComputeButton = new System.Windows.Forms.Button();
             this.CalculatorDamageDistributionScottPlot = new ScottPlot.FormsPlot();
             this.GeneratorTabPage = new System.Windows.Forms.TabPage();
@@ -317,17 +317,17 @@
             this.CalculatorMiscStatisticsRoundDamageMeanTextBox.TabIndex = 2;
             this.CalculatorMiscStatisticsRoundDamageMeanTextBox.TabStop = false;
             // 
-            // CalculatorMBCLabel
+            // CalculatorBCLGLabel
             // 
-            this.CalculatorMBCLabel.AutoSize = true;
-            this.CalculatorMBCLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.CalculatorMBCLabel.Location = new System.Drawing.Point(469, 405);
-            this.CalculatorMBCLabel.Name = "CalculatorMBCLabel";
-            this.CalculatorMBCLabel.Size = new System.Drawing.Size(147, 15);
-            this.CalculatorMBCLabel.TabIndex = 16;
-            this.CalculatorMBCLabel.Text = "Many Batch Computation";
-            this.CalculatorMBCLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.CalculatorMBCLabel.Visible = false;
+            this.CalculatorBCLGLabel.AutoSize = true;
+            this.CalculatorBCLGLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.CalculatorBCLGLabel.Location = new System.Drawing.Point(454, 405);
+            this.CalculatorBCLGLabel.Name = "CalculatorBCLGLabel";
+            this.CalculatorBCLGLabel.Size = new System.Drawing.Size(176, 15);
+            this.CalculatorBCLGLabel.TabIndex = 16;
+            this.CalculatorBCLGLabel.Text = "Batch Computation Layers Get";
+            this.CalculatorBCLGLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.CalculatorBCLGLabel.Visible = false;
             // 
             // CalculatorWarningLabel
             // 
@@ -1580,8 +1580,8 @@
             // CalculatorTabPage
             // 
             this.CalculatorTabPage.Controls.Add(this.CalculatorBatchComputePopupPanel);
-            this.CalculatorTabPage.Controls.Add(this.CalculatorLWGEFLabel);
-            this.CalculatorTabPage.Controls.Add(this.CalculatorMBCLabel);
+            this.CalculatorTabPage.Controls.Add(this.CalculatorEMELabel);
+            this.CalculatorTabPage.Controls.Add(this.CalculatorBCLGLabel);
             this.CalculatorTabPage.Controls.Add(this.CalculatorBatchComputeButton);
             this.CalculatorTabPage.Controls.Add(this.CalculatorVersionLabel);
             this.CalculatorTabPage.Controls.Add(this.CalculatorSettingsGroupBox);
@@ -1750,17 +1750,17 @@
             this.CalculatorBatchComputePopupXButton.UseVisualStyleBackColor = false;
             this.CalculatorBatchComputePopupXButton.Click += new System.EventHandler(this.CalculatorBatchComputePopupXButton_Click);
             // 
-            // CalculatorLWGEFLabel
+            // CalculatorEMELabel
             // 
-            this.CalculatorLWGEFLabel.AutoSize = true;
-            this.CalculatorLWGEFLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.CalculatorLWGEFLabel.Location = new System.Drawing.Point(454, 420);
-            this.CalculatorLWGEFLabel.Name = "CalculatorLWGEFLabel";
-            this.CalculatorLWGEFLabel.Size = new System.Drawing.Size(178, 15);
-            this.CalculatorLWGEFLabel.TabIndex = 16;
-            this.CalculatorLWGEFLabel.Text = "Layers Will Get Expensive Fast!";
-            this.CalculatorLWGEFLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.CalculatorLWGEFLabel.Visible = false;
+            this.CalculatorEMELabel.AutoSize = true;
+            this.CalculatorEMELabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.CalculatorEMELabel.Location = new System.Drawing.Point(454, 420);
+            this.CalculatorEMELabel.Name = "CalculatorEMELabel";
+            this.CalculatorEMELabel.Size = new System.Drawing.Size(177, 15);
+            this.CalculatorEMELabel.TabIndex = 16;
+            this.CalculatorEMELabel.Text = "Exponentially More Expensive!";
+            this.CalculatorEMELabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.CalculatorEMELabel.Visible = false;
             // 
             // CalculatorBatchComputeButton
             // 
@@ -2224,7 +2224,7 @@
         private CheckBox checkBox2;
         private CheckBox checkBox1;
         private Button CalculatorBatchComputeButton;
-        private Label CalculatorMBCLabel;
+        private Label CalculatorBCLGLabel;
         private Label CalculatorWarningLabel;
         private Button CalculatorBatchComputePopupXButton;
         private GroupBox CalculatorBatchComputePopupGroupBox;
@@ -2240,7 +2240,7 @@
         private Button CalculatorBatchComputePopupSaveButton;
         private Label label8;
         private Label label7;
-        private Label CalculatorLWGEFLabel;
+        private Label CalculatorEMELabel;
         private TextBox CalculatorBatchComputePopupStepPatternTextBox;
     }
 }

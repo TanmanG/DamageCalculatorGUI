@@ -1,10 +1,7 @@
 ﻿
-using System;
-using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 using static DamageCalculatorGUI.DamageCalculator;
 
 
@@ -14,6 +11,7 @@ namespace DamageCalculatorGUI
     {
         // Damage Stats Struct
         public DamageStats damageStats = new();
+        public Array damageStats_BATCH = null;
 
         // Already Running a Sim
         private static bool computing_damage = false;
@@ -74,6 +72,37 @@ namespace DamageCalculatorGUI
             public List<int> steps; // Pattern of steps to be taken in total. Repeating list.
             public int number_of_steps; // Number of times to be stepped in total.
             public int step_direction; // Overall direction of steps
+            public Dictionary<int, int> steps_at = new();
+            public bool initialized = false;
+
+            public BatchModeSettings()
+            {
+            }
+
+            public int GetValueAtStep(int target_step = -1)
+            {
+                int returnValue = start;
+                
+                // Step through final value until we reach the target value
+                for (int currentStep = 0;
+                    (target_step == -1 && returnValue < end) || (target_step != -1 && currentStep != target_step);
+                    currentStep++)
+                {
+                    // Increase the current value by the current step, getting the current step based on number_of_steps
+                    returnValue += steps[(int)HelperFunctions.Mod(number_of_steps, steps.Count)];
+
+                    // Cache the value for later lookup
+                    if (!initialized)
+                    {
+                        steps_at.Add(number_of_steps, returnValue);
+                        number_of_steps++;
+                    }
+                }
+
+                initialized = true;
+
+                return returnValue;
+            }
         }
         // Help Mode Variable
         public static bool help_mode_enabled;
@@ -171,7 +200,18 @@ namespace DamageCalculatorGUI
                     currEncounterSettings = GetDamageSimulationVariables(currEncounterSettings);
 
                     // Compute Damage Stats
-                    damageStats = await ComputeAverageDamage_SINGLE(number_of_encounters: currEncounterSettings.number_of_encounters,
+                    if (batch_mode_enabled)
+                    {
+                        var binned_compute_layers = ComputeBinnedLayersForBatch(batched_variables);
+                        int[] maxSteps = ComputeMaxStepsArrayForBatch(binned_compute_layers);
+
+                        damageStats_BATCH = await ComputeAverageDamage_BATCH(encounter_settings: currEncounterSettings,
+                                                                            binned_compute_layers: binned_compute_layers,
+                                                                            maxSteps: maxSteps);
+                    }
+                    else
+                    {
+                        damageStats = await ComputeAverageDamage_SINGLE(number_of_encounters: currEncounterSettings.number_of_encounters,
                                                         rounds_per_encounter: currEncounterSettings.rounds_per_encounter,
                                                         actions_per_round: currEncounterSettings.actions_per_round,
                                                         reload_size: currEncounterSettings.magazine_size,
@@ -189,20 +229,22 @@ namespace DamageCalculatorGUI
                                                         range: currEncounterSettings.range,
                                                         volley: currEncounterSettings.volley,
                                                         damage_dice_DOT: currEncounterSettings.damage_dice_DOT);
+                        
+                        // Compute 25th, 50th, and 75th Percentiles
+                        Tuple<int, int, int> percentiles = HelperFunctions.ComputePercentiles(damageStats.damage_bins);
+                        /// Update the GUI with the percentiles
+                        UpdateStatisticsGUI(percentiles);
 
-                    // Compute 25th, 50th, and 75th Percentiles
-                    Tuple<int, int, int> percentiles = HelperFunctions.ComputePercentiles(damageStats.damage_bins);
-                    /// Update the GUI with the percentiles
-                    UpdateStatisticsGUI(percentiles);
-
-                    // Update Graph
-                    UpdateGraph(percentiles);
+                        // Update Graph
+                        UpdateGraph(percentiles);
+                    }
 
                     // Visually Update Graph
                     CalculatorDamageDistributionScottPlot.Render();
                 }
                 catch (Exception ex)
                 { // Exception caught!
+                    throw ex;
                     computing_damage = false;
                     PushErrorMessages(ex);
                     return;
@@ -490,43 +532,43 @@ namespace DamageCalculatorGUI
             // Damage
                 // Base
                 case EncounterSetting.damage_dice_count:
-                    EditDamageDie(DieField.count, value, index);
+                    EditDamageDie(currEncounterSettings.damage_dice, DieField.count, value, index);
                     break;
                 case EncounterSetting.damage_dice_size:
-                    EditDamageDie(DieField.size, value, index);
+                    EditDamageDie(currEncounterSettings.damage_dice, DieField.size, value, index);
                     break;
                 case EncounterSetting.damage_dice_bonus:
-                    EditDamageDie(DieField.bonus, value, index);
+                    EditDamageDie(currEncounterSettings.damage_dice, DieField.bonus, value, index);
                     break;
                 // Critical
                 case EncounterSetting.damage_dice_count_critical:
-                    EditDamageDie(DieField.count, value, index, edit_critical: true);
+                    EditDamageDie(currEncounterSettings.damage_dice, DieField.count, value, index, edit_critical: true);
                     break;
                 case EncounterSetting.damage_dice_size_critical:
-                    EditDamageDie(DieField.size, value, index, edit_critical: true);
+                    EditDamageDie(currEncounterSettings.damage_dice, DieField.size, value, index, edit_critical: true);
                     break;
                 case EncounterSetting.damage_dice_bonus_critical:
-                    EditDamageDie(DieField.bonus, value, index, edit_critical: true);
+                    EditDamageDie(currEncounterSettings.damage_dice, DieField.bonus, value, index, edit_critical: true);
                     break;
                 // Bleed
                 case EncounterSetting.damage_dice_DOT_count:
-                    EditDamageDie(DieField.count, value, index, edit_bleed: true);
+                    EditDamageDie(currEncounterSettings.damage_dice_DOT, DieField.count, value, index);
                     break;
                 case EncounterSetting.damage_dice_DOT_size:
-                    EditDamageDie(DieField.size, value, index, edit_bleed: true);
+                    EditDamageDie(currEncounterSettings.damage_dice_DOT, DieField.size, value, index);
                     break;
                 case EncounterSetting.damage_dice_DOT_bonus:
-                    EditDamageDie(DieField.bonus, value, index, edit_bleed: true);
+                    EditDamageDie(currEncounterSettings.damage_dice_DOT, DieField.bonus, value, index);
                     break;
                 // Critical
                 case EncounterSetting.damage_dice_DOT_count_critical:
-                    EditDamageDie(DieField.count, value, index, edit_bleed: true, edit_critical: true);
+                    EditDamageDie(currEncounterSettings.damage_dice_DOT, DieField.count, value, index, edit_critical: true);
                     break;
                 case EncounterSetting.damage_dice_DOT_size_critical:
-                    EditDamageDie(DieField.size, value, index, edit_bleed: true, edit_critical: true);
+                    EditDamageDie(currEncounterSettings.damage_dice_DOT, DieField.size, value, index, edit_critical: true);
                     break;
                 case EncounterSetting.damage_dice_DOT_bonus_critical:
-                    EditDamageDie(DieField.bonus, value, index, edit_bleed: true, edit_critical: true);
+                    EditDamageDie(currEncounterSettings.damage_dice_DOT, DieField.bonus, value, index, edit_critical: true);
                     break;
 
                 // Reach
@@ -685,43 +727,43 @@ namespace DamageCalculatorGUI
             // Damage
                 // Base
                 case EncounterSetting.damage_dice_count:
-                    EditDamageDie(DieField.count, GetDefaultSettingByControl(control), index);
+                    EditDamageDie(currEncounterSettings.damage_dice, DieField.count, GetDefaultSettingByControl(control), index);
                     break;
                 case EncounterSetting.damage_dice_size:
-                    EditDamageDie(DieField.size, GetDefaultSettingByControl(control), index);
+                    EditDamageDie(currEncounterSettings.damage_dice, DieField.size, GetDefaultSettingByControl(control), index);
                     break;
                 case EncounterSetting.damage_dice_bonus:
-                    EditDamageDie(DieField.bonus, GetDefaultSettingByControl(control), index);
+                    EditDamageDie(currEncounterSettings.damage_dice, DieField.bonus, GetDefaultSettingByControl(control), index);
                     break;
                 // Critical
                 case EncounterSetting.damage_dice_count_critical:
-                    EditDamageDie(DieField.count, GetDefaultSettingByControl(control), index, edit_critical: true);
+                    EditDamageDie(currEncounterSettings.damage_dice, DieField.count, GetDefaultSettingByControl(control), index, edit_critical: true);
                     break;
                 case EncounterSetting.damage_dice_size_critical:
-                    EditDamageDie(DieField.size, GetDefaultSettingByControl(control), index, edit_critical: true);
+                    EditDamageDie(currEncounterSettings.damage_dice, DieField.size, GetDefaultSettingByControl(control), index, edit_critical: true);
                     break;
                 case EncounterSetting.damage_dice_bonus_critical:
-                    EditDamageDie(DieField.bonus, GetDefaultSettingByControl(control), index, edit_critical: true);
+                    EditDamageDie(currEncounterSettings.damage_dice, DieField.bonus, GetDefaultSettingByControl(control), index, edit_critical: true);
                     break;
                 // Bleed
                 case EncounterSetting.damage_dice_DOT_count:
-                    EditDamageDie(DieField.count, GetDefaultSettingByControl(control), index, edit_bleed: true);
+                    EditDamageDie(currEncounterSettings.damage_dice_DOT, DieField.count, GetDefaultSettingByControl(control), index);
                     break;
                 case EncounterSetting.damage_dice_DOT_size:
-                    EditDamageDie(DieField.size, GetDefaultSettingByControl(control), index, edit_bleed: true);
+                    EditDamageDie(currEncounterSettings.damage_dice_DOT, DieField.size, GetDefaultSettingByControl(control), index);
                     break;
                 case EncounterSetting.damage_dice_DOT_bonus:
-                    EditDamageDie(DieField.bonus, GetDefaultSettingByControl(control), index, edit_bleed: true);
+                    EditDamageDie(currEncounterSettings.damage_dice_DOT, DieField.bonus, GetDefaultSettingByControl(control), index);
                     break;
                 // Critical
                 case EncounterSetting.damage_dice_DOT_count_critical:
-                    EditDamageDie(DieField.count, GetDefaultSettingByControl(control), index, edit_bleed: true, edit_critical: true);
+                    EditDamageDie(currEncounterSettings.damage_dice_DOT, DieField.count, GetDefaultSettingByControl(control), index, edit_critical: true);
                     break;
                 case EncounterSetting.damage_dice_DOT_size_critical:
-                    EditDamageDie(DieField.size, GetDefaultSettingByControl(control), index, edit_bleed: true, edit_critical: true);
+                    EditDamageDie(currEncounterSettings.damage_dice_DOT, DieField.size, GetDefaultSettingByControl(control), index, edit_critical: true);
                     break;
                 case EncounterSetting.damage_dice_DOT_bonus_critical:
-                    EditDamageDie(DieField.bonus, GetDefaultSettingByControl(control), index, edit_bleed: true, edit_critical: true);
+                    EditDamageDie(currEncounterSettings.damage_dice_DOT, DieField.bonus, GetDefaultSettingByControl(control), index, edit_critical: true);
                     break;
 
             // Reach
@@ -835,21 +877,14 @@ namespace DamageCalculatorGUI
 
         // SETTING HELPERS
         /// <summary>
-        /// Edit the given damage die in the current damage_dice variable.
+        /// Edit the given damage die in the given damage_dice variable.
         /// </summary>
         /// <param name="setting">Which field to edit.</param>
         /// <param name="value">What to set the value of the damage die to.</param>
         /// <param name="index">What index to change the value of.</param>
-        private void EditDamageDie(DieField setting, int value, int index, bool edit_critical = false, bool edit_bleed = false)
-        {
-            // Store the relevant damage dice list
-            var edited_damage_dice =
-                edit_bleed // Check if editing the edit_bleed die
-                ? currEncounterSettings.damage_dice_DOT
-                : currEncounterSettings.damage_dice;
-
-            // Store the relevant damage die
-            Tuple<Tuple<int, int, int>, Tuple<int, int, int>> edited_damage_die = edited_damage_dice[index];
+        private static void EditDamageDie(List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>> damage_dice, DieField setting, int value, int index, bool edit_critical = false)
+        {// Store the relevant damage die
+            Tuple<Tuple<int, int, int>, Tuple<int, int, int>> edited_damage_die = damage_dice[index];
 
             // Figure out whether edit_critical or base damage is being modified.
             Tuple<int, int, int> edited_die =
@@ -863,7 +898,7 @@ namespace DamageCalculatorGUI
                 : edited_damage_die.Item2;// Storing the edit_critical die
 
             // Remove the old entry
-            edited_damage_dice.RemoveAt(index);
+            damage_dice.RemoveAt(index);
 
             switch (setting)
             {
@@ -879,7 +914,7 @@ namespace DamageCalculatorGUI
                     break;
             }
 
-            edited_damage_dice.Insert(index,new(edit_critical
+            damage_dice.Insert(index,new(edit_critical
                                                 ? edited_die
                                                 : unedited_die,
                                             edit_critical
@@ -1890,8 +1925,8 @@ namespace DamageCalculatorGUI
 
                 // Enable Warning Text
                 CalculatorWarningLabel.Visible = true;
-                CalculatorMBCLabel.Visible = true;
-                CalculatorLWGEFLabel.Visible = true;
+                CalculatorBCLGLabel.Visible = true;
+                CalculatorEMELabel.Visible = true;
             }
             else
             { // Disable Batch Mode
@@ -1899,8 +1934,8 @@ namespace DamageCalculatorGUI
 
                 // Enable Warning Text
                 CalculatorWarningLabel.Visible = false;
-                CalculatorMBCLabel.Visible = false;
-                CalculatorLWGEFLabel.Visible = false;
+                CalculatorBCLGLabel.Visible = false;
+                CalculatorEMELabel.Visible = false;
 
                 // Reset Visible Batch Control
                 HideBatchPopup();
@@ -1980,27 +2015,9 @@ namespace DamageCalculatorGUI
                 steps = GetIntListFromCommaString(CalculatorBatchComputePopupStepPatternTextBox.Text),
             };
             return_setting.step_direction = Math.Sign(return_setting.steps.Sum());
-            return_setting.number_of_steps = GetNumberOfSteps(return_setting);
+            return_setting.GetValueAtStep();
             
             return return_setting;
-        }
-        private static int GetNumberOfSteps(BatchModeSettings settings)
-        {
-            int current_step = 0;
-            int direction = settings.end < settings.start ? -1 : 1;
-
-            for (int currVal = settings.start; currVal * direction < settings.end * direction;)
-            { // Iterate until reached end value
-                for (int i = 0; i < settings.steps.Count; i++)
-                { // Iterate over each pattern value
-                    currVal += settings.steps[i] * direction;
-                    current_step++;
-                }
-
-                if (current_step > 50) // Prevent infinite/huge loops
-                    break;
-            }
-            return current_step;
         }
         private bool CheckControlBatched(EncounterSetting encounterSetting)
         {
@@ -2156,7 +2173,10 @@ namespace DamageCalculatorGUI
         }
 
         // Batch Computation
-        public async Task<Array> ComputeAverageDamage_BATCH(Dictionary<EncounterSetting, BatchModeSettings> batched_vars, EncounterSettings encounter_settings)
+        public async Task<Array> ComputeAverageDamage_BATCH(EncounterSettings encounter_settings, 
+                                                            SortedDictionary<int, List<Tuple<EncounterSetting, 
+                                                            BatchModeSettings>>> binned_compute_layers,
+                                                            int[] maxSteps)
         {
             // COMPUTATION FLAGS
             // Track Progress Bar
@@ -2166,46 +2186,168 @@ namespace DamageCalculatorGUI
             // Set the flag for actively computing damage
             computing_damage = true;
 
-
-            // BATCH COMPUTATION PREP
-            // Collect all batched settings into layers
-            SortedDictionary<int, List<Tuple<EncounterSetting, BatchModeSettings>>> binned_compute_layers = new();
-            foreach (var batched_var in batched_vars)
-            {
-                if (binned_compute_layers.TryGetValue(batched_var.Value.layer, out var bin))
-                { // Store the batched layer in the existing bin
-                    bin.Add(new(batched_var.Key, batched_var.Value));
-                }
-                else
-                { // Create a new bin for the given layer
-                    binned_compute_layers.Add(batched_var.Value.layer, new() { new(batched_var.Key, batched_var.Value) });
-                }
-            }
             // Set number of dimensions
             int dimensions = binned_compute_layers.Count;
-            // Create an array to hold all the damage stats
-            Array totalDamageStats = (Array)Activator.CreateInstance(typeof(DamageStats), 
-                                                                    binned_compute_layers.Select(x => x.Value // Get the total number of steps each layer
-                                                                                        .Sum(x => x.Item2.number_of_steps)));
+
+            // Create an array to hold all the damage stats, sized by the most number of steps in each batch layer
+            Array totalDamageStats = Array.CreateInstance(typeof(DamageStats), maxSteps);
+
             // Create an array to track current index such that
             // [X, Y, Z, ... END] represent the [LOWEST, SECOND LOWEST, THIRD LOWEST, ... HIGHEST] layers.
             int[] indices = new int[dimensions];
-            int totalSize = indices.Aggregate((current, next) => current * next);
+
+            // Calculate the total number of entries in the array
+            int number_of_values = maxSteps.Aggregate((sum, next) => sum * next);
+
+            // Use a dictionary to track the current value of each variable
+            Dictionary<EncounterSetting, int> computeVariables = new()
+            {
+            // ENCOUNTER
+                // Number of Encounters
+                { EncounterSetting.number_of_encounters, encounter_settings.number_of_encounters },
+                // Rounds Per Encounter
+                { EncounterSetting.rounds_per_encounter, batched_variables.TryGetValue(EncounterSetting.rounds_per_encounter,
+                                                                                        out BatchModeSettings roundsPerEncounterSetting)
+                                                            ? roundsPerEncounterSetting.start
+                                                            : encounter_settings.rounds_per_encounter },
+                // Engagement Range
+                { EncounterSetting.engagement_range, batched_variables.TryGetValue(EncounterSetting.engagement_range,
+                                                                                        out BatchModeSettings engagementRangeSetting)
+                                                            ? engagementRangeSetting.start
+                                                            : encounter_settings.engagement_range },
+            // ACTIONS
+                    // Any
+                { EncounterSetting.actions_per_round_any, batched_variables.TryGetValue(EncounterSetting.actions_per_round_any,
+                                                                                        out BatchModeSettings actionsPerRoundAnySetting)
+                                                            ? actionsPerRoundAnySetting.start
+                                                            : encounter_settings.actions_per_round.any },
+                    // Strike
+                { EncounterSetting.actions_per_round_strike, batched_variables.TryGetValue(EncounterSetting.actions_per_round_strike,
+                                                                                        out BatchModeSettings actionsPerRoundStrikeSetting)
+                                                            ? actionsPerRoundStrikeSetting.start
+                                                            : encounter_settings.actions_per_round.strike },
+                    // Draw
+                { EncounterSetting.actions_per_round_draw, batched_variables.TryGetValue(EncounterSetting.actions_per_round_draw,
+                                                                                        out BatchModeSettings actionsPerRoundDrawSetting)
+                                                            ? actionsPerRoundDrawSetting.start
+                                                            : encounter_settings.actions_per_round.draw },
+                    // Reload
+                { EncounterSetting.actions_per_round_reload, batched_variables.TryGetValue(EncounterSetting.actions_per_round_reload,
+                                                                                        out BatchModeSettings actionsPerRoundReloadSetting)
+                                                            ? actionsPerRoundReloadSetting.start
+                                                            : encounter_settings.actions_per_round.reload },
+                    // Long Reload
+                { EncounterSetting.actions_per_round_long_reload, batched_variables.TryGetValue(EncounterSetting.actions_per_round_long_reload,
+                                                                                        out BatchModeSettings actionsPerRoundLongReloadSetting)
+                                                            ? actionsPerRoundLongReloadSetting.start
+                                                            : encounter_settings.actions_per_round.long_reload },
+                    // Stride
+                { EncounterSetting.actions_per_round_stride, batched_variables.TryGetValue(EncounterSetting.actions_per_round_stride,
+                                                                                        out BatchModeSettings actionsPerRoundStrideSetting)
+                                                            ? actionsPerRoundStrideSetting.start
+                                                            : encounter_settings.actions_per_round.stride },
+                    // Draw
+                { EncounterSetting.draw, batched_variables.TryGetValue(EncounterSetting.draw,
+                                                                                        out BatchModeSettings drawSetting)
+                                                            ? drawSetting.start
+                                                            : encounter_settings.draw },
+            // RELOAD
+                // Reload
+                { EncounterSetting.reload, batched_variables.TryGetValue(EncounterSetting.reload,
+                                                                                        out BatchModeSettings reloadSetting)
+                                                            ? reloadSetting.start
+                                                            : encounter_settings.reload },
+                // Long Reload
+                { EncounterSetting.long_reload, batched_variables.TryGetValue(EncounterSetting.long_reload,
+                                                                                        out BatchModeSettings longReloadSetting)
+                                                            ? longReloadSetting.start
+                                                            : encounter_settings.long_reload },
+                // Magazine Size
+                { EncounterSetting.magazine_size, batched_variables.TryGetValue(EncounterSetting.magazine_size,
+                                                                                        out BatchModeSettings magazineSizeSetting)
+                                                            ? magazineSizeSetting.start
+                                                            : encounter_settings.magazine_size },
+            // ATTACK
+                // Bonus To Hit
+                { EncounterSetting.bonus_to_hit, batched_variables.TryGetValue(EncounterSetting.bonus_to_hit,
+                                                                                        out BatchModeSettings bonusToHitSetting)
+                                                            ? bonusToHitSetting.start
+                                                            : encounter_settings.bonus_to_hit },
+                // AC
+                { EncounterSetting.AC, batched_variables.TryGetValue(EncounterSetting.AC,
+                                                                                        out BatchModeSettings ACSetting)
+                                                            ? ACSetting.start
+                                                            : encounter_settings.AC },
+                // Crit Threshhold
+                { EncounterSetting.crit_threshhold, batched_variables.TryGetValue(EncounterSetting.crit_threshhold,
+                                                                                        out BatchModeSettings critThreshholdSetting)
+                                                            ? critThreshholdSetting.start
+                                                            : encounter_settings.crit_threshhold },
+                // MAP Modifier
+                { EncounterSetting.MAP_modifier, batched_variables.TryGetValue(EncounterSetting.MAP_modifier,
+                                                                                        out BatchModeSettings MAPModifierSetting)
+                                                            ? MAPModifierSetting.start
+                                                            : encounter_settings.MAP_modifier },
+            // REACH
+                // Range Increment
+                { EncounterSetting.range, batched_variables.TryGetValue(EncounterSetting.range,
+                                                                                        out BatchModeSettings rangeSetting)
+                                                            ? rangeSetting.start
+                                                            : encounter_settings.range },
+                // Volley Increment
+                { EncounterSetting.volley, batched_variables.TryGetValue(EncounterSetting.volley,
+                                                                                        out BatchModeSettings volleySetting)
+                                                            ? volleySetting.start
+                                                            : encounter_settings.volley },
+                // Move Speed
+                { EncounterSetting.move_speed, batched_variables.TryGetValue(EncounterSetting.move_speed,
+                                                                                        out BatchModeSettings moveSpeedSetting)
+                                                            ? moveSpeedSetting.start
+                                                            : encounter_settings.move_speed },
+            };
+            List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>> computeVariablesDamageDice = new (encounter_settings.damage_dice);
+            List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>> computeVariablesDamageDiceDOT = new (encounter_settings.damage_dice_DOT);
 
             // BATCH COMPUTATION
             // Start a do-while loop to iterate through all elements of the array
             do
             {
+                // Compute the Damage at the Current Iteration Step
+                Task<DamageStats> computeDamage = Task.Run(() => CalculateAverageDamage(number_of_encounters: computeVariables[EncounterSetting.number_of_encounters],
+                                                        rounds_per_encounter: computeVariables[EncounterSetting.rounds_per_encounter],
+                                                        actions_per_round: new Actions(any: computeVariables[EncounterSetting.actions_per_round_any],
+                                                                                strike: computeVariables[EncounterSetting.actions_per_round_strike],
+                                                                                stride: computeVariables[EncounterSetting.actions_per_round_stride],
+                                                                                draw: computeVariables[EncounterSetting.draw],
+                                                                                reload: computeVariables[EncounterSetting.reload],
+                                                                                long_reload: computeVariables[EncounterSetting.long_reload]),
+                                                        reload_size: computeVariables[EncounterSetting.magazine_size],
+                                                        reload: computeVariables[EncounterSetting.reload],
+                                                        long_reload: computeVariables[EncounterSetting.long_reload],
+                                                        draw: computeVariables[EncounterSetting.draw],
+                                                        damage_dice: computeVariablesDamageDice, // Figure something out for this one
+                                                        bonus_to_hit: computeVariables[EncounterSetting.bonus_to_hit],
+                                                        AC: computeVariables[EncounterSetting.AC],
+                                                        crit_threshhold: computeVariables[EncounterSetting.crit_threshhold],
+                                                        MAP_modifier: computeVariables[EncounterSetting.MAP_modifier],
+                                                        engagement_range: computeVariables[EncounterSetting.engagement_range],
+                                                        move_speed: computeVariables[EncounterSetting.move_speed],
+                                                        seek_favorable_range: currEncounterSettings.seek_favorable_range,
+                                                        range: computeVariables[EncounterSetting.range],
+                                                        volley: computeVariables[EncounterSetting.volley],
+                                                        damage_dice_DOT: computeVariablesDamageDiceDOT, // This one too
+                                                        progress: progress)); // To-do: Add some batch computation detection to the progress code
+
                 // How to access the current element of the array using the GetValue method
-                //DamageStats currDamage = await DamageCalculator.CalculateAverageDamage();
+                DamageStats currDamage = await computeDamage;
 
                 // How to set the current element of the array using the SetValue method
-                totalDamageStats.SetValue(default, indices);
+                totalDamageStats.SetValue(currDamage, indices);
 
                 // Increment the rightmost dimension (the last index), which will be the root iterator (highest layer)
                 indices[dimensions - 1]++;
 
-                // Loop to iterate the current dimension
+                // Cascade the current indices
                 for (int dimension_index = dimensions - 1; dimension_index > 0; dimension_index--)
                 {
                     // If the current dimension is larger than its limit, iterate the next index down the line
@@ -2222,10 +2364,47 @@ namespace DamageCalculatorGUI
                             indices[dimension_index - 1]++;
                     }
                 }
+
+                // Iterate across each layer to check for/apply changes to the existing variables
+                for (int layer_index = 0; layer_index < binned_compute_layers.Count; layer_index++)
+                {
+                    // Iterate within each layer (through each "slice", representing a batched variable)
+                    foreach (var slice in binned_compute_layers.ElementAt(layer_index).Value)
+                    {
+                        computeVariables[slice.Item1] = slice.Item2.GetValueAtStep(indices[layer_index]);
+                    }
+                }
             } while (indices[0] < totalDamageStats.GetLength(0));
+
+            // Reset the damage computation flag
+            computing_damage = false;
 
             return totalDamageStats;
         }
-
+        // Collects same-layered batch variables into a SortedDictionary
+        public SortedDictionary<int, List<Tuple<EncounterSetting, BatchModeSettings>>> ComputeBinnedLayersForBatch(Dictionary<EncounterSetting, BatchModeSettings> batched_vars)
+        {
+            // Collect all batched settings into layers
+            SortedDictionary<int, List<Tuple<EncounterSetting, BatchModeSettings>>> binned_compute_layers = new();
+            foreach (var batched_var in batched_vars)
+            {
+                if (binned_compute_layers.TryGetValue(batched_var.Value.layer, out var bin))
+                { // Store the batched layer in the existing bin
+                    bin.Add(new(batched_var.Key, batched_var.Value));
+                }
+                else
+                { // Create a new bin for the given layer
+                    binned_compute_layers.Add(batched_var.Value.layer, new() { new(batched_var.Key, batched_var.Value) });
+                }
+            }
+            return binned_compute_layers;
+        }
+        // Computes the dimensions array, i.e. the number of iteration steps necessary for each layer within a set of batch layers.
+        public int[] ComputeMaxStepsArrayForBatch(SortedDictionary<int, List<Tuple<EncounterSetting, BatchModeSettings>>> binned_compute_layers)
+        {
+            // Get the size of each dimension
+            return binned_compute_layers.Select(kvp => kvp.Value.Max(t => t.Item2.number_of_steps))
+                                        .ToArray();
+        }
     }
 }
