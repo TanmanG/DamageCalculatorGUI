@@ -1,13 +1,22 @@
-﻿using System.Security.AccessControl;
+﻿using System.Numerics;
+using System.Security.AccessControl;
 using System.Text.RegularExpressions;
 
 namespace DamageCalculatorGUI
 {
     internal class HelperFunctions
     {
-        public static float Mod(float a, float b)
+        public static T ClampAboveZero<T>(T value) where T : INumber<T>
         {
-            return a - b * MathF.Floor(a / b);
+            return value <= T.Zero ? T.Zero : value;
+        }
+        public static T Mod<T>(T a, T b) where T : INumber<T>
+        {
+            return a - b * Floor(a / b);
+        }
+        public static T Floor<T>(T x) where T : INumber<T>, IComparable<T>
+        {
+            return (T)Convert.ChangeType(Math.Floor(Convert.ToDouble(x)), typeof(T));
         }
         public static T GetRandomEnum<T>() where T : Enum
         {
@@ -44,12 +53,12 @@ namespace DamageCalculatorGUI
             if (xDyCritPlus.Length == 0) // Catch and prevent failed regex parsing problems
                 xDyCritPlus = "0";
 
-            Tuple<int, int, int> damage = new(Int32.Parse(xDy[..(str.IndexOf('d'))]), // Get count
-                                        Int32.Parse(xDy[(str.IndexOf('d') + 1)..]),
-                                        Int32.Parse(xDyPlus)); // Get faces
-            Tuple<int, int, int> damageCrit = new(Int32.Parse(xDyCrit[..(str.IndexOf('d'))]), // Get count
-                                        Int32.Parse(xDyCrit[(str.IndexOf('d') + 1)..]),
-                                        Int32.Parse(xDyCritPlus)); // Get faces
+            Tuple<int, int, int> damage = new(int.Parse(xDy[..(str.IndexOf('d'))]), // Get count
+                                        int.Parse(xDy[(str.IndexOf('d') + 1)..]),
+                                        int.Parse(xDyPlus)); // Get faces
+            Tuple<int, int, int> damageCrit = new(int.Parse(xDyCrit[..(str.IndexOf('d'))]), // Get count
+                                        int.Parse(xDyCrit[(str.IndexOf('d') + 1)..]),
+                                        int.Parse(xDyCritPlus)); // Get faces
 
             return new(damage, damageCrit);
         }

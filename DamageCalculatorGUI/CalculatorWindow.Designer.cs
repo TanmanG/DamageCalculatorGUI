@@ -164,6 +164,7 @@
             this.CalculatorEMELabel = new System.Windows.Forms.Label();
             this.CalculatorBatchComputeButton = new System.Windows.Forms.Button();
             this.CalculatorDamageDistributionScottPlot = new ScottPlot.FormsPlot();
+            this.CalculatorBatchComputeScottPlot = new ScottPlot.FormsPlot();
             this.GeneratorTabPage = new System.Windows.Forms.TabPage();
             this.GeneratorGenerationSettingsGroupBox = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -1591,6 +1592,7 @@
             this.CalculatorTabPage.Controls.Add(this.CalculatorEncounterStatisticsGroupBox);
             this.CalculatorTabPage.Controls.Add(this.CalculatorMiscStatisticsGroupBox);
             this.CalculatorTabPage.Controls.Add(this.CalculatorDamageDistributionScottPlot);
+            this.CalculatorTabPage.Controls.Add(this.CalculatorBatchComputeScottPlot);
             this.CalculatorTabPage.Location = new System.Drawing.Point(4, 24);
             this.CalculatorTabPage.Name = "CalculatorTabPage";
             this.CalculatorTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -1779,6 +1781,15 @@
             this.CalculatorDamageDistributionScottPlot.Name = "CalculatorDamageDistributionScottPlot";
             this.CalculatorDamageDistributionScottPlot.Size = new System.Drawing.Size(358, 163);
             this.CalculatorDamageDistributionScottPlot.TabIndex = 13;
+            // 
+            // CalculatorBatchComputeScottPlot
+            // 
+            this.CalculatorBatchComputeScottPlot.Location = new System.Drawing.Point(612, 15);
+            this.CalculatorBatchComputeScottPlot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.CalculatorBatchComputeScottPlot.Name = "CalculatorBatchComputeScottPlot";
+            this.CalculatorBatchComputeScottPlot.Size = new System.Drawing.Size(358, 387);
+            this.CalculatorBatchComputeScottPlot.TabIndex = 17;
+            this.CalculatorBatchComputeScottPlot.Visible = false;
             // 
             // GeneratorTabPage
             // 
@@ -2242,5 +2253,6 @@
         private Label label7;
         private Label CalculatorEMELabel;
         private TextBox CalculatorBatchComputePopupStepPatternTextBox;
+        private ScottPlot.FormsPlot CalculatorBatchComputeScottPlot;
     }
 }

@@ -51,6 +51,10 @@ namespace DamageCalculatorGUI
             public int crits = 0;
             // Total damage through the encounter.
             public int damage_total = 0;
+            // Highest damage encounter
+            public int highest_encounter_damage = 0;
+            // Total number of encounters ran for the given collection
+            public int encounters_simulated = 0;
             // Average damage per encounter.
             public double average_encounter_damage = 0;
             // Average damage per round.
@@ -67,22 +71,26 @@ namespace DamageCalculatorGUI
                 misses = 0;
                 crits = 0;
                 damage_total = 0;
+                encounters_simulated = 0;
+                average_round_damage = 0;
                 average_encounter_damage = 0;
                 average_round_damage = 0;
                 average_hit_damage = 0;
                 average_accuracy = 0;
             }
-            public DamageStats(Dictionary<int, int> damageBins, int hits, int misses, int crits, int damageTotal, double averageEncounterDamage, double averageRoundDamage, double averageHitDamage, double averageAccuracy)
+            public DamageStats(Dictionary<int, int> damageBins, int hits, int misses, int crits, int damageTotal, int encountersSimulated, int highestEncounterDamage, double averageEncounterDamage, double averageRoundDamage, double averageHitDamage, double averageAccuracy)
             {
-                this.damage_bins = damageBins;
+                damage_bins = damageBins;
                 this.hits = hits;
                 this.misses = misses;
                 this.crits = crits;
-                this.damage_total = damageTotal;
-                this.average_encounter_damage = averageEncounterDamage;
-                this.average_round_damage = averageRoundDamage;
-                this.average_hit_damage = averageHitDamage;
-                this.average_accuracy = averageAccuracy;
+                damage_total = damageTotal;
+                encounters_simulated = encountersSimulated;
+                highest_encounter_damage = highestEncounterDamage;
+                average_encounter_damage = averageEncounterDamage;
+                average_round_damage = averageRoundDamage;
+                average_hit_damage = averageHitDamage;
+                average_accuracy = averageAccuracy;
             }
         }
         enum SuccessDegree
@@ -121,6 +129,8 @@ namespace DamageCalculatorGUI
             int misses = 0;
             int crits = 0;
             int damageTotal = 0;
+            int highestDamage = 0;
+            int encountersSimulated = 0;
             Dictionary<int, int> damageBins = new();
 
             int damageThisEncounter; // Damage dealt on the current encounter iteration.
@@ -143,6 +153,8 @@ namespace DamageCalculatorGUI
 
             for (int currentEncounter = 0; currentEncounter < number_of_encounters; currentEncounter++)
             { // Iterate each encounter
+                // Track how many encounters were simulated.
+                encountersSimulated++;
                 // Set Progress on Bar
                 if (progress != null && HelperFunctions.Mod(a: currentEncounter + 1, b: number_of_encounters / 1000) == 0)
                     // Update progress
@@ -346,7 +358,7 @@ namespace DamageCalculatorGUI
                                     for (int damageDiceIndex = 0; damageDiceIndex < damage_dice.Count; damageDiceIndex++)
                                     { // Roll damage for each damage dice block
                                         Tuple<int, int, int> currDamageDie = damage_dice[damageDiceIndex].Item2;
-                                        attackDamage += RollD(currDamageDie.Item1, currDamageDie.Item2) + currDamageDie.Item3;
+                                        attackDamage += HelperFunctions.ClampAboveZero(RollD(currDamageDie.Item1, currDamageDie.Item2) + currDamageDie.Item3);
                                     }
 
                                     // DOT Damage
@@ -354,7 +366,7 @@ namespace DamageCalculatorGUI
                                     {
                                         Tuple<int, int, int> currDamageDieDOT = damage_dice_DOT[damageDiceDOTIndex].Item2;
 
-                                        int dotDamageRollResult = (RollD(currDamageDieDOT.Item1, currDamageDieDOT.Item2) + currDamageDieDOT.Item3) * 2;
+                                        int dotDamageRollResult = HelperFunctions.ClampAboveZero(RollD(currDamageDieDOT.Item1, currDamageDieDOT.Item2) + currDamageDieDOT.Item3) * 2;
                                         if (dotEffects.TryGetValue(damageDiceDOTIndex, out int activeDOTsize))
                                         {
                                             if (activeDOTsize > dotDamageRollResult)
@@ -373,7 +385,7 @@ namespace DamageCalculatorGUI
                                     for (int damageDiceIndex = 0; damageDiceIndex < damage_dice.Count; damageDiceIndex++)
                                     { // Roll damage for each damage dice type
                                         Tuple<int, int, int> currDamageDie = damage_dice[damageDiceIndex].Item1;
-                                        attackDamage += RollD(currDamageDie.Item1, currDamageDie.Item2) + currDamageDie.Item3;
+                                        attackDamage += HelperFunctions.ClampAboveZero(RollD(currDamageDie.Item1, currDamageDie.Item2) + currDamageDie.Item3);
                                     }
 
                                     // Apply DOT Damage
@@ -381,7 +393,7 @@ namespace DamageCalculatorGUI
                                     {
                                         Tuple<int, int, int> currDamageDieDOT = damage_dice_DOT[damageDiceDOTIndex].Item1;
                                         
-                                        int dotDamageRollResult = RollD(currDamageDieDOT.Item1, currDamageDieDOT.Item2) + currDamageDieDOT.Item3;
+                                        int dotDamageRollResult = HelperFunctions.ClampAboveZero(RollD(currDamageDieDOT.Item1, currDamageDieDOT.Item2) + currDamageDieDOT.Item3);
                                         if (dotEffects.TryGetValue(damageDiceDOTIndex, out int activeDOTsize))
                                         {
                                             if (activeDOTsize > dotDamageRollResult)
@@ -442,6 +454,9 @@ namespace DamageCalculatorGUI
                 else
                     damageBins.Add(damageThisEncounter, 1);
                 damageTotal += damageThisEncounter;
+                
+                // Track the highest damage dealt
+                highestDamage = damageThisEncounter > highestDamage ? damageThisEncounter : highestDamage;
             }
 
             // Fill in holes in damage_bins
@@ -459,6 +474,8 @@ namespace DamageCalculatorGUI
                         misses: misses,
                         crits: crits,
                         damageTotal: damageTotal,
+                        encountersSimulated: encountersSimulated,
+                        highestEncounterDamage: highestDamage,
                         averageEncounterDamage: Math.Round((double)damageTotal / number_of_encounters, 2),
                         averageRoundDamage: Math.Round((double)damageTotal / number_of_encounters / rounds_per_encounter, 2),
                         averageHitDamage: Math.Round((double)damageTotal / hits, 2),

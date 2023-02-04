@@ -1,4 +1,10 @@
 ﻿
+using Pickings_For_Kurtulmak;
+using ScottPlot.Drawing.Colormaps;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
@@ -11,7 +17,7 @@ namespace DamageCalculatorGUI
     {
         // Damage Stats Struct
         public DamageStats damageStats = new();
-        public Array damageStats_BATCH = null;
+        public BatchResults damageStats_BATCH = new();
 
         // Already Running a Sim
         private static bool computing_damage = false;
@@ -25,6 +31,41 @@ namespace DamageCalculatorGUI
         private Dictionary<EncounterSetting, int> batched_variables_last_value = new();
         private Dictionary<EncounterSetting, BatchModeSettings> batched_variables = new();
         private Dictionary<EncounterSetting, Control> setting_to_control = new();
+        private Dictionary<EncounterSetting, string> setting_to_string = new()
+        {
+            { EncounterSetting.number_of_encounters, "Number of Encounters" },
+            { EncounterSetting.rounds_per_encounter, "Rounds Per Encounter" },
+            { EncounterSetting.actions_per_round_any, "Actions Per Round" },
+            { EncounterSetting.actions_per_round_strike, "Extra Actions Per Round (Strike)" },
+            { EncounterSetting.actions_per_round_draw, "Extra Actions Per Round (Draw)" },
+            { EncounterSetting.actions_per_round_stride, "Extra Actions Per Round (Stride)" },
+            { EncounterSetting.actions_per_round_reload, "Extra Actions Per Round (Reload)" },
+            { EncounterSetting.actions_per_round_long_reload, "Extra Actions Per Round (Long Reload)" },
+            { EncounterSetting.magazine_size, "Magazine Size" },
+            { EncounterSetting.reload, "Reload" },
+            { EncounterSetting.long_reload, "Long Reload" },
+            { EncounterSetting.draw, "Draw" },
+            { EncounterSetting.damage_dice_count, "Damage Die Count" },
+            { EncounterSetting.damage_dice_size, "Damage Die Size" },
+            { EncounterSetting.damage_dice_bonus, "Damage Die Bonus" },
+            { EncounterSetting.damage_dice_count_critical, "Damage Die Count (Critical)" },
+            { EncounterSetting.damage_dice_size_critical, "Damage Die Size (Critical)" },
+            { EncounterSetting.damage_dice_bonus_critical, "Damage Die Bonus (Critical)" },
+            { EncounterSetting.bonus_to_hit, "Bonus To Hit" },
+            { EncounterSetting.AC, "AC" },
+            { EncounterSetting.crit_threshhold, "Critical Hit Minimum" },
+            { EncounterSetting.MAP_modifier, "MAP Modifier" },
+            { EncounterSetting.engagement_range, "Engagement Start Range" },
+            { EncounterSetting.move_speed, "Movement Speed" },
+            { EncounterSetting.range, "Range Increment" },
+            { EncounterSetting.volley, "Volley Increment" },
+            { EncounterSetting.damage_dice_DOT_count, "Damage Die Count (Bleed)" },
+            { EncounterSetting.damage_dice_DOT_size, "Damage Die Size (Bleed)" },
+            { EncounterSetting.damage_dice_DOT_bonus, "Damage Die Bonus (Bleed)" },
+            { EncounterSetting.damage_dice_DOT_count_critical, "Damage Die Count (Bleed, Critical)" },
+            { EncounterSetting.damage_dice_DOT_size_critical, "Damage Die Size (Bleed, Critical)" },
+            { EncounterSetting.damage_dice_DOT_bonus_critical, "Damage Die Bonus (Bleed, Critical)" }
+        };
 
         public enum EncounterSetting
         {
@@ -72,7 +113,7 @@ namespace DamageCalculatorGUI
             public List<int> steps; // Pattern of steps to be taken in total. Repeating list.
             public int number_of_steps; // Number of times to be stepped in total.
             public int step_direction; // Overall direction of steps
-            public Dictionary<int, int> steps_at = new();
+            public Dictionary<int, int> steps_at = new(); // Number of steps taken to reach the given value
             public bool initialized = false;
 
             public BatchModeSettings()
@@ -81,27 +122,44 @@ namespace DamageCalculatorGUI
 
             public int GetValueAtStep(int target_step = -1)
             {
+                // Check for pre-computed value
+                if (steps_at.TryGetValue(target_step, out int value))
+                    return value;
+                else if (target_step == 0)
+                    return start;
+
                 int returnValue = start;
+
+                if (!initialized)
+                    number_of_steps++;
                 
                 // Step through final value until we reach the target value
-                for (int currentStep = 0;
+                for (int currentStep = 1;
                     (target_step == -1 && returnValue < end) || (target_step != -1 && currentStep != target_step);
                     currentStep++)
                 {
+
                     // Increase the current value by the current step, getting the current step based on number_of_steps
-                    returnValue += steps[(int)HelperFunctions.Mod(number_of_steps, steps.Count)];
+                    returnValue += steps[HelperFunctions.Mod(number_of_steps - 1, steps.Count)];
 
                     // Cache the value for later lookup
+                    if (!steps_at.ContainsKey(currentStep))
+                    {
+                        steps_at.Add(currentStep, Math.Clamp(returnValue, int.MinValue, end));
+                    }
+
+                    // Track how many steps are necessary to fully iterate across the given set
                     if (!initialized)
                     {
-                        steps_at.Add(number_of_steps, returnValue);
                         number_of_steps++;
                     }
+
+
                 }
 
                 initialized = true;
 
-                return returnValue;
+                return Math.Clamp(returnValue, int.MinValue, end);
             }
         }
         // Help Mode Variable
@@ -155,12 +213,17 @@ namespace DamageCalculatorGUI
         }
         EncounterSettings currEncounterSettings = new();
 
+        // BASE LOAD FUNCTIONS
+        //
         public CalculatorWindow()
         {
             InitializeComponent();
         }
         private void CalculatorWindowLoad(object sender, EventArgs e)
         {
+            // Set graph appearances to be something normal
+            InitializeGraphStartAppearance();
+
             // Generate and store label hashes for the help mode
             StoreLabelHelpHashes();
 
@@ -181,6 +244,9 @@ namespace DamageCalculatorGUI
 
             // Enable Carat Hiding
             AddCaretHidingEvents();
+
+            CalculatorBatchComputeScottPlot.Render();
+            CalculatorDamageDistributionScottPlot.Render();
         }
 
         private async void CalculateDamageStatsButton_MouseClick(object sender, MouseEventArgs e)
@@ -207,7 +273,11 @@ namespace DamageCalculatorGUI
 
                         damageStats_BATCH = await ComputeAverageDamage_BATCH(encounter_settings: currEncounterSettings,
                                                                             binned_compute_layers: binned_compute_layers,
-                                                                            maxSteps: maxSteps);
+                                                                            maxSteps: maxSteps,
+                                                                            batched_variables: batched_variables,
+                                                                            progress: null);
+                        
+                        UpdateBatchGraph(damageStats_BATCH);
                     }
                     else
                     {
@@ -236,10 +306,11 @@ namespace DamageCalculatorGUI
                         UpdateStatisticsGUI(percentiles);
 
                         // Update Graph
-                        UpdateGraph(percentiles);
+                        UpdateBaseGraph(percentiles);
                     }
 
-                    // Visually Update Graph
+                    // Visually Update Graphs
+                    CalculatorBatchComputeScottPlot.Render();
                     CalculatorDamageDistributionScottPlot.Render();
                 }
                 catch (Exception ex)
@@ -269,9 +340,11 @@ namespace DamageCalculatorGUI
             CalculatorMiscStatisticsAccuracyMeanTextBox.GotFocus += new EventHandler(TextBox_GotFocusDisableCarat);
         }
 
-        private static void CollectionAddFromControlHash<T>(Dictionary<int, T> dictionary, Control control, T tooltip)
+        // POPULATE DICTIONARIES/LISTS
+        //
+        private static void CollectionAddFromControlHash<T>(Dictionary<int, T> dictionary, Control control, T element)
         {
-            dictionary.Add(control.GetHashCode(), tooltip);
+            dictionary.Add(control.GetHashCode(), element);
         }
         private void StoreLabelHelpHashes()
         {
@@ -876,6 +949,7 @@ namespace DamageCalculatorGUI
         }
 
         // SETTING HELPERS
+        //
         /// <summary>
         /// Edit the given damage die in the given damage_dice variable.
         /// </summary>
@@ -930,6 +1004,16 @@ namespace DamageCalculatorGUI
 
         // VISUAL UPDATES
         //
+        private void InitializeGraphStartAppearance()
+        {
+            // Update the Batch Graph
+            CalculatorBatchComputeScottPlot.Plot.SetAxisLimits(xMin: 0, xMax: 100, yMin: 0, yMax: 10);
+            CalculatorBatchComputeScottPlot.Plot.SetOuterViewLimits(xMin: 0, xMax: 100, yMin: 0, yMax: 10);
+
+            // Update the Base Graph
+            CalculatorDamageDistributionScottPlot.Plot.SetAxisLimits(xMin: 0, xMax: 100, yMin: 0, yMax: 1000);
+            CalculatorDamageDistributionScottPlot.Plot.SetOuterViewLimits(xMin: 0, xMax: 100, yMin: 0, yMax: 1000);
+        }
         private void ResetVisuals(EncounterSettings encounterSettings)
         {
             // Reset Visuals
@@ -974,7 +1058,7 @@ namespace DamageCalculatorGUI
             CalculatorMiscStatisticsAttackDamageMeanTextBox.Text = Math.Round(damageStats.average_hit_damage, 2).ToString();
             CalculatorMiscStatisticsAccuracyMeanTextBox.Text = (Math.Round(damageStats.average_accuracy * 100, 2)).ToString() + "%";
         }
-        private void UpdateGraph(Tuple<int, int, int> percentiles_int)
+        private void UpdateBaseGraph(Tuple<int, int, int> percentiles_int)
         {
             // Clear the Plot
             CalculatorDamageDistributionScottPlot.Plot.Clear();
@@ -1023,6 +1107,99 @@ namespace DamageCalculatorGUI
                 CalculatorDamageDistributionScottPlot.Plot.AddVerticalLine(x: percentiles.Item3, color: Color.Orange, label: "Q3");
             }
             CalculatorDamageDistributionScottPlot.Plot.Legend(location: ScottPlot.Alignment.UpperRight);
+        }
+        private void UpdateBatchGraph(BatchResults batch_results)
+        {
+            // Clear encounter tracking
+            batch_results.highest_encounter_count = 0;
+
+            // Clear the Plot
+            CalculatorBatchComputeScottPlot.Plot.Clear();
+
+            batch_results.processed_data = UpdateBatchGraph_PROCESS_DATA_ARR(batch_results, new int[1]);
+            UpdateBatchGraph_RENDER_GRAPH(batch_results);
+        }
+        private double[,] UpdateBatchGraph_PROCESS_DATA_ARR(BatchResults batch_results, int[] render_dims)
+        {
+            // To-Do: Add render dims for selecting the layer
+            // Create the surface graph array as wide as the highest damage and as tall as the number of scaling variables
+            double[,] processed_data = new double[batch_results.raw_data.GetLength(batch_results.raw_data.Rank - 1), batch_results.max_width];
+
+            int[] currIndex = new int[batch_results.raw_data.Rank];
+            // Iterate to convert each horizonal entry
+            for (int currRow = 0; currRow < processed_data.GetLength(0); currRow++)
+            {
+                // Set the current data column
+                currIndex[^1] = currRow;
+                // Store a copy of the cu
+                // Store a reference to the current row being expanded
+                Dictionary<int, int> currentStatsBlock = ((DamageStats)batch_results.raw_data.GetValue(currIndex)).damage_bins;
+                // Populate each row
+                for (int currCol = 0; currCol < processed_data.GetLength(1); currCol++)
+                {
+                    // Store the current value, or a zero if it's not present
+                    processed_data[currRow, currCol] = currentStatsBlock.TryGetValue(key: currCol, out int value)
+                                                    ? value
+                                                    : 0;
+
+                    if (batch_results.highest_encounter_count < ((DamageStats)batch_results.raw_data.GetValue(currIndex)).encounters_simulated)
+                    {
+                        batch_results.highest_encounter_count = ((DamageStats)batch_results.raw_data.GetValue(currIndex)).encounters_simulated;
+                    }
+                }
+            }
+
+            return processed_data;
+        }
+        private void UpdateBatchGraph_RENDER_GRAPH(BatchResults batch_results)
+        {
+            // Render the Plot
+            var addedHeatmap = CalculatorBatchComputeScottPlot.Plot.AddHeatmap(batch_results.processed_data);
+
+            // Configure the Plot
+            addedHeatmap.FlipVertically = true;
+            
+            // Generate a list of incrementing X ticks
+            double[] xTicks = Enumerable.Range(0, batch_results.max_width)
+                                        .Where(x => x % (batch_results.max_width / 10) == 0)
+                                        .Select(x => Convert.ToDouble(x))
+                                        .ToArray();
+            double[] yTicks = Enumerable.Range(0, batch_results.dimensions[^1])
+                                        .Where(x => x % (batch_results.max_width / 10) == 0)
+                                        .Select(x => Convert.ToDouble(x))
+                                        .ToArray();
+            CalculatorBatchComputeScottPlot.Plot.XTicks(positions: xTicks.Select(x => x + 0.5).ToArray(),
+                                                        labels: xTicks.Select(x => x.ToString()).ToArray());
+
+            // Label the X and Y Axes
+            //setting_to_string[batch_results.tick_values.First().Key]
+            int highest_layer = batched_variables.Select(x => x.Value.layer).Max();
+            CalculatorBatchComputeScottPlot.Plot.YAxis.Label(string.Join(values: batch_results.tick_values
+                                                                    .Select(x => x.Keys.Select(y => y.ToString())),
+                                                                        separator: ", "));
+
+            CalculatorBatchComputeScottPlot.Plot.YTicks(positions: yTicks.Select(x => x + 0.5).ToArray(),
+                                                        labels: batch_results.tick_values
+                                                                    .Select(x => string.Join(values: x
+                                                                                    .ToList()
+                                                                                    .Select(x => x.Value.ToString()),
+                                                                                            separator: ", ")).ToArray());
+
+            CalculatorBatchComputeScottPlot.Plot.XAxis.Label("Encounter Damage");
+
+            // Set the camera/axis limits
+            CalculatorBatchComputeScottPlot.Plot.SetAxisLimits(xMin: 0, xMax: batch_results.max_width,
+                                                               yMin: 0, yMax: batch_results.dimensions[^1]);
+            CalculatorBatchComputeScottPlot.Plot.SetOuterViewLimits(xMin: 0, xMax: batch_results.max_width,
+                                                                    yMin: 0, yMax: batch_results.dimensions[^1]);
+
+            // Add & Configure the color bar
+            var addedColorBar = CalculatorBatchComputeScottPlot.Plot.AddColorbar(addedHeatmap);
+            addedColorBar.AutomaticTicks(formatter: ConvertDoubleToPercentageString);
+        }
+        private string ConvertDoubleToPercentageString(double value)
+        {
+            return Math.Round(value * 100 / damageStats_BATCH.highest_encounter_count, 2).ToString() + "%";
         }
 
         // SAFETY
@@ -1892,13 +2069,12 @@ namespace DamageCalculatorGUI
             }
         }
 
-        // PROGRESS BAR        
+        // PROGRESS BAR
         public void SetProgressBar(object sender, int progress)
         {
             CalculatorMiscStatisticsCalculateStatsProgressBars.Value = Math.Clamp(progress + 1, 0, CalculatorMiscStatisticsCalculateStatsProgressBars.Maximum);
             CalculatorMiscStatisticsCalculateStatsProgressBars.Value = progress;
         }
-
 
         // BATCH COMPUTATION
         // Toggle Batch Computation Mode
@@ -1908,12 +2084,14 @@ namespace DamageCalculatorGUI
             { // Disable batch mode
                 CalculatorBatchComputeButton.Text = "Enable Batch Mode";
                 SetBatchMode(false);
+                SetBatchGraphVisibility(false);
             }
             else
             { // Enable batch mode
                 // Fix the scaling on the button & set the first text to be right
                 CalculatorBatchComputeButton.Text = "Disable Batch Mode";
                 SetBatchMode(true);
+                SetBatchGraphVisibility(true);
             }
             UpdateMouse();
         }
@@ -1939,6 +2117,23 @@ namespace DamageCalculatorGUI
 
                 // Reset Visible Batch Control
                 HideBatchPopup();
+            }
+        }
+        private void SetBatchGraphVisibility(bool state)
+        {
+            if (state)
+            { // Show the batch graph
+                CalculatorMiscStatisticsGroupBox.Visible = false;
+                CalculatorEncounterStatisticsGroupBox.Visible = false;
+                CalculatorDamageDistributionScottPlot.Visible = false;
+                CalculatorBatchComputeScottPlot.Visible = true;
+            }
+            else
+            { // Hide the batch graph
+                CalculatorMiscStatisticsGroupBox.Visible = true;
+                CalculatorEncounterStatisticsGroupBox.Visible = true;
+                CalculatorDamageDistributionScottPlot.Visible = true;
+                CalculatorBatchComputeScottPlot.Visible = false;
             }
         }
 
@@ -2122,7 +2317,7 @@ namespace DamageCalculatorGUI
             if (ex.Data.Count > 0)
                 throw ex;
         }
-        private void CheckBatchLogicSafety(BatchModeSettings setting)
+        private static void CheckBatchLogicSafety(BatchModeSettings setting)
         { // Check and throw any errors found
             Exception ex = new();
 
@@ -2173,18 +2368,27 @@ namespace DamageCalculatorGUI
         }
 
         // Batch Computation
-        public async Task<Array> ComputeAverageDamage_BATCH(EncounterSettings encounter_settings, 
+        public static async Task<BatchResults> ComputeAverageDamage_BATCH(EncounterSettings encounter_settings, 
                                                             SortedDictionary<int, List<Tuple<EncounterSetting, 
                                                             BatchModeSettings>>> binned_compute_layers,
-                                                            int[] maxSteps)
+                                                            int[] maxSteps,
+                                                            Dictionary<EncounterSetting, BatchModeSettings> batched_variables,
+                                                            IProgress<int> progress)
         {
+            // Declare & Initialize the return value
+            BatchResults batch_results = new();
+            for (int i = 0; i < maxSteps[^1]; i++)
+                batch_results.tick_values.Add(new());
+
+            // To-Do: Implement proper progress tracking
+
             // COMPUTATION FLAGS
-            // Track Progress Bar
-            Progress<int> progress = new();
-            progress.ProgressChanged += SetProgressBar;
 
             // Set the flag for actively computing damage
             computing_damage = true;
+
+            // Store the dimensions of the array
+            batch_results.dimensions = maxSteps.ToList();
 
             // Set number of dimensions
             int dimensions = binned_compute_layers.Count;
@@ -2332,14 +2536,19 @@ namespace DamageCalculatorGUI
                                                         MAP_modifier: computeVariables[EncounterSetting.MAP_modifier],
                                                         engagement_range: computeVariables[EncounterSetting.engagement_range],
                                                         move_speed: computeVariables[EncounterSetting.move_speed],
-                                                        seek_favorable_range: currEncounterSettings.seek_favorable_range,
+                                                        seek_favorable_range: computeVariables[EncounterSetting.move_speed] > 0,
                                                         range: computeVariables[EncounterSetting.range],
                                                         volley: computeVariables[EncounterSetting.volley],
                                                         damage_dice_DOT: computeVariablesDamageDiceDOT, // This one too
-                                                        progress: progress)); // To-do: Add some batch computation detection to the progress code
+                                                        progress: null)); // To-do: Add some batch computation detection to the progress code
 
                 // How to access the current element of the array using the GetValue method
                 DamageStats currDamage = await computeDamage;
+
+                // Track the highest damage encounter thus far
+                batch_results.max_width = currDamage.highest_encounter_damage > batch_results.max_width
+                                            ? currDamage.highest_encounter_damage
+                                            : batch_results.max_width;
 
                 // How to set the current element of the array using the SetValue method
                 totalDamageStats.SetValue(currDamage, indices);
@@ -2371,7 +2580,19 @@ namespace DamageCalculatorGUI
                     // Iterate within each layer (through each "slice", representing a batched variable)
                     foreach (var slice in binned_compute_layers.ElementAt(layer_index).Value)
                     {
-                        computeVariables[slice.Item1] = slice.Item2.GetValueAtStep(indices[layer_index]);
+                        /*
+                        // Catch an issue with the first value being skipped
+                        if (batch_results.tick_values[indices[^1] - 1].Count == 0)
+                        {
+                            batch_results.tick_values[indices[^1] - 1].Add(slice.Item1, computeVariables[slice.Item1]);
+                        }*/
+
+                        int newVal = slice.Item2.GetValueAtStep(indices[layer_index]);
+
+                        // Store the variable/step
+                        batch_results.tick_values[indices[^1] - 1].TryAdd(slice.Item1, newVal);
+
+                        computeVariables[slice.Item1] = newVal;
                     }
                 }
             } while (indices[0] < totalDamageStats.GetLength(0));
@@ -2379,10 +2600,13 @@ namespace DamageCalculatorGUI
             // Reset the damage computation flag
             computing_damage = false;
 
-            return totalDamageStats;
+            // Store the computed results
+            batch_results.raw_data = totalDamageStats;
+
+            return batch_results;
         }
         // Collects same-layered batch variables into a SortedDictionary
-        public SortedDictionary<int, List<Tuple<EncounterSetting, BatchModeSettings>>> ComputeBinnedLayersForBatch(Dictionary<EncounterSetting, BatchModeSettings> batched_vars)
+        public static SortedDictionary<int, List<Tuple<EncounterSetting, BatchModeSettings>>> ComputeBinnedLayersForBatch(Dictionary<EncounterSetting, BatchModeSettings> batched_vars)
         {
             // Collect all batched settings into layers
             SortedDictionary<int, List<Tuple<EncounterSetting, BatchModeSettings>>> binned_compute_layers = new();
@@ -2400,7 +2624,7 @@ namespace DamageCalculatorGUI
             return binned_compute_layers;
         }
         // Computes the dimensions array, i.e. the number of iteration steps necessary for each layer within a set of batch layers.
-        public int[] ComputeMaxStepsArrayForBatch(SortedDictionary<int, List<Tuple<EncounterSetting, BatchModeSettings>>> binned_compute_layers)
+        public static int[] ComputeMaxStepsArrayForBatch(SortedDictionary<int, List<Tuple<EncounterSetting, BatchModeSettings>>> binned_compute_layers)
         {
             // Get the size of each dimension
             return binned_compute_layers.Select(kvp => kvp.Value.Max(t => t.Item2.number_of_steps))
