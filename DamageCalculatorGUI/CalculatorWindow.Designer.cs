@@ -1637,14 +1637,14 @@
             this.CalculatorBatchComputePopupStepPatternTextBox.Location = new System.Drawing.Point(6, 81);
             this.CalculatorBatchComputePopupStepPatternTextBox.Name = "CalculatorBatchComputePopupStepPatternTextBox";
             this.CalculatorBatchComputePopupStepPatternTextBox.Size = new System.Drawing.Size(74, 23);
-            this.CalculatorBatchComputePopupStepPatternTextBox.TabIndex = 4;
+            this.CalculatorBatchComputePopupStepPatternTextBox.TabIndex = 3;
             this.CalculatorBatchComputePopupStepPatternTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChangedFilterToDigitsAndCommaAndSign);
             this.CalculatorBatchComputePopupStepPatternTextBox.Leave += new System.EventHandler(this.TextBox_LeaveClearLoneOrTrailingComma);
             // 
             // CalculatorBatchComputePopupDashLabel
             // 
             this.CalculatorBatchComputePopupDashLabel.AutoSize = true;
-            this.CalculatorBatchComputePopupDashLabel.Location = new System.Drawing.Point(86, 40);
+            this.CalculatorBatchComputePopupDashLabel.Location = new System.Drawing.Point(86, 39);
             this.CalculatorBatchComputePopupDashLabel.Name = "CalculatorBatchComputePopupDashLabel";
             this.CalculatorBatchComputePopupDashLabel.Size = new System.Drawing.Size(12, 15);
             this.CalculatorBatchComputePopupDashLabel.TabIndex = 3;
@@ -1668,7 +1668,7 @@
             this.CalculatorBatchComputePopupLayerNumericUpDown.Location = new System.Drawing.Point(104, 81);
             this.CalculatorBatchComputePopupLayerNumericUpDown.Name = "CalculatorBatchComputePopupLayerNumericUpDown";
             this.CalculatorBatchComputePopupLayerNumericUpDown.Size = new System.Drawing.Size(74, 23);
-            this.CalculatorBatchComputePopupLayerNumericUpDown.TabIndex = 2;
+            this.CalculatorBatchComputePopupLayerNumericUpDown.TabIndex = 4;
             this.CalculatorBatchComputePopupLayerNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ClearError);
             // 
             // CalculatorBatchComputePopupStartValueNumericUpDown
@@ -1681,7 +1681,7 @@
             -2147483648});
             this.CalculatorBatchComputePopupStartValueNumericUpDown.Name = "CalculatorBatchComputePopupStartValueNumericUpDown";
             this.CalculatorBatchComputePopupStartValueNumericUpDown.Size = new System.Drawing.Size(74, 23);
-            this.CalculatorBatchComputePopupStartValueNumericUpDown.TabIndex = 2;
+            this.CalculatorBatchComputePopupStartValueNumericUpDown.TabIndex = 1;
             this.CalculatorBatchComputePopupStartValueNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ClearError);
             // 
             // CalculatorBatchComputePopupEndValueLabel

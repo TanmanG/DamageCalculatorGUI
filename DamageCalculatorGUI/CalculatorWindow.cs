@@ -113,53 +113,67 @@ namespace DamageCalculatorGUI
             public List<int> steps; // Pattern of steps to be taken in total. Repeating list.
             public int number_of_steps; // Number of times to be stepped in total.
             public int step_direction; // Overall direction of steps
-            public Dictionary<int, int> steps_at = new(); // Number of steps taken to reach the given value
-            public bool initialized = false;
+            public Dictionary<int, int> value_at_step; // Number of steps taken to reach the given value
+            public bool initialized;
 
-            public BatchModeSettings()
+            public BatchModeSettings(int layer, int start, int end, List<int> steps)
             {
+                this.layer = layer;
+                this.start = start;
+                this.end = end;
+                this.steps = steps;
+
+                value_at_step = new();
+                initialized = false;
+                number_of_steps = 0; 
+
+                step_direction = Math.Sign(steps.Sum()); // Compute overall direction of the steps list
             }
 
             public int GetValueAtStep(int target_step = -1)
             {
-                // Check for pre-computed value
-                if (steps_at.TryGetValue(target_step, out int value))
-                    return value;
-                else if (target_step == 0)
-                    return start;
+                // Store the base value
+                int valueAtTargetStep = start;
 
-                int returnValue = start;
+                // Store the current step
+                int currentStep = 0;
 
-                if (!initialized)
-                    number_of_steps++;
-                
-                // Step through final value until we reach the target value
-                for (int currentStep = 1;
-                    (target_step == -1 && returnValue < end) || (target_step != -1 && currentStep != target_step);
-                    currentStep++)
+                if (end > start)
                 {
+                    // Step until the target_step is reached
+                    while ((target_step != -1 && currentStep != target_step)  // The target step is reached if provided
+                            || (target_step == -1 && valueAtTargetStep < end))// End has been reached if provided
+                    { // Iterate steps until the target step is reached
 
-                    // Increase the current value by the current step, getting the current step based on number_of_steps
-                    returnValue += steps[HelperFunctions.Mod(number_of_steps - 1, steps.Count)];
+                        // Increase the current value by the step, clamped to not overflow the index 
+                        valueAtTargetStep = Math.Clamp(value: valueAtTargetStep + steps[HelperFunctions.Mod(currentStep, steps.Count)],
+                                                        min: int.MinValue, max: end); // To-Do: Add negative support here
 
-                    // Cache the value for later lookup
-                    if (!steps_at.ContainsKey(currentStep))
-                    {
-                        steps_at.Add(currentStep, Math.Clamp(returnValue, int.MinValue, end));
+                        // Iterate the current step
+                        currentStep++;
                     }
-
-                    // Track how many steps are necessary to fully iterate across the given set
-                    if (!initialized)
-                    {
-                        number_of_steps++;
-                    }
-
-
                 }
+                else
+                {
+                    // Step until the target_step is reached
+                    while ((target_step != -1 && currentStep != target_step)  // The target step is reached if provided
+                            || (target_step == -1 && valueAtTargetStep > end))// End has been reached if provided
+                    { // Iterate steps until the target step is reached
 
-                initialized = true;
+                        // Increase the current value by the step, clamped to not overflow the index 
+                        valueAtTargetStep = Math.Clamp(value: valueAtTargetStep + steps[HelperFunctions.Mod(currentStep, steps.Count)],
+                                                        min: end, max: int.MaxValue); // To-Do: Add negative support here
 
-                return Math.Clamp(returnValue, int.MinValue, end);
+                        // Iterate the current step
+                        currentStep++;
+                    }
+                }
+                
+
+                if (target_step == -1)
+                    number_of_steps = currentStep;
+
+                return valueAtTargetStep;
             }
         }
         // Help Mode Variable
@@ -1161,28 +1175,25 @@ namespace DamageCalculatorGUI
             
             // Generate a list of incrementing X ticks
             double[] xTicks = Enumerable.Range(0, batch_results.max_width)
-                                        .Where(x => x % (batch_results.max_width / 10) == 0)
-                                        .Select(x => Convert.ToDouble(x))
-                                        .ToArray();
-            double[] yTicks = Enumerable.Range(0, batch_results.dimensions[^1])
-                                        .Where(x => x % (batch_results.max_width / 10) == 0)
+                                        .Where(x => x % (batch_results.max_width / 8) == 0)
                                         .Select(x => Convert.ToDouble(x))
                                         .ToArray();
             CalculatorBatchComputeScottPlot.Plot.XTicks(positions: xTicks.Select(x => x + 0.5).ToArray(),
                                                         labels: xTicks.Select(x => x.ToString()).ToArray());
 
             // Label the X and Y Axes
-            //setting_to_string[batch_results.tick_values.First().Key]
             int highest_layer = batched_variables.Select(x => x.Value.layer).Max();
             CalculatorBatchComputeScottPlot.Plot.YAxis.Label(string.Join(values: batch_results.tick_values
-                                                                    .Select(x => x.Keys.Select(y => y.ToString())),
+                                                                                .First()
+                                                                                .Select(x => setting_to_string[x.Key]),
                                                                         separator: ", "));
 
-            CalculatorBatchComputeScottPlot.Plot.YTicks(positions: yTicks.Select(x => x + 0.5).ToArray(),
+            CalculatorBatchComputeScottPlot.Plot.YTicks(positions: Enumerable.Range(0, batch_results.dimensions[^1])
+                                                                            .Select(x => x + 0.5).ToArray(),
                                                         labels: batch_results.tick_values
                                                                     .Select(x => string.Join(values: x
-                                                                                    .ToList()
-                                                                                    .Select(x => x.Value.ToString()),
+                                                                                                .ToList()
+                                                                                                .Select(x => x.Value.ToString()),
                                                                                             separator: ", ")).ToArray());
 
             CalculatorBatchComputeScottPlot.Plot.XAxis.Label("Encounter Damage");
@@ -2150,10 +2161,14 @@ namespace DamageCalculatorGUI
             {
                 // Check it's safe to parse the fields
                 CheckBatchParseSafety();
+
                 BatchModeSettings settings = ReadBatchSettings();
 
                 // Check it's safe to compute
                 CheckBatchLogicSafety(settings);
+
+                // Process the step value after confirming it's safe
+                settings.GetValueAtStep();
 
                 // Update the control
                 SetControlAsBatched(batch_mode_selected, true, settings);
@@ -2202,15 +2217,10 @@ namespace DamageCalculatorGUI
         // Batch Data
         private BatchModeSettings ReadBatchSettings()
         {
-            BatchModeSettings return_setting = new()
-            {
-                layer = (int)CalculatorBatchComputePopupLayerNumericUpDown.Value,
-                start = (int)CalculatorBatchComputePopupStartValueNumericUpDown.Value,
-                end = (int)CalculatorBatchComputePopupEndValueNumericUpDown.Value,
-                steps = GetIntListFromCommaString(CalculatorBatchComputePopupStepPatternTextBox.Text),
-            };
-            return_setting.step_direction = Math.Sign(return_setting.steps.Sum());
-            return_setting.GetValueAtStep();
+            BatchModeSettings return_setting = new(layer: (int)CalculatorBatchComputePopupLayerNumericUpDown.Value,
+                                                    start: (int)CalculatorBatchComputePopupStartValueNumericUpDown.Value,
+                                                    end: (int)CalculatorBatchComputePopupEndValueNumericUpDown.Value,
+                                                    steps: GetIntListFromCommaString(CalculatorBatchComputePopupStepPatternTextBox.Text));
             
             return return_setting;
         }
@@ -2580,12 +2590,8 @@ namespace DamageCalculatorGUI
                     // Iterate within each layer (through each "slice", representing a batched variable)
                     foreach (var slice in binned_compute_layers.ElementAt(layer_index).Value)
                     {
-                        /*
                         // Catch an issue with the first value being skipped
-                        if (batch_results.tick_values[indices[^1] - 1].Count == 0)
-                        {
-                            batch_results.tick_values[indices[^1] - 1].Add(slice.Item1, computeVariables[slice.Item1]);
-                        }*/
+                        batch_results.tick_values[indices[^1] - 1].TryAdd(slice.Item1, computeVariables[slice.Item1]);
 
                         int newVal = slice.Item2.GetValueAtStep(indices[layer_index]);
 
@@ -2627,7 +2633,7 @@ namespace DamageCalculatorGUI
         public static int[] ComputeMaxStepsArrayForBatch(SortedDictionary<int, List<Tuple<EncounterSetting, BatchModeSettings>>> binned_compute_layers)
         {
             // Get the size of each dimension
-            return binned_compute_layers.Select(kvp => kvp.Value.Max(t => t.Item2.number_of_steps))
+            return binned_compute_layers.Select(kvp => kvp.Value.Max(t => t.Item2.number_of_steps + 1))
                                         .ToArray();
         }
     }
