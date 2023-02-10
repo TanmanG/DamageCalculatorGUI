@@ -66,6 +66,8 @@ namespace DamageCalculatorGUI
             { EncounterSetting.damage_dice_DOT_size_critical, "Damage Die Size (Bleed, Critical)" },
             { EncounterSetting.damage_dice_DOT_bonus_critical, "Damage Die Bonus (Bleed, Critical)" }
         };
+        private static double computationStepsTotal = 0;
+        private static double computationStepsCurrent = 0;
 
         public enum EncounterSetting
         {
@@ -147,7 +149,7 @@ namespace DamageCalculatorGUI
 
                         // Increase the current value by the step, clamped to not overflow the index 
                         valueAtTargetStep = Math.Clamp(value: valueAtTargetStep + steps[HelperFunctions.Mod(currentStep, steps.Count)],
-                                                        min: int.MinValue, max: end); // To-Do: Add negative support here
+                                                        min: int.MinValue, max: end);
 
                         // Iterate the current step
                         currentStep++;
@@ -162,7 +164,7 @@ namespace DamageCalculatorGUI
 
                         // Increase the current value by the step, clamped to not overflow the index 
                         valueAtTargetStep = Math.Clamp(value: valueAtTargetStep + steps[HelperFunctions.Mod(currentStep, steps.Count)],
-                                                        min: end, max: int.MaxValue); // To-Do: Add negative support here
+                                                        min: end, max: int.MaxValue);
 
                         // Iterate the current step
                         currentStep++;
@@ -272,7 +274,7 @@ namespace DamageCalculatorGUI
                     return;
 
                 // Update Data
-                try
+                //try
                 { // Check for exception
                     CheckComputeSafety();
 
@@ -285,11 +287,15 @@ namespace DamageCalculatorGUI
                         var binned_compute_layers = ComputeBinnedLayersForBatch(batched_variables);
                         int[] maxSteps = ComputeMaxStepsArrayForBatch(binned_compute_layers);
 
+                        // Track Progress Bar
+                        Progress<int> progress = new();
+                        progress.ProgressChanged += SetProgressBar;
+
                         damageStats_BATCH = await ComputeAverageDamage_BATCH(encounter_settings: currEncounterSettings,
                                                                             binned_compute_layers: binned_compute_layers,
                                                                             maxSteps: maxSteps,
                                                                             batched_variables: batched_variables,
-                                                                            progress: null);
+                                                                            progress: progress);
                         
                         UpdateBatchGraph(damageStats_BATCH);
                     }
@@ -327,13 +333,14 @@ namespace DamageCalculatorGUI
                     CalculatorBatchComputeScottPlot.Render();
                     CalculatorDamageDistributionScottPlot.Render();
                 }
+                /* To-Do: REMOVE THIS WHEN TESTING IS FINISHED
                 catch (Exception ex)
                 { // Exception caught!
                     throw ex;
                     computing_damage = false;
                     PushErrorMessages(ex);
                     return;
-                }
+                }*/
             }
             else
             {
@@ -1510,6 +1517,7 @@ namespace DamageCalculatorGUI
                                                         volley: volley,
                                                         damage_dice_DOT: damage_dice_DOT,
                                                         progress: progress));
+
             damageStats = await computeDamage;
             computing_damage = false;
 
@@ -2083,8 +2091,20 @@ namespace DamageCalculatorGUI
         // PROGRESS BAR
         public void SetProgressBar(object sender, int progress)
         {
-            CalculatorMiscStatisticsCalculateStatsProgressBars.Value = Math.Clamp(progress + 1, 0, CalculatorMiscStatisticsCalculateStatsProgressBars.Maximum);
-            CalculatorMiscStatisticsCalculateStatsProgressBars.Value = progress;
+            if (batch_mode_enabled)
+            {
+                CalculatorMiscStatisticsCalculateStatsProgressBars.Value = Math.Clamp(
+                    value: (int)(CalculatorMiscStatisticsCalculateStatsProgressBars.Maximum
+                    * computationStepsCurrent / computationStepsTotal) + 1, 
+                    min: 0, 
+                    max: CalculatorMiscStatisticsCalculateStatsProgressBars.Maximum);
+                CalculatorMiscStatisticsCalculateStatsProgressBars.Value -= 1;
+            }
+            else
+            {
+                CalculatorMiscStatisticsCalculateStatsProgressBars.Value = Math.Clamp(progress + 1, 0, CalculatorMiscStatisticsCalculateStatsProgressBars.Maximum);
+                CalculatorMiscStatisticsCalculateStatsProgressBars.Value = progress;
+            }
         }
 
         // BATCH COMPUTATION
@@ -2159,7 +2179,6 @@ namespace DamageCalculatorGUI
         { // Save the current batch settings
             try
             {
-                // Check it's safe to parse the fields
                 CheckBatchParseSafety();
 
                 BatchModeSettings settings = ReadBatchSettings();
@@ -2385,13 +2404,14 @@ namespace DamageCalculatorGUI
                                                             Dictionary<EncounterSetting, BatchModeSettings> batched_variables,
                                                             IProgress<int> progress)
         {
+
             // Declare & Initialize the return value
             BatchResults batch_results = new();
             for (int i = 0; i < maxSteps[^1]; i++)
                 batch_results.tick_values.Add(new());
 
             // To-Do: Implement proper progress tracking
-
+            // To-Do: Fix batch compute not working with any layers. Crashes halfway in?
             // COMPUTATION FLAGS
 
             // Set the flag for actively computing damage
@@ -2412,6 +2432,8 @@ namespace DamageCalculatorGUI
 
             // Calculate the total number of entries in the array
             int number_of_values = maxSteps.Aggregate((sum, next) => sum * next);
+            computationStepsTotal = number_of_values;
+            computationStepsCurrent = 1;
 
             // Use a dictionary to track the current value of each variable
             Dictionary<EncounterSetting, int> computeVariables = new()
@@ -2550,7 +2572,7 @@ namespace DamageCalculatorGUI
                                                         range: computeVariables[EncounterSetting.range],
                                                         volley: computeVariables[EncounterSetting.volley],
                                                         damage_dice_DOT: computeVariablesDamageDiceDOT, // This one too
-                                                        progress: null)); // To-do: Add some batch computation detection to the progress code
+                                                        progress: progress)); // To-do: Add some batch computation detection to the progress code
 
                 // How to access the current element of the array using the GetValue method
                 DamageStats currDamage = await computeDamage;
@@ -2565,6 +2587,19 @@ namespace DamageCalculatorGUI
 
                 // Increment the rightmost dimension (the last index), which will be the root iterator (highest layer)
                 indices[dimensions - 1]++;
+
+                // Catch an annoying issue with the last variable not being iterated when there is more than one layer
+                if (indices[^1] == totalDamageStats.GetLength(indices.Length - 1))
+                    foreach (int layer_index in binned_compute_layers.Keys)
+                        // Iterate within each layer (through each "slice", representing a batched variable)
+                        foreach (var slice in binned_compute_layers[layer_index])
+                            if (layer_index == binned_compute_layers.Keys.Max() // Check if we're at the rapid-iterated layer
+                                && (indices.Length == 1 // Pass through if there's only one layer
+                                    || indices.ToList().Take(indices.Length - 1).All(x => x == 0))) // Pass through only if we're on the first iteration layer
+                            // Only store the top layer iteration labels
+                              // Catch an issue with the first value being skipped due to how index iteration is implemented
+                                batch_results.tick_values[indices[^1] - 1].TryAdd(slice.Item1, computeVariables[slice.Item1]);
+                
 
                 // Cascade the current indices
                 for (int dimension_index = dimensions - 1; dimension_index > 0; dimension_index--)
@@ -2585,22 +2620,32 @@ namespace DamageCalculatorGUI
                 }
 
                 // Iterate across each layer to check for/apply changes to the existing variables
-                for (int layer_index = 0; layer_index < binned_compute_layers.Count; layer_index++)
+                foreach (int layer_index in binned_compute_layers.Keys)
                 {
                     // Iterate within each layer (through each "slice", representing a batched variable)
-                    foreach (var slice in binned_compute_layers.ElementAt(layer_index).Value)
+                    foreach (var slice in binned_compute_layers[layer_index])
                     {
-                        // Catch an issue with the first value being skipped
-                        batch_results.tick_values[indices[^1] - 1].TryAdd(slice.Item1, computeVariables[slice.Item1]);
+                        // To-do: Store the array instead to a list of graph views
+                        // To-do: Load current graph from the list
+                        // To-do: Add button/dropdown to select which one
+                        // To-do: Make 'gif' feature
+                        if (layer_index == binned_compute_layers.Keys.Max()
+                            && (indices.Length == 1 // Pass through if there's only one layer
+                                || indices.ToList().Take(indices.Length - 1).All(x => x == 0))) // Pass through only if we're on the first iteration layer
+                        { // Only store the top layer iteration labels
+                            // Catch an issue with the first value being skipped due to how index iteration is implemented
+                            int tick_index = indices[^1] - 1;
+                            batch_results.tick_values[tick_index].TryAdd(slice.Item1, computeVariables[slice.Item1]);
+                        }
 
-                        int newVal = slice.Item2.GetValueAtStep(indices[layer_index]);
-
-                        // Store the variable/step
-                        batch_results.tick_values[indices[^1] - 1].TryAdd(slice.Item1, newVal);
-
+                        int newVal = slice.Item2.GetValueAtStep(indices[binned_compute_layers.Keys.ToList().IndexOf(layer_index)]) ;
+                        
                         computeVariables[slice.Item1] = newVal;
                     }
                 }
+
+                // Track progress thus far
+                computationStepsCurrent++;
             } while (indices[0] < totalDamageStats.GetLength(0));
 
             // Reset the damage computation flag

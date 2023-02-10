@@ -156,9 +156,9 @@ namespace DamageCalculatorGUI
                 // Track how many encounters were simulated.
                 encountersSimulated++;
                 // Set Progress on Bar
-                if (progress != null && HelperFunctions.Mod(a: currentEncounter + 1, b: number_of_encounters / 1000) == 0)
+                if (progress != null && HelperFunctions.Mod(a: currentEncounter + 1, b: number_of_encounters / 250) == 0)
                     // Update progress
-                    progress.Report((currentEncounter + 1) * 1000 / number_of_encounters);
+                    progress.Report((currentEncounter + 1) * 250 / number_of_encounters);
                 
 
                 // Reset Encounter-based Variables

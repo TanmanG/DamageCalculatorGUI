@@ -346,7 +346,7 @@
             // 
             this.CalculatorMiscStatisticsCalculateStatsProgressBars.Location = new System.Drawing.Point(480, 367);
             this.CalculatorMiscStatisticsCalculateStatsProgressBars.MarqueeAnimationSpeed = 150;
-            this.CalculatorMiscStatisticsCalculateStatsProgressBars.Maximum = 1000;
+            this.CalculatorMiscStatisticsCalculateStatsProgressBars.Maximum = 250;
             this.CalculatorMiscStatisticsCalculateStatsProgressBars.Name = "CalculatorMiscStatisticsCalculateStatsProgressBars";
             this.CalculatorMiscStatisticsCalculateStatsProgressBars.Size = new System.Drawing.Size(112, 23);
             this.CalculatorMiscStatisticsCalculateStatsProgressBars.TabIndex = 8;
@@ -1564,7 +1564,7 @@
             this.CalculatorVersionLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.CalculatorVersionLabel.Size = new System.Drawing.Size(138, 23);
             this.CalculatorVersionLabel.TabIndex = 12;
-            this.CalculatorVersionLabel.Text = "PFK V1.3-proto";
+            this.CalculatorVersionLabel.Text = "PFK V2.0.0-proto-4";
             this.CalculatorVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // PrimaryTabControl
@@ -1733,7 +1733,7 @@
             this.CalculatorBatchComputePopupSaveButton.Location = new System.Drawing.Point(161, 0);
             this.CalculatorBatchComputePopupSaveButton.Name = "CalculatorBatchComputePopupSaveButton";
             this.CalculatorBatchComputePopupSaveButton.Size = new System.Drawing.Size(18, 18);
-            this.CalculatorBatchComputePopupSaveButton.TabIndex = 0;
+            this.CalculatorBatchComputePopupSaveButton.TabIndex = 6;
             this.CalculatorBatchComputePopupSaveButton.Text = "O";
             this.CalculatorBatchComputePopupSaveButton.UseVisualStyleBackColor = false;
             this.CalculatorBatchComputePopupSaveButton.Click += new System.EventHandler(this.CalculatorBatchComputePopupSaveButton_Click);
@@ -1747,7 +1747,7 @@
             this.CalculatorBatchComputePopupXButton.Location = new System.Drawing.Point(137, 0);
             this.CalculatorBatchComputePopupXButton.Name = "CalculatorBatchComputePopupXButton";
             this.CalculatorBatchComputePopupXButton.Size = new System.Drawing.Size(18, 18);
-            this.CalculatorBatchComputePopupXButton.TabIndex = 0;
+            this.CalculatorBatchComputePopupXButton.TabIndex = 5;
             this.CalculatorBatchComputePopupXButton.Text = "X";
             this.CalculatorBatchComputePopupXButton.UseVisualStyleBackColor = false;
             this.CalculatorBatchComputePopupXButton.Click += new System.EventHandler(this.CalculatorBatchComputePopupXButton_Click);
@@ -2019,7 +2019,7 @@
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label1.Size = new System.Drawing.Size(178, 23);
             this.label1.TabIndex = 12;
-            this.label1.Text = "PFK V1.3-proto";
+            this.label1.Text = "PFK V2.0.0-proto-4";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // button5
