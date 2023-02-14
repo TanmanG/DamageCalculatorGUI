@@ -62,7 +62,6 @@ namespace DamageCalculatorGUI
 
             return new(damage, damageCrit);
         }
-
         public static Tuple<int, int, int> ComputePercentiles(Dictionary<int, int> damageBins)
         {
             // Declare & Initialize Base Percentiles
@@ -102,6 +101,24 @@ namespace DamageCalculatorGUI
             }
 
             return new(quarterPercentileFinal, halfPercentileFinal, threeQuarterPercentileFinal);
+        }
+        public static Array GetSubArray(Array original_array, int[] index_extracted)
+        {
+            int numDims = original_array.Rank;
+            int[] fullInd = new int[numDims];
+            index_extracted.CopyTo(fullInd, 0);
+
+            int extracted_array_size = original_array.GetLength(numDims - 1);
+
+            Array extracted_array = Array.CreateInstance(elementType: original_array.GetType().GetElementType(), length: extracted_array_size);
+
+            for (int i = 0; i < extracted_array_size; i++)
+            {
+                fullInd[^1] = i;
+                extracted_array.SetValue(original_array.GetValue(fullInd), i);
+            }
+
+            return extracted_array;
         }
     }
 }

@@ -33,7 +33,8 @@ namespace Pickings_For_Kurtulmak
         /// <summary>
         /// A list containing the values and respective variable at each tick.
         /// </summary>
-        public List<SortedDictionary<EncounterSetting, int>> tick_values = new();
+        //public List<SortedDictionary<EncounterSetting, int>> tick_values = new();
+        public Array tick_values = null;
 
         /// <summary>
         /// Highest encounter in all of the simulated batch layers

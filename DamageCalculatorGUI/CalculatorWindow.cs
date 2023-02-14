@@ -18,6 +18,7 @@ namespace DamageCalculatorGUI
         // Damage Stats Struct
         public DamageStats damageStats = new();
         public BatchResults damageStats_BATCH = new();
+        public int[] batch_selected_variables = new[] { 0 };
 
         // Already Running a Sim
         private static bool computing_damage = false;
@@ -31,7 +32,25 @@ namespace DamageCalculatorGUI
         private Dictionary<EncounterSetting, int> batched_variables_last_value = new();
         private Dictionary<EncounterSetting, BatchModeSettings> batched_variables = new();
         private Dictionary<EncounterSetting, Control> setting_to_control = new();
-        private Dictionary<EncounterSetting, string> setting_to_string = new()
+        private static readonly Dictionary<EncounterSetting, Tuple<DieField, bool, bool>> setting_to_info = new() // Conversions to get die type
+        {
+            { EncounterSetting.damage_dice_count, new (DieField.count, false, false) },
+            { EncounterSetting.damage_dice_size, new (DieField.size, false, false) },
+            { EncounterSetting.damage_dice_bonus, new (DieField.bonus, false, false) },
+
+            { EncounterSetting.damage_dice_count_critical, new (DieField.count, false, true) },
+            { EncounterSetting.damage_dice_size_critical, new (DieField.size, false, true) },
+            { EncounterSetting.damage_dice_bonus_critical, new (DieField.bonus, false, true) },
+
+            { EncounterSetting.damage_dice_DOT_count, new (DieField.count, true, false) },
+            { EncounterSetting.damage_dice_DOT_size, new (DieField.size, true, false) },
+            { EncounterSetting.damage_dice_DOT_bonus, new (DieField.bonus, true, false) },
+
+            { EncounterSetting.damage_dice_DOT_count_critical, new (DieField.count, true, true) },
+            { EncounterSetting.damage_dice_DOT_size_critical, new (DieField.size, true, true) },
+            { EncounterSetting.damage_dice_DOT_bonus_critical, new (DieField.bonus, true, true) },
+        };
+        private static readonly Dictionary<EncounterSetting, string> setting_to_string = new()
         {
             { EncounterSetting.number_of_encounters, "Number of Encounters" },
             { EncounterSetting.rounds_per_encounter, "Rounds Per Encounter" },
@@ -83,12 +102,6 @@ namespace DamageCalculatorGUI
             reload,
             long_reload,
             draw,
-            damage_dice_count,
-            damage_dice_size,
-            damage_dice_bonus,
-            damage_dice_count_critical,
-            damage_dice_size_critical,
-            damage_dice_bonus_critical,
             bonus_to_hit,
             AC,
             crit_threshhold,
@@ -98,6 +111,12 @@ namespace DamageCalculatorGUI
             seek_favorable_range,
             range,
             volley,
+            damage_dice_count,
+            damage_dice_size,
+            damage_dice_bonus,
+            damage_dice_count_critical,
+            damage_dice_size_critical,
+            damage_dice_bonus_critical,
             damage_dice_DOT_count,
             damage_dice_DOT_size,
             damage_dice_DOT_bonus,
@@ -118,22 +137,35 @@ namespace DamageCalculatorGUI
             public Dictionary<int, int> value_at_step; // Number of steps taken to reach the given value
             public bool initialized;
 
-            public BatchModeSettings(int layer, int start, int end, List<int> steps)
+            public int index;
+            public DieField die_field;
+            public bool bleed;
+            public bool critical;
+
+            public BatchModeSettings(int layer, int start, int end, List<int> steps, bool bleed = false, int index = -1, DieField die_field = DieField.count, bool critical = false)
             {
                 this.layer = layer;
                 this.start = start;
                 this.end = end;
                 this.steps = steps;
+                this.index = index;
+                this.bleed = bleed;
+                this.die_field = die_field;
+                this.critical = critical;
 
                 value_at_step = new();
                 initialized = false;
-                number_of_steps = 0; 
+                number_of_steps = 0;
 
                 step_direction = Math.Sign(steps.Sum()); // Compute overall direction of the steps list
             }
 
             public int GetValueAtStep(int target_step = -1)
             {
+                if (value_at_step.TryGetValue(target_step, out int value))
+                    return value;
+                // To-do: Maybe optimize this to get the key closest to the target step as the initial values?
+
                 // Store the base value
                 int valueAtTargetStep = start;
 
@@ -151,6 +183,9 @@ namespace DamageCalculatorGUI
                         valueAtTargetStep = Math.Clamp(value: valueAtTargetStep + steps[HelperFunctions.Mod(currentStep, steps.Count)],
                                                         min: int.MinValue, max: end);
 
+                        // Cache the current step value
+                        value_at_step.TryAdd(currentStep, valueAtTargetStep);
+
                         // Iterate the current step
                         currentStep++;
                     }
@@ -165,6 +200,9 @@ namespace DamageCalculatorGUI
                         // Increase the current value by the step, clamped to not overflow the index 
                         valueAtTargetStep = Math.Clamp(value: valueAtTargetStep + steps[HelperFunctions.Mod(currentStep, steps.Count)],
                                                         min: end, max: int.MaxValue);
+
+                        // Cache the current step value
+                        value_at_step.TryAdd(currentStep, valueAtTargetStep);
 
                         // Iterate the current step
                         currentStep++;
@@ -1016,7 +1054,7 @@ namespace DamageCalculatorGUI
                                                 ? unedited_die
                                                 : edited_die));
         }
-        enum DieField
+        public enum DieField
         {
             count,
             size,
@@ -1138,15 +1176,17 @@ namespace DamageCalculatorGUI
             CalculatorBatchComputeScottPlot.Plot.Clear();
 
             batch_results.processed_data = UpdateBatchGraph_PROCESS_DATA_ARR(batch_results, new int[1]);
-            UpdateBatchGraph_RENDER_GRAPH(batch_results);
+            UpdateBatchGraph_RENDER_GRAPH(batch_results, batch_selected_variables);
         }
-        private double[,] UpdateBatchGraph_PROCESS_DATA_ARR(BatchResults batch_results, int[] render_dims)
+        private static double[,] UpdateBatchGraph_PROCESS_DATA_ARR(BatchResults batch_results, int[] batch_selected)
         {
             // To-Do: Add render dims for selecting the layer
+            Array pulledLayer = HelperFunctions.GetSubArray(original_array: batch_results.raw_data, index_extracted: batch_selected);
             // Create the surface graph array as wide as the highest damage and as tall as the number of scaling variables
-            double[,] processed_data = new double[batch_results.raw_data.GetLength(batch_results.raw_data.Rank - 1), batch_results.max_width];
+            double[,] processed_data = new double[batch_results.raw_data.GetLength(batch_selected.Length - 1), batch_results.max_width];
 
             int[] currIndex = new int[batch_results.raw_data.Rank];
+
             // Iterate to convert each horizonal entry
             for (int currRow = 0; currRow < processed_data.GetLength(0); currRow++)
             {
@@ -1154,7 +1194,7 @@ namespace DamageCalculatorGUI
                 currIndex[^1] = currRow;
                 // Store a copy of the cu
                 // Store a reference to the current row being expanded
-                Dictionary<int, int> currentStatsBlock = ((DamageStats)batch_results.raw_data.GetValue(currIndex)).damage_bins;
+                Dictionary<int, int> currentStatsBlock = ((DamageStats)pulledLayer.GetValue(currIndex)).damage_bins;
                 // Populate each row
                 for (int currCol = 0; currCol < processed_data.GetLength(1); currCol++)
                 {
@@ -1163,16 +1203,16 @@ namespace DamageCalculatorGUI
                                                     ? value
                                                     : 0;
 
-                    if (batch_results.highest_encounter_count < ((DamageStats)batch_results.raw_data.GetValue(currIndex)).encounters_simulated)
+                    if (batch_results.highest_encounter_count < ((DamageStats)pulledLayer.GetValue(currIndex)).encounters_simulated)
                     {
-                        batch_results.highest_encounter_count = ((DamageStats)batch_results.raw_data.GetValue(currIndex)).encounters_simulated;
+                        batch_results.highest_encounter_count = ((DamageStats)pulledLayer.GetValue(currIndex)).encounters_simulated;
                     }
                 }
             }
 
             return processed_data;
         }
-        private void UpdateBatchGraph_RENDER_GRAPH(BatchResults batch_results)
+        private void UpdateBatchGraph_RENDER_GRAPH(BatchResults batch_results, int[] batch_selected)
         {
             // Render the Plot
             var addedHeatmap = CalculatorBatchComputeScottPlot.Plot.AddHeatmap(batch_results.processed_data);
@@ -1180,28 +1220,44 @@ namespace DamageCalculatorGUI
             // Configure the Plot
             addedHeatmap.FlipVertically = true;
             
+            // To-do: Fix rendering with the new robust system
+            // To-do: Generate/Create controls for selecting options
+            // To-do: Add a timer hook to iterate the graph if it's selected
+
             // Generate a list of incrementing X ticks
             double[] xTicks = Enumerable.Range(0, batch_results.max_width)
                                         .Where(x => x % (batch_results.max_width / 8) == 0)
-                                        .Select(x => Convert.ToDouble(x))
+                                        .Select(Convert.ToDouble)
                                         .ToArray();
             CalculatorBatchComputeScottPlot.Plot.XTicks(positions: xTicks.Select(x => x + 0.5).ToArray(),
                                                         labels: xTicks.Select(x => x.ToString()).ToArray());
 
             // Label the X and Y Axes
             int highest_layer = batched_variables.Select(x => x.Value.layer).Max();
-            CalculatorBatchComputeScottPlot.Plot.YAxis.Label(string.Join(values: batch_results.tick_values
-                                                                                .First()
-                                                                                .Select(x => setting_to_string[x.Key]),
+
+            // To-do: Investigate scuffed label shennaigans
+            // Extract the dictionary of the currently selected layer
+            List<Dictionary<EncounterSetting, int>> tick_values =
+                                batch_results.tick_values.Rank > 1
+                                ? HelperFunctions.GetSubArray(original_array: batch_results.tick_values,
+                                                            index_extracted: batch_selected)
+                                    .Cast<Dictionary<EncounterSetting, int>>()
+                                    .ToList()
+                                : batch_results.tick_values
+                                    .Cast<Dictionary<EncounterSetting, int>>()
+                                    .ToList();
+
+            // Combine each batched variable into the Y-axis label
+            // To-do: Group tick_values by each List<int> rows, then this should in theory be working
+            CalculatorBatchComputeScottPlot.Plot.YAxis.Label(string.Join(values: tick_values
+                                                                            .First()
+                                                                            .Select(x => setting_to_string[x.Key]),
                                                                         separator: ", "));
 
-            CalculatorBatchComputeScottPlot.Plot.YTicks(positions: Enumerable.Range(0, batch_results.dimensions[^1])
-                                                                            .Select(x => x + 0.5).ToArray(),
-                                                        labels: batch_results.tick_values
-                                                                    .Select(x => string.Join(values: x
-                                                                                                .ToList()
-                                                                                                .Select(x => x.Value.ToString()),
-                                                                                            separator: ", ")).ToArray());
+            CalculatorBatchComputeScottPlot.Plot.YTicks(positions: Enumerable.Range(0, batch_results.dimensions[^1]).Select(x => x + 0.5).ToArray(),
+                                                        labels: tick_values
+                                                                    .Select(x => string.Join(values: x.Values.Select(y => y.ToString()),
+                                                                                                separator: ", ")).ToArray());
 
             CalculatorBatchComputeScottPlot.Plot.XAxis.Label("Encounter Damage");
 
@@ -2236,10 +2292,19 @@ namespace DamageCalculatorGUI
         // Batch Data
         private BatchModeSettings ReadBatchSettings()
         {
+            bool isDamageDie = setting_to_info.TryGetValue(control_hash_to_setting[batch_mode_selected.GetHashCode()], out var value);
             BatchModeSettings return_setting = new(layer: (int)CalculatorBatchComputePopupLayerNumericUpDown.Value,
                                                     start: (int)CalculatorBatchComputePopupStartValueNumericUpDown.Value,
                                                     end: (int)CalculatorBatchComputePopupEndValueNumericUpDown.Value,
-                                                    steps: GetIntListFromCommaString(CalculatorBatchComputePopupStepPatternTextBox.Text));
+                                                    steps: GetIntListFromCommaString(CalculatorBatchComputePopupStepPatternTextBox.Text),
+                                                    index: (int)control_hash_to_setting[batch_mode_selected.GetHashCode()] >= 21
+                                                                ? CalculatorDamageListBox.SelectedIndex
+                                                                : -1,
+                                                    die_field: isDamageDie
+                                                                ? value.Item1
+                                                                : DieField.bonus,
+                                                    critical: isDamageDie && value.Item3,
+                                                    bleed: isDamageDie && value.Item2);
             
             return return_setting;
         }
@@ -2407,8 +2472,6 @@ namespace DamageCalculatorGUI
 
             // Declare & Initialize the return value
             BatchResults batch_results = new();
-            for (int i = 0; i < maxSteps[^1]; i++)
-                batch_results.tick_values.Add(new());
 
             // To-Do: Implement proper progress tracking
             // To-Do: Fix batch compute not working with any layers. Crashes halfway in?
@@ -2425,6 +2488,7 @@ namespace DamageCalculatorGUI
 
             // Create an array to hold all the damage stats, sized by the most number of steps in each batch layer
             Array totalDamageStats = Array.CreateInstance(typeof(DamageStats), maxSteps);
+            batch_results.tick_values = Array.CreateInstance(typeof(Dictionary<EncounterSetting, int>), maxSteps);
 
             // Create an array to track current index such that
             // [X, Y, Z, ... END] represent the [LOWEST, SECOND LOWEST, THIRD LOWEST, ... HIGHEST] layers.
@@ -2583,23 +2647,65 @@ namespace DamageCalculatorGUI
                                             : batch_results.max_width;
 
                 // How to set the current element of the array using the SetValue method
-                totalDamageStats.SetValue(currDamage, indices);
+                totalDamageStats.SetValue(value: currDamage, indices: indices);
+
+                // Iterate across each layer to check for/apply changes to the existing variables
+                foreach (int layer_index in binned_compute_layers.Keys)
+                {
+                    // Iterate within each layer (through each "slice", representing a batched variable)
+                    foreach (var slice in binned_compute_layers[layer_index])
+                    {
+                        // To-do: Store the array instead to a list of graph views
+                        // To-do: Load current graph from the list
+                        // To-do: Add button/dropdown to select which one
+                        // To-do: Make 'gif' feature
+                        /*
+                        if (layer_index == binned_compute_layers.Keys.Max()
+                            && (indices.Length == 1 // Pass through if there's only one layer
+                                || indices.ToList().Take(indices.Length - 1).All(x => x == 0))) // Pass through only if we're on the first iteration layer
+                        { // Only store the top layer iteration labels
+                            // Catch an issue with the first value being skipped due to how index iteration is implemented
+                            int tick_index = indices[^1] - 1;
+                            batch_results.tick_values[tick_index].TryAdd(slice.Item1, computeVariables[slice.Item1]);
+                        }*/
+                        int storedValue;
+                        if (slice.Item2.index != -1)
+                        { // Store the current damageDie value
+                            var readDamageList = slice.Item2.bleed
+                                                ? computeVariablesDamageDiceDOT
+                                                : computeVariablesDamageDice;
+                            var readDamageTuple = slice.Item2.critical
+                                                ? readDamageList[slice.Item2.index].Item2
+                                                : readDamageList[slice.Item2.index].Item1;
+                            storedValue = (slice.Item2.die_field) switch
+                            {
+                                DieField.count => readDamageTuple.Item1,
+                                DieField.size => readDamageTuple.Item2,
+                                DieField.bonus => readDamageTuple.Item3
+                            };
+                        }// To-do: Fix simultaneous stepping of damage dice variables
+                        else
+                        { // Store the non-list variable
+                            storedValue = computeVariables[slice.Item1];
+                        }
+
+                        if (batch_results.tick_values.GetValue(indices: indices) is Dictionary<EncounterSetting, int> tick_dictionary)
+                        {
+                            tick_dictionary.TryAdd(slice.Item1, storedValue);
+                        }
+                        else
+                        {
+                            Dictionary<EncounterSetting, int> new_tick_dictionary = new()
+                                {
+                                    { slice.Item1, storedValue }
+                                };
+                            batch_results.tick_values.SetValue(indices: indices, value: new_tick_dictionary);
+                        }
+                    }
+                }
 
                 // Increment the rightmost dimension (the last index), which will be the root iterator (highest layer)
                 indices[dimensions - 1]++;
-
-                // Catch an annoying issue with the last variable not being iterated when there is more than one layer
-                if (indices[^1] == totalDamageStats.GetLength(indices.Length - 1))
-                    foreach (int layer_index in binned_compute_layers.Keys)
-                        // Iterate within each layer (through each "slice", representing a batched variable)
-                        foreach (var slice in binned_compute_layers[layer_index])
-                            if (layer_index == binned_compute_layers.Keys.Max() // Check if we're at the rapid-iterated layer
-                                && (indices.Length == 1 // Pass through if there's only one layer
-                                    || indices.ToList().Take(indices.Length - 1).All(x => x == 0))) // Pass through only if we're on the first iteration layer
-                            // Only store the top layer iteration labels
-                              // Catch an issue with the first value being skipped due to how index iteration is implemented
-                                batch_results.tick_values[indices[^1] - 1].TryAdd(slice.Item1, computeVariables[slice.Item1]);
-                
 
                 // Cascade the current indices
                 for (int dimension_index = dimensions - 1; dimension_index > 0; dimension_index--)
@@ -2629,6 +2735,7 @@ namespace DamageCalculatorGUI
                         // To-do: Load current graph from the list
                         // To-do: Add button/dropdown to select which one
                         // To-do: Make 'gif' feature
+                        /*
                         if (layer_index == binned_compute_layers.Keys.Max()
                             && (indices.Length == 1 // Pass through if there's only one layer
                                 || indices.ToList().Take(indices.Length - 1).All(x => x == 0))) // Pass through only if we're on the first iteration layer
@@ -2636,11 +2743,62 @@ namespace DamageCalculatorGUI
                             // Catch an issue with the first value being skipped due to how index iteration is implemented
                             int tick_index = indices[^1] - 1;
                             batch_results.tick_values[tick_index].TryAdd(slice.Item1, computeVariables[slice.Item1]);
+                        }*/
+
+                        // Run last-loop computation
+                        if (indices[^1] == maxSteps[^1] - 1)
+                        {
+                            int storedValue;
+                            if (slice.Item2.index != -1)
+                            { // Store the current damageDie value
+                                var readDamageList = slice.Item2.bleed
+                                                    ? computeVariablesDamageDiceDOT
+                                                    : computeVariablesDamageDice;
+                                var readDamageTuple = slice.Item2.critical
+                                                    ? readDamageList[slice.Item2.index].Item2
+                                                    : readDamageList[slice.Item2.index].Item1;
+                                storedValue = (slice.Item2.die_field) switch
+                                {
+                                    DieField.count => readDamageTuple.Item1,
+                                    DieField.size => readDamageTuple.Item2,
+                                    DieField.bonus => readDamageTuple.Item3
+                                };
+                            }
+                            else
+                            { // Store the non-list variable
+                                storedValue = computeVariables[slice.Item1];
+                            }
+
+                            if (batch_results.tick_values.GetValue(indices: indices) is Dictionary<EncounterSetting, int> tick_dictionary)
+                            {
+                                tick_dictionary.TryAdd(slice.Item1, storedValue);
+                            }
+                            else
+                            {
+                                Dictionary<EncounterSetting, int> new_tick_dictionary = new()
+                                {
+                                    { slice.Item1, storedValue }
+                                };
+                                batch_results.tick_values.SetValue(indices: indices, value: new_tick_dictionary);
+                            }
                         }
 
-                        int newVal = slice.Item2.GetValueAtStep(indices[binned_compute_layers.Keys.ToList().IndexOf(layer_index)]) ;
-                        
-                        computeVariables[slice.Item1] = newVal;
+                        if (slice.Item2.index != -1)
+                        { // Check if currently a damage die
+                            List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>> editedDamage = slice.Item2.bleed
+                                                ? computeVariablesDamageDiceDOT
+                                                : computeVariablesDamageDice;
+
+                            EditDamageDie(damage_dice: editedDamage,
+                                            setting: slice.Item2.die_field,
+                                            value: slice.Item2.GetValueAtStep(indices[binned_compute_layers.Keys.ToList().IndexOf(layer_index)]),
+                                            index: slice.Item2.index,
+                                            edit_critical: slice.Item2.critical);
+                        }
+                        else
+                        {
+                            computeVariables[slice.Item1] = slice.Item2.GetValueAtStep(indices[binned_compute_layers.Keys.ToList().IndexOf(layer_index)]);
+                        }
                     }
                 }
 
