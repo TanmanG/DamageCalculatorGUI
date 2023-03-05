@@ -65,7 +65,7 @@
             CalculatorActionActionsPerRoundLabel = new Label();
             CalculatorActionExtraLimitedActionsReloadLabel = new Label();
             CalculatorActionActionsPerRoundTextBox = new TextBox();
-            label8 = new Label();
+            CalculatorEmail2Label = new Label();
             CalculatorEmail1Label = new Label();
             CalculatorReachGroupBox = new GroupBox();
             CalculatorReachRangeIncrementLabel = new Label();
@@ -87,8 +87,8 @@
             CalculatorAmmunitionMagazineSizeTextBox = new TextBox();
             CalculatorAmmunitionReloadTextBox = new TextBox();
             CalculatorAmmunitionMagazineSizeCheckBox = new CheckBox();
-            label7 = new Label();
-            CalculatorSubmitBugsInquiriesLabel = new Label();
+            CalculatorOrInquiriesAtLabel = new Label();
+            CalculatorSendBugsLabel = new Label();
             CalculatorAttackGroupBox = new GroupBox();
             CalculatorAttackMAPModifierLabel = new Label();
             CalculatorAttackACLabel = new Label();
@@ -164,6 +164,13 @@
             CalculatorBatchComputeButton = new Button();
             CalculatorDamageDistributionScottPlot = new ScottPlot.FormsPlot();
             CalculatorBatchComputeScottPlot = new ScottPlot.FormsPlot();
+            CalculatorBatchComputeLayerViewControlGroupBox = new GroupBox();
+            CalculatorBatchComputeLayerViewControlStepSelectLabel = new Label();
+            CalculatorBatchComputeLayerViewControlValuesAtLayerLabel = new Label();
+            CalculatorBatchComputeLayerViewControlLayerSelectLabel = new Label();
+            CalculatorBatchComputeLayerViewControlStepSelectComboBox = new ComboBox();
+            CalculatorBatchComputeLayerViewControlValuesAtLayerListBox = new ListBox();
+            CalculatorBatchComputeLayerViewControlLayerSelectListBox = new ListBox();
             GeneratorTabPage = new TabPage();
             GeneratorGenerationSettingsGroupBox = new GroupBox();
             groupBox2 = new GroupBox();
@@ -208,6 +215,7 @@
             ((System.ComponentModel.ISupportInitialize)CalculatorBatchComputePopupEndValueNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CalculatorBatchComputePopupLayerNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CalculatorBatchComputePopupStartValueNumericUpDown).BeginInit();
+            CalculatorBatchComputeLayerViewControlGroupBox.SuspendLayout();
             GeneratorTabPage.SuspendLayout();
             groupBox2.SuspendLayout();
             GeneratorEnabledWeaponTypesGroupBox.SuspendLayout();
@@ -429,12 +437,12 @@
             CalculatorSettingsGroupBox.Controls.Add(CalculatorMiscStatisticsCalculateStatsProgressBars);
             CalculatorSettingsGroupBox.Controls.Add(CalculatorActionGroupBox);
             CalculatorSettingsGroupBox.Controls.Add(CalculatorCalculateDamageStatsButton);
-            CalculatorSettingsGroupBox.Controls.Add(label8);
+            CalculatorSettingsGroupBox.Controls.Add(CalculatorEmail2Label);
             CalculatorSettingsGroupBox.Controls.Add(CalculatorEmail1Label);
             CalculatorSettingsGroupBox.Controls.Add(CalculatorReachGroupBox);
             CalculatorSettingsGroupBox.Controls.Add(CalculatorAmmunitionGroupBox);
-            CalculatorSettingsGroupBox.Controls.Add(label7);
-            CalculatorSettingsGroupBox.Controls.Add(CalculatorSubmitBugsInquiriesLabel);
+            CalculatorSettingsGroupBox.Controls.Add(CalculatorOrInquiriesAtLabel);
+            CalculatorSettingsGroupBox.Controls.Add(CalculatorSendBugsLabel);
             CalculatorSettingsGroupBox.Controls.Add(CalculatorAttackGroupBox);
             CalculatorSettingsGroupBox.Controls.Add(CalculatorEncounterGroupBox);
             CalculatorSettingsGroupBox.Controls.Add(CalculatorTanmanGLabel);
@@ -604,16 +612,16 @@
             CalculatorActionActionsPerRoundTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
             CalculatorActionActionsPerRoundTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
             // 
-            // label8
+            // CalculatorEmail2Label
             // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label8.Location = new Point(501, 312);
-            label8.Name = "label8";
-            label8.Size = new Size(75, 15);
-            label8.TabIndex = 10;
-            label8.Text = "@gmail.com";
-            label8.TextAlign = ContentAlignment.MiddleCenter;
+            CalculatorEmail2Label.AutoSize = true;
+            CalculatorEmail2Label.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            CalculatorEmail2Label.Location = new Point(501, 312);
+            CalculatorEmail2Label.Name = "CalculatorEmail2Label";
+            CalculatorEmail2Label.Size = new Size(75, 15);
+            CalculatorEmail2Label.TabIndex = 10;
+            CalculatorEmail2Label.Text = "@gmail.com";
+            CalculatorEmail2Label.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // CalculatorEmail1Label
             // 
@@ -862,25 +870,25 @@
             CalculatorAmmunitionMagazineSizeCheckBox.UseVisualStyleBackColor = true;
             CalculatorAmmunitionMagazineSizeCheckBox.CheckedChanged += CheckBox_CheckChangedToggleTextBoxes;
             // 
-            // label7
+            // CalculatorOrInquiriesAtLabel
             // 
-            label7.AutoSize = true;
-            label7.Location = new Point(496, 281);
-            label7.Name = "label7";
-            label7.Size = new Size(82, 15);
-            label7.TabIndex = 9;
-            label7.Text = "or Inquiries at:";
-            label7.TextAlign = ContentAlignment.MiddleCenter;
+            CalculatorOrInquiriesAtLabel.AutoSize = true;
+            CalculatorOrInquiriesAtLabel.Location = new Point(496, 281);
+            CalculatorOrInquiriesAtLabel.Name = "CalculatorOrInquiriesAtLabel";
+            CalculatorOrInquiriesAtLabel.Size = new Size(82, 15);
+            CalculatorOrInquiriesAtLabel.TabIndex = 9;
+            CalculatorOrInquiriesAtLabel.Text = "or Inquiries at:";
+            CalculatorOrInquiriesAtLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // CalculatorSubmitBugsInquiriesLabel
+            // CalculatorSendBugsLabel
             // 
-            CalculatorSubmitBugsInquiriesLabel.AutoSize = true;
-            CalculatorSubmitBugsInquiriesLabel.Location = new Point(504, 266);
-            CalculatorSubmitBugsInquiriesLabel.Name = "CalculatorSubmitBugsInquiriesLabel";
-            CalculatorSubmitBugsInquiriesLabel.Size = new Size(62, 15);
-            CalculatorSubmitBugsInquiriesLabel.TabIndex = 9;
-            CalculatorSubmitBugsInquiriesLabel.Text = "Send Bugs";
-            CalculatorSubmitBugsInquiriesLabel.TextAlign = ContentAlignment.MiddleCenter;
+            CalculatorSendBugsLabel.AutoSize = true;
+            CalculatorSendBugsLabel.Location = new Point(504, 266);
+            CalculatorSendBugsLabel.Name = "CalculatorSendBugsLabel";
+            CalculatorSendBugsLabel.Size = new Size(62, 15);
+            CalculatorSendBugsLabel.TabIndex = 9;
+            CalculatorSendBugsLabel.Text = "Send Bugs";
+            CalculatorSendBugsLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // CalculatorAttackGroupBox
             // 
@@ -1496,7 +1504,7 @@
             CalculatorDefaultSettingsButton.Location = new Point(6, 408);
             CalculatorDefaultSettingsButton.Name = "CalculatorDefaultSettingsButton";
             CalculatorDefaultSettingsButton.Size = new Size(113, 27);
-            CalculatorDefaultSettingsButton.TabIndex = 4;
+            CalculatorDefaultSettingsButton.TabIndex = 5;
             CalculatorDefaultSettingsButton.Text = "Revert Default";
             CalculatorDefaultSettingsButton.UseVisualStyleBackColor = true;
             CalculatorDefaultSettingsButton.Click += DefaultSettingsButton_Click;
@@ -1518,7 +1526,7 @@
             CalculatorHelpModeButton.Location = new Point(125, 408);
             CalculatorHelpModeButton.Name = "CalculatorHelpModeButton";
             CalculatorHelpModeButton.Size = new Size(115, 27);
-            CalculatorHelpModeButton.TabIndex = 5;
+            CalculatorHelpModeButton.TabIndex = 6;
             CalculatorHelpModeButton.Text = "Enable Help Mode";
             CalculatorHelpModeButton.UseVisualStyleBackColor = true;
             CalculatorHelpModeButton.MouseClick += HelpButton_MouseClick;
@@ -1531,7 +1539,7 @@
             CalculatorVersionLabel.RightToLeft = RightToLeft.No;
             CalculatorVersionLabel.Size = new Size(138, 23);
             CalculatorVersionLabel.TabIndex = 12;
-            CalculatorVersionLabel.Text = "PFK V2.0.0-proto-7";
+            CalculatorVersionLabel.Text = "PFK V2.0.0-proto-8";
             CalculatorVersionLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // PrimaryTabControl
@@ -1560,6 +1568,7 @@
             CalculatorTabPage.Controls.Add(CalculatorMiscStatisticsGroupBox);
             CalculatorTabPage.Controls.Add(CalculatorDamageDistributionScottPlot);
             CalculatorTabPage.Controls.Add(CalculatorBatchComputeScottPlot);
+            CalculatorTabPage.Controls.Add(CalculatorBatchComputeLayerViewControlGroupBox);
             CalculatorTabPage.Location = new Point(4, 24);
             CalculatorTabPage.Name = "CalculatorTabPage";
             CalculatorTabPage.Padding = new Padding(3);
@@ -1595,7 +1604,7 @@
             CalculatorBatchComputePopupGroupBox.Location = new Point(3, 3);
             CalculatorBatchComputePopupGroupBox.Name = "CalculatorBatchComputePopupGroupBox";
             CalculatorBatchComputePopupGroupBox.Size = new Size(185, 112);
-            CalculatorBatchComputePopupGroupBox.TabIndex = 2;
+            CalculatorBatchComputePopupGroupBox.TabIndex = 8;
             CalculatorBatchComputePopupGroupBox.TabStop = false;
             CalculatorBatchComputePopupGroupBox.Text = "Batch Settings";
             // 
@@ -1726,7 +1735,7 @@
             CalculatorBatchComputeButton.Location = new Point(246, 408);
             CalculatorBatchComputeButton.Name = "CalculatorBatchComputeButton";
             CalculatorBatchComputeButton.Size = new Size(130, 27);
-            CalculatorBatchComputeButton.TabIndex = 6;
+            CalculatorBatchComputeButton.TabIndex = 7;
             CalculatorBatchComputeButton.Text = "Enable Batch Mode";
             CalculatorBatchComputeButton.UseVisualStyleBackColor = true;
             CalculatorBatchComputeButton.MouseClick += CalculatorToggleBatchComputeButton_MouseClick;
@@ -1747,6 +1756,79 @@
             CalculatorBatchComputeScottPlot.Size = new Size(358, 387);
             CalculatorBatchComputeScottPlot.TabIndex = 17;
             CalculatorBatchComputeScottPlot.Visible = false;
+            // 
+            // CalculatorBatchComputeLayerViewControlGroupBox
+            // 
+            CalculatorBatchComputeLayerViewControlGroupBox.Controls.Add(CalculatorBatchComputeLayerViewControlStepSelectLabel);
+            CalculatorBatchComputeLayerViewControlGroupBox.Controls.Add(CalculatorBatchComputeLayerViewControlValuesAtLayerLabel);
+            CalculatorBatchComputeLayerViewControlGroupBox.Controls.Add(CalculatorBatchComputeLayerViewControlLayerSelectLabel);
+            CalculatorBatchComputeLayerViewControlGroupBox.Controls.Add(CalculatorBatchComputeLayerViewControlStepSelectComboBox);
+            CalculatorBatchComputeLayerViewControlGroupBox.Controls.Add(CalculatorBatchComputeLayerViewControlValuesAtLayerListBox);
+            CalculatorBatchComputeLayerViewControlGroupBox.Controls.Add(CalculatorBatchComputeLayerViewControlLayerSelectListBox);
+            CalculatorBatchComputeLayerViewControlGroupBox.Location = new Point(612, 6);
+            CalculatorBatchComputeLayerViewControlGroupBox.Name = "CalculatorBatchComputeLayerViewControlGroupBox";
+            CalculatorBatchComputeLayerViewControlGroupBox.Size = new Size(358, 142);
+            CalculatorBatchComputeLayerViewControlGroupBox.TabIndex = 4;
+            CalculatorBatchComputeLayerViewControlGroupBox.TabStop = false;
+            CalculatorBatchComputeLayerViewControlGroupBox.Text = "Layer View Control";
+            CalculatorBatchComputeLayerViewControlGroupBox.Visible = false;
+            // 
+            // CalculatorBatchComputeLayerViewControlStepSelectLabel
+            // 
+            CalculatorBatchComputeLayerViewControlStepSelectLabel.AutoSize = true;
+            CalculatorBatchComputeLayerViewControlStepSelectLabel.Location = new Point(6, 92);
+            CalculatorBatchComputeLayerViewControlStepSelectLabel.Name = "CalculatorBatchComputeLayerViewControlStepSelectLabel";
+            CalculatorBatchComputeLayerViewControlStepSelectLabel.Size = new Size(85, 15);
+            CalculatorBatchComputeLayerViewControlStepSelectLabel.TabIndex = 21;
+            CalculatorBatchComputeLayerViewControlStepSelectLabel.Text = "Step to Display";
+            // 
+            // CalculatorBatchComputeLayerViewControlValuesAtLayerLabel
+            // 
+            CalculatorBatchComputeLayerViewControlValuesAtLayerLabel.AutoSize = true;
+            CalculatorBatchComputeLayerViewControlValuesAtLayerLabel.Location = new Point(174, 19);
+            CalculatorBatchComputeLayerViewControlValuesAtLayerLabel.Name = "CalculatorBatchComputeLayerViewControlValuesAtLayerLabel";
+            CalculatorBatchComputeLayerViewControlValuesAtLayerLabel.Size = new Size(89, 15);
+            CalculatorBatchComputeLayerViewControlValuesAtLayerLabel.TabIndex = 21;
+            CalculatorBatchComputeLayerViewControlValuesAtLayerLabel.Text = "Variables Values";
+            // 
+            // CalculatorBatchComputeLayerViewControlLayerSelectLabel
+            // 
+            CalculatorBatchComputeLayerViewControlLayerSelectLabel.AutoSize = true;
+            CalculatorBatchComputeLayerViewControlLayerSelectLabel.Location = new Point(6, 19);
+            CalculatorBatchComputeLayerViewControlLayerSelectLabel.Name = "CalculatorBatchComputeLayerViewControlLayerSelectLabel";
+            CalculatorBatchComputeLayerViewControlLayerSelectLabel.Size = new Size(35, 15);
+            CalculatorBatchComputeLayerViewControlLayerSelectLabel.TabIndex = 21;
+            CalculatorBatchComputeLayerViewControlLayerSelectLabel.Text = "Layer";
+            // 
+            // CalculatorBatchComputeLayerViewControlStepSelectComboBox
+            // 
+            CalculatorBatchComputeLayerViewControlStepSelectComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            CalculatorBatchComputeLayerViewControlStepSelectComboBox.FormattingEnabled = true;
+            CalculatorBatchComputeLayerViewControlStepSelectComboBox.Location = new Point(6, 108);
+            CalculatorBatchComputeLayerViewControlStepSelectComboBox.Name = "CalculatorBatchComputeLayerViewControlStepSelectComboBox";
+            CalculatorBatchComputeLayerViewControlStepSelectComboBox.Size = new Size(160, 23);
+            CalculatorBatchComputeLayerViewControlStepSelectComboBox.TabIndex = 2;
+            CalculatorBatchComputeLayerViewControlStepSelectComboBox.SelectionChangeCommitted += CalculatorBatchComputeLayerViewControlStepSelectComboBox_SelectionChangeCommitted;
+            // 
+            // CalculatorBatchComputeLayerViewControlValuesAtLayerListBox
+            // 
+            CalculatorBatchComputeLayerViewControlValuesAtLayerListBox.FormattingEnabled = true;
+            CalculatorBatchComputeLayerViewControlValuesAtLayerListBox.ItemHeight = 15;
+            CalculatorBatchComputeLayerViewControlValuesAtLayerListBox.Location = new Point(174, 37);
+            CalculatorBatchComputeLayerViewControlValuesAtLayerListBox.Name = "CalculatorBatchComputeLayerViewControlValuesAtLayerListBox";
+            CalculatorBatchComputeLayerViewControlValuesAtLayerListBox.Size = new Size(178, 94);
+            CalculatorBatchComputeLayerViewControlValuesAtLayerListBox.TabIndex = 18;
+            CalculatorBatchComputeLayerViewControlValuesAtLayerListBox.TabStop = false;
+            // 
+            // CalculatorBatchComputeLayerViewControlLayerSelectListBox
+            // 
+            CalculatorBatchComputeLayerViewControlLayerSelectListBox.FormattingEnabled = true;
+            CalculatorBatchComputeLayerViewControlLayerSelectListBox.ItemHeight = 15;
+            CalculatorBatchComputeLayerViewControlLayerSelectListBox.Location = new Point(6, 37);
+            CalculatorBatchComputeLayerViewControlLayerSelectListBox.Name = "CalculatorBatchComputeLayerViewControlLayerSelectListBox";
+            CalculatorBatchComputeLayerViewControlLayerSelectListBox.Size = new Size(160, 49);
+            CalculatorBatchComputeLayerViewControlLayerSelectListBox.TabIndex = 1;
+            CalculatorBatchComputeLayerViewControlLayerSelectListBox.SelectedIndexChanged += CalculatorBatchComputeLayerViewControlLayerSelectListBox_SelectedIndexChanged;
             // 
             // GeneratorTabPage
             // 
@@ -1950,7 +2032,7 @@
             label1.RightToLeft = RightToLeft.No;
             label1.Size = new Size(178, 23);
             label1.TabIndex = 12;
-            label1.Text = "PFK V2.0.0-proto-7";
+            label1.Text = "PFK V2.0.0-proto-8";
             label1.TextAlign = ContentAlignment.MiddleRight;
             // 
             // button5
@@ -2014,6 +2096,8 @@
             ((System.ComponentModel.ISupportInitialize)CalculatorBatchComputePopupEndValueNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)CalculatorBatchComputePopupLayerNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)CalculatorBatchComputePopupStartValueNumericUpDown).EndInit();
+            CalculatorBatchComputeLayerViewControlGroupBox.ResumeLayout(false);
+            CalculatorBatchComputeLayerViewControlGroupBox.PerformLayout();
             GeneratorTabPage.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
@@ -2117,7 +2201,7 @@
         private TextBox CalculatorAttackBonusToHitTextBox;
         private ErrorProvider CalculatorErrorProvider;
         private Label CalculatorEmail1Label;
-        private Label CalculatorSubmitBugsInquiriesLabel;
+        private Label CalculatorSendBugsLabel;
         private Label CalculatorTanmanGLabel;
         private Label CalculatorDevelopedByLabel;
         private ToolTip CalculatorHelpToolTip;
@@ -2178,10 +2262,17 @@
         private NumericUpDown CalculatorBatchComputePopupLayerNumericUpDown;
         private Label CalculatorBatchComputePopupLayerLabel;
         private Button CalculatorBatchComputePopupSaveButton;
-        private Label label8;
-        private Label label7;
+        private Label CalculatorEmail2Label;
+        private Label CalculatorOrInquiriesAtLabel;
         private Label CalculatorEMELabel;
         private TextBox CalculatorBatchComputePopupStepPatternTextBox;
         private ScottPlot.FormsPlot CalculatorBatchComputeScottPlot;
+        private GroupBox CalculatorBatchComputeLayerViewControlGroupBox;
+        private ComboBox CalculatorBatchComputeLayerViewControlStepSelectComboBox;
+        private ListBox CalculatorBatchComputeLayerViewControlLayerSelectListBox;
+        private Label CalculatorBatchComputeLayerViewControlStepSelectLabel;
+        private Label CalculatorBatchComputeLayerViewControlLayerSelectLabel;
+        private ListBox CalculatorBatchComputeLayerViewControlValuesAtLayerListBox;
+        private Label CalculatorBatchComputeLayerViewControlValuesAtLayerLabel;
     }
 }

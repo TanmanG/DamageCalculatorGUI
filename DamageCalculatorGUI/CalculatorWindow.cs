@@ -21,7 +21,7 @@ namespace DamageCalculatorGUI
         // Damage Stats Struct
         public DamageStats damageStats = new();
         public BatchResults damageStats_BATCH = new();
-        public int[] batch_selected_variables = new[] { 0 };
+        public List<int> batch_view_selected_steps = new() { 0 };
 
         // Already Running a Sim
         private static bool computing_damage = false;
@@ -132,6 +132,7 @@ namespace DamageCalculatorGUI
         // Batch Setting, represents the batch configuration for the given value.
         public struct BatchModeSettings
         {
+            public EncounterSetting encounterSetting;
             public int layer; // What layer to scale on. Equal means both iterate simultaneously, below means will iterate once every other layer finishes.
             public int start; // Initial value
             public int end; // End value 
@@ -146,8 +147,9 @@ namespace DamageCalculatorGUI
             public bool bleed;
             public bool critical;
 
-            public BatchModeSettings(int layer, int start, int end, List<int> steps, bool bleed = false, int index = -1, DieField die_field = DieField.count, bool critical = false)
+            public BatchModeSettings(int layer, int start, int end, List<int> steps, bool bleed = false, int index = -1, DieField die_field = DieField.count, bool critical = false, EncounterSetting encounterSetting = default)
             {
+                this.encounterSetting = encounterSetting;
                 this.layer = layer;
                 this.start = start;
                 this.end = end;
@@ -162,6 +164,13 @@ namespace DamageCalculatorGUI
                 number_of_steps = 0;
 
                 step_direction = Math.Sign(steps.Sum()); // Compute overall direction of the steps list
+
+
+                // Check it's safe to compute
+                CheckBatchLogicSafety(this);
+
+                // Compute the base step direction.
+                GetValueAtStep();
             }
 
             public int GetValueAtStep(int target_step = -1)
@@ -215,7 +224,7 @@ namespace DamageCalculatorGUI
 
 
                 if (target_step == -1)
-                    number_of_steps = currentStep;
+                    this.number_of_steps = currentStep;
 
                 return valueAtTargetStep;
             }
@@ -271,6 +280,8 @@ namespace DamageCalculatorGUI
         }
         EncounterSettings currEncounterSettings = new();
 
+        public Dictionary<int, List<BatchModeSettings>> layerViewControlEncounterSettings = new();
+
         // BASE LOAD FUNCTIONS
         //
         public CalculatorWindow()
@@ -317,7 +328,7 @@ namespace DamageCalculatorGUI
                     return;
 
                 // Update Data
-                //try
+                try
                 { // Check for exception
                     CheckComputeSafety();
 
@@ -334,12 +345,28 @@ namespace DamageCalculatorGUI
                         Progress<int> progress = new();
                         progress.ProgressChanged += SetProgressBar;
 
+                        // Compute all variables
                         damageStats_BATCH = await ComputeAverageDamage_BATCH(encounter_settings: currEncounterSettings,
                                                                             binned_compute_layers: binned_compute_layers,
                                                                             maxSteps: maxSteps,
                                                                             batched_variables: batched_variables,
                                                                             progress: progress);
 
+                        int numberOfLayers = batched_variables
+                                        .SelectMany(encounterSetting => encounterSetting.Value)
+                                        .GroupBy(blindEncounterSetting => blindEncounterSetting.Value.layer)
+                                        .Distinct()
+                                        .Count();
+
+                        // Reset the viewed index list
+                        batch_view_selected_steps.Clear();
+                        batch_view_selected_steps.AddRange(Enumerable.Repeat(element: 0, numberOfLayers));
+
+                        // Adjust the graph size
+                        SetBatchGraphSizeSmall(numberOfLayers > 1);
+                        SetBatchLayerViewControlVisibility(numberOfLayers > 1);
+
+                        // Update the graph
                         UpdateBatchGraph(damageStats_BATCH);
                     }
                     else
@@ -375,14 +402,14 @@ namespace DamageCalculatorGUI
                     // Visually Update Graphs
                     CalculatorBatchComputeScottPlot.Render();
                     CalculatorDamageDistributionScottPlot.Render();
-                }/*
+                }
                 // To-Do: REMOVE THIS WHEN TESTING IS FINISHED
                 catch (Exception ex)
                 { // Exception caught!
                     computing_damage = false;
                     PushErrorMessages(ex);
                     return;
-                }*/
+                }
             }
             else
             {
@@ -1030,7 +1057,7 @@ namespace DamageCalculatorGUI
                     return int.TryParse(textBox.Text, out int result) ? result : GetDefaultSettingByControl(control);
                 case NumericUpDown numericUpDown:
                     return (int)numericUpDown.Value;
-                case ListBox listBox: // To-do: Fix this not properly getting die values???
+                case ListBox listBox: // To-do: Fix this not properly getting die values??? Oh I think it may because straight parsing doesn't work here hurr durr
                     return listBox.Items.Count > index ? int.Parse((string)listBox.Items[index]) : GetDefaultSettingByControl(control);
                 case CheckBox checkBox:
                     return checkBox.Checked ? 1 : 0;
@@ -1209,23 +1236,23 @@ namespace DamageCalculatorGUI
             // Clear the Plot
             CalculatorBatchComputeScottPlot.Plot.Clear();
 
-            batch_results.processed_data = UpdateBatchGraph_PROCESS_DATA_ARR(batch_results, new int[1]);
-            UpdateBatchGraph_RENDER_GRAPH(batch_results, batch_selected_variables);
+            batch_results.processed_data = UpdateBatchGraph_PROCESS_DATA_ARR(batch_results, batch_view_selected_steps.ToArray());
+            UpdateBatchGraph_RENDER_GRAPH(batch_results, batch_view_selected_steps.ToArray());
         }
         private static double[,] UpdateBatchGraph_PROCESS_DATA_ARR(BatchResults batch_results, int[] batch_selected)
         {
             // To-Do: Add render dims for selecting the layer
             Array pulledLayer = HelperFunctions.GetSubArray(original_array: batch_results.raw_data, index_extracted: batch_selected);
             // Create the surface graph array as wide as the highest damage and as tall as the number of scaling variables
-            double[,] processed_data = new double[batch_results.raw_data.GetLength(batch_selected.Length - 1), batch_results.max_width];
+            double[,] processed_data = new double[batch_results.raw_data.GetLength(batch_results.raw_data.Rank - 1), batch_results.max_width];
 
-            int[] currIndex = new int[batch_results.raw_data.Rank];
+            int currIndex;
 
             // Iterate to convert each horizonal entry
             for (int currRow = 0; currRow < processed_data.GetLength(0); currRow++)
             {
                 // Set the current data column
-                currIndex[^1] = currRow;
+                currIndex = currRow;
                 // Store a copy of the cu
                 // Store a reference to the current row being expanded
                 Dictionary<int, int> currentStatsBlock = ((DamageStats)pulledLayer.GetValue(currIndex)).damage_bins;
@@ -1281,18 +1308,59 @@ namespace DamageCalculatorGUI
                                     .Cast<Dictionary<EncounterSetting, int>>()
                                     .ToList();
 
-            // Combine each batched variable into the Y-axis label
-            // To-do: Group tick_values by each List<int> rows, then this should in theory be working
-            CalculatorBatchComputeScottPlot.Plot.YAxis.Label(string.Join(values: tick_values
-                                                                            .First()
-                                                                            .Select(x => setting_to_string[x.Key]),
-                                                                        separator: ", "));
+            // FILTER OUT Y-AXIS STATIC VARIABLES
+            tick_values.First().ToList().ForEach(baseKVP =>
+            {
+                // Check each tick variable in an arbitrary tick (as all ticks will have every variable in theory)
+                if (tick_values.All(tickValueDict => tickValueDict[baseKVP.Key] == baseKVP.Value))
+                { // If every dictionary has the same value for the checked tick variable, remove it from all dictionaries
+                    tick_values.ForEach(iteratedKVP => iteratedKVP.Remove(baseKVP.Key));
+                }
+            });
 
+            // COMBINE SHORT ENOUGH Y-LABELS
+            // Combine each batched variable into the Y-axis label
+            int maxLength = 26; // set the maximum length here
+            int numberOfLabelLines = 1; // Track number of lines being made
+            int currentLineLength = 0;
+            string labelStringSeparator = ", "; // Create a separator between each variable
+            string labelString = ""; // Create an initial label string to concatenate to
+
+            // Get a single string of each variable
+            foreach (var tickValue in tick_values.First())
+            {
+                string settingString = setting_to_string[tickValue.Key];
+                if (currentLineLength + settingString.Length > maxLength)
+                { // Current Line is too long, wrapping!
+                    labelString += "\n"; // Wrap the string around
+                    numberOfLabelLines++; // Increase number of lines
+                    currentLineLength = settingString.Length; // Reset the current line length
+                }
+                else
+                { // Current Line isn't long enough to reset!
+                    currentLineLength += settingString.Length; // Increase the current line length by the new string
+                }
+                // Store the current string.
+                labelString += settingString + labelStringSeparator;
+            }
+            // Remove the trailing separator
+            if (labelString.EndsWith(labelStringSeparator))
+            {
+                labelString = labelString[..^labelStringSeparator.Length];
+            }
+
+            // Apply the label
+            CalculatorBatchComputeScottPlot.Plot.YAxis.Label(labelString);
+            // Style size down, with a floor size of 8
+            CalculatorBatchComputeScottPlot.Plot.YAxis.LabelStyle(fontSize: 16 / numberOfLabelLines + 6);
+
+            // Concatenate and assign y-tick values
             CalculatorBatchComputeScottPlot.Plot.YTicks(positions: Enumerable.Range(0, batch_results.dimensions[^1]).Select(x => x + 0.5).ToArray(),
                                                         labels: tick_values
-                                                                    .Select(x => string.Join(values: x.Values.Select(y => y.ToString()),
-                                                                                                separator: ", ")).ToArray());
-
+                                                                    .Select(x => string.Join(values: x.Values
+                                                                                                .Select(y => y.ToString()),
+                                                                                             separator: ", ")).ToArray());
+            // Label the x-axis
             CalculatorBatchComputeScottPlot.Plot.XAxis.Label("Encounter Damage");
 
             // Set the camera/axis limits
@@ -1300,6 +1368,8 @@ namespace DamageCalculatorGUI
                                                                yMin: 0, yMax: batch_results.dimensions[^1]);
             CalculatorBatchComputeScottPlot.Plot.SetOuterViewLimits(xMin: 0, xMax: batch_results.max_width,
                                                                     yMin: 0, yMax: batch_results.dimensions[^1]);
+
+            // To-do: Figure out why the graph is fucked on it's initial rescale????
 
             // Add & Configure the color bar
             var addedColorBar = CalculatorBatchComputeScottPlot.Plot.AddColorbar(addedHeatmap);
@@ -1869,10 +1939,6 @@ namespace DamageCalculatorGUI
         }
 
         // DAMAGE BUTTONS
-        private void DamageEditButton_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
         private void DamageDeleteButton_MouseClick(object sender, MouseEventArgs e)
         {
             int index = CalculatorDamageListBox.SelectedIndex;
@@ -1999,6 +2065,7 @@ namespace DamageCalculatorGUI
             Tuple<Tuple<int, int, int>, Tuple<int, int, int>> currDamageDie = new(values.Item1, values.Item2);
             Tuple<Tuple<int, int, int>, Tuple<int, int, int>> currBleedDie = new(values.Item3, values.Item4);
 
+            // To-do: Add asterisks to respective fields on batch mode enabled
             string entryString = CreateDamageListBoxString(currDamageDie, currBleedDie);
 
             // Add the new string to the list
@@ -2283,24 +2350,21 @@ namespace DamageCalculatorGUI
         // Batch Menu Buttons
         private void CalculatorBatchComputePopupXButton_Click(object sender, EventArgs e)
         { // Close/Discard the current batch settings
-            SetControlAsBatched(control: batch_mode_selected, batched: false, index: (int)control_hash_to_setting[batch_mode_selected.GetHashCode()] >= 21
-                                                                                        ? CalculatorDamageListBox.SelectedIndex
-                                                                                        : -1);
+            SetControlAsBatched(control: batch_mode_selected,
+                                batched: false,
+                                index: (int)control_hash_to_setting[batch_mode_selected.GetHashCode()] >= 21
+                                                    ? CalculatorDamageListBox.SelectedIndex
+                                                    : -1);
             HideBatchPopup();
         }
         private void CalculatorBatchComputePopupSaveButton_Click(object sender, EventArgs e)
         { // Save the current batch settings
-            //try
+            try
             { // Try and store 
                 CheckBatchParseSafety();
 
                 BatchModeSettings settings = ReadBatchSettings();
 
-                // Check it's safe to compute
-                CheckBatchLogicSafety(settings);
-
-                // Process the step value after confirming it's safe
-                settings.GetValueAtStep();
 
                 // Check if currently on a list value
                 int index = (int)control_hash_to_setting[batch_mode_selected.GetHashCode()] >= 21
@@ -2315,11 +2379,11 @@ namespace DamageCalculatorGUI
 
                 // Clear the no-batched-variables error
                 ClearError(CalculatorBatchComputeButton);
-            }/*
+            }
             catch (Exception ex)
             {
                 PushBatchErrorMessages(ex);
-            }*/
+            }
         }
 
         // Batch Interaction
@@ -2327,7 +2391,7 @@ namespace DamageCalculatorGUI
         {
             if (batch_mode_enabled)
             {
-                // Store the casted control to improve performance
+                // Store the casted control to save excessive casting
                 Control control = sender as Control;
 
                 // Move the popup
@@ -2336,29 +2400,29 @@ namespace DamageCalculatorGUI
 
                 // Get the setting reference
                 EncounterSetting encounterSetting = control_hash_to_setting[control.GetHashCode()];
+                // Either store or default the selected index
                 int index = (int)encounterSetting >= 21
                                         ? CalculatorDamageListBox.SelectedIndex
                                         : -1;
 
-                if (batched_variables.TryGetValue(encounterSetting, out var settings) && CalculatorDamageListBox.SelectedIndex != -1 && settings.ContainsKey(CalculatorDamageListBox.SelectedIndex))
-                { // Loaded the batch variable
-
+                // Check if this particular variable at this index has been batched before
+                if (batched_variables.TryGetValue(encounterSetting, out var settings) && settings.ContainsKey(index))  // If this encounter setting has been batched
+                { // Load the batch variable that's already set
                     // Load variables to the popup
                     LoadSettingsToBatchComputePopup(settings, CalculatorDamageListBox.SelectedIndex);
 
-                    // Remove the old value from the list
-                    if (batched_variables.TryGetValue(encounterSetting, out var batchedVariableDict))
-                    {
-                        batchedVariableDict.Remove(index);
-                    }
-                    else
+                    // Remove the old value from this encounter dictionary
+                    settings.Remove(index);
+
+                    // Remove the dictionary if it's empty
+                    if (settings.Count == 0)
                     {
                         batched_variables.Remove(encounterSetting);
                     }
                 }
                 else
-                {
-                    // Store the value to being batched
+                { // Store the last value of the variable being batched
+                    // Check if an encounterSetting of this type has been batched yet
                     if (batched_variables_last_value.TryGetValue(encounterSetting, out var last_value_dict))
                     {
                         last_value_dict.Add(index, GetValueFromControl(control));
@@ -2375,7 +2439,8 @@ namespace DamageCalculatorGUI
         private BatchModeSettings ReadBatchSettings()
         {
             bool isDamageDie = setting_to_info.TryGetValue(control_hash_to_setting[batch_mode_selected.GetHashCode()], out var value);
-            BatchModeSettings return_setting = new(layer: (int)CalculatorBatchComputePopupLayerNumericUpDown.Value,
+            BatchModeSettings return_setting = new(encounterSetting: control_hash_to_setting[batch_mode_selected.GetHashCode()],
+                                                    layer: (int)CalculatorBatchComputePopupLayerNumericUpDown.Value,
                                                     start: (int)CalculatorBatchComputePopupStartValueNumericUpDown.Value,
                                                     end: (int)CalculatorBatchComputePopupEndValueNumericUpDown.Value,
                                                     steps: GetIntListFromCommaString(CalculatorBatchComputePopupStepPatternTextBox.Text),
@@ -2457,29 +2522,120 @@ namespace DamageCalculatorGUI
                 // Unlock the Input on the Field
                 SetFieldAsLocked(control: control, locked: false, setting: encounterSetting, index: index);
 
-                // Remove the batched variable.
-                if (batched_variables.TryGetValue(encounterSetting, out var batchedVariableDict))
+                // Remove the encounterSetting batch settings
+                if (batched_variables.TryGetValue(encounterSetting, out var encounterDict))
                 {
-                    batchedVariableDict.Remove(index);
-                }
-                else
-                {
-                    batched_variables.Remove(encounterSetting);
+                    encounterDict.Remove(index);
+                    if (encounterDict.Count == 0)
+                    { // Delete the encounterSetting dictionary if it was the last one
+                        batched_variables.Remove(encounterSetting);
+                    }
                 }
 
-                // Remove the old last-value.
-                if (batched_variables_last_value.TryGetValue(encounterSetting, out var lastVariableDict))
-                {
-                    lastVariableDict.Remove(index);
-                }
-                else
-                {
+
+                // Remove the encounterSetting last value
+                batched_variables_last_value[encounterSetting].Remove(index);
+                if (batched_variables_last_value[encounterSetting].Count == 0)
+                { // Delete the encounterSetting last value dictionary if it was the last one
                     batched_variables_last_value.Remove(encounterSetting);
                 }
 
                 // Update visuals on Unbatched Control
                 batch_mode_selected.BackColor = SystemColors.Window;
             }
+        }
+        private void SetBatchGraphSizeSmall(bool state)
+        {
+            if (state)
+            {
+                // Adjust graph size to accomodate the intrusion
+                CalculatorBatchComputeScottPlot.Height = 250;
+                CalculatorBatchComputeScottPlot.Location = new(CalculatorBatchComputeScottPlot.Location.X, 157);
+            }
+            else
+            {
+                // Adjust graph size to fill the gap
+                CalculatorBatchComputeScottPlot.Height = 387;
+                CalculatorBatchComputeScottPlot.Location = new(CalculatorBatchComputeScottPlot.Location.X, 15);
+            }
+        }
+        private void SetBatchLayerViewControlVisibility(bool state)
+        { // Show/Hide the Batch Layer View Control menu
+            if (state)
+            { // Show the graph layer selection menu
+
+                // Show the layer view controls
+                CalculatorBatchComputeLayerViewControlGroupBox.Visible = true;
+
+                // REPOPULATE LAYER CONTROL MENU
+
+                // Get each variable by layer
+                Dictionary<int, List<BatchModeSettings>> layerGroupedBatchVariables = batched_variables.Values
+                                .SelectMany(batchSettingsForEncounterSetting => batchSettingsForEncounterSetting.Values)
+                                .GroupBy(batchSetting => batchSetting.layer) // Group settings by layer
+                                .ToDictionary(sortedLayerGroup => sortedLayerGroup.Key, sortedLayerGroup => sortedLayerGroup.ToList()); // Create a dictionary by each layer
+
+                // Highest/Fastest Iterated Layer
+                int topLayer = layerGroupedBatchVariables.MaxBy(layerDict => layerDict.Key).Key;
+                // Lowest/Slowest Iterated Layer
+                int botLayer = layerGroupedBatchVariables.MinBy(layerDict => layerDict.Key).Key;
+
+                // Iterate through each layer
+                foreach (var layerGroup in layerGroupedBatchVariables.OrderBy(layer => layer.Key))
+                { // Populate the controls menu with the layer's variables
+                    int currentLayer = layerGroup.Key;
+                    // Repopulate only if not on the fastest iterated layer
+                    if (currentLayer != topLayer)
+                    {
+                        // FIRST LAYER LOGIC
+                        if (currentLayer == botLayer)
+                        { // Clear the old values from the layer selection and the value tracking window
+                            CalculatorBatchComputeLayerViewControlLayerSelectListBox.Items.Clear();
+                            layerViewControlEncounterSettings.Clear();
+                        }
+
+                        // LAYER LOGIC
+                        // Add a new entry for when changing the edited layer at run-time
+                        CalculatorBatchComputeLayerViewControlLayerSelectListBox.Items.Add("Layer " + currentLayer);
+                        layerViewControlEncounterSettings.Add(currentLayer, layerGroup.Value);
+                    }
+                }
+
+                // Set the default selections for the layer view control
+                CalculatorBatchComputeLayerViewControlLayerSelectListBox.SelectedIndex = 0;
+                SetBatchComputeLayerSelectionOnVariables(selectedLayer: 0);
+                SetBatchComputeLayerSelectionOnStep(selectedLayer: 0);
+            }
+            else
+            { // Hide the graph layer selection menu
+                // Hide the layer view controls
+                CalculatorBatchComputeLayerViewControlGroupBox.Visible = false;
+            }
+
+        }
+        private void SetBatchComputeLayerSelectionOnVariables(int selectedLayer)
+        { // Repopulate the menu with the respective values
+            // Repopulate the Variable Values
+            CalculatorBatchComputeLayerViewControlValuesAtLayerListBox.Items.Clear();
+            CalculatorBatchComputeLayerViewControlValuesAtLayerListBox
+                .Items.AddRange(layerViewControlEncounterSettings[selectedLayer]
+                                .Select(batchSetting => setting_to_string[batchSetting.encounterSetting] // EncounterSetting
+                                            + ((batchSetting.index == -1) ? string.Empty // Index (if applicable)
+                                                                         : " (Damage Die #" + batchSetting.index + 1 + ")")
+                                            + " : " + batchSetting.GetValueAtStep(batch_view_selected_steps[selectedLayer])) // Value
+                    .ToArray());
+        }
+        private void SetBatchComputeLayerSelectionOnStep(int selectedLayer)
+        {
+            // Repopulate the Step Selection Options
+            CalculatorBatchComputeLayerViewControlStepSelectComboBox.Items.Clear();
+            CalculatorBatchComputeLayerViewControlStepSelectComboBox
+                    .Items.AddRange(Enumerable.Range(0, layerViewControlEncounterSettings[selectedLayer]
+                                    .Max(batchSetting => batchSetting.number_of_steps) + 1)
+                                    .Select(stepValue => "Step #" + stepValue)
+                                    .ToArray());
+            // Default the selected index to the first
+            CalculatorBatchComputeLayerViewControlStepSelectComboBox.SelectedIndex = 0;
         }
 
         // BATCH COMPUTATION ERROR CHECKING
@@ -2550,17 +2706,15 @@ namespace DamageCalculatorGUI
 
         // Batch Computation
         public static async Task<BatchResults> ComputeAverageDamage_BATCH(EncounterSettings encounter_settings,
-                                                            SortedDictionary<int, List<Tuple<EncounterSetting,
-                                                            Dictionary<int, BatchModeSettings>>>> binned_compute_layers,
-                                                            int[] maxSteps,
-                                                            Dictionary<EncounterSetting, Dictionary<int, BatchModeSettings>> batched_variables,
-                                                            IProgress<int> progress)
+                                                        SortedDictionary<int, List<Tuple<EncounterSetting, Dictionary<int, BatchModeSettings>>>> binned_compute_layers,
+                                                        int[] maxSteps,
+                                                        Dictionary<EncounterSetting, Dictionary<int, BatchModeSettings>> batched_variables,
+                                                        IProgress<int> progress)
         {
 
             // Declare & Initialize the return value
             BatchResults batch_results = new();
 
-            // To-Do: Fix batch compute not working with any layers. Crashes halfway in?
             // COMPUTATION FLAGS
 
             // Set the flag for actively computing damage
@@ -3054,6 +3208,28 @@ namespace DamageCalculatorGUI
                     numericUpDown.Value = batched_variables_last_value[setting][index];
                 }
             }
+        }
+
+        private void CalculatorBatchComputeLayerViewControlLayerSelectListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Populate each box with the selected value
+            SetBatchComputeLayerSelectionOnVariables(CalculatorBatchComputeLayerViewControlLayerSelectListBox.SelectedIndex);
+            SetBatchComputeLayerSelectionOnStep(CalculatorBatchComputeLayerViewControlLayerSelectListBox.SelectedIndex);
+        }
+
+        private void CalculatorBatchComputeLayerViewControlStepSelectComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            // Update the selected index
+            batch_view_selected_steps[CalculatorBatchComputeLayerViewControlLayerSelectListBox.SelectedIndex] = CalculatorBatchComputeLayerViewControlStepSelectComboBox.SelectedIndex;
+
+            // Update the variable values-at-current-step.
+            SetBatchComputeLayerSelectionOnVariables(CalculatorBatchComputeLayerViewControlLayerSelectListBox.SelectedIndex);
+
+            // Reload the graph with the newly selected variable results
+            UpdateBatchGraph(damageStats_BATCH);
+
+            // Visually Update The Graph
+            CalculatorBatchComputeScottPlot.Render();
         }
     }
 }
