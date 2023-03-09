@@ -1276,7 +1276,7 @@ namespace DamageCalculatorGUI
         private void UpdateBatchGraph_RENDER_GRAPH(BatchResults batch_results, int[] batch_selected)
         {
             // Render the Plot
-            var addedHeatmap = CalculatorBatchComputeScottPlot.Plot.AddHeatmap(batch_results.processed_data);
+            var addedHeatmap = CalculatorBatchComputeScottPlot.Plot.AddHeatmap(batch_results.processed_data, lockScales: false);
 
             // Configure the Plot
             addedHeatmap.FlipVertically = true;
