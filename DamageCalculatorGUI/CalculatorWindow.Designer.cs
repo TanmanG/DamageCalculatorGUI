@@ -143,7 +143,6 @@
             CalculatorDefaultSettingsButton = new Button();
             CalculatorErrorProvider = new ErrorProvider(components);
             CalculatorHelpToolTip = new ToolTip(components);
-            CalculatorHelpModeButton = new Button();
             CalculatorVersionLabel = new Label();
             PrimaryTabControl = new TabControl();
             CalculatorTabPage = new TabPage();
@@ -191,7 +190,6 @@
             label3 = new Label();
             checkedListBox1 = new CheckedListBox();
             label1 = new Label();
-            button5 = new Button();
             button6 = new Button();
             CalculatorMiscStatisticsGroupBox.SuspendLayout();
             CalculatorEncounterStatisticsGroupBox.SuspendLayout();
@@ -329,7 +327,7 @@
             // 
             CalculatorBCLGLabel.AutoSize = true;
             CalculatorBCLGLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            CalculatorBCLGLabel.Location = new Point(454, 405);
+            CalculatorBCLGLabel.Location = new Point(331, 405);
             CalculatorBCLGLabel.Name = "CalculatorBCLGLabel";
             CalculatorBCLGLabel.Size = new Size(176, 15);
             CalculatorBCLGLabel.TabIndex = 16;
@@ -341,7 +339,7 @@
             // 
             CalculatorWarningLabel.AutoSize = true;
             CalculatorWarningLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            CalculatorWarningLabel.Location = new Point(382, 410);
+            CalculatorWarningLabel.Location = new Point(259, 410);
             CalculatorWarningLabel.Name = "CalculatorWarningLabel";
             CalculatorWarningLabel.Size = new Size(72, 21);
             CalculatorWarningLabel.TabIndex = 15;
@@ -604,7 +602,7 @@
             // CalculatorActionActionsPerRoundTextBox
             // 
             CalculatorActionActionsPerRoundTextBox.Location = new Point(6, 34);
-            CalculatorActionActionsPerRoundTextBox.MaxLength = 6;
+            CalculatorActionActionsPerRoundTextBox.MaxLength = 3;
             CalculatorActionActionsPerRoundTextBox.Name = "CalculatorActionActionsPerRoundTextBox";
             CalculatorActionActionsPerRoundTextBox.Size = new Size(161, 23);
             CalculatorActionActionsPerRoundTextBox.TabIndex = 0;
@@ -1521,16 +1519,6 @@
             CalculatorHelpToolTip.InitialDelay = 0;
             CalculatorHelpToolTip.ReshowDelay = 0;
             // 
-            // CalculatorHelpModeButton
-            // 
-            CalculatorHelpModeButton.Location = new Point(125, 408);
-            CalculatorHelpModeButton.Name = "CalculatorHelpModeButton";
-            CalculatorHelpModeButton.Size = new Size(115, 27);
-            CalculatorHelpModeButton.TabIndex = 6;
-            CalculatorHelpModeButton.Text = "Enable Help Mode";
-            CalculatorHelpModeButton.UseVisualStyleBackColor = true;
-            CalculatorHelpModeButton.MouseClick += HelpButton_MouseClick;
-            // 
             // CalculatorVersionLabel
             // 
             CalculatorVersionLabel.ForeColor = Color.Gray;
@@ -1539,7 +1527,7 @@
             CalculatorVersionLabel.RightToLeft = RightToLeft.No;
             CalculatorVersionLabel.Size = new Size(138, 23);
             CalculatorVersionLabel.TabIndex = 12;
-            CalculatorVersionLabel.Text = "PFK V2.0.0-proto-8";
+            CalculatorVersionLabel.Text = "PFK V2.0.0-proto-10";
             CalculatorVersionLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // PrimaryTabControl
@@ -1561,7 +1549,6 @@
             CalculatorTabPage.Controls.Add(CalculatorBatchComputeButton);
             CalculatorTabPage.Controls.Add(CalculatorVersionLabel);
             CalculatorTabPage.Controls.Add(CalculatorSettingsGroupBox);
-            CalculatorTabPage.Controls.Add(CalculatorHelpModeButton);
             CalculatorTabPage.Controls.Add(CalculatorDefaultSettingsButton);
             CalculatorTabPage.Controls.Add(CalculatorWarningLabel);
             CalculatorTabPage.Controls.Add(CalculatorEncounterStatisticsGroupBox);
@@ -1629,6 +1616,7 @@
             // CalculatorBatchComputePopupEndValueNumericUpDown
             // 
             CalculatorBatchComputePopupEndValueNumericUpDown.Location = new Point(104, 37);
+            CalculatorBatchComputePopupEndValueNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
             CalculatorBatchComputePopupEndValueNumericUpDown.Name = "CalculatorBatchComputePopupEndValueNumericUpDown";
             CalculatorBatchComputePopupEndValueNumericUpDown.Size = new Size(74, 23);
             CalculatorBatchComputePopupEndValueNumericUpDown.TabIndex = 2;
@@ -1645,6 +1633,7 @@
             // CalculatorBatchComputePopupStartValueNumericUpDown
             // 
             CalculatorBatchComputePopupStartValueNumericUpDown.Location = new Point(6, 37);
+            CalculatorBatchComputePopupStartValueNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
             CalculatorBatchComputePopupStartValueNumericUpDown.Name = "CalculatorBatchComputePopupStartValueNumericUpDown";
             CalculatorBatchComputePopupStartValueNumericUpDown.Size = new Size(74, 23);
             CalculatorBatchComputePopupStartValueNumericUpDown.TabIndex = 1;
@@ -1722,7 +1711,7 @@
             // 
             CalculatorEMELabel.AutoSize = true;
             CalculatorEMELabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            CalculatorEMELabel.Location = new Point(454, 420);
+            CalculatorEMELabel.Location = new Point(331, 420);
             CalculatorEMELabel.Name = "CalculatorEMELabel";
             CalculatorEMELabel.Size = new Size(177, 15);
             CalculatorEMELabel.TabIndex = 16;
@@ -1732,7 +1721,7 @@
             // 
             // CalculatorBatchComputeButton
             // 
-            CalculatorBatchComputeButton.Location = new Point(246, 408);
+            CalculatorBatchComputeButton.Location = new Point(125, 408);
             CalculatorBatchComputeButton.Name = "CalculatorBatchComputeButton";
             CalculatorBatchComputeButton.Size = new Size(130, 27);
             CalculatorBatchComputeButton.TabIndex = 7;
@@ -1836,7 +1825,6 @@
             GeneratorTabPage.Controls.Add(groupBox2);
             GeneratorTabPage.Controls.Add(GeneratorEnabledWeaponTypesGroupBox);
             GeneratorTabPage.Controls.Add(label1);
-            GeneratorTabPage.Controls.Add(button5);
             GeneratorTabPage.Controls.Add(button6);
             GeneratorTabPage.Location = new Point(4, 24);
             GeneratorTabPage.Name = "GeneratorTabPage";
@@ -2032,17 +2020,8 @@
             label1.RightToLeft = RightToLeft.No;
             label1.Size = new Size(178, 23);
             label1.TabIndex = 12;
-            label1.Text = "PFK V2.0.0-proto-8";
+            label1.Text = "PFK V2.0.0-proto-10";
             label1.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // button5
-            // 
-            button5.Location = new Point(125, 408);
-            button5.Name = "button5";
-            button5.Size = new Size(115, 27);
-            button5.TabIndex = 11;
-            button5.Text = "Enable Help Mode";
-            button5.UseVisualStyleBackColor = true;
             // 
             // button6
             // 
@@ -2205,14 +2184,12 @@
         private Label CalculatorTanmanGLabel;
         private Label CalculatorDevelopedByLabel;
         private ToolTip CalculatorHelpToolTip;
-        private Button CalculatorHelpModeButton;
         private Label CalculatorVersionLabel;
         private TabControl PrimaryTabControl;
         private TabPage CalculatorTabPage;
         private ScottPlot.FormsPlot CalculatorDamageDistributionScottPlot;
         private TabPage GeneratorTabPage;
         private Label label1;
-        private Button button5;
         private Button button6;
         private GroupBox CalculatorActionGroupBox;
         private Label CalculatorActionActionsPerRoundLabel;

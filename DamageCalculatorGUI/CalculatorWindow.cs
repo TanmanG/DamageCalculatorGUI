@@ -319,6 +319,8 @@ namespace DamageCalculatorGUI
             CalculatorDamageDistributionScottPlot.Render();
         }
 
+        // To-do: Set all damage die fields to readonly/disable when not editing an index
+
         private async void CalculateDamageStatsButton_MouseClick(object sender, MouseEventArgs e)
         {
 
@@ -673,6 +675,7 @@ namespace DamageCalculatorGUI
             setting_to_checkbox.Add(EncounterSetting.engagement_range, CalculatorEncounterEngagementRangeCheckBox);
         }
 
+        // To-do: Fix string listbox string not updating when batching (use new function)
 
         // SETTINGS
         // Set the given setting
@@ -1149,7 +1152,7 @@ namespace DamageCalculatorGUI
             CalculatorAmmunitionDrawLengthTextBox.Text = encounterSettings.draw.ToString();
             CalculatorDamageListBox.Items.Clear();
             for (int dieIndex = 0; dieIndex < encounterSettings.damage_dice.Count; dieIndex++)
-                CalculatorDamageListBox.Items.Add(CreateDamageListBoxString(encounterSettings.damage_dice[dieIndex], encounterSettings.damage_dice_DOT[dieIndex]));
+                CalculatorDamageListBox.Items.Add(CreateDamageListBoxString(encounterSettings.damage_dice[dieIndex], encounterSettings.damage_dice_DOT[dieIndex], index: dieIndex));
             CalculatorAttackBonusToHitTextBox.Text = encounterSettings.bonus_to_hit.ToString();
             CalculatorAttackACTextBox.Text = encounterSettings.AC.ToString();
             CalculatorAttackCriticalHitMinimumTextBox.Text = encounterSettings.crit_threshhold.ToString();
@@ -1948,7 +1951,7 @@ namespace DamageCalculatorGUI
                 DeleteDamageDice(index);
                 if (batched_variables.Count > 0)
                 {
-                    // To-Do: Add fix for collisions from multiple scaling dice
+                    // To-do: Remove batched die variables at the given index
                 }
             }
         }
@@ -2065,77 +2068,127 @@ namespace DamageCalculatorGUI
             Tuple<Tuple<int, int, int>, Tuple<int, int, int>> currDamageDie = new(values.Item1, values.Item2);
             Tuple<Tuple<int, int, int>, Tuple<int, int, int>> currBleedDie = new(values.Item3, values.Item4);
 
-            // To-do: Add asterisks to respective fields on batch mode enabled
-            string entryString = CreateDamageListBoxString(currDamageDie, currBleedDie);
+            string entryString = CreateDamageListBoxString(currDamageDie, currBleedDie, index);
+
+            // Store the damage die in the
+            AddDamageDieToListBox(entryString);
 
             // Add the new string to the list
             if (index == -1)
             {
-                CalculatorDamageListBox.Items.Add(item: entryString); // Store the text entry
                 currEncounterSettings.damage_dice.Add(item: currDamageDie); // Store the damage
                 currEncounterSettings.damage_dice_DOT.Add(item: currBleedDie); // Store the edit_bleed damage
             }
             else
             {
-                CalculatorDamageListBox.Items.Insert(index: index, item: entryString); // Store the text entry
                 currEncounterSettings.damage_dice.Insert(index: index, item: currDamageDie); // Store the damage
                 currEncounterSettings.damage_dice_DOT.Insert(index: index, item: currBleedDie); // Store the edit_bleed damage
             }
         }
-        private static string CreateDamageListBoxString(Tuple<Tuple<int, int, int>, Tuple<int, int, int>> currDamageDie,
-                                                    Tuple<Tuple<int, int, int>, Tuple<int, int, int>> currBleedDie)
+        private void AddDamageDieToListBox(string newEntry, int index = -1)
+        {
+            if (index == -1)
+                CalculatorDamageListBox.Items.Add(item: newEntry); // Store the text entry
+            if (index == -1)
+                CalculatorDamageListBox.Items.Insert(index: index, item: newEntry); // Store the text entry
+        }
+        private void ReplaceDamageDieAtIndex(string newEntry, int index)
+        {
+            // Remove the old entry
+            CalculatorDamageListBox.Items.RemoveAt(index);
+            // Store the new entry
+            AddDamageDieToListBox(newEntry);
+        }
+        private string CreateDamageListBoxString(Tuple<Tuple<int, int, int>, Tuple<int, int, int>> currDamageDie,
+                                                    Tuple<Tuple<int, int, int>, Tuple<int, int, int>> currBleedDie,
+                                                    int index)
         {
             // Store references to each dice/bonus
-            // Add a visual entry to the GUIc
+            // Add a visual entry to the ListBox
             // Base Base Bools
             bool hasBaseBonus = currDamageDie.Item1.Item3 != 0;
             // Bleed Critical Bools
             bool hasCriticalCount = currDamageDie.Item2.Item1 != currDamageDie.Item1.Item1;
+            bool hasCriticalCountBATCHED = batched_variables.TryGetValue(EncounterSetting.damage_dice_count_critical,
+                                                                            out var criticalCountDict) && criticalCountDict.ContainsKey(index);
             bool hasCriticalSides = currDamageDie.Item2.Item2 != currDamageDie.Item1.Item2;
+            bool hasCriticalSidesBATCHED = batched_variables.TryGetValue(EncounterSetting.damage_dice_size_critical,
+                                                                            out var criticalSizeDict) && criticalSizeDict.ContainsKey(index);
             bool hasCriticalBonus = currDamageDie.Item2.Item3 != currDamageDie.Item1.Item3;
+            bool hasCriticalBonusBATCHED = batched_variables.TryGetValue(EncounterSetting.damage_dice_bonus_critical,
+                                                                            out var criticalBonusDict) && criticalBonusDict.ContainsKey(index);
             // Bleed Base Bools
             bool hasBaseBleedCount = currBleedDie.Item1.Item1 != 0;
+            bool hasBaseBleedCountBATCHED = batched_variables.TryGetValue(EncounterSetting.damage_dice_DOT_count,
+                                                                            out var bleedCountDict) && bleedCountDict.ContainsKey(index);
             bool hasBaseBleedSides = currBleedDie.Item1.Item2 != 0;
+            bool hasBaseBleedSidesBATCHED = batched_variables.TryGetValue(EncounterSetting.damage_dice_DOT_size,
+                                                                            out var bleedSizeDict) && bleedSizeDict.ContainsKey(index);
             bool hasBaseBleedBonus = currBleedDie.Item1.Item3 != 0;
+            bool hasBaseBleedBonusBATCHED = batched_variables.TryGetValue(EncounterSetting.damage_dice_DOT_bonus,
+                                                                            out var bleedBonusDict) && bleedBonusDict.ContainsKey(index);
             // Bleed Critical Bools
             bool hasCriticalBleedCount = currBleedDie.Item2.Item1 != currBleedDie.Item1.Item1;
+            bool hasCriticalBleedCountBATCHED = batched_variables.TryGetValue(EncounterSetting.damage_dice_DOT_count,
+                                                                            out var criticalBleedCountDict) && criticalBleedCountDict.ContainsKey(index);
             bool hasCriticalBleedSides = currBleedDie.Item2.Item2 != currBleedDie.Item1.Item2;
+            bool hasCriticalBleedSidesBATCHED = batched_variables.TryGetValue(EncounterSetting.damage_dice_DOT_size,
+                                                                            out var criticalBleedSizeDict) && criticalBleedSizeDict.ContainsKey(index);
             bool hasCriticalBleedBonus = currBleedDie.Item2.Item3 != currBleedDie.Item1.Item3;
+            bool hasCriticalBleedBonusBATCHED = batched_variables.TryGetValue(EncounterSetting.damage_dice_DOT_bonus,
+                                                                            out var criticalBleedBonusDict) && criticalBleedBonusDict.ContainsKey(index);
             // Store signs of each bonus
             string[] signs = new string[4] { (currDamageDie.Item1.Item3 < 0) ? "" : "+",
                                         (currDamageDie.Item2.Item3 < 0) ? "" : "+",
                                         (currBleedDie.Item1.Item3 < 0) ? "" : "+",
                                         (currBleedDie.Item2.Item3 < 0) ? "" : "+" };
 
-            // Base
+            // Base damage dice
             string entryString = currDamageDie.Item1.Item1 + "D" + currDamageDie.Item1.Item2;
             if (hasBaseBonus)
                 entryString += signs[0] + currDamageDie.Item1.Item3;
-            // Critical
+            // Critical dice
             if (hasCriticalCount || hasCriticalSides || hasCriticalBonus)
                 entryString += " ("
-                                + (hasCriticalCount ? currDamageDie.Item2.Item1.ToString() : "")
+                                + (hasCriticalCountBATCHED ? "*"
+                                                           : hasCriticalCount ? currDamageDie.Item2.Item1.ToString()
+                                                                              : "")
                                 + ((hasCriticalCount || hasCriticalSides) ? "D" : "")
-                                + (hasCriticalSides ? currDamageDie.Item2.Item2.ToString() : "")
-                                + (hasCriticalBonus ? signs[1] + currDamageDie.Item2.Item3 : "")
+                                + (hasCriticalSidesBATCHED ? "*"
+                                                           : hasCriticalSides ? currDamageDie.Item2.Item2.ToString()
+                                                                              : "")
+                                + (hasCriticalBonusBATCHED ? signs[1] + "*"
+                                                           : hasCriticalBonus ? signs[1] + currDamageDie.Item2.Item3
+                                                                              : "")
                                 + ")";
-            // Bleed
+            // Bleed dice
             if (hasBaseBleedCount || hasBaseBleedSides || hasBaseBleedBonus
                 || hasCriticalBleedCount || hasCriticalBleedSides || hasCriticalBleedBonus)
                 entryString += " 🗡 ";
-            // Base
+            // Base dice
             if (hasBaseBleedCount || hasBaseBleedSides || hasBaseBleedBonus)
-                entryString += (hasBaseBleedCount ? currBleedDie.Item1.Item1.ToString() : "")
+                entryString += (hasBaseBleedCountBATCHED ? "*"
+                                                         : hasBaseBleedCount ? currBleedDie.Item1.Item1.ToString()
+                                                                             : "")
                                 + ((hasBaseBleedCount || hasBaseBleedSides) ? "D" : "")
-                                + (hasBaseBleedSides ? currBleedDie.Item1.Item2.ToString() : "")
-                                + (hasBaseBleedBonus ? signs[2] + currBleedDie.Item1.Item3 : "");
+                                + (hasBaseBleedSidesBATCHED ? "*"
+                                                            : hasBaseBleedSides ? currBleedDie.Item1.Item2.ToString()
+                                                                                : "")
+                                + (hasBaseBleedBonusBATCHED ? "*"
+                                                            : hasBaseBleedBonus ? signs[2] + currBleedDie.Item1.Item3
+                                                                                : "");
             // Critical
             if (hasCriticalBleedCount || hasCriticalBleedSides || hasCriticalBleedBonus)
                 entryString += " ("
-                                + (hasCriticalBleedCount ? currBleedDie.Item2.Item1.ToString() : "")
+                                + (hasCriticalBleedCountBATCHED ? "*"
+                                                                : hasCriticalBleedCount ? currBleedDie.Item2.Item1.ToString()
+                                                                                        : "")
                                 + ((hasCriticalBleedCount || hasCriticalBleedSides) ? "D" : "")
-                                + (hasCriticalBleedSides ? currBleedDie.Item2.Item2.ToString() : "")
-                                + (hasCriticalBleedBonus ? signs[3] + currBleedDie.Item2.Item3 : "")
+                                + (hasCriticalBleedSidesBATCHED ? "*"
+                                                                : hasCriticalBleedSides ? currBleedDie.Item2.Item2.ToString()
+                                                                                        : "")
+                                + (hasCriticalBleedBonusBATCHED ? "*"
+                                                                : hasCriticalBleedBonus ? signs[3] + currBleedDie.Item2.Item3 : "")
                                 + ")";
 
             return entryString;
@@ -2176,19 +2229,6 @@ namespace DamageCalculatorGUI
         // MOUSE
         //
 
-        // HELP BUTTON
-        private void HelpButton_MouseClick(object sender, MouseEventArgs e)
-        {
-            // Toggle Help Mode
-            SetHelpMode(!help_mode_enabled);
-            UpdateMouse();
-        }
-        private void SetHelpMode(bool mode)
-        {
-            help_mode_enabled = mode;
-            CalculatorHelpModeButton.Text = mode ? "Disable Help Mode"
-                                                 : "Enable Help Mode";
-        }
         // MOUSE APPEARANCE
         private enum MouseAppearance
         {
@@ -2215,7 +2255,6 @@ namespace DamageCalculatorGUI
                 if (batch_mode_enabled)
                     // Disable Help Mode
                     SetMouse(MouseAppearance.BatchHelpOff);
-
                 else
                     // Disable Regular Help Mode
                     SetMouse(MouseAppearance.NormalHelpOff);
@@ -2245,10 +2284,7 @@ namespace DamageCalculatorGUI
         }
         private void Control_MouseHoverShowTooltip(object sender, EventArgs e)
         {
-            if (help_mode_enabled)
-            {
-                CalculatorHelpToolTip.SetToolTip(sender as Control, label_hashes_help[sender.GetHashCode()]);
-            }
+            CalculatorHelpToolTip.SetToolTip(sender as Control, label_hashes_help[sender.GetHashCode()]);
         }
 
         // PROGRESS BAR
@@ -2352,9 +2388,10 @@ namespace DamageCalculatorGUI
         { // Close/Discard the current batch settings
             SetControlAsBatched(control: batch_mode_selected,
                                 batched: false,
-                                index: (int)control_hash_to_setting[batch_mode_selected.GetHashCode()] >= 21
+                                index: CheckControlIsDamageDie(control_hash_to_setting[batch_mode_selected.GetHashCode()])
                                                     ? CalculatorDamageListBox.SelectedIndex
                                                     : -1);
+
             HideBatchPopup();
         }
         private void CalculatorBatchComputePopupSaveButton_Click(object sender, EventArgs e)
@@ -2365,11 +2402,22 @@ namespace DamageCalculatorGUI
 
                 BatchModeSettings settings = ReadBatchSettings();
 
-
+                // Store the encouner setting to avoid recasting
+                EncounterSetting encounterSetting = control_hash_to_setting[batch_mode_selected.GetHashCode()];
                 // Check if currently on a list value
-                int index = (int)control_hash_to_setting[batch_mode_selected.GetHashCode()] >= 21
+                int index = CheckControlIsDamageDie(encounterSetting)
                                     ? CalculatorDamageListBox.SelectedIndex
                                     : -1;
+
+                // Check if an encounterSetting of this type has been batched yet
+                if (batched_variables_last_value.TryGetValue(encounterSetting, out var last_value_dict))
+                {
+                    last_value_dict.Add(index, GetValueFromControl(batch_mode_selected));
+                }
+                else
+                {
+                    batched_variables_last_value.Add(encounterSetting, new() { { index, GetValueFromControl(batch_mode_selected) } });
+                }
 
                 // Update the control
                 SetControlAsBatched(control: batch_mode_selected, batched: true, index: index, settings: settings);
@@ -2389,48 +2437,27 @@ namespace DamageCalculatorGUI
         // Batch Interaction
         private void TextBox_MouseClickShowBatchComputation(object sender, EventArgs e)
         {
+            // Store the control casted
+            Control control = sender as Control;
+            // Store the casted control to save excessive casting
+            EncounterSetting encounterSetting = control_hash_to_setting[control.GetHashCode()];
+            // Either store or default the selected index
+            int index = CheckControlIsDamageDie(encounterSetting)
+                                    ? CalculatorDamageListBox.SelectedIndex
+                                    : -1;
+
+            // Show the batch window at the new location
             if (batch_mode_enabled)
             {
-                // Store the casted control to save excessive casting
-                Control control = sender as Control;
-
                 // Move the popup
                 HideBatchPopup();
                 ShowBatchPopup(control);
 
-                // Get the setting reference
-                EncounterSetting encounterSetting = control_hash_to_setting[control.GetHashCode()];
-                // Either store or default the selected index
-                int index = (int)encounterSetting >= 21
-                                        ? CalculatorDamageListBox.SelectedIndex
-                                        : -1;
-
                 // Check if this particular variable at this index has been batched before
-                if (batched_variables.TryGetValue(encounterSetting, out var settings) && settings.ContainsKey(index))  // If this encounter setting has been batched
+                if (batched_variables.TryGetValue(encounterSetting, out var encounterSettingDict) && encounterSettingDict.ContainsKey(index))  // If this encounter setting has been batched
                 { // Load the batch variable that's already set
                     // Load variables to the popup
-                    LoadSettingsToBatchComputePopup(settings, CalculatorDamageListBox.SelectedIndex);
-
-                    // Remove the old value from this encounter dictionary
-                    settings.Remove(index);
-
-                    // Remove the dictionary if it's empty
-                    if (settings.Count == 0)
-                    {
-                        batched_variables.Remove(encounterSetting);
-                    }
-                }
-                else
-                { // Store the last value of the variable being batched
-                    // Check if an encounterSetting of this type has been batched yet
-                    if (batched_variables_last_value.TryGetValue(encounterSetting, out var last_value_dict))
-                    {
-                        last_value_dict.Add(index, GetValueFromControl(control));
-                    }
-                    else
-                    {
-                        batched_variables_last_value.Add(encounterSetting, new() { { index, GetValueFromControl(control) } });
-                    }
+                    LoadSettingsToBatchComputePopup(encounterSettingDict, index);
                 }
             }
         }
@@ -2444,7 +2471,7 @@ namespace DamageCalculatorGUI
                                                     start: (int)CalculatorBatchComputePopupStartValueNumericUpDown.Value,
                                                     end: (int)CalculatorBatchComputePopupEndValueNumericUpDown.Value,
                                                     steps: GetIntListFromCommaString(CalculatorBatchComputePopupStepPatternTextBox.Text),
-                                                    index: (int)control_hash_to_setting[batch_mode_selected.GetHashCode()] >= 21
+                                                    index: CheckControlIsDamageDie(control_hash_to_setting[batch_mode_selected.GetHashCode()])
                                                                 ? CalculatorDamageListBox.SelectedIndex
                                                                 : -1,
                                                     die_field: isDamageDie
@@ -2479,7 +2506,8 @@ namespace DamageCalculatorGUI
 
             // Position Panel next to the clicked TextBox
             CalculatorBatchComputePopupPanel.Location = CalculatorTabPage.PointToClient(control.PointToScreen(new Point(0, 0)));
-            CalculatorBatchComputePopupPanel.Location = new Point(CalculatorBatchComputePopupPanel.Location.X - 2, CalculatorBatchComputePopupPanel.Location.Y - 2);
+            CalculatorBatchComputePopupPanel.Location = new Point(x: CalculatorBatchComputePopupPanel.Location.X - 2,
+                                                                  y: Math.Clamp(value: CalculatorBatchComputePopupPanel.Location.Y - 2, min: 0, max: 287));
 
             // Show Panel Regardless of wheter it was loaded or not
             CalculatorBatchComputePopupPanel.Visible = true;
@@ -2511,7 +2539,7 @@ namespace DamageCalculatorGUI
                 }
 
                 // Lock the Input on the Field
-                SetFieldAsLocked(control: control, locked: true, setting: encounterSetting, index: index);
+                SetFieldLookToBatched(control: control, locked: true, setting: encounterSetting, index: index);
 
                 // Update Visuals of Batched Control
                 batch_mode_selected.BackColor = Color.Lavender;
@@ -2520,7 +2548,7 @@ namespace DamageCalculatorGUI
             { // Unbatch Variable
 
                 // Unlock the Input on the Field
-                SetFieldAsLocked(control: control, locked: false, setting: encounterSetting, index: index);
+                SetFieldLookToBatched(control: control, locked: false, setting: encounterSetting, index: index);
 
                 // Remove the encounterSetting batch settings
                 if (batched_variables.TryGetValue(encounterSetting, out var encounterDict))
@@ -2530,14 +2558,12 @@ namespace DamageCalculatorGUI
                     { // Delete the encounterSetting dictionary if it was the last one
                         batched_variables.Remove(encounterSetting);
                     }
-                }
 
-
-                // Remove the encounterSetting last value
-                batched_variables_last_value[encounterSetting].Remove(index);
-                if (batched_variables_last_value[encounterSetting].Count == 0)
-                { // Delete the encounterSetting last value dictionary if it was the last one
-                    batched_variables_last_value.Remove(encounterSetting);
+                    batched_variables_last_value[encounterSetting].Remove(index);
+                    if (batched_variables_last_value[encounterSetting].Count == 0)
+                    { // Delete the encounterSetting last value dictionary if it was the last one
+                        batched_variables_last_value.Remove(encounterSetting);
+                    }
                 }
 
                 // Update visuals on Unbatched Control
@@ -2637,6 +2663,10 @@ namespace DamageCalculatorGUI
             // Default the selected index to the first
             CalculatorBatchComputeLayerViewControlStepSelectComboBox.SelectedIndex = 0;
         }
+        private bool CheckControlIsDamageDie(EncounterSetting setting)
+        {
+            return (int)setting >= 21;
+        }
 
         // BATCH COMPUTATION ERROR CHECKING
         private void CheckBatchParseSafety()
@@ -2685,7 +2715,7 @@ namespace DamageCalculatorGUI
                 switch (errorCode)
                 {
                     case 531:
-                        PushError(CalculatorBatchComputePopupStepPatternTextBox, "A step pattern is missing!");
+                        PushError(CalculatorBatchComputePopupStepPatternTextBox, "A step size is missing!");
                         break;
                     case 551: // Push
                         PushError(CalculatorBatchComputePopupStepPatternTextBox, "The End value is smaller than the Start value with non-negative Step Size (infinite steps)!");
@@ -3164,21 +3194,21 @@ namespace DamageCalculatorGUI
         {
             if (show)
             {
-                SetFieldAsLocked(control, true, setting, index);
+                SetFieldLookToBatched(control, true, setting, index);
 
                 // Update Visuals of Batched Control
                 control.BackColor = Color.Lavender;
             }
             else
             { // Unbatch Variable
-                SetFieldAsLocked(control, false, setting, index);
+                SetFieldLookToBatched(control, false, setting, index);
 
                 // Update visuals on Unbatched Control
                 control.BackColor = SystemColors.Window;
             }
         }
 
-        private void SetFieldAsLocked(Control control, bool locked, EncounterSetting setting, int index)
+        private void SetFieldLookToBatched(Control control, bool locked, EncounterSetting setting, int index)
         {
             if (locked)
             {
@@ -3194,7 +3224,7 @@ namespace DamageCalculatorGUI
                     numericUpDown.Text = "BATCHED";
                 }
             }
-            else
+            else if (batched_variables.TryGetValue(setting, out var encounterSettingDict) && encounterSettingDict.ContainsKey(index))
             {
                 // Unlock the Input on the Field
                 if (control is TextBox textBox)
