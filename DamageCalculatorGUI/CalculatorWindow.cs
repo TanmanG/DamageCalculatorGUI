@@ -1313,7 +1313,7 @@ namespace DamageCalculatorGUI
                     // Check each tick variable in an arbitrary tick (as all ticks will have every variable in theory)
                     if (tick_values.All(tickValueDict => tickValueDict[baseKVP.Key][indexedKVP.Key] == indexedKVP.Value))
                     { // If every dictionary has the same value for the checked tick variable, remove it from all dictionaries
-                        tick_values.ForEach(iteratedKVP => 
+                        tick_values.ForEach(iteratedKVP =>
                         {
                             // Check if we're going to have to snipe a single variable out
                             if (iteratedKVP[baseKVP.Key].Count > 1)
@@ -3207,9 +3207,9 @@ namespace DamageCalculatorGUI
                                     }
                                     else
                                     {
-                                        tick_dictionary.Add(slice.Item1, new() 
-                                        { 
-                                            { settingDict.Value.index, storedValue } 
+                                        tick_dictionary.Add(slice.Item1, new()
+                                        {
+                                            { settingDict.Value.index, storedValue }
                                         });
                                     }
                                 }
@@ -3217,8 +3217,8 @@ namespace DamageCalculatorGUI
                                 {
                                     Dictionary<EncounterSetting, Dictionary<int, int>> new_tick_dictionary = new()
                                     {
-                                        { slice.Item1, new() { 
-                                                                { settingDict.Value.index, storedValue } 
+                                        { slice.Item1, new() {
+                                                                { settingDict.Value.index, storedValue }
                                                              } }
                                     };
                                     batch_results.tick_values.SetValue(indices: indices, value: new_tick_dictionary);

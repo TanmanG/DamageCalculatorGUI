@@ -1536,7 +1536,7 @@
             CalculatorVersionLabel.RightToLeft = RightToLeft.No;
             CalculatorVersionLabel.Size = new Size(138, 23);
             CalculatorVersionLabel.TabIndex = 12;
-            CalculatorVersionLabel.Text = "PFK V2.0.0-proto-11";
+            CalculatorVersionLabel.Text = "PFK V2.0.0";
             CalculatorVersionLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // PrimaryTabControl
@@ -1626,7 +1626,6 @@
             // 
             CalculatorBatchComputePopupEndValueNumericUpDown.Location = new Point(104, 37);
             CalculatorBatchComputePopupEndValueNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-            CalculatorBatchComputePopupEndValueNumericUpDown.Minimum = new decimal(new int[] { 999, 0, 0, int.MinValue });
             CalculatorBatchComputePopupEndValueNumericUpDown.Name = "CalculatorBatchComputePopupEndValueNumericUpDown";
             CalculatorBatchComputePopupEndValueNumericUpDown.Size = new Size(74, 23);
             CalculatorBatchComputePopupEndValueNumericUpDown.TabIndex = 2;
@@ -1644,7 +1643,6 @@
             // 
             CalculatorBatchComputePopupStartValueNumericUpDown.Location = new Point(6, 37);
             CalculatorBatchComputePopupStartValueNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-            CalculatorBatchComputePopupStartValueNumericUpDown.Minimum = new decimal(new int[] { 999, 0, 0, int.MinValue });
             CalculatorBatchComputePopupStartValueNumericUpDown.Name = "CalculatorBatchComputePopupStartValueNumericUpDown";
             CalculatorBatchComputePopupStartValueNumericUpDown.Size = new Size(74, 23);
             CalculatorBatchComputePopupStartValueNumericUpDown.TabIndex = 1;
@@ -2031,7 +2029,7 @@
             label1.RightToLeft = RightToLeft.No;
             label1.Size = new Size(178, 23);
             label1.TabIndex = 12;
-            label1.Text = "PFK V2.0.0-proto-11";
+            label1.Text = "PFK V2.0.0";
             label1.TextAlign = ContentAlignment.MiddleRight;
             // 
             // button6
