@@ -56,24 +56,24 @@ namespace DamageCalculatorGUI
         };
         private static readonly Dictionary<EncounterSetting, string> setting_to_string = new()
         {
-            { EncounterSetting.number_of_encounters, "Number of Encounters" },
-            { EncounterSetting.rounds_per_encounter, "Rounds Per Encounter" },
-            { EncounterSetting.actions_per_round_any, "Actions Per Round" },
-            { EncounterSetting.actions_per_round_strike, "Extra Actions Per Round (Strike)" },
-            { EncounterSetting.actions_per_round_draw, "Extra Actions Per Round (Draw)" },
-            { EncounterSetting.actions_per_round_stride, "Extra Actions Per Round (Stride)" },
-            { EncounterSetting.actions_per_round_reload, "Extra Actions Per Round (Reload)" },
-            { EncounterSetting.actions_per_round_long_reload, "Extra Actions Per Round (Long Reload)" },
+            { EncounterSetting.number_of_encounters, "Encounters" },
+            { EncounterSetting.rounds_per_encounter, "Rounds" },
+            { EncounterSetting.actions_per_round_any, "Actions" },
+            { EncounterSetting.actions_per_round_strike, "Extra Actions (Strike)" },
+            { EncounterSetting.actions_per_round_draw, "Extra Actions (Draw)" },
+            { EncounterSetting.actions_per_round_stride, "Extra Actions (Stride)" },
+            { EncounterSetting.actions_per_round_reload, "Extra Actions (Reload)" },
+            { EncounterSetting.actions_per_round_long_reload, "Extra Actions (Long Reload)" },
             { EncounterSetting.magazine_size, "Magazine Size" },
             { EncounterSetting.reload, "Reload" },
             { EncounterSetting.long_reload, "Long Reload" },
             { EncounterSetting.draw, "Draw" },
-            { EncounterSetting.damage_dice_count, "Damage Die Count" },
-            { EncounterSetting.damage_dice_size, "Damage Die Size" },
-            { EncounterSetting.damage_dice_bonus, "Damage Die Bonus" },
-            { EncounterSetting.damage_dice_count_critical, "Damage Die Count (Critical)" },
-            { EncounterSetting.damage_dice_size_critical, "Damage Die Size (Critical)" },
-            { EncounterSetting.damage_dice_bonus_critical, "Damage Die Bonus (Critical)" },
+            { EncounterSetting.damage_dice_count, "Die Count" },
+            { EncounterSetting.damage_dice_size, "Die Size" },
+            { EncounterSetting.damage_dice_bonus, "Die Bonus" },
+            { EncounterSetting.damage_dice_count_critical, "Die Count (C)" },
+            { EncounterSetting.damage_dice_size_critical, "Die Size (C)" },
+            { EncounterSetting.damage_dice_bonus_critical, "Die Bonus (C)" },
             { EncounterSetting.bonus_to_hit, "Bonus To Hit" },
             { EncounterSetting.AC, "AC" },
             { EncounterSetting.crit_threshhold, "Critical Hit Minimum" },
@@ -82,13 +82,13 @@ namespace DamageCalculatorGUI
             { EncounterSetting.move_speed, "Movement Speed" },
             { EncounterSetting.range, "Range Increment" },
             { EncounterSetting.volley, "Volley Increment" },
-            { EncounterSetting.damage_dice_DOT_count, "Damage Die Count (Bleed)" },
-            { EncounterSetting.damage_dice_DOT_size, "Damage Die Size (Bleed)" },
-            { EncounterSetting.damage_dice_DOT_bonus, "Damage Die Bonus (Bleed)" },
-            { EncounterSetting.damage_dice_DOT_count_critical, "Damage Die Count (Bleed, Critical)" },
-            { EncounterSetting.damage_dice_DOT_size_critical, "Damage Die Size (Bleed, Critical)" },
-            { EncounterSetting.damage_dice_DOT_bonus_critical, "Damage Die Bonus (Bleed, Critical)" }
-        };
+            { EncounterSetting.damage_dice_DOT_count, "Die Count (B)" },
+            { EncounterSetting.damage_dice_DOT_size, "Die Size (B)" },
+            { EncounterSetting.damage_dice_DOT_bonus, "Die Bonus (B)" },
+            { EncounterSetting.damage_dice_DOT_count_critical, "Die Count (BC)" },
+            { EncounterSetting.damage_dice_DOT_size_critical, "Die Size (BC)" },
+            { EncounterSetting.damage_dice_DOT_bonus_critical, "Die Bonus (BC)" }
+        }; // To-do: Wait for ScottPlot to update 5.0 with heatmaps to test UTF-16 support for these guys: 🗡🗲 instead of BC respectively
         private static double computationStepsTotal = 0;
         private static double computationStepsCurrent = 0;
 
@@ -319,8 +319,6 @@ namespace DamageCalculatorGUI
             CalculatorDamageDistributionScottPlot.Render();
         }
 
-        // To-do: Set all damage die fields to readonly/disable when not editing an index
-
         private async void CalculateDamageStatsButton_MouseClick(object sender, MouseEventArgs e)
         {
 
@@ -329,8 +327,8 @@ namespace DamageCalculatorGUI
                 if (computing_damage) // Prevent double-computing
                     return;
 
-                // Update Data
-                try
+                // Update Data // To-do: ENABLE TRY CATCH
+                //try
                 { // Check for exception
                     CheckComputeSafety();
 
@@ -405,13 +403,12 @@ namespace DamageCalculatorGUI
                     CalculatorBatchComputeScottPlot.Render();
                     CalculatorDamageDistributionScottPlot.Render();
                 }
-                // To-Do: REMOVE THIS WHEN TESTING IS FINISHED
-                catch (Exception ex)
+                /*catch (Exception ex)
                 { // Exception caught!
                     computing_damage = false;
                     PushErrorMessages(ex);
                     return;
-                }
+                }*/
             }
             else
             {
@@ -1244,7 +1241,7 @@ namespace DamageCalculatorGUI
         }
         private static double[,] UpdateBatchGraph_PROCESS_DATA_ARR(BatchResults batch_results, int[] batch_selected)
         {
-            // To-Do: Add render dims for selecting the layer
+            // Extract a 2D array to use to populate the graph. Probably one of the most technically complex functions I've ever written tbh
             Array pulledLayer = HelperFunctions.GetSubArray(original_array: batch_results.raw_data, index_extracted: batch_selected);
             // Create the surface graph array as wide as the highest damage and as tall as the number of scaling variables
             double[,] processed_data = new double[batch_results.raw_data.GetLength(batch_results.raw_data.Rank - 1), batch_results.max_width];
@@ -1284,8 +1281,6 @@ namespace DamageCalculatorGUI
             // Configure the Plot
             addedHeatmap.FlipVertically = true;
 
-            // To-do: Fix rendering with the new robust system
-            // To-do: Generate/Create controls for selecting options
             // To-do: Add a timer hook to iterate the graph if it's selected
 
             // Generate a list of incrementing X ticks
@@ -1299,26 +1294,39 @@ namespace DamageCalculatorGUI
             // Label the X and Y Axes
             int highest_layer = batched_variables.Select(batchedSetting => batchedSetting.Value.Max(settingDict => settingDict.Value.layer)).Max();
 
-            // To-do: Investigate scuffed label shennaigans
             // Extract the dictionary of the currently selected layer
-            List<Dictionary<EncounterSetting, int>> tick_values =
+            List<Dictionary<EncounterSetting, Dictionary<int, int>>> tick_values =
                                 batch_results.tick_values.Rank > 1
                                 ? HelperFunctions.GetSubArray(original_array: batch_results.tick_values,
                                                             index_extracted: batch_selected)
-                                    .Cast<Dictionary<EncounterSetting, int>>()
+                                    .Cast<Dictionary<EncounterSetting, Dictionary<int, int>>>()
                                     .ToList()
                                 : batch_results.tick_values
-                                    .Cast<Dictionary<EncounterSetting, int>>()
+                                    .Cast<Dictionary<EncounterSetting, Dictionary<int, int>>>()
                                     .ToList();
 
             // FILTER OUT Y-AXIS STATIC VARIABLES
             tick_values.First().ToList().ForEach(baseKVP =>
             {
-                // Check each tick variable in an arbitrary tick (as all ticks will have every variable in theory)
-                if (tick_values.All(tickValueDict => tickValueDict[baseKVP.Key] == baseKVP.Value))
-                { // If every dictionary has the same value for the checked tick variable, remove it from all dictionaries
-                    tick_values.ForEach(iteratedKVP => iteratedKVP.Remove(baseKVP.Key));
-                }
+                baseKVP.Value.ToList().ForEach(indexedKVP =>
+                {
+                    // Check each tick variable in an arbitrary tick (as all ticks will have every variable in theory)
+                    if (tick_values.All(tickValueDict => tickValueDict[baseKVP.Key][indexedKVP.Key] == indexedKVP.Value))
+                    { // If every dictionary has the same value for the checked tick variable, remove it from all dictionaries
+                        tick_values.ForEach(iteratedKVP => 
+                        {
+                            // Check if we're going to have to snipe a single variable out
+                            if (iteratedKVP[baseKVP.Key].Count > 1)
+                            { // Remove only the targeted indexed value
+                                iteratedKVP[baseKVP.Key].Remove(indexedKVP.Key);
+                            }
+                            else
+                            { // Delete the entire encounterSetting dict
+                                iteratedKVP.Remove(baseKVP.Key);
+                            }
+                        });
+                    }
+                });
             });
 
             // COMBINE SHORT ENOUGH Y-LABELS
@@ -1330,21 +1338,27 @@ namespace DamageCalculatorGUI
             string labelString = ""; // Create an initial label string to concatenate to
 
             // Get a single string of each variable
-            foreach (var tickValue in tick_values.First())
+            foreach (var encounterDictionaries in tick_values.First())
             {
-                string settingString = setting_to_string[tickValue.Key];
-                if (currentLineLength + settingString.Length > maxLength)
-                { // Current Line is too long, wrapping!
-                    labelString += "\n"; // Wrap the string around
-                    numberOfLabelLines++; // Increase number of lines
-                    currentLineLength = settingString.Length; // Reset the current line length
+                foreach (var encounterTickPair in encounterDictionaries.Value)
+                {
+                    string settingString = setting_to_string[encounterDictionaries.Key]
+                                            + (encounterTickPair.Key != -1
+                                                ? "(#" + (encounterTickPair.Key + 1).ToString() + ")"
+                                                : "");
+                    if (currentLineLength + settingString.Length > maxLength)
+                    { // Current Line is too long, wrapping!
+                        labelString += "\n"; // Wrap the string around
+                        numberOfLabelLines++; // Increase number of lines
+                        currentLineLength = settingString.Length; // Reset the current line length
+                    }
+                    else
+                    { // Current Line isn't long enough to reset!
+                        currentLineLength += settingString.Length; // Increase the current line length by the new string
+                    }
+                    // Store the current string.
+                    labelString += settingString + labelStringSeparator;
                 }
-                else
-                { // Current Line isn't long enough to reset!
-                    currentLineLength += settingString.Length; // Increase the current line length by the new string
-                }
-                // Store the current string.
-                labelString += settingString + labelStringSeparator;
             }
             // Remove the trailing separator
             if (labelString.EndsWith(labelStringSeparator))
@@ -1360,8 +1374,9 @@ namespace DamageCalculatorGUI
             // Concatenate and assign y-tick values
             CalculatorBatchComputeScottPlot.Plot.YTicks(positions: Enumerable.Range(0, batch_results.dimensions[^1]).Select(x => x + 0.5).ToArray(),
                                                         labels: tick_values
-                                                                    .Select(x => string.Join(values: x.Values
-                                                                                                .Select(y => y.ToString()),
+                                                                    .Select(tickList => string.Join(values: tickList.Values
+                                                                                                .SelectMany(encounterSettingTickDict => encounterSettingTickDict.Values)
+                                                                                                .Select(encounterSettingValue => encounterSettingValue.ToString()),
                                                                                              separator: ", ")).ToArray());
             // Label the x-axis
             CalculatorBatchComputeScottPlot.Plot.XAxis.Label("Encounter Damage");
@@ -1371,8 +1386,6 @@ namespace DamageCalculatorGUI
                                                                yMin: 0, yMax: batch_results.dimensions[^1]);
             CalculatorBatchComputeScottPlot.Plot.SetOuterViewLimits(xMin: 0, xMax: batch_results.max_width,
                                                                     yMin: 0, yMax: batch_results.dimensions[^1]);
-
-            // To-do: Figure out why the graph is fucked on it's initial rescale????
 
             // Add & Configure the color bar
             var addedColorBar = CalculatorBatchComputeScottPlot.Plot.AddColorbar(addedHeatmap);
@@ -1944,15 +1957,23 @@ namespace DamageCalculatorGUI
         // DAMAGE BUTTONS
         private void DamageDeleteButton_MouseClick(object sender, MouseEventArgs e)
         {
+            Control control = sender as Control;
+            EncounterSetting encounterSetting = control_hash_to_setting[control.GetHashCode()];
             int index = CalculatorDamageListBox.SelectedIndex;
             if (index != -1)
             {
+                // Check if there's any batched variables to potentially de-batch
+                if (batched_variables.Count > 0)
+                { // De-batch the given damage die
+                    foreach (var batchedVariableDict in batched_variables)
+                    {
+                        // Debatch all damage die variables at the given index
+                        batchedVariableDict.Value.Remove(index);
+                    }
+                }
+
                 // Clear Old Data
                 DeleteDamageDice(index);
-                if (batched_variables.Count > 0)
-                {
-                    // To-do: Remove batched die variables at the given index
-                }
             }
         }
         private void DamageAddButton_MouseClick(object sender, MouseEventArgs e)
@@ -1969,12 +1990,16 @@ namespace DamageCalculatorGUI
 
                 // Add New Data
                 AddDamageDice(index);
+
+                // Disable the UI
+                SetDamageDiceFieldsEnabled(false);
             }
         }
 
         // Damage Dice Helper Methods
         private void LoadDamageDice(int index)
         {
+
             // Store references to each dice/bonus
             var currDamageDie = currEncounterSettings.damage_dice[index];
             var currBleedDie = currEncounterSettings.damage_dice_DOT[index];
@@ -2002,7 +2027,7 @@ namespace DamageCalculatorGUI
                                                         : currDamageDie.Item1.Item3.ToString();
             }
             else
-            {
+            { // Clear the critical damage die textboxes and checkbox
                 CalculatorDamageCriticalDieCheckBox.Checked = false;
             }
 
@@ -2024,11 +2049,11 @@ namespace DamageCalculatorGUI
                                                         : "0";
             }
             else
-            {
+            { // Clear the bleed damage die textboxes and checkbox
                 CalculatorDamageBleedDieCheckBox.Checked = false;
             }
 
-            // Critical Damage Die
+            // Critical Bleed Damage Die
             if (currBleedDie.Item2.Item1 != 0 && currBleedDie.Item2.Item1 != currBleedDie.Item1.Item1
                 || currBleedDie.Item2.Item2 != 0 && currBleedDie.Item2.Item2 != currBleedDie.Item1.Item2
                 || currBleedDie.Item2.Item3 != 0 && currBleedDie.Item2.Item3 != currBleedDie.Item1.Item3)
@@ -2045,9 +2070,12 @@ namespace DamageCalculatorGUI
                                                         : currBleedDie.Item1.Item3.ToString();
             }
             else
-            {
+            { // Clear the critical damage die textboxes and checkbox
                 CalculatorDamageCriticalBleedDieCheckBox.Checked = false;
             }
+
+            // Enable the UI
+            SetDamageDiceFieldsEnabled(true);
         }
         private void DeleteDamageDice(int index)
         {
@@ -2071,7 +2099,7 @@ namespace DamageCalculatorGUI
             string entryString = CreateDamageListBoxString(currDamageDie, currBleedDie, index);
 
             // Store the damage die in the
-            AddDamageDieToListBox(entryString);
+            AddDamageDieToListBox(entryString, index);
 
             // Add the new string to the list
             if (index == -1)
@@ -2089,15 +2117,8 @@ namespace DamageCalculatorGUI
         {
             if (index == -1)
                 CalculatorDamageListBox.Items.Add(item: newEntry); // Store the text entry
-            if (index == -1)
+            else if (index != -1)
                 CalculatorDamageListBox.Items.Insert(index: index, item: newEntry); // Store the text entry
-        }
-        private void ReplaceDamageDieAtIndex(string newEntry, int index)
-        {
-            // Remove the old entry
-            CalculatorDamageListBox.Items.RemoveAt(index);
-            // Store the new entry
-            AddDamageDieToListBox(newEntry);
         }
         private string CreateDamageListBoxString(Tuple<Tuple<int, int, int>, Tuple<int, int, int>> currDamageDie,
                                                     Tuple<Tuple<int, int, int>, Tuple<int, int, int>> currBleedDie,
@@ -2149,7 +2170,7 @@ namespace DamageCalculatorGUI
                 entryString += signs[0] + currDamageDie.Item1.Item3;
             // Critical dice
             if (hasCriticalCount || hasCriticalSides || hasCriticalBonus)
-                entryString += " ("
+                entryString += " (🗲 "
                                 + (hasCriticalCountBATCHED ? "*"
                                                            : hasCriticalCount ? currDamageDie.Item2.Item1.ToString()
                                                                               : "")
@@ -2179,7 +2200,7 @@ namespace DamageCalculatorGUI
                                                                                 : "");
             // Critical
             if (hasCriticalBleedCount || hasCriticalBleedSides || hasCriticalBleedBonus)
-                entryString += " ("
+                entryString += " (🗲 "
                                 + (hasCriticalBleedCountBATCHED ? "*"
                                                                 : hasCriticalBleedCount ? currBleedDie.Item2.Item1.ToString()
                                                                                         : "")
@@ -2218,6 +2239,71 @@ namespace DamageCalculatorGUI
                         new(damageCritCount, damageCritSize, damageCritBonus),
                         new(damageBleedCount, damageBleedSize, damageBleedBonus),
                         new(damageCritBleedCount, damageCritBleedSize, damageCritBleedBonus));
+        }
+        private void SetDamageDiceFieldsEnabled(bool state)
+        {
+            if (state)
+            { // Enable each textbox/checkbox
+                // Base Damage
+                CalculatorDamageDieCountTextBox.Enabled = true;
+                CalculatorDamageDieCountTextBox.ReadOnly = false;
+                CalculatorDamageDieSizeTextBox.Enabled = true;
+                CalculatorDamageDieSizeTextBox.ReadOnly = false;
+                CalculatorDamageDieBonusTextBox.Enabled = true;
+                CalculatorDamageDieBonusTextBox.ReadOnly = false;
+                // Critical Damage
+                CalculatorDamageCriticalDieCheckBox.Enabled = true;
+                CalculatorDamageCriticalDieCountTextBox.Enabled = CalculatorDamageCriticalDieCheckBox.Checked;
+                CalculatorDamageCriticalDieSizeTextBox.Enabled = CalculatorDamageCriticalDieCheckBox.Checked;
+                CalculatorDamageCriticalDieBonusTextBox.Enabled = CalculatorDamageCriticalDieCheckBox.Checked;
+                // Dot Damage
+                CalculatorDamageBleedDieCheckBox.Enabled = true;
+                CalculatorDamageBleedDieCountTextBox.Enabled = CalculatorDamageBleedDieCheckBox.Checked;
+                CalculatorDamageBleedDieSizeTextBox.Enabled = CalculatorDamageBleedDieCheckBox.Checked;
+                CalculatorDamageBleedDieBonusTextBox.Enabled = CalculatorDamageBleedDieCheckBox.Checked;
+                // Critical Dot Damage
+                CalculatorDamageCriticalBleedDieCheckBox.Enabled = true;
+                CalculatorDamageCriticalBleedDieCountTextBox.Enabled = CalculatorDamageCriticalBleedDieCheckBox.Checked;
+                CalculatorDamageCriticalBleedDieSizeTextBox.Enabled = CalculatorDamageCriticalBleedDieCheckBox.Checked;
+                CalculatorDamageCriticalBleedDieBonusTextBox.Enabled = CalculatorDamageCriticalBleedDieCheckBox.Checked;
+            }
+            else
+            { // Disable each textbox/checkbox
+                // Base Damage
+                CalculatorDamageDieCountTextBox.Enabled = false;
+                CalculatorDamageDieCountTextBox.ReadOnly = true;
+                CalculatorDamageDieCountTextBox.Text = string.Empty;
+                CalculatorDamageDieSizeTextBox.Enabled = false;
+                CalculatorDamageDieSizeTextBox.ReadOnly = true;
+                CalculatorDamageDieSizeTextBox.Text = string.Empty;
+                CalculatorDamageDieBonusTextBox.Enabled = false;
+                CalculatorDamageDieBonusTextBox.ReadOnly = true;
+                CalculatorDamageDieBonusTextBox.Text = string.Empty;
+                // Critical Damage
+                CalculatorDamageCriticalDieCheckBox.Enabled = false;
+                CalculatorDamageCriticalDieCountTextBox.Enabled = false;
+                CalculatorDamageCriticalDieCountTextBox.Text = string.Empty;
+                CalculatorDamageCriticalDieSizeTextBox.Enabled = false;
+                CalculatorDamageCriticalDieSizeTextBox.Text = string.Empty;
+                CalculatorDamageCriticalDieBonusTextBox.Enabled = false;
+                CalculatorDamageCriticalDieBonusTextBox.Text = string.Empty;
+                // Dot Damage
+                CalculatorDamageBleedDieCheckBox.Enabled = false;
+                CalculatorDamageBleedDieCountTextBox.Enabled = false;
+                CalculatorDamageBleedDieCountTextBox.Text = string.Empty;
+                CalculatorDamageBleedDieSizeTextBox.Enabled = false;
+                CalculatorDamageBleedDieSizeTextBox.Text = string.Empty;
+                CalculatorDamageBleedDieBonusTextBox.Enabled = false;
+                CalculatorDamageBleedDieBonusTextBox.Text = string.Empty;
+                // Critical Dot Damage
+                CalculatorDamageCriticalBleedDieCheckBox.Enabled = false;
+                CalculatorDamageCriticalBleedDieCountTextBox.Enabled = false;
+                CalculatorDamageCriticalBleedDieCountTextBox.Text = string.Empty;
+                CalculatorDamageCriticalBleedDieSizeTextBox.Enabled = false;
+                CalculatorDamageCriticalBleedDieSizeTextBox.Text = string.Empty;
+                CalculatorDamageCriticalBleedDieBonusTextBox.Enabled = false;
+                CalculatorDamageCriticalBleedDieBonusTextBox.Text = string.Empty;
+            }
         }
 
         private void DefaultSettingsButton_Click(object sender, EventArgs e)
@@ -2412,7 +2498,10 @@ namespace DamageCalculatorGUI
                 // Check if an encounterSetting of this type has been batched yet
                 if (batched_variables_last_value.TryGetValue(encounterSetting, out var last_value_dict))
                 {
-                    last_value_dict.Add(index, GetValueFromControl(batch_mode_selected));
+                    if (!last_value_dict.ContainsKey(index))
+                    {
+                        last_value_dict.Add(index, GetValueFromControl(batch_mode_selected));
+                    }
                 }
                 else
                 {
@@ -2527,14 +2616,18 @@ namespace DamageCalculatorGUI
             EncounterSetting encounterSetting = control_hash_to_setting[batch_mode_selected.GetHashCode()];
 
             if (batched)
-            {
+            { // Store the given encounterSetting
+
+                TryRemoveBatchedVariable(setting: encounterSetting, index: index, removeLastValue: false);
                 // Save the Settings
                 if (batched_variables.TryGetValue(encounterSetting, out var batchDict))
                 {
+                    // Store the key if there are other values of this specific setting
                     batchDict.Add(key: index, value: settings);
                 }
                 else
                 {
+                    // Add a new entry as this value isn't batched already
                     batched_variables.Add(encounterSetting, new() { { index, settings } });
                 }
 
@@ -2551,23 +2644,32 @@ namespace DamageCalculatorGUI
                 SetFieldLookToBatched(control: control, locked: false, setting: encounterSetting, index: index);
 
                 // Remove the encounterSetting batch settings
-                if (batched_variables.TryGetValue(encounterSetting, out var encounterDict))
-                {
-                    encounterDict.Remove(index);
-                    if (encounterDict.Count == 0)
-                    { // Delete the encounterSetting dictionary if it was the last one
-                        batched_variables.Remove(encounterSetting);
-                    }
-
-                    batched_variables_last_value[encounterSetting].Remove(index);
-                    if (batched_variables_last_value[encounterSetting].Count == 0)
-                    { // Delete the encounterSetting last value dictionary if it was the last one
-                        batched_variables_last_value.Remove(encounterSetting);
-                    }
-                }
+                TryRemoveBatchedVariable(setting: encounterSetting, index: index, removeLastValue: true);
 
                 // Update visuals on Unbatched Control
                 batch_mode_selected.BackColor = SystemColors.Window;
+            }
+        }
+        private void TryRemoveBatchedVariable(EncounterSetting setting, int index, bool removeLastValue = false)
+        {
+            // Remove the encounterSetting batch settings
+            if (batched_variables.TryGetValue(setting, out var encounterDict))
+            {
+                encounterDict.Remove(index);
+                if (encounterDict.Count == 0)
+                { // Delete the encounterSetting dictionary if it was the last one
+                    batched_variables.Remove(setting);
+                }
+
+                // Remove last_value if required
+                if (removeLastValue)
+                {
+                    batched_variables_last_value[setting].Remove(index);
+                    if (batched_variables_last_value[setting].Count == 0)
+                    { // Delete the encounterSetting last value dictionary if it was the last one
+                        batched_variables_last_value.Remove(setting);
+                    }
+                }
             }
         }
         private void SetBatchGraphSizeSmall(bool state)
@@ -2629,8 +2731,6 @@ namespace DamageCalculatorGUI
 
                 // Set the default selections for the layer view control
                 CalculatorBatchComputeLayerViewControlLayerSelectListBox.SelectedIndex = 0;
-                SetBatchComputeLayerSelectionOnVariables(selectedLayer: 0);
-                SetBatchComputeLayerSelectionOnStep(selectedLayer: 0);
             }
             else
             { // Hide the graph layer selection menu
@@ -2644,10 +2744,11 @@ namespace DamageCalculatorGUI
             // Repopulate the Variable Values
             CalculatorBatchComputeLayerViewControlValuesAtLayerListBox.Items.Clear();
             CalculatorBatchComputeLayerViewControlValuesAtLayerListBox
-                .Items.AddRange(layerViewControlEncounterSettings[selectedLayer]
+                .Items.AddRange(layerViewControlEncounterSettings.OrderBy(layer => layer.Key)
+                                .ElementAt(selectedLayer).Value
                                 .Select(batchSetting => setting_to_string[batchSetting.encounterSetting] // EncounterSetting
                                             + ((batchSetting.index == -1) ? string.Empty // Index (if applicable)
-                                                                         : " (Damage Die #" + batchSetting.index + 1 + ")")
+                                                                         : " (Index #" + (batchSetting.index + 1) + ")")
                                             + " : " + batchSetting.GetValueAtStep(batch_view_selected_steps[selectedLayer])) // Value
                     .ToArray());
         }
@@ -2656,14 +2757,15 @@ namespace DamageCalculatorGUI
             // Repopulate the Step Selection Options
             CalculatorBatchComputeLayerViewControlStepSelectComboBox.Items.Clear();
             CalculatorBatchComputeLayerViewControlStepSelectComboBox
-                    .Items.AddRange(Enumerable.Range(0, layerViewControlEncounterSettings[selectedLayer]
+                    .Items.AddRange(Enumerable.Range(0, layerViewControlEncounterSettings.OrderBy(layer => layer.Key)
+                                    .ElementAt(selectedLayer).Value
                                     .Max(batchSetting => batchSetting.number_of_steps) + 1)
                                     .Select(stepValue => "Step #" + stepValue)
                                     .ToArray());
             // Default the selected index to the first
             CalculatorBatchComputeLayerViewControlStepSelectComboBox.SelectedIndex = 0;
         }
-        private bool CheckControlIsDamageDie(EncounterSetting setting)
+        private static bool CheckControlIsDamageDie(EncounterSetting setting)
         {
             return (int)setting >= 21;
         }
@@ -2698,6 +2800,10 @@ namespace DamageCalculatorGUI
             {
                 ex.Data.Add(552, "Bad Data Combination Exception: End is larger than Start with negative Step Size");
             }
+            if (setting.start == setting.end)
+            {
+                ex.Data.Add(553, "Bad Data Exception: Start and End values are the same");
+            }
             if (setting.end != setting.start && setting.step_direction == 0)
             {
                 ex.Data.Add(541, "Bad Data Exception: Net step size is zero");
@@ -2714,17 +2820,20 @@ namespace DamageCalculatorGUI
             {
                 switch (errorCode)
                 {
-                    case 531:
+                    case 531: // Push
                         PushError(CalculatorBatchComputePopupStepPatternTextBox, "A step size is missing!");
                         break;
                     case 551: // Push
-                        PushError(CalculatorBatchComputePopupStepPatternTextBox, "The End value is smaller than the Start value with non-negative Step Size (infinite steps)!");
+                        PushError(CalculatorBatchComputePopupStepPatternTextBox, "The End value cannot be smaller than the Start value with non-negative Step Size (impossible to reach)!");
                         break;
                     case 552: // Push
-                        PushError(CalculatorBatchComputePopupStepPatternTextBox, "The End value is larger than the Start value with negative Step Size (infinite steps)!");
+                        PushError(CalculatorBatchComputePopupStepPatternTextBox, "The End value cannot be larger the Start value with negative Step Size (impossible to reach)!");
+                        break;
+                    case 553: // Push
+                        PushError(CalculatorBatchComputePopupStartValueNumericUpDown, "The Start value cannot be the same value as the End value", isNumericUpDown: true);
                         break;
                     case 541: // Push
-                        PushError(CalculatorBatchComputePopupStepPatternTextBox, "The net step size is zero (infinite steps)!");
+                        PushError(CalculatorBatchComputePopupStepPatternTextBox, "The net step size cannot be zero (infinite steps)!");
                         break;
                 }
             }
@@ -2758,7 +2867,7 @@ namespace DamageCalculatorGUI
 
             // Create an array to hold all the damage stats, sized by the most number of steps in each batch layer
             Array totalDamageStats = Array.CreateInstance(typeof(DamageStats), maxSteps);
-            batch_results.tick_values = Array.CreateInstance(typeof(Dictionary<EncounterSetting, int>), maxSteps);
+            batch_results.tick_values = Array.CreateInstance(typeof(Dictionary<EncounterSetting, Dictionary<int, int>>), maxSteps);
 
             // Create an array to track current index such that
             // [X, Y, Z, ... END] represent the [LOWEST, SECOND LOWEST, THIRD LOWEST, ... HIGHEST] layers.
@@ -2904,6 +3013,15 @@ namespace DamageCalculatorGUI
                                                 value: settingDict.Value.GetValueAtStep(indices[binned_compute_layers.Keys.ToList().IndexOf(layer_index)]),
                                                 index: settingDict.Value.index,
                                                 edit_critical: settingDict.Value.critical);
+
+                                if (!settingDict.Value.critical && binned_compute_layers.Values.Any(binnedComputeLayer => binnedComputeLayer.Any(encounterSettingDict => encounterSettingDict.Item2.ContainsKey(settingDict.Value.index))))
+                                { // Also update the critical if critical isn't batched
+                                    EditDamageDie(damage_dice: editedDamage,
+                                                setting: settingDict.Value.die_field,
+                                                value: settingDict.Value.GetValueAtStep(indices[binned_compute_layers.Keys.ToList().IndexOf(layer_index)]),
+                                                index: settingDict.Value.index,
+                                                edit_critical: true);
+                                }
                             }
                         }
                     }
@@ -2952,9 +3070,6 @@ namespace DamageCalculatorGUI
                     // Iterate within each layer (through each "slice", representing a batched variable)
                     foreach (var slice in binned_compute_layers[layer_index])
                     {
-                        // To-do: Store the array instead to a list of graph views
-                        // To-do: Load current graph from the list
-                        // To-do: Add button/dropdown to select which one
                         // To-do: Make 'gif' feature
 
                         foreach (var settingDict in slice.Item2)
@@ -2974,22 +3089,35 @@ namespace DamageCalculatorGUI
                                     DieField.size => readDamageTuple.Item2,
                                     DieField.bonus => readDamageTuple.Item3
                                 };
-                            }// To-do: Fix simultaneous stepping of damage dice variables
+                            }
                             else
                             { // Store the non-list variable
                                 storedValue = computeVariables[slice.Item1];
                             }
 
-                            if (batch_results.tick_values.GetValue(indices: indices) is Dictionary<EncounterSetting, int> tick_dictionary)
+                            // Store the value to the tick list
+                            if (batch_results.tick_values.GetValue(indices: indices) is Dictionary<EncounterSetting, Dictionary<int, int>> tick_dictionary)
                             {
-                                tick_dictionary.TryAdd(slice.Item1, storedValue);
+                                if (tick_dictionary.TryGetValue(slice.Item1, out var encounterSettingDict))
+                                {
+                                    encounterSettingDict.TryAdd(settingDict.Value.index, storedValue);
+                                }
+                                else
+                                {
+                                    tick_dictionary.Add(slice.Item1, new()
+                                        {
+                                            { settingDict.Value.index, storedValue }
+                                        });
+                                }
                             }
                             else
                             {
-                                Dictionary<EncounterSetting, int> new_tick_dictionary = new()
-                                {
-                                    { slice.Item1, storedValue }
-                                }; // To-do: Fix labels being unique to settings (make them friendly to damage die)
+                                Dictionary<EncounterSetting, Dictionary<int, int>> new_tick_dictionary = new()
+                                    {
+                                        { slice.Item1, new() {
+                                                                { settingDict.Value.index, storedValue }
+                                                             } }
+                                    };
                                 batch_results.tick_values.SetValue(indices: indices, value: new_tick_dictionary);
                             }
                         }
@@ -3023,19 +3151,9 @@ namespace DamageCalculatorGUI
                     // Iterate within each layer (through each "slice", representing a batched variable)
                     foreach (var slice in binned_compute_layers[layer_index])
                     {
-                        // To-do: Store the array instead to a list of graph views
-                        // To-do: Load current graph from the list
-                        // To-do: Add button/dropdown to select which one
+
                         // To-do: Make 'gif' feature
-                        /*
-                        if (layer_index == binned_compute_layers.Keys.Max()
-                            && (indices.Length == 1 // Pass through if there's only one layer
-                                || indices.ToList().Take(indices.Length - 1).All(x => x == 0))) // Pass through only if we're on the first iteration layer
-                        { // Only store the top layer iteration labels
-                            // Catch an issue with the first value being skipped due to how index iteration is implemented
-                            int tick_index = indices[^1] - 1;
-                            batch_results.tick_values[tick_index].TryAdd(slice.Item1, computeVariables[slice.Item1]);
-                        }*/
+
                         foreach (var settingDict in slice.Item2)
                         {
                             // Update the current iteration variable
@@ -3081,16 +3199,28 @@ namespace DamageCalculatorGUI
                                 }
 
                                 // Store the value to the tick list
-                                if (batch_results.tick_values.GetValue(indices: indices) is Dictionary<EncounterSetting, int> tick_dictionary)
+                                if (batch_results.tick_values.GetValue(indices: indices) is Dictionary<EncounterSetting, Dictionary<int, int>> tick_dictionary)
                                 {
-                                    tick_dictionary.TryAdd(slice.Item1, storedValue);
+                                    if (tick_dictionary.TryGetValue(slice.Item1, out var encounterSettingDict))
+                                    {
+                                        encounterSettingDict.TryAdd(settingDict.Value.index, storedValue);
+                                    }
+                                    else
+                                    {
+                                        tick_dictionary.Add(slice.Item1, new() 
+                                        { 
+                                            { settingDict.Value.index, storedValue } 
+                                        });
+                                    }
                                 }
                                 else
                                 {
-                                    Dictionary<EncounterSetting, int> new_tick_dictionary = new()
-                                {
-                                    { slice.Item1, storedValue }
-                                };
+                                    Dictionary<EncounterSetting, Dictionary<int, int>> new_tick_dictionary = new()
+                                    {
+                                        { slice.Item1, new() { 
+                                                                { settingDict.Value.index, storedValue } 
+                                                             } }
+                                    };
                                     batch_results.tick_values.SetValue(indices: indices, value: new_tick_dictionary);
                                 }
                             }

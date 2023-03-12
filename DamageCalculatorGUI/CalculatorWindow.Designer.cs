@@ -1190,6 +1190,7 @@
             // CalculatorDamageCriticalBleedDieCheckBox
             // 
             CalculatorDamageCriticalBleedDieCheckBox.AutoSize = true;
+            CalculatorDamageCriticalBleedDieCheckBox.Enabled = false;
             CalculatorDamageCriticalBleedDieCheckBox.Location = new Point(223, 158);
             CalculatorDamageCriticalBleedDieCheckBox.Name = "CalculatorDamageCriticalBleedDieCheckBox";
             CalculatorDamageCriticalBleedDieCheckBox.Size = new Size(15, 14);
@@ -1224,6 +1225,7 @@
             // CalculatorDamageBleedDieCheckBox
             // 
             CalculatorDamageBleedDieCheckBox.AutoSize = true;
+            CalculatorDamageBleedDieCheckBox.Enabled = false;
             CalculatorDamageBleedDieCheckBox.Location = new Point(223, 112);
             CalculatorDamageBleedDieCheckBox.Name = "CalculatorDamageBleedDieCheckBox";
             CalculatorDamageBleedDieCheckBox.Size = new Size(15, 14);
@@ -1234,6 +1236,7 @@
             // CalculatorDamageCriticalDieCheckBox
             // 
             CalculatorDamageCriticalDieCheckBox.AutoSize = true;
+            CalculatorDamageCriticalDieCheckBox.Enabled = false;
             CalculatorDamageCriticalDieCheckBox.Location = new Point(223, 60);
             CalculatorDamageCriticalDieCheckBox.Name = "CalculatorDamageCriticalDieCheckBox";
             CalculatorDamageCriticalDieCheckBox.Size = new Size(15, 14);
@@ -1445,9 +1448,11 @@
             // 
             // CalculatorDamageDieBonusTextBox
             // 
+            CalculatorDamageDieBonusTextBox.Enabled = false;
             CalculatorDamageDieBonusTextBox.Location = new Point(313, 32);
             CalculatorDamageDieBonusTextBox.MaxLength = 3;
             CalculatorDamageDieBonusTextBox.Name = "CalculatorDamageDieBonusTextBox";
+            CalculatorDamageDieBonusTextBox.ReadOnly = true;
             CalculatorDamageDieBonusTextBox.Size = new Size(25, 23);
             CalculatorDamageDieBonusTextBox.TabIndex = 8;
             CalculatorDamageDieBonusTextBox.Click += TextBox_MouseClickShowBatchComputation;
@@ -1457,9 +1462,11 @@
             // 
             // CalculatorDamageDieSizeTextBox
             // 
+            CalculatorDamageDieSizeTextBox.Enabled = false;
             CalculatorDamageDieSizeTextBox.Location = new Point(269, 32);
             CalculatorDamageDieSizeTextBox.MaxLength = 3;
             CalculatorDamageDieSizeTextBox.Name = "CalculatorDamageDieSizeTextBox";
+            CalculatorDamageDieSizeTextBox.ReadOnly = true;
             CalculatorDamageDieSizeTextBox.Size = new Size(25, 23);
             CalculatorDamageDieSizeTextBox.TabIndex = 7;
             CalculatorDamageDieSizeTextBox.Click += TextBox_MouseClickShowBatchComputation;
@@ -1468,9 +1475,11 @@
             // 
             // CalculatorDamageDieCountTextBox
             // 
+            CalculatorDamageDieCountTextBox.Enabled = false;
             CalculatorDamageDieCountTextBox.Location = new Point(225, 32);
             CalculatorDamageDieCountTextBox.MaxLength = 3;
             CalculatorDamageDieCountTextBox.Name = "CalculatorDamageDieCountTextBox";
+            CalculatorDamageDieCountTextBox.ReadOnly = true;
             CalculatorDamageDieCountTextBox.Size = new Size(25, 23);
             CalculatorDamageDieCountTextBox.TabIndex = 6;
             CalculatorDamageDieCountTextBox.Click += TextBox_MouseClickShowBatchComputation;
@@ -1527,7 +1536,7 @@
             CalculatorVersionLabel.RightToLeft = RightToLeft.No;
             CalculatorVersionLabel.Size = new Size(138, 23);
             CalculatorVersionLabel.TabIndex = 12;
-            CalculatorVersionLabel.Text = "PFK V2.0.0-proto-10";
+            CalculatorVersionLabel.Text = "PFK V2.0.0-proto-11";
             CalculatorVersionLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // PrimaryTabControl
@@ -1617,6 +1626,7 @@
             // 
             CalculatorBatchComputePopupEndValueNumericUpDown.Location = new Point(104, 37);
             CalculatorBatchComputePopupEndValueNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            CalculatorBatchComputePopupEndValueNumericUpDown.Minimum = new decimal(new int[] { 999, 0, 0, int.MinValue });
             CalculatorBatchComputePopupEndValueNumericUpDown.Name = "CalculatorBatchComputePopupEndValueNumericUpDown";
             CalculatorBatchComputePopupEndValueNumericUpDown.Size = new Size(74, 23);
             CalculatorBatchComputePopupEndValueNumericUpDown.TabIndex = 2;
@@ -1634,6 +1644,7 @@
             // 
             CalculatorBatchComputePopupStartValueNumericUpDown.Location = new Point(6, 37);
             CalculatorBatchComputePopupStartValueNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            CalculatorBatchComputePopupStartValueNumericUpDown.Minimum = new decimal(new int[] { 999, 0, 0, int.MinValue });
             CalculatorBatchComputePopupStartValueNumericUpDown.Name = "CalculatorBatchComputePopupStartValueNumericUpDown";
             CalculatorBatchComputePopupStartValueNumericUpDown.Size = new Size(74, 23);
             CalculatorBatchComputePopupStartValueNumericUpDown.TabIndex = 1;
@@ -2020,7 +2031,7 @@
             label1.RightToLeft = RightToLeft.No;
             label1.Size = new Size(178, 23);
             label1.TabIndex = 12;
-            label1.Text = "PFK V2.0.0-proto-10";
+            label1.Text = "PFK V2.0.0-proto-11";
             label1.TextAlign = ContentAlignment.MiddleRight;
             // 
             // button6
