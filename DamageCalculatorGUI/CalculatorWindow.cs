@@ -1344,7 +1344,7 @@ namespace DamageCalculatorGUI
                 {
                     string settingString = setting_to_string[encounterDictionaries.Key]
                                             + (encounterTickPair.Key != -1
-                                                ? "(#" + (encounterTickPair.Key + 1).ToString() + ")"
+                                                ? " (#" + (encounterTickPair.Key + 1).ToString() + ")"
                                                 : "");
                     if (currentLineLength + settingString.Length > maxLength)
                     { // Current Line is too long, wrapping!
