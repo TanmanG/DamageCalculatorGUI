@@ -1,16 +1,10 @@
 ﻿
 using Pickings_For_Kurtulmak;
 using ScottPlot;
-using ScottPlot.Drawing.Colormaps;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using static DamageCalculatorGUI.CalculatorWindow;
 using static DamageCalculatorGUI.DamageCalculator;
 
 
@@ -18,6 +12,46 @@ namespace DamageCalculatorGUI
 {
     public partial class CalculatorWindow : Form
     {
+        // Current UI Settings
+        public PFKColorPalette currentColorPallete;
+        public List<Control> allWindowControls;
+        public Dictionary<string, PFKColorPalette> colorPalettes = new()
+        {
+            { "pf2e", new(background: Color.FromArgb(alpha: 255, red: 242, green: 233, blue: 231),
+                          entryNormal: Color.FromArgb(alpha: 255, red: 233, green: 227, blue: 222),
+                          entryBatched: Color.FromArgb(alpha: 255, red: 234, green: 190, blue: 178),
+                          text: Color.Black,
+                          buttonBackground: Color.FromArgb(alpha: 255, red: 120, green: 99, blue: 83),
+                          buttonIdle: Color.FromArgb(alpha: 255, red: 120, green: 99, blue: 83),
+                          buttonHovered: Color.FromArgb(alpha: 255, red: 150, green: 124, blue: 105),
+                          buttonPressed: Color.FromArgb(alpha: 255, red: 96, green: 79, blue: 67),
+                          fontName: "cambria",
+                          fontSizeOverride: 0,
+                          border: Color.FromArgb(alpha: 255, red: 157, green: 151, blue: 148)) },
+            { "gray", new(background: SystemColors.Window,
+                          entryNormal: SystemColors.Window,
+                          entryBatched: Color.Lavender,
+                          text: Color.Black,
+                          buttonBackground: Color.Transparent,
+                          buttonIdle: SystemColors.ButtonFace,
+                          buttonHovered: SystemColors.ButtonHighlight,
+                          buttonPressed: SystemColors.ButtonShadow,
+                          fontName: "segoe ui",
+                          fontSizeOverride: 0,
+                          border: SystemColors.InactiveBorder) },
+            { "dark", new(background: Color.FromArgb(alpha: 255, red: 43, green: 42, blue: 51),
+                          entryNormal: Color.FromArgb(alpha: 255, red: 66, green: 65, blue: 77),
+                          entryBatched: Color.FromArgb(alpha: 255, red: 66, green: 78, blue: 77),
+                          text: Color.LightGray,
+                          buttonBackground: Color.FromArgb(alpha: 255, red: 59, green: 58, blue: 68),
+                          buttonIdle: Color.FromArgb(alpha: 255, red: 59, green: 58, blue: 68),
+                          buttonHovered: Color.FromArgb(alpha: 255, red: 74, green: 73, blue: 86),
+                          buttonPressed: Color.FromArgb(alpha: 255, red: 46, green: 45, blue: 53),
+                          fontName: "segoe ui",
+                          fontSizeOverride: 0,
+                          border: Color.FromArgb(alpha: 255, red: 25, green: 25, blue: 30)) }
+        };
+
         // Damage Stats Struct
         public DamageStats damageStats = new();
         public BatchResults damageStats_BATCH = new();
@@ -71,9 +105,9 @@ namespace DamageCalculatorGUI
             { EncounterSetting.damage_dice_count, "Die Count" },
             { EncounterSetting.damage_dice_size, "Die Size" },
             { EncounterSetting.damage_dice_bonus, "Die Bonus" },
-            { EncounterSetting.damage_dice_count_critical, "Die Count (C)" },
-            { EncounterSetting.damage_dice_size_critical, "Die Size (C)" },
-            { EncounterSetting.damage_dice_bonus_critical, "Die Bonus (C)" },
+            { EncounterSetting.damage_dice_count_critical, "Die Count (🗲)" },
+            { EncounterSetting.damage_dice_size_critical, "Die Size (🗲)" },
+            { EncounterSetting.damage_dice_bonus_critical, "Die Bonus (🗲)" },
             { EncounterSetting.bonus_to_hit, "Bonus To Hit" },
             { EncounterSetting.AC, "AC" },
             { EncounterSetting.crit_threshhold, "Critical Hit Minimum" },
@@ -82,13 +116,13 @@ namespace DamageCalculatorGUI
             { EncounterSetting.move_speed, "Movement Speed" },
             { EncounterSetting.range, "Range Increment" },
             { EncounterSetting.volley, "Volley Increment" },
-            { EncounterSetting.damage_dice_DOT_count, "Die Count (B)" },
-            { EncounterSetting.damage_dice_DOT_size, "Die Size (B)" },
-            { EncounterSetting.damage_dice_DOT_bonus, "Die Bonus (B)" },
-            { EncounterSetting.damage_dice_DOT_count_critical, "Die Count (BC)" },
-            { EncounterSetting.damage_dice_DOT_size_critical, "Die Size (BC)" },
-            { EncounterSetting.damage_dice_DOT_bonus_critical, "Die Bonus (BC)" }
-        }; // To-do: Wait for ScottPlot to update 5.0 with heatmaps to test UTF-16 support for these guys: 🗡🗲 instead of BC respectively
+            { EncounterSetting.damage_dice_DOT_count, "Die Count (🗡)" },
+            { EncounterSetting.damage_dice_DOT_size, "Die Size (🗡)" },
+            { EncounterSetting.damage_dice_DOT_bonus, "Die Bonus (🗡)" },
+            { EncounterSetting.damage_dice_DOT_count_critical, "Die Count (🗡🗲)" },
+            { EncounterSetting.damage_dice_DOT_size_critical, "Die Size (🗡🗲)" },
+            { EncounterSetting.damage_dice_DOT_bonus_critical, "Die Bonus (🗡🗲)" }
+        };
         private static double computationStepsTotal = 0;
         private static double computationStepsCurrent = 0;
 
@@ -224,7 +258,7 @@ namespace DamageCalculatorGUI
 
 
                 if (target_step == -1)
-                    this.number_of_steps = currentStep;
+                    number_of_steps = currentStep;
 
                 return valueAtTargetStep;
             }
@@ -315,8 +349,16 @@ namespace DamageCalculatorGUI
             // Enable Carat Hiding
             AddCaretHidingEvents();
 
+            // Update the graphs to fix some scuffed rendering problems
             CalculatorBatchComputeScottPlot.Render();
             CalculatorDamageDistributionScottPlot.Render();
+
+            // Populate the tracked-controls menu
+            allWindowControls = new();
+            HelperFunctions.GetAllControls(this, allWindowControls);
+            allWindowControls.Add(PrimaryTabControl);
+            allWindowControls.Add(CalculatorMiscStatisticsCalculateStatsProgressBars);
+            LoadColorPallete(colorPalettes["dark"]);
         }
 
         private async void CalculateDamageStatsButton_MouseClick(object sender, MouseEventArgs e)
@@ -327,8 +369,8 @@ namespace DamageCalculatorGUI
                 if (computing_damage) // Prevent double-computing
                     return;
 
-                // Update Data // To-do: ENABLE TRY CATCH
-                //try
+                // Update Data
+                try
                 { // Check for exception
                     CheckComputeSafety();
 
@@ -403,18 +445,12 @@ namespace DamageCalculatorGUI
                     CalculatorBatchComputeScottPlot.Render();
                     CalculatorDamageDistributionScottPlot.Render();
                 }
-                /*catch (Exception ex)
+                catch (Exception ex)
                 { // Exception caught!
                     computing_damage = false;
                     PushErrorMessages(ex);
                     return;
-                }*/
-            }
-            else
-            {
-                if (damageStats.damage_bins != null && damageStats.damage_bins.Count > 0)
-                    // Store damage bins to the clipboard
-                    Clipboard.SetText(string.Join(",", damageStats.damage_bins.OrderBy(x => x.Key).Select(x => x.Value)));
+                }
             }
         }
 
@@ -1344,7 +1380,7 @@ namespace DamageCalculatorGUI
                 {
                     string settingString = setting_to_string[encounterDictionaries.Key]
                                             + (encounterTickPair.Key != -1
-                                                ? "(#" + (encounterTickPair.Key + 1).ToString() + ")"
+                                                ? " (#" + (encounterTickPair.Key + 1).ToString() + ")"
                                                 : "");
                     if (currentLineLength + settingString.Length > maxLength)
                     { // Current Line is too long, wrapping!
@@ -1369,7 +1405,8 @@ namespace DamageCalculatorGUI
             // Apply the label
             CalculatorBatchComputeScottPlot.Plot.YAxis.Label(labelString);
             // Style size down, with a floor size of 8
-            CalculatorBatchComputeScottPlot.Plot.YAxis.LabelStyle(fontSize: 16 / numberOfLabelLines + 6);
+            CalculatorBatchComputeScottPlot.Plot.YAxis.LabelStyle(fontSize: 16 / numberOfLabelLines + 6, fontName: "cambria");
+            CalculatorBatchComputeScottPlot.Plot.YAxis.TickLabelStyle(fontName: "cambria");
 
             // Concatenate and assign y-tick values
             CalculatorBatchComputeScottPlot.Plot.YTicks(positions: Enumerable.Range(0, batch_results.dimensions[^1]).Select(x => x + 0.5).ToArray(),
@@ -1379,7 +1416,8 @@ namespace DamageCalculatorGUI
                                                                                                 .Select(encounterSettingValue => encounterSettingValue.ToString()),
                                                                                              separator: ", ")).ToArray());
             // Label the x-axis
-            CalculatorBatchComputeScottPlot.Plot.XAxis.Label("Encounter Damage");
+            CalculatorBatchComputeScottPlot.Plot.XAxis.Label("Encounter Damage", fontName: "cambria");
+            CalculatorBatchComputeScottPlot.Plot.XAxis.TickLabelStyle(fontName: "cambria");
 
             // Set the camera/axis limits
             CalculatorBatchComputeScottPlot.Plot.SetAxisLimits(xMin: 0, xMax: batch_results.max_width,
@@ -2635,7 +2673,7 @@ namespace DamageCalculatorGUI
                 SetFieldLookToBatched(control: control, locked: true, setting: encounterSetting, index: index);
 
                 // Update Visuals of Batched Control
-                batch_mode_selected.BackColor = Color.Lavender;
+                batch_mode_selected.BackColor = currentColorPallete.entryBatched;
             }
             else
             { // Unbatch Variable
@@ -2647,7 +2685,7 @@ namespace DamageCalculatorGUI
                 TryRemoveBatchedVariable(setting: encounterSetting, index: index, removeLastValue: true);
 
                 // Update visuals on Unbatched Control
-                batch_mode_selected.BackColor = SystemColors.Window;
+                batch_mode_selected.BackColor = currentColorPallete.entryNormal;
             }
         }
         private void TryRemoveBatchedVariable(EncounterSetting setting, int index, bool removeLastValue = false)
@@ -3327,14 +3365,14 @@ namespace DamageCalculatorGUI
                 SetFieldLookToBatched(control, true, setting, index);
 
                 // Update Visuals of Batched Control
-                control.BackColor = Color.Lavender;
+                control.BackColor = currentColorPallete.entryBatched;
             }
             else
             { // Unbatch Variable
                 SetFieldLookToBatched(control, false, setting, index);
 
                 // Update visuals on Unbatched Control
-                control.BackColor = SystemColors.Window;
+                control.BackColor = currentColorPallete.entryNormal;
             }
         }
 
@@ -3390,6 +3428,78 @@ namespace DamageCalculatorGUI
 
             // Visually Update The Graph
             CalculatorBatchComputeScottPlot.Render();
+        }
+
+        // FONT & COLOR MANAGEMENT
+        private void LoadColorPallete(PFKColorPalette pallete)
+        {
+            // Store the current pallete
+            currentColorPallete = pallete;
+            ApplyCurrentColorPallete();
+        }
+        private void ApplyCurrentColorPallete()
+        {
+            int xHashCode = CalculatorBatchComputePopupXButton.GetHashCode();
+            int oHashCode = CalculatorBatchComputePopupSaveButton.GetHashCode();
+            // Iterate through every control, applying the respective color
+            foreach (Control control in allWindowControls)
+            {
+                if (control.GetHashCode() != xHashCode && control.GetHashCode() != oHashCode)
+                {
+                    switch (control)
+                    {
+                        case Label:
+                            control.BackColor = Color.Transparent;
+                            break;
+                        case Button button:
+                            control.BackColor = currentColorPallete.buttonBackground;
+                            button.FlatAppearance.CheckedBackColor = currentColorPallete.buttonIdle;
+                            button.FlatAppearance.MouseOverBackColor = currentColorPallete.buttonHovered;
+                            button.FlatAppearance.MouseDownBackColor = currentColorPallete.buttonPressed;
+                            break;
+                        case TextBox textBox:
+                        case NumericUpDown:
+                            control.BackColor = currentColorPallete.entryNormal;
+                            break;
+                        default:
+                            control.BackColor = currentColorPallete.background;
+                            break;
+                    }
+
+                    control.ForeColor = currentColorPallete.text;
+                    control.Font = new(familyName: currentColorPallete.fontName, emSize: 9 + currentColorPallete.fontSizeOverride, style: control.Font.Style, unit: control.Font.Unit);
+                }
+            }
+            PrimaryTabControl.Invalidate();
+            foreach (Control control in allWindowControls)
+            { // Redraw each window
+                control.Invalidate();
+            }
+        }
+
+        private void PrimaryTabControl_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            // Redraw the outer border
+            Rectangle tabPageBox = e.Bounds;
+            tabPageBox.Inflate(-2, -2); // shrink the box by 2 pixels on all sides
+            e.Graphics.FillRectangle(new SolidBrush(currentColorPallete.background), tabPageBox);
+            e.Graphics.DrawRectangle(new Pen(currentColorPallete.border, 5), tabPageBox);
+
+            // Set the background color of the tab
+            e.Graphics.FillRectangle(new SolidBrush(currentColorPallete.background), e.Bounds);
+
+            // Draw the text
+            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            // Draw the text of the tab
+            string tabText = PrimaryTabControl.TabPages[e.Index].Text;
+            e.Graphics.DrawString(s: tabText,
+                                  font: new Font(familyName: currentColorPallete.fontName,
+                                                    emSize: 9,
+                                                    style: PrimaryTabControl.Font.Style,
+                                                    unit: PrimaryTabControl.Font.Unit),
+                                  brush: new SolidBrush(currentColorPallete.text),
+                                  x: e.Bounds.X + (e.Bounds.Width - e.Graphics.MeasureString(tabText, PrimaryTabControl.Font).Width) / 2,
+                                  y: e.Bounds.Y + (e.Bounds.Height - e.Graphics.MeasureString(tabText, PrimaryTabControl.Font).Height) / 2);
         }
     }
 }

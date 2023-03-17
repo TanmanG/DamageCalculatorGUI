@@ -52,62 +52,74 @@
             CalculatorEncounterStatisticsMedianTextBox = new TextBox();
             CalculatorSettingsGroupBox = new GroupBox();
             CalculatorActionGroupBox = new GroupBox();
-            CalculatorActionExtraLimitedActionsLabel = new Label();
-            CalculatorActionExtraLimitedActionsDrawLabel = new Label();
             CalculatorActionExtraLimitedActionsDrawNumericUpDown = new NumericUpDown();
             CalculatorActionExtraLimitedActionsLongReloadNumericUpDown = new NumericUpDown();
             CalculatorActionExtraLimitedActionsStrideNumericUpDown = new NumericUpDown();
-            CalculatorActionExtraLimitedActionsStrikeLabel = new Label();
             CalculatorActionExtraLimitedActionsStrikeNumericUpDown = new NumericUpDown();
+            CalculatorActionExtraLimitedActionsReloadNumericUpDown = new NumericUpDown();
+            CalculatorActionActionsPerRoundTextBox = new TextBox();
+            CalculatorActionExtraLimitedActionsLabel = new Label();
+            CalculatorActionExtraLimitedActionsDrawLabel = new Label();
+            CalculatorActionExtraLimitedActionsStrikeLabel = new Label();
             CalculatorActionExtraLimitedActionsLongReloadLabel = new Label();
             CalculatorActionExtraLimitedActionsStrideLabel = new Label();
-            CalculatorActionExtraLimitedActionsReloadNumericUpDown = new NumericUpDown();
             CalculatorActionActionsPerRoundLabel = new Label();
             CalculatorActionExtraLimitedActionsReloadLabel = new Label();
-            CalculatorActionActionsPerRoundTextBox = new TextBox();
             CalculatorEmail2Label = new Label();
             CalculatorEmail1Label = new Label();
             CalculatorReachGroupBox = new GroupBox();
+            CalculatorReachMovementSpeedTextBox = new TextBox();
+            CalculatorReachVolleyIncrementTextBox = new TextBox();
+            CalculatorReachRangeIncrementTextBox = new TextBox();
             CalculatorReachRangeIncrementLabel = new Label();
             CalculatorReachMovementSpeedLabel = new Label();
-            CalculatorReachMovementSpeedTextBox = new TextBox();
             CalculatorReachVolleyIncrementLabel = new Label();
-            CalculatorReachVolleyIncrementTextBox = new TextBox();
             CalculatorReachMovementSpeedCheckBox = new CheckBox();
-            CalculatorReachRangeIncrementTextBox = new TextBox();
             CalculatorReachVolleyIncrementCheckBox = new CheckBox();
             CalculatorReachRangeIncrementCheckBox = new CheckBox();
             CalculatorAmmunitionGroupBox = new GroupBox();
-            CalculatorAmmunitionMagazineSizeLabel = new Label();
-            CalculatorAmmunitionDrawLengthLabel = new Label();
             CalculatorAmmunitionDrawLengthTextBox = new TextBox();
-            CalculatorAmmunitionLongReloadLabel = new Label();
-            CalculatorAmmunitionReloadLabel = new Label();
             CalculatorAmmunitionLongReloadTextBox = new TextBox();
             CalculatorAmmunitionMagazineSizeTextBox = new TextBox();
             CalculatorAmmunitionReloadTextBox = new TextBox();
+            CalculatorAmmunitionMagazineSizeLabel = new Label();
+            CalculatorAmmunitionDrawLengthLabel = new Label();
+            CalculatorAmmunitionLongReloadLabel = new Label();
+            CalculatorAmmunitionReloadLabel = new Label();
             CalculatorAmmunitionMagazineSizeCheckBox = new CheckBox();
             CalculatorOrInquiriesAtLabel = new Label();
             CalculatorSendBugsLabel = new Label();
             CalculatorAttackGroupBox = new GroupBox();
-            CalculatorAttackMAPModifierLabel = new Label();
-            CalculatorAttackACLabel = new Label();
             CalculatorAttackMAPModifierTextBox = new TextBox();
-            CalculatorAttackCriticalHitMinimumLabel = new Label();
             CalculatorAttackACTextBox = new TextBox();
             CalculatorAttackCriticalHitMinimumTextBox = new TextBox();
             CalculatorAttackBonusToHitTextBox = new TextBox();
+            CalculatorAttackMAPModifierLabel = new Label();
+            CalculatorAttackACLabel = new Label();
+            CalculatorAttackCriticalHitMinimumLabel = new Label();
             CalculatorAttackBonusToHitLabel = new Label();
             CalculatorEncounterGroupBox = new GroupBox();
-            CalculatorEncounterEngagementRangeLabel = new Label();
             CalculatorEncounterEngagementRangeTextBox = new TextBox();
+            CalculatorEncounterRoundsPerEncounterTextBox = new TextBox();
+            CalculatorEncounterNumberOfEncountersTextBox = new TextBox();
+            CalculatorEncounterEngagementRangeLabel = new Label();
             CalculatorEncounterRoundsPerEncounterLabel = new Label();
             CalculatorEncounterEngagementRangeCheckBox = new CheckBox();
             CalculatorEncounterNumberOfEncountersLabel = new Label();
-            CalculatorEncounterRoundsPerEncounterTextBox = new TextBox();
-            CalculatorEncounterNumberOfEncountersTextBox = new TextBox();
             CalculatorTanmanGLabel = new Label();
             CalculatorDamageGroupBox = new GroupBox();
+            CalculatorDamageBleedDieBonusTextBox = new TextBox();
+            CalculatorDamageBleedDieSizeTextBox = new TextBox();
+            CalculatorDamageBleedDieCountTextBox = new TextBox();
+            CalculatorDamageCriticalBleedDieBonusTextBox = new TextBox();
+            CalculatorDamageCriticalDieBonusTextBox = new TextBox();
+            CalculatorDamageCriticalBleedDieSizeTextBox = new TextBox();
+            CalculatorDamageCriticalDieSizeTextBox = new TextBox();
+            CalculatorDamageCriticalBleedDieCountTextBox = new TextBox();
+            CalculatorDamageCriticalDieCountTextBox = new TextBox();
+            CalculatorDamageDieBonusTextBox = new TextBox();
+            CalculatorDamageDieSizeTextBox = new TextBox();
+            CalculatorDamageDieCountTextBox = new TextBox();
             CalculatorDamageCriticalBleedDieLabel = new Label();
             CalculatorDamageBleedDieLabel = new Label();
             CalculatorDamageCriticalDieLabel = new Label();
@@ -115,29 +127,17 @@
             CalculatorDamageBleedDieSizePLabel = new Label();
             CalculatorDamageCriticalBleedDieCheckBox = new CheckBox();
             CalculatorDamageSaveButton = new Button();
-            CalculatorDamageBleedDieBonusTextBox = new TextBox();
             CalculatorDamageBleedDieCheckBox = new CheckBox();
             CalculatorDamageCriticalDieCheckBox = new CheckBox();
-            CalculatorDamageBleedDieSizeTextBox = new TextBox();
-            CalculatorDamageBleedDieCountTextBox = new TextBox();
             CalculatorDamageDieSizeDLabel = new Label();
             CalculatorDamageDieSizePLabel = new Label();
             CalculatorDamageCritBleedDieSizePLabel = new Label();
             CalculatorDamageCritDieSizePLabel = new Label();
             CalculatorDamageCritBleedDieSizeDLabel = new Label();
             CalculatorDamageCritDieSizeDLabel = new Label();
-            CalculatorDamageCriticalBleedDieBonusTextBox = new TextBox();
-            CalculatorDamageCriticalDieBonusTextBox = new TextBox();
-            CalculatorDamageCriticalBleedDieSizeTextBox = new TextBox();
-            CalculatorDamageCriticalDieSizeTextBox = new TextBox();
-            CalculatorDamageCriticalBleedDieCountTextBox = new TextBox();
-            CalculatorDamageCriticalDieCountTextBox = new TextBox();
             CalculatorDamageDieSizeLabel = new Label();
             CalculatorDamageAddNewButton = new Button();
             CalculatorDamageDeleteButton = new Button();
-            CalculatorDamageDieBonusTextBox = new TextBox();
-            CalculatorDamageDieSizeTextBox = new TextBox();
-            CalculatorDamageDieCountTextBox = new TextBox();
             CalculatorDamageListBox = new ListBox();
             CalculatorDevelopedByLabel = new Label();
             CalculatorDefaultSettingsButton = new Button();
@@ -149,10 +149,10 @@
             CalculatorBatchComputePopupPanel = new Panel();
             CalculatorBatchComputePopupGroupBox = new GroupBox();
             CalculatorBatchComputePopupStepPatternTextBox = new TextBox();
-            CalculatorBatchComputePopupDashLabel = new Label();
             CalculatorBatchComputePopupEndValueNumericUpDown = new NumericUpDown();
             CalculatorBatchComputePopupLayerNumericUpDown = new NumericUpDown();
             CalculatorBatchComputePopupStartValueNumericUpDown = new NumericUpDown();
+            CalculatorBatchComputePopupDashLabel = new Label();
             CalculatorBatchComputePopupEndValueLabel = new Label();
             CalculatorBatchComputePopupLayerLabel = new Label();
             CalculatorBatchComputePopupStepPatternLabel = new Label();
@@ -223,12 +223,14 @@
             // 
             // CalculatorCalculateDamageStatsButton
             // 
+            CalculatorCalculateDamageStatsButton.BackColor = Color.Transparent;
+            CalculatorCalculateDamageStatsButton.FlatStyle = FlatStyle.Flat;
             CalculatorCalculateDamageStatsButton.Location = new Point(480, 334);
             CalculatorCalculateDamageStatsButton.Name = "CalculatorCalculateDamageStatsButton";
             CalculatorCalculateDamageStatsButton.Size = new Size(113, 27);
             CalculatorCalculateDamageStatsButton.TabIndex = 0;
             CalculatorCalculateDamageStatsButton.Text = "Calculate Stats";
-            CalculatorCalculateDamageStatsButton.UseVisualStyleBackColor = true;
+            CalculatorCalculateDamageStatsButton.UseVisualStyleBackColor = false;
             CalculatorCalculateDamageStatsButton.MouseClick += CalculateDamageStatsButton_MouseClick;
             CalculatorCalculateDamageStatsButton.MouseEnter += Control_MouseHoverShowTooltip;
             // 
@@ -244,6 +246,7 @@
             // 
             // CalculatorEncounterStatisticsMeanTextBox
             // 
+            CalculatorEncounterStatisticsMeanTextBox.BorderStyle = BorderStyle.FixedSingle;
             CalculatorEncounterStatisticsMeanTextBox.Location = new Point(6, 37);
             CalculatorEncounterStatisticsMeanTextBox.Name = "CalculatorEncounterStatisticsMeanTextBox";
             CalculatorEncounterStatisticsMeanTextBox.ReadOnly = true;
@@ -288,6 +291,7 @@
             // 
             // CalculatorMiscStatisticsAccuracyMeanTextBox
             // 
+            CalculatorMiscStatisticsAccuracyMeanTextBox.BorderStyle = BorderStyle.FixedSingle;
             CalculatorMiscStatisticsAccuracyMeanTextBox.Location = new Point(6, 125);
             CalculatorMiscStatisticsAccuracyMeanTextBox.Name = "CalculatorMiscStatisticsAccuracyMeanTextBox";
             CalculatorMiscStatisticsAccuracyMeanTextBox.ReadOnly = true;
@@ -307,6 +311,7 @@
             // 
             // CalculatorMiscStatisticsAttackDamageMeanTextBox
             // 
+            CalculatorMiscStatisticsAttackDamageMeanTextBox.BorderStyle = BorderStyle.FixedSingle;
             CalculatorMiscStatisticsAttackDamageMeanTextBox.Location = new Point(6, 81);
             CalculatorMiscStatisticsAttackDamageMeanTextBox.Name = "CalculatorMiscStatisticsAttackDamageMeanTextBox";
             CalculatorMiscStatisticsAttackDamageMeanTextBox.ReadOnly = true;
@@ -316,6 +321,7 @@
             // 
             // CalculatorMiscStatisticsRoundDamageMeanTextBox
             // 
+            CalculatorMiscStatisticsRoundDamageMeanTextBox.BorderStyle = BorderStyle.FixedSingle;
             CalculatorMiscStatisticsRoundDamageMeanTextBox.Location = new Point(6, 37);
             CalculatorMiscStatisticsRoundDamageMeanTextBox.Name = "CalculatorMiscStatisticsRoundDamageMeanTextBox";
             CalculatorMiscStatisticsRoundDamageMeanTextBox.ReadOnly = true;
@@ -395,6 +401,7 @@
             // 
             // CalculatorEncounterStatisticsLowerQuartileBoxTextBox
             // 
+            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.BorderStyle = BorderStyle.FixedSingle;
             CalculatorEncounterStatisticsLowerQuartileBoxTextBox.Location = new Point(6, 169);
             CalculatorEncounterStatisticsLowerQuartileBoxTextBox.Name = "CalculatorEncounterStatisticsLowerQuartileBoxTextBox";
             CalculatorEncounterStatisticsLowerQuartileBoxTextBox.ReadOnly = true;
@@ -414,6 +421,7 @@
             // 
             // CalculatorEncounterStatisticsUpperQuartileTextBox
             // 
+            CalculatorEncounterStatisticsUpperQuartileTextBox.BorderStyle = BorderStyle.FixedSingle;
             CalculatorEncounterStatisticsUpperQuartileTextBox.Location = new Point(6, 81);
             CalculatorEncounterStatisticsUpperQuartileTextBox.Name = "CalculatorEncounterStatisticsUpperQuartileTextBox";
             CalculatorEncounterStatisticsUpperQuartileTextBox.ReadOnly = true;
@@ -423,6 +431,7 @@
             // 
             // CalculatorEncounterStatisticsMedianTextBox
             // 
+            CalculatorEncounterStatisticsMedianTextBox.BorderStyle = BorderStyle.FixedSingle;
             CalculatorEncounterStatisticsMedianTextBox.Location = new Point(6, 125);
             CalculatorEncounterStatisticsMedianTextBox.Name = "CalculatorEncounterStatisticsMedianTextBox";
             CalculatorEncounterStatisticsMedianTextBox.ReadOnly = true;
@@ -455,25 +464,97 @@
             // 
             // CalculatorActionGroupBox
             // 
-            CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsLabel);
-            CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsDrawLabel);
             CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsDrawNumericUpDown);
             CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsLongReloadNumericUpDown);
             CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsStrideNumericUpDown);
-            CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsStrikeLabel);
             CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsStrikeNumericUpDown);
+            CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsReloadNumericUpDown);
+            CalculatorActionGroupBox.Controls.Add(CalculatorActionActionsPerRoundTextBox);
+            CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsLabel);
+            CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsDrawLabel);
+            CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsStrikeLabel);
             CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsLongReloadLabel);
             CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsStrideLabel);
-            CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsReloadNumericUpDown);
             CalculatorActionGroupBox.Controls.Add(CalculatorActionActionsPerRoundLabel);
             CalculatorActionGroupBox.Controls.Add(CalculatorActionExtraLimitedActionsReloadLabel);
-            CalculatorActionGroupBox.Controls.Add(CalculatorActionActionsPerRoundTextBox);
             CalculatorActionGroupBox.Location = new Point(299, 231);
             CalculatorActionGroupBox.Name = "CalculatorActionGroupBox";
             CalculatorActionGroupBox.Size = new Size(175, 160);
             CalculatorActionGroupBox.TabIndex = 6;
             CalculatorActionGroupBox.TabStop = false;
             CalculatorActionGroupBox.Text = "Action";
+            // 
+            // CalculatorActionExtraLimitedActionsDrawNumericUpDown
+            // 
+            CalculatorActionExtraLimitedActionsDrawNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorActionExtraLimitedActionsDrawNumericUpDown.Location = new Point(62, 90);
+            CalculatorActionExtraLimitedActionsDrawNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            CalculatorActionExtraLimitedActionsDrawNumericUpDown.Name = "CalculatorActionExtraLimitedActionsDrawNumericUpDown";
+            CalculatorActionExtraLimitedActionsDrawNumericUpDown.Size = new Size(50, 23);
+            CalculatorActionExtraLimitedActionsDrawNumericUpDown.TabIndex = 2;
+            CalculatorActionExtraLimitedActionsDrawNumericUpDown.ValueChanged += NumericUpDown_ClearError;
+            CalculatorActionExtraLimitedActionsDrawNumericUpDown.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorActionExtraLimitedActionsDrawNumericUpDown.Leave += NumericUpDown_ClearError;
+            // 
+            // CalculatorActionExtraLimitedActionsLongReloadNumericUpDown
+            // 
+            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Location = new Point(62, 131);
+            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Name = "CalculatorActionExtraLimitedActionsLongReloadNumericUpDown";
+            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Size = new Size(105, 23);
+            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.TabIndex = 5;
+            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.ValueChanged += NumericUpDown_ClearError;
+            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Leave += NumericUpDown_ClearError;
+            // 
+            // CalculatorActionExtraLimitedActionsStrideNumericUpDown
+            // 
+            CalculatorActionExtraLimitedActionsStrideNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorActionExtraLimitedActionsStrideNumericUpDown.Location = new Point(118, 90);
+            CalculatorActionExtraLimitedActionsStrideNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            CalculatorActionExtraLimitedActionsStrideNumericUpDown.Name = "CalculatorActionExtraLimitedActionsStrideNumericUpDown";
+            CalculatorActionExtraLimitedActionsStrideNumericUpDown.Size = new Size(50, 23);
+            CalculatorActionExtraLimitedActionsStrideNumericUpDown.TabIndex = 3;
+            CalculatorActionExtraLimitedActionsStrideNumericUpDown.ValueChanged += NumericUpDown_ClearError;
+            CalculatorActionExtraLimitedActionsStrideNumericUpDown.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorActionExtraLimitedActionsStrideNumericUpDown.Leave += NumericUpDown_ClearError;
+            // 
+            // CalculatorActionExtraLimitedActionsStrikeNumericUpDown
+            // 
+            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Location = new Point(6, 90);
+            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Name = "CalculatorActionExtraLimitedActionsStrikeNumericUpDown";
+            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Size = new Size(50, 23);
+            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.TabIndex = 1;
+            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.ValueChanged += NumericUpDown_ClearError;
+            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Leave += NumericUpDown_ClearError;
+            // 
+            // CalculatorActionExtraLimitedActionsReloadNumericUpDown
+            // 
+            CalculatorActionExtraLimitedActionsReloadNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorActionExtraLimitedActionsReloadNumericUpDown.Location = new Point(6, 131);
+            CalculatorActionExtraLimitedActionsReloadNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            CalculatorActionExtraLimitedActionsReloadNumericUpDown.Name = "CalculatorActionExtraLimitedActionsReloadNumericUpDown";
+            CalculatorActionExtraLimitedActionsReloadNumericUpDown.Size = new Size(50, 23);
+            CalculatorActionExtraLimitedActionsReloadNumericUpDown.TabIndex = 4;
+            CalculatorActionExtraLimitedActionsReloadNumericUpDown.ValueChanged += NumericUpDown_ClearError;
+            CalculatorActionExtraLimitedActionsReloadNumericUpDown.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorActionExtraLimitedActionsReloadNumericUpDown.Leave += NumericUpDown_ClearError;
+            // 
+            // CalculatorActionActionsPerRoundTextBox
+            // 
+            CalculatorActionActionsPerRoundTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorActionActionsPerRoundTextBox.Location = new Point(6, 34);
+            CalculatorActionActionsPerRoundTextBox.MaxLength = 3;
+            CalculatorActionActionsPerRoundTextBox.Name = "CalculatorActionActionsPerRoundTextBox";
+            CalculatorActionActionsPerRoundTextBox.Size = new Size(161, 23);
+            CalculatorActionActionsPerRoundTextBox.TabIndex = 0;
+            CalculatorActionActionsPerRoundTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorActionActionsPerRoundTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorActionActionsPerRoundTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
             // 
             // CalculatorActionExtraLimitedActionsLabel
             // 
@@ -494,39 +575,6 @@
             CalculatorActionExtraLimitedActionsDrawLabel.Text = "Draw";
             CalculatorActionExtraLimitedActionsDrawLabel.MouseEnter += Control_MouseHoverShowTooltip;
             // 
-            // CalculatorActionExtraLimitedActionsDrawNumericUpDown
-            // 
-            CalculatorActionExtraLimitedActionsDrawNumericUpDown.Location = new Point(62, 90);
-            CalculatorActionExtraLimitedActionsDrawNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-            CalculatorActionExtraLimitedActionsDrawNumericUpDown.Name = "CalculatorActionExtraLimitedActionsDrawNumericUpDown";
-            CalculatorActionExtraLimitedActionsDrawNumericUpDown.Size = new Size(50, 23);
-            CalculatorActionExtraLimitedActionsDrawNumericUpDown.TabIndex = 2;
-            CalculatorActionExtraLimitedActionsDrawNumericUpDown.ValueChanged += NumericUpDown_ClearError;
-            CalculatorActionExtraLimitedActionsDrawNumericUpDown.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorActionExtraLimitedActionsDrawNumericUpDown.Leave += NumericUpDown_ClearError;
-            // 
-            // CalculatorActionExtraLimitedActionsLongReloadNumericUpDown
-            // 
-            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Location = new Point(62, 131);
-            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Name = "CalculatorActionExtraLimitedActionsLongReloadNumericUpDown";
-            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Size = new Size(105, 23);
-            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.TabIndex = 5;
-            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.ValueChanged += NumericUpDown_ClearError;
-            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorActionExtraLimitedActionsLongReloadNumericUpDown.Leave += NumericUpDown_ClearError;
-            // 
-            // CalculatorActionExtraLimitedActionsStrideNumericUpDown
-            // 
-            CalculatorActionExtraLimitedActionsStrideNumericUpDown.Location = new Point(118, 90);
-            CalculatorActionExtraLimitedActionsStrideNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-            CalculatorActionExtraLimitedActionsStrideNumericUpDown.Name = "CalculatorActionExtraLimitedActionsStrideNumericUpDown";
-            CalculatorActionExtraLimitedActionsStrideNumericUpDown.Size = new Size(50, 23);
-            CalculatorActionExtraLimitedActionsStrideNumericUpDown.TabIndex = 3;
-            CalculatorActionExtraLimitedActionsStrideNumericUpDown.ValueChanged += NumericUpDown_ClearError;
-            CalculatorActionExtraLimitedActionsStrideNumericUpDown.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorActionExtraLimitedActionsStrideNumericUpDown.Leave += NumericUpDown_ClearError;
-            // 
             // CalculatorActionExtraLimitedActionsStrikeLabel
             // 
             CalculatorActionExtraLimitedActionsStrikeLabel.AutoSize = true;
@@ -536,17 +584,6 @@
             CalculatorActionExtraLimitedActionsStrikeLabel.TabIndex = 1;
             CalculatorActionExtraLimitedActionsStrikeLabel.Text = "Strike";
             CalculatorActionExtraLimitedActionsStrikeLabel.MouseEnter += Control_MouseHoverShowTooltip;
-            // 
-            // CalculatorActionExtraLimitedActionsStrikeNumericUpDown
-            // 
-            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Location = new Point(6, 90);
-            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Name = "CalculatorActionExtraLimitedActionsStrikeNumericUpDown";
-            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Size = new Size(50, 23);
-            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.TabIndex = 1;
-            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.ValueChanged += NumericUpDown_ClearError;
-            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorActionExtraLimitedActionsStrikeNumericUpDown.Leave += NumericUpDown_ClearError;
             // 
             // CalculatorActionExtraLimitedActionsLongReloadLabel
             // 
@@ -568,17 +605,6 @@
             CalculatorActionExtraLimitedActionsStrideLabel.Text = "Stride";
             CalculatorActionExtraLimitedActionsStrideLabel.MouseEnter += Control_MouseHoverShowTooltip;
             // 
-            // CalculatorActionExtraLimitedActionsReloadNumericUpDown
-            // 
-            CalculatorActionExtraLimitedActionsReloadNumericUpDown.Location = new Point(6, 131);
-            CalculatorActionExtraLimitedActionsReloadNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-            CalculatorActionExtraLimitedActionsReloadNumericUpDown.Name = "CalculatorActionExtraLimitedActionsReloadNumericUpDown";
-            CalculatorActionExtraLimitedActionsReloadNumericUpDown.Size = new Size(50, 23);
-            CalculatorActionExtraLimitedActionsReloadNumericUpDown.TabIndex = 4;
-            CalculatorActionExtraLimitedActionsReloadNumericUpDown.ValueChanged += NumericUpDown_ClearError;
-            CalculatorActionExtraLimitedActionsReloadNumericUpDown.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorActionExtraLimitedActionsReloadNumericUpDown.Leave += NumericUpDown_ClearError;
-            // 
             // CalculatorActionActionsPerRoundLabel
             // 
             CalculatorActionActionsPerRoundLabel.AutoSize = true;
@@ -598,17 +624,6 @@
             CalculatorActionExtraLimitedActionsReloadLabel.TabIndex = 1;
             CalculatorActionExtraLimitedActionsReloadLabel.Text = "Reload";
             CalculatorActionExtraLimitedActionsReloadLabel.MouseEnter += Control_MouseHoverShowTooltip;
-            // 
-            // CalculatorActionActionsPerRoundTextBox
-            // 
-            CalculatorActionActionsPerRoundTextBox.Location = new Point(6, 34);
-            CalculatorActionActionsPerRoundTextBox.MaxLength = 3;
-            CalculatorActionActionsPerRoundTextBox.Name = "CalculatorActionActionsPerRoundTextBox";
-            CalculatorActionActionsPerRoundTextBox.Size = new Size(161, 23);
-            CalculatorActionActionsPerRoundTextBox.TabIndex = 0;
-            CalculatorActionActionsPerRoundTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorActionActionsPerRoundTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorActionActionsPerRoundTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
             // 
             // CalculatorEmail2Label
             // 
@@ -634,13 +649,13 @@
             // 
             // CalculatorReachGroupBox
             // 
+            CalculatorReachGroupBox.Controls.Add(CalculatorReachMovementSpeedTextBox);
+            CalculatorReachGroupBox.Controls.Add(CalculatorReachVolleyIncrementTextBox);
+            CalculatorReachGroupBox.Controls.Add(CalculatorReachRangeIncrementTextBox);
             CalculatorReachGroupBox.Controls.Add(CalculatorReachRangeIncrementLabel);
             CalculatorReachGroupBox.Controls.Add(CalculatorReachMovementSpeedLabel);
-            CalculatorReachGroupBox.Controls.Add(CalculatorReachMovementSpeedTextBox);
             CalculatorReachGroupBox.Controls.Add(CalculatorReachVolleyIncrementLabel);
-            CalculatorReachGroupBox.Controls.Add(CalculatorReachVolleyIncrementTextBox);
             CalculatorReachGroupBox.Controls.Add(CalculatorReachMovementSpeedCheckBox);
-            CalculatorReachGroupBox.Controls.Add(CalculatorReachRangeIncrementTextBox);
             CalculatorReachGroupBox.Controls.Add(CalculatorReachVolleyIncrementCheckBox);
             CalculatorReachGroupBox.Controls.Add(CalculatorReachRangeIncrementCheckBox);
             CalculatorReachGroupBox.Location = new Point(6, 231);
@@ -649,6 +664,48 @@
             CalculatorReachGroupBox.TabIndex = 4;
             CalculatorReachGroupBox.TabStop = false;
             CalculatorReachGroupBox.Text = "Reach";
+            // 
+            // CalculatorReachMovementSpeedTextBox
+            // 
+            CalculatorReachMovementSpeedTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorReachMovementSpeedTextBox.Enabled = false;
+            CalculatorReachMovementSpeedTextBox.Location = new Point(6, 124);
+            CalculatorReachMovementSpeedTextBox.MaxLength = 6;
+            CalculatorReachMovementSpeedTextBox.Name = "CalculatorReachMovementSpeedTextBox";
+            CalculatorReachMovementSpeedTextBox.ReadOnly = true;
+            CalculatorReachMovementSpeedTextBox.Size = new Size(128, 23);
+            CalculatorReachMovementSpeedTextBox.TabIndex = 6;
+            CalculatorReachMovementSpeedTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorReachMovementSpeedTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorReachMovementSpeedTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            // 
+            // CalculatorReachVolleyIncrementTextBox
+            // 
+            CalculatorReachVolleyIncrementTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorReachVolleyIncrementTextBox.Enabled = false;
+            CalculatorReachVolleyIncrementTextBox.Location = new Point(6, 79);
+            CalculatorReachVolleyIncrementTextBox.MaxLength = 6;
+            CalculatorReachVolleyIncrementTextBox.Name = "CalculatorReachVolleyIncrementTextBox";
+            CalculatorReachVolleyIncrementTextBox.ReadOnly = true;
+            CalculatorReachVolleyIncrementTextBox.Size = new Size(128, 23);
+            CalculatorReachVolleyIncrementTextBox.TabIndex = 4;
+            CalculatorReachVolleyIncrementTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorReachVolleyIncrementTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorReachVolleyIncrementTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            // 
+            // CalculatorReachRangeIncrementTextBox
+            // 
+            CalculatorReachRangeIncrementTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorReachRangeIncrementTextBox.Enabled = false;
+            CalculatorReachRangeIncrementTextBox.Location = new Point(6, 34);
+            CalculatorReachRangeIncrementTextBox.MaxLength = 6;
+            CalculatorReachRangeIncrementTextBox.Name = "CalculatorReachRangeIncrementTextBox";
+            CalculatorReachRangeIncrementTextBox.ReadOnly = true;
+            CalculatorReachRangeIncrementTextBox.Size = new Size(128, 23);
+            CalculatorReachRangeIncrementTextBox.TabIndex = 2;
+            CalculatorReachRangeIncrementTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorReachRangeIncrementTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorReachRangeIncrementTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
             // 
             // CalculatorReachRangeIncrementLabel
             // 
@@ -670,19 +727,6 @@
             CalculatorReachMovementSpeedLabel.Text = "Movement Speed";
             CalculatorReachMovementSpeedLabel.MouseEnter += Control_MouseHoverShowTooltip;
             // 
-            // CalculatorReachMovementSpeedTextBox
-            // 
-            CalculatorReachMovementSpeedTextBox.Enabled = false;
-            CalculatorReachMovementSpeedTextBox.Location = new Point(6, 124);
-            CalculatorReachMovementSpeedTextBox.MaxLength = 6;
-            CalculatorReachMovementSpeedTextBox.Name = "CalculatorReachMovementSpeedTextBox";
-            CalculatorReachMovementSpeedTextBox.ReadOnly = true;
-            CalculatorReachMovementSpeedTextBox.Size = new Size(128, 23);
-            CalculatorReachMovementSpeedTextBox.TabIndex = 6;
-            CalculatorReachMovementSpeedTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorReachMovementSpeedTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorReachMovementSpeedTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            // 
             // CalculatorReachVolleyIncrementLabel
             // 
             CalculatorReachVolleyIncrementLabel.AutoSize = true;
@@ -693,19 +737,6 @@
             CalculatorReachVolleyIncrementLabel.Text = "Volley Increment";
             CalculatorReachVolleyIncrementLabel.MouseEnter += Control_MouseHoverShowTooltip;
             // 
-            // CalculatorReachVolleyIncrementTextBox
-            // 
-            CalculatorReachVolleyIncrementTextBox.Enabled = false;
-            CalculatorReachVolleyIncrementTextBox.Location = new Point(6, 79);
-            CalculatorReachVolleyIncrementTextBox.MaxLength = 6;
-            CalculatorReachVolleyIncrementTextBox.Name = "CalculatorReachVolleyIncrementTextBox";
-            CalculatorReachVolleyIncrementTextBox.ReadOnly = true;
-            CalculatorReachVolleyIncrementTextBox.Size = new Size(128, 23);
-            CalculatorReachVolleyIncrementTextBox.TabIndex = 4;
-            CalculatorReachVolleyIncrementTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorReachVolleyIncrementTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorReachVolleyIncrementTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            // 
             // CalculatorReachMovementSpeedCheckBox
             // 
             CalculatorReachMovementSpeedCheckBox.AutoSize = true;
@@ -715,19 +746,6 @@
             CalculatorReachMovementSpeedCheckBox.TabIndex = 5;
             CalculatorReachMovementSpeedCheckBox.UseVisualStyleBackColor = true;
             CalculatorReachMovementSpeedCheckBox.CheckedChanged += CheckBox_CheckChangedToggleTextBoxes;
-            // 
-            // CalculatorReachRangeIncrementTextBox
-            // 
-            CalculatorReachRangeIncrementTextBox.Enabled = false;
-            CalculatorReachRangeIncrementTextBox.Location = new Point(6, 34);
-            CalculatorReachRangeIncrementTextBox.MaxLength = 6;
-            CalculatorReachRangeIncrementTextBox.Name = "CalculatorReachRangeIncrementTextBox";
-            CalculatorReachRangeIncrementTextBox.ReadOnly = true;
-            CalculatorReachRangeIncrementTextBox.Size = new Size(128, 23);
-            CalculatorReachRangeIncrementTextBox.TabIndex = 2;
-            CalculatorReachRangeIncrementTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorReachRangeIncrementTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorReachRangeIncrementTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
             // 
             // CalculatorReachVolleyIncrementCheckBox
             // 
@@ -751,14 +769,14 @@
             // 
             // CalculatorAmmunitionGroupBox
             // 
-            CalculatorAmmunitionGroupBox.Controls.Add(CalculatorAmmunitionMagazineSizeLabel);
-            CalculatorAmmunitionGroupBox.Controls.Add(CalculatorAmmunitionDrawLengthLabel);
             CalculatorAmmunitionGroupBox.Controls.Add(CalculatorAmmunitionDrawLengthTextBox);
-            CalculatorAmmunitionGroupBox.Controls.Add(CalculatorAmmunitionLongReloadLabel);
-            CalculatorAmmunitionGroupBox.Controls.Add(CalculatorAmmunitionReloadLabel);
             CalculatorAmmunitionGroupBox.Controls.Add(CalculatorAmmunitionLongReloadTextBox);
             CalculatorAmmunitionGroupBox.Controls.Add(CalculatorAmmunitionMagazineSizeTextBox);
             CalculatorAmmunitionGroupBox.Controls.Add(CalculatorAmmunitionReloadTextBox);
+            CalculatorAmmunitionGroupBox.Controls.Add(CalculatorAmmunitionMagazineSizeLabel);
+            CalculatorAmmunitionGroupBox.Controls.Add(CalculatorAmmunitionDrawLengthLabel);
+            CalculatorAmmunitionGroupBox.Controls.Add(CalculatorAmmunitionLongReloadLabel);
+            CalculatorAmmunitionGroupBox.Controls.Add(CalculatorAmmunitionReloadLabel);
             CalculatorAmmunitionGroupBox.Controls.Add(CalculatorAmmunitionMagazineSizeCheckBox);
             CalculatorAmmunitionGroupBox.Location = new Point(135, 22);
             CalculatorAmmunitionGroupBox.Name = "CalculatorAmmunitionGroupBox";
@@ -766,6 +784,61 @@
             CalculatorAmmunitionGroupBox.TabIndex = 2;
             CalculatorAmmunitionGroupBox.TabStop = false;
             CalculatorAmmunitionGroupBox.Text = "Ammunition";
+            // 
+            // CalculatorAmmunitionDrawLengthTextBox
+            // 
+            CalculatorAmmunitionDrawLengthTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorAmmunitionDrawLengthTextBox.Location = new Point(6, 165);
+            CalculatorAmmunitionDrawLengthTextBox.MaxLength = 6;
+            CalculatorAmmunitionDrawLengthTextBox.Name = "CalculatorAmmunitionDrawLengthTextBox";
+            CalculatorAmmunitionDrawLengthTextBox.Size = new Size(94, 23);
+            CalculatorAmmunitionDrawLengthTextBox.TabIndex = 5;
+            CalculatorAmmunitionDrawLengthTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorAmmunitionDrawLengthTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
+            CalculatorAmmunitionDrawLengthTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            CalculatorAmmunitionDrawLengthTextBox.Leave += TextBox_LeaveClearLoneSymbol;
+            // 
+            // CalculatorAmmunitionLongReloadTextBox
+            // 
+            CalculatorAmmunitionLongReloadTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorAmmunitionLongReloadTextBox.Enabled = false;
+            CalculatorAmmunitionLongReloadTextBox.Location = new Point(6, 122);
+            CalculatorAmmunitionLongReloadTextBox.MaxLength = 6;
+            CalculatorAmmunitionLongReloadTextBox.Name = "CalculatorAmmunitionLongReloadTextBox";
+            CalculatorAmmunitionLongReloadTextBox.ReadOnly = true;
+            CalculatorAmmunitionLongReloadTextBox.Size = new Size(94, 23);
+            CalculatorAmmunitionLongReloadTextBox.TabIndex = 4;
+            CalculatorAmmunitionLongReloadTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorAmmunitionLongReloadTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
+            CalculatorAmmunitionLongReloadTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            CalculatorAmmunitionLongReloadTextBox.Leave += TextBox_LeaveClearLoneSymbol;
+            // 
+            // CalculatorAmmunitionMagazineSizeTextBox
+            // 
+            CalculatorAmmunitionMagazineSizeTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorAmmunitionMagazineSizeTextBox.Enabled = false;
+            CalculatorAmmunitionMagazineSizeTextBox.Location = new Point(6, 79);
+            CalculatorAmmunitionMagazineSizeTextBox.MaxLength = 6;
+            CalculatorAmmunitionMagazineSizeTextBox.Name = "CalculatorAmmunitionMagazineSizeTextBox";
+            CalculatorAmmunitionMagazineSizeTextBox.ReadOnly = true;
+            CalculatorAmmunitionMagazineSizeTextBox.Size = new Size(94, 23);
+            CalculatorAmmunitionMagazineSizeTextBox.TabIndex = 3;
+            CalculatorAmmunitionMagazineSizeTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorAmmunitionMagazineSizeTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorAmmunitionMagazineSizeTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            // 
+            // CalculatorAmmunitionReloadTextBox
+            // 
+            CalculatorAmmunitionReloadTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorAmmunitionReloadTextBox.Location = new Point(6, 36);
+            CalculatorAmmunitionReloadTextBox.MaxLength = 6;
+            CalculatorAmmunitionReloadTextBox.Name = "CalculatorAmmunitionReloadTextBox";
+            CalculatorAmmunitionReloadTextBox.Size = new Size(94, 23);
+            CalculatorAmmunitionReloadTextBox.TabIndex = 1;
+            CalculatorAmmunitionReloadTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorAmmunitionReloadTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
+            CalculatorAmmunitionReloadTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            CalculatorAmmunitionReloadTextBox.Leave += TextBox_LeaveClearLoneSymbol;
             // 
             // CalculatorAmmunitionMagazineSizeLabel
             // 
@@ -787,18 +860,6 @@
             CalculatorAmmunitionDrawLengthLabel.Text = "Draw Length";
             CalculatorAmmunitionDrawLengthLabel.MouseEnter += Control_MouseHoverShowTooltip;
             // 
-            // CalculatorAmmunitionDrawLengthTextBox
-            // 
-            CalculatorAmmunitionDrawLengthTextBox.Location = new Point(6, 165);
-            CalculatorAmmunitionDrawLengthTextBox.MaxLength = 6;
-            CalculatorAmmunitionDrawLengthTextBox.Name = "CalculatorAmmunitionDrawLengthTextBox";
-            CalculatorAmmunitionDrawLengthTextBox.Size = new Size(94, 23);
-            CalculatorAmmunitionDrawLengthTextBox.TabIndex = 5;
-            CalculatorAmmunitionDrawLengthTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorAmmunitionDrawLengthTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
-            CalculatorAmmunitionDrawLengthTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            CalculatorAmmunitionDrawLengthTextBox.Leave += TextBox_LeaveClearLoneSymbol;
-            // 
             // CalculatorAmmunitionLongReloadLabel
             // 
             CalculatorAmmunitionLongReloadLabel.AutoSize = true;
@@ -818,45 +879,6 @@
             CalculatorAmmunitionReloadLabel.TabIndex = 1;
             CalculatorAmmunitionReloadLabel.Text = "Reload";
             CalculatorAmmunitionReloadLabel.MouseEnter += Control_MouseHoverShowTooltip;
-            // 
-            // CalculatorAmmunitionLongReloadTextBox
-            // 
-            CalculatorAmmunitionLongReloadTextBox.Enabled = false;
-            CalculatorAmmunitionLongReloadTextBox.Location = new Point(6, 122);
-            CalculatorAmmunitionLongReloadTextBox.MaxLength = 6;
-            CalculatorAmmunitionLongReloadTextBox.Name = "CalculatorAmmunitionLongReloadTextBox";
-            CalculatorAmmunitionLongReloadTextBox.ReadOnly = true;
-            CalculatorAmmunitionLongReloadTextBox.Size = new Size(94, 23);
-            CalculatorAmmunitionLongReloadTextBox.TabIndex = 4;
-            CalculatorAmmunitionLongReloadTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorAmmunitionLongReloadTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
-            CalculatorAmmunitionLongReloadTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            CalculatorAmmunitionLongReloadTextBox.Leave += TextBox_LeaveClearLoneSymbol;
-            // 
-            // CalculatorAmmunitionMagazineSizeTextBox
-            // 
-            CalculatorAmmunitionMagazineSizeTextBox.Enabled = false;
-            CalculatorAmmunitionMagazineSizeTextBox.Location = new Point(6, 79);
-            CalculatorAmmunitionMagazineSizeTextBox.MaxLength = 6;
-            CalculatorAmmunitionMagazineSizeTextBox.Name = "CalculatorAmmunitionMagazineSizeTextBox";
-            CalculatorAmmunitionMagazineSizeTextBox.ReadOnly = true;
-            CalculatorAmmunitionMagazineSizeTextBox.Size = new Size(94, 23);
-            CalculatorAmmunitionMagazineSizeTextBox.TabIndex = 3;
-            CalculatorAmmunitionMagazineSizeTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorAmmunitionMagazineSizeTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorAmmunitionMagazineSizeTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            // 
-            // CalculatorAmmunitionReloadTextBox
-            // 
-            CalculatorAmmunitionReloadTextBox.Location = new Point(6, 36);
-            CalculatorAmmunitionReloadTextBox.MaxLength = 6;
-            CalculatorAmmunitionReloadTextBox.Name = "CalculatorAmmunitionReloadTextBox";
-            CalculatorAmmunitionReloadTextBox.Size = new Size(94, 23);
-            CalculatorAmmunitionReloadTextBox.TabIndex = 1;
-            CalculatorAmmunitionReloadTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorAmmunitionReloadTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
-            CalculatorAmmunitionReloadTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            CalculatorAmmunitionReloadTextBox.Leave += TextBox_LeaveClearLoneSymbol;
             // 
             // CalculatorAmmunitionMagazineSizeCheckBox
             // 
@@ -890,13 +912,13 @@
             // 
             // CalculatorAttackGroupBox
             // 
-            CalculatorAttackGroupBox.Controls.Add(CalculatorAttackMAPModifierLabel);
-            CalculatorAttackGroupBox.Controls.Add(CalculatorAttackACLabel);
             CalculatorAttackGroupBox.Controls.Add(CalculatorAttackMAPModifierTextBox);
-            CalculatorAttackGroupBox.Controls.Add(CalculatorAttackCriticalHitMinimumLabel);
             CalculatorAttackGroupBox.Controls.Add(CalculatorAttackACTextBox);
             CalculatorAttackGroupBox.Controls.Add(CalculatorAttackCriticalHitMinimumTextBox);
             CalculatorAttackGroupBox.Controls.Add(CalculatorAttackBonusToHitTextBox);
+            CalculatorAttackGroupBox.Controls.Add(CalculatorAttackMAPModifierLabel);
+            CalculatorAttackGroupBox.Controls.Add(CalculatorAttackACLabel);
+            CalculatorAttackGroupBox.Controls.Add(CalculatorAttackCriticalHitMinimumLabel);
             CalculatorAttackGroupBox.Controls.Add(CalculatorAttackBonusToHitLabel);
             CalculatorAttackGroupBox.Location = new Point(6, 22);
             CalculatorAttackGroupBox.Name = "CalculatorAttackGroupBox";
@@ -904,6 +926,58 @@
             CalculatorAttackGroupBox.TabIndex = 1;
             CalculatorAttackGroupBox.TabStop = false;
             CalculatorAttackGroupBox.Text = "Attack";
+            // 
+            // CalculatorAttackMAPModifierTextBox
+            // 
+            CalculatorAttackMAPModifierTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorAttackMAPModifierTextBox.Location = new Point(6, 165);
+            CalculatorAttackMAPModifierTextBox.MaxLength = 6;
+            CalculatorAttackMAPModifierTextBox.Name = "CalculatorAttackMAPModifierTextBox";
+            CalculatorAttackMAPModifierTextBox.Size = new Size(111, 23);
+            CalculatorAttackMAPModifierTextBox.TabIndex = 4;
+            CalculatorAttackMAPModifierTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorAttackMAPModifierTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
+            CalculatorAttackMAPModifierTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            CalculatorAttackMAPModifierTextBox.Leave += TextBox_LeaveClearLoneSymbol;
+            // 
+            // CalculatorAttackACTextBox
+            // 
+            CalculatorAttackACTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorAttackACTextBox.Location = new Point(6, 121);
+            CalculatorAttackACTextBox.MaxLength = 6;
+            CalculatorAttackACTextBox.Name = "CalculatorAttackACTextBox";
+            CalculatorAttackACTextBox.Size = new Size(111, 23);
+            CalculatorAttackACTextBox.TabIndex = 3;
+            CalculatorAttackACTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorAttackACTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
+            CalculatorAttackACTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            CalculatorAttackACTextBox.Leave += TextBox_LeaveClearLoneSymbol;
+            // 
+            // CalculatorAttackCriticalHitMinimumTextBox
+            // 
+            CalculatorAttackCriticalHitMinimumTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorAttackCriticalHitMinimumTextBox.Location = new Point(6, 79);
+            CalculatorAttackCriticalHitMinimumTextBox.MaxLength = 6;
+            CalculatorAttackCriticalHitMinimumTextBox.Name = "CalculatorAttackCriticalHitMinimumTextBox";
+            CalculatorAttackCriticalHitMinimumTextBox.Size = new Size(111, 23);
+            CalculatorAttackCriticalHitMinimumTextBox.TabIndex = 2;
+            CalculatorAttackCriticalHitMinimumTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorAttackCriticalHitMinimumTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
+            CalculatorAttackCriticalHitMinimumTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            CalculatorAttackCriticalHitMinimumTextBox.Leave += TextBox_LeaveClearLoneSymbol;
+            // 
+            // CalculatorAttackBonusToHitTextBox
+            // 
+            CalculatorAttackBonusToHitTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorAttackBonusToHitTextBox.Location = new Point(6, 36);
+            CalculatorAttackBonusToHitTextBox.MaxLength = 6;
+            CalculatorAttackBonusToHitTextBox.Name = "CalculatorAttackBonusToHitTextBox";
+            CalculatorAttackBonusToHitTextBox.Size = new Size(111, 23);
+            CalculatorAttackBonusToHitTextBox.TabIndex = 1;
+            CalculatorAttackBonusToHitTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorAttackBonusToHitTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
+            CalculatorAttackBonusToHitTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            CalculatorAttackBonusToHitTextBox.Leave += TextBox_LeaveClearLoneSymbol;
             // 
             // CalculatorAttackMAPModifierLabel
             // 
@@ -925,18 +999,6 @@
             CalculatorAttackACLabel.Text = "AC";
             CalculatorAttackACLabel.MouseEnter += Control_MouseHoverShowTooltip;
             // 
-            // CalculatorAttackMAPModifierTextBox
-            // 
-            CalculatorAttackMAPModifierTextBox.Location = new Point(6, 165);
-            CalculatorAttackMAPModifierTextBox.MaxLength = 6;
-            CalculatorAttackMAPModifierTextBox.Name = "CalculatorAttackMAPModifierTextBox";
-            CalculatorAttackMAPModifierTextBox.Size = new Size(111, 23);
-            CalculatorAttackMAPModifierTextBox.TabIndex = 4;
-            CalculatorAttackMAPModifierTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorAttackMAPModifierTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
-            CalculatorAttackMAPModifierTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            CalculatorAttackMAPModifierTextBox.Leave += TextBox_LeaveClearLoneSymbol;
-            // 
             // CalculatorAttackCriticalHitMinimumLabel
             // 
             CalculatorAttackCriticalHitMinimumLabel.AutoSize = true;
@@ -946,42 +1008,6 @@
             CalculatorAttackCriticalHitMinimumLabel.TabIndex = 1;
             CalculatorAttackCriticalHitMinimumLabel.Text = "Crit At/Below";
             CalculatorAttackCriticalHitMinimumLabel.MouseEnter += Control_MouseHoverShowTooltip;
-            // 
-            // CalculatorAttackACTextBox
-            // 
-            CalculatorAttackACTextBox.Location = new Point(6, 121);
-            CalculatorAttackACTextBox.MaxLength = 6;
-            CalculatorAttackACTextBox.Name = "CalculatorAttackACTextBox";
-            CalculatorAttackACTextBox.Size = new Size(111, 23);
-            CalculatorAttackACTextBox.TabIndex = 3;
-            CalculatorAttackACTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorAttackACTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
-            CalculatorAttackACTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            CalculatorAttackACTextBox.Leave += TextBox_LeaveClearLoneSymbol;
-            // 
-            // CalculatorAttackCriticalHitMinimumTextBox
-            // 
-            CalculatorAttackCriticalHitMinimumTextBox.Location = new Point(6, 79);
-            CalculatorAttackCriticalHitMinimumTextBox.MaxLength = 6;
-            CalculatorAttackCriticalHitMinimumTextBox.Name = "CalculatorAttackCriticalHitMinimumTextBox";
-            CalculatorAttackCriticalHitMinimumTextBox.Size = new Size(111, 23);
-            CalculatorAttackCriticalHitMinimumTextBox.TabIndex = 2;
-            CalculatorAttackCriticalHitMinimumTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorAttackCriticalHitMinimumTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
-            CalculatorAttackCriticalHitMinimumTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            CalculatorAttackCriticalHitMinimumTextBox.Leave += TextBox_LeaveClearLoneSymbol;
-            // 
-            // CalculatorAttackBonusToHitTextBox
-            // 
-            CalculatorAttackBonusToHitTextBox.Location = new Point(6, 36);
-            CalculatorAttackBonusToHitTextBox.MaxLength = 6;
-            CalculatorAttackBonusToHitTextBox.Name = "CalculatorAttackBonusToHitTextBox";
-            CalculatorAttackBonusToHitTextBox.Size = new Size(111, 23);
-            CalculatorAttackBonusToHitTextBox.TabIndex = 1;
-            CalculatorAttackBonusToHitTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorAttackBonusToHitTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
-            CalculatorAttackBonusToHitTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            CalculatorAttackBonusToHitTextBox.Leave += TextBox_LeaveClearLoneSymbol;
             // 
             // CalculatorAttackBonusToHitLabel
             // 
@@ -995,13 +1021,13 @@
             // 
             // CalculatorEncounterGroupBox
             // 
-            CalculatorEncounterGroupBox.Controls.Add(CalculatorEncounterEngagementRangeLabel);
             CalculatorEncounterGroupBox.Controls.Add(CalculatorEncounterEngagementRangeTextBox);
+            CalculatorEncounterGroupBox.Controls.Add(CalculatorEncounterRoundsPerEncounterTextBox);
+            CalculatorEncounterGroupBox.Controls.Add(CalculatorEncounterNumberOfEncountersTextBox);
+            CalculatorEncounterGroupBox.Controls.Add(CalculatorEncounterEngagementRangeLabel);
             CalculatorEncounterGroupBox.Controls.Add(CalculatorEncounterRoundsPerEncounterLabel);
             CalculatorEncounterGroupBox.Controls.Add(CalculatorEncounterEngagementRangeCheckBox);
             CalculatorEncounterGroupBox.Controls.Add(CalculatorEncounterNumberOfEncountersLabel);
-            CalculatorEncounterGroupBox.Controls.Add(CalculatorEncounterRoundsPerEncounterTextBox);
-            CalculatorEncounterGroupBox.Controls.Add(CalculatorEncounterNumberOfEncountersTextBox);
             CalculatorEncounterGroupBox.Location = new Point(153, 231);
             CalculatorEncounterGroupBox.Name = "CalculatorEncounterGroupBox";
             CalculatorEncounterGroupBox.Size = new Size(140, 160);
@@ -1009,18 +1035,9 @@
             CalculatorEncounterGroupBox.TabStop = false;
             CalculatorEncounterGroupBox.Text = "Encounter";
             // 
-            // CalculatorEncounterEngagementRangeLabel
-            // 
-            CalculatorEncounterEngagementRangeLabel.AutoSize = true;
-            CalculatorEncounterEngagementRangeLabel.Location = new Point(18, 107);
-            CalculatorEncounterEngagementRangeLabel.Name = "CalculatorEncounterEngagementRangeLabel";
-            CalculatorEncounterEngagementRangeLabel.Size = new Size(110, 15);
-            CalculatorEncounterEngagementRangeLabel.TabIndex = 1;
-            CalculatorEncounterEngagementRangeLabel.Text = "Engagement Range";
-            CalculatorEncounterEngagementRangeLabel.MouseEnter += Control_MouseHoverShowTooltip;
-            // 
             // CalculatorEncounterEngagementRangeTextBox
             // 
+            CalculatorEncounterEngagementRangeTextBox.BorderStyle = BorderStyle.FixedSingle;
             CalculatorEncounterEngagementRangeTextBox.Enabled = false;
             CalculatorEncounterEngagementRangeTextBox.Location = new Point(6, 124);
             CalculatorEncounterEngagementRangeTextBox.MaxLength = 6;
@@ -1031,6 +1048,40 @@
             CalculatorEncounterEngagementRangeTextBox.Click += TextBox_MouseClickShowBatchComputation;
             CalculatorEncounterEngagementRangeTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
             CalculatorEncounterEngagementRangeTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            // 
+            // CalculatorEncounterRoundsPerEncounterTextBox
+            // 
+            CalculatorEncounterRoundsPerEncounterTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorEncounterRoundsPerEncounterTextBox.Location = new Point(6, 79);
+            CalculatorEncounterRoundsPerEncounterTextBox.MaxLength = 6;
+            CalculatorEncounterRoundsPerEncounterTextBox.Name = "CalculatorEncounterRoundsPerEncounterTextBox";
+            CalculatorEncounterRoundsPerEncounterTextBox.Size = new Size(127, 23);
+            CalculatorEncounterRoundsPerEncounterTextBox.TabIndex = 2;
+            CalculatorEncounterRoundsPerEncounterTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorEncounterRoundsPerEncounterTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorEncounterRoundsPerEncounterTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            // 
+            // CalculatorEncounterNumberOfEncountersTextBox
+            // 
+            CalculatorEncounterNumberOfEncountersTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorEncounterNumberOfEncountersTextBox.Location = new Point(6, 36);
+            CalculatorEncounterNumberOfEncountersTextBox.MaxLength = 10;
+            CalculatorEncounterNumberOfEncountersTextBox.Name = "CalculatorEncounterNumberOfEncountersTextBox";
+            CalculatorEncounterNumberOfEncountersTextBox.Size = new Size(127, 23);
+            CalculatorEncounterNumberOfEncountersTextBox.TabIndex = 1;
+            CalculatorEncounterNumberOfEncountersTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorEncounterNumberOfEncountersTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorEncounterNumberOfEncountersTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            // 
+            // CalculatorEncounterEngagementRangeLabel
+            // 
+            CalculatorEncounterEngagementRangeLabel.AutoSize = true;
+            CalculatorEncounterEngagementRangeLabel.Location = new Point(18, 107);
+            CalculatorEncounterEngagementRangeLabel.Name = "CalculatorEncounterEngagementRangeLabel";
+            CalculatorEncounterEngagementRangeLabel.Size = new Size(110, 15);
+            CalculatorEncounterEngagementRangeLabel.TabIndex = 1;
+            CalculatorEncounterEngagementRangeLabel.Text = "Engagement Range";
+            CalculatorEncounterEngagementRangeLabel.MouseEnter += Control_MouseHoverShowTooltip;
             // 
             // CalculatorEncounterRoundsPerEncounterLabel
             // 
@@ -1062,28 +1113,6 @@
             CalculatorEncounterNumberOfEncountersLabel.Text = "Number of Encounters";
             CalculatorEncounterNumberOfEncountersLabel.MouseEnter += Control_MouseHoverShowTooltip;
             // 
-            // CalculatorEncounterRoundsPerEncounterTextBox
-            // 
-            CalculatorEncounterRoundsPerEncounterTextBox.Location = new Point(6, 79);
-            CalculatorEncounterRoundsPerEncounterTextBox.MaxLength = 6;
-            CalculatorEncounterRoundsPerEncounterTextBox.Name = "CalculatorEncounterRoundsPerEncounterTextBox";
-            CalculatorEncounterRoundsPerEncounterTextBox.Size = new Size(127, 23);
-            CalculatorEncounterRoundsPerEncounterTextBox.TabIndex = 2;
-            CalculatorEncounterRoundsPerEncounterTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorEncounterRoundsPerEncounterTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorEncounterRoundsPerEncounterTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            // 
-            // CalculatorEncounterNumberOfEncountersTextBox
-            // 
-            CalculatorEncounterNumberOfEncountersTextBox.Location = new Point(6, 36);
-            CalculatorEncounterNumberOfEncountersTextBox.MaxLength = 10;
-            CalculatorEncounterNumberOfEncountersTextBox.Name = "CalculatorEncounterNumberOfEncountersTextBox";
-            CalculatorEncounterNumberOfEncountersTextBox.Size = new Size(127, 23);
-            CalculatorEncounterNumberOfEncountersTextBox.TabIndex = 1;
-            CalculatorEncounterNumberOfEncountersTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorEncounterNumberOfEncountersTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorEncounterNumberOfEncountersTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            // 
             // CalculatorTanmanGLabel
             // 
             CalculatorTanmanGLabel.AutoSize = true;
@@ -1097,6 +1126,18 @@
             // 
             // CalculatorDamageGroupBox
             // 
+            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageBleedDieBonusTextBox);
+            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageBleedDieSizeTextBox);
+            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageBleedDieCountTextBox);
+            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalBleedDieBonusTextBox);
+            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalDieBonusTextBox);
+            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalBleedDieSizeTextBox);
+            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalDieSizeTextBox);
+            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalBleedDieCountTextBox);
+            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalDieCountTextBox);
+            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageDieBonusTextBox);
+            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageDieSizeTextBox);
+            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageDieCountTextBox);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalBleedDieLabel);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageBleedDieLabel);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalDieLabel);
@@ -1104,29 +1145,17 @@
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageBleedDieSizePLabel);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalBleedDieCheckBox);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageSaveButton);
-            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageBleedDieBonusTextBox);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageBleedDieCheckBox);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalDieCheckBox);
-            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageBleedDieSizeTextBox);
-            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageBleedDieCountTextBox);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageDieSizeDLabel);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageDieSizePLabel);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCritBleedDieSizePLabel);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCritDieSizePLabel);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCritBleedDieSizeDLabel);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCritDieSizeDLabel);
-            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalBleedDieBonusTextBox);
-            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalDieBonusTextBox);
-            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalBleedDieSizeTextBox);
-            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalDieSizeTextBox);
-            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalBleedDieCountTextBox);
-            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageCriticalDieCountTextBox);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageDieSizeLabel);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageAddNewButton);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageDeleteButton);
-            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageDieBonusTextBox);
-            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageDieSizeTextBox);
-            CalculatorDamageGroupBox.Controls.Add(CalculatorDamageDieCountTextBox);
             CalculatorDamageGroupBox.Controls.Add(CalculatorDamageListBox);
             CalculatorDamageGroupBox.Location = new Point(248, 22);
             CalculatorDamageGroupBox.Name = "CalculatorDamageGroupBox";
@@ -1134,6 +1163,178 @@
             CalculatorDamageGroupBox.TabIndex = 3;
             CalculatorDamageGroupBox.TabStop = false;
             CalculatorDamageGroupBox.Text = "Damage";
+            // 
+            // CalculatorDamageBleedDieBonusTextBox
+            // 
+            CalculatorDamageBleedDieBonusTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorDamageBleedDieBonusTextBox.Enabled = false;
+            CalculatorDamageBleedDieBonusTextBox.Location = new Point(313, 130);
+            CalculatorDamageBleedDieBonusTextBox.MaxLength = 3;
+            CalculatorDamageBleedDieBonusTextBox.Name = "CalculatorDamageBleedDieBonusTextBox";
+            CalculatorDamageBleedDieBonusTextBox.ReadOnly = true;
+            CalculatorDamageBleedDieBonusTextBox.Size = new Size(25, 23);
+            CalculatorDamageBleedDieBonusTextBox.TabIndex = 16;
+            CalculatorDamageBleedDieBonusTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorDamageBleedDieBonusTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
+            CalculatorDamageBleedDieBonusTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            CalculatorDamageBleedDieBonusTextBox.Leave += TextBox_LeaveClearLoneSymbol;
+            // 
+            // CalculatorDamageBleedDieSizeTextBox
+            // 
+            CalculatorDamageBleedDieSizeTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorDamageBleedDieSizeTextBox.Enabled = false;
+            CalculatorDamageBleedDieSizeTextBox.Location = new Point(269, 130);
+            CalculatorDamageBleedDieSizeTextBox.MaxLength = 3;
+            CalculatorDamageBleedDieSizeTextBox.Name = "CalculatorDamageBleedDieSizeTextBox";
+            CalculatorDamageBleedDieSizeTextBox.ReadOnly = true;
+            CalculatorDamageBleedDieSizeTextBox.Size = new Size(25, 23);
+            CalculatorDamageBleedDieSizeTextBox.TabIndex = 15;
+            CalculatorDamageBleedDieSizeTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorDamageBleedDieSizeTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorDamageBleedDieSizeTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            // 
+            // CalculatorDamageBleedDieCountTextBox
+            // 
+            CalculatorDamageBleedDieCountTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorDamageBleedDieCountTextBox.Enabled = false;
+            CalculatorDamageBleedDieCountTextBox.Location = new Point(225, 130);
+            CalculatorDamageBleedDieCountTextBox.MaxLength = 3;
+            CalculatorDamageBleedDieCountTextBox.Name = "CalculatorDamageBleedDieCountTextBox";
+            CalculatorDamageBleedDieCountTextBox.ReadOnly = true;
+            CalculatorDamageBleedDieCountTextBox.Size = new Size(25, 23);
+            CalculatorDamageBleedDieCountTextBox.TabIndex = 14;
+            CalculatorDamageBleedDieCountTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorDamageBleedDieCountTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorDamageBleedDieCountTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            // 
+            // CalculatorDamageCriticalBleedDieBonusTextBox
+            // 
+            CalculatorDamageCriticalBleedDieBonusTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorDamageCriticalBleedDieBonusTextBox.Enabled = false;
+            CalculatorDamageCriticalBleedDieBonusTextBox.Location = new Point(313, 175);
+            CalculatorDamageCriticalBleedDieBonusTextBox.MaxLength = 3;
+            CalculatorDamageCriticalBleedDieBonusTextBox.Name = "CalculatorDamageCriticalBleedDieBonusTextBox";
+            CalculatorDamageCriticalBleedDieBonusTextBox.ReadOnly = true;
+            CalculatorDamageCriticalBleedDieBonusTextBox.Size = new Size(25, 23);
+            CalculatorDamageCriticalBleedDieBonusTextBox.TabIndex = 20;
+            CalculatorDamageCriticalBleedDieBonusTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorDamageCriticalBleedDieBonusTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
+            CalculatorDamageCriticalBleedDieBonusTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            CalculatorDamageCriticalBleedDieBonusTextBox.Leave += TextBox_LeaveClearLoneSymbol;
+            // 
+            // CalculatorDamageCriticalDieBonusTextBox
+            // 
+            CalculatorDamageCriticalDieBonusTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorDamageCriticalDieBonusTextBox.Enabled = false;
+            CalculatorDamageCriticalDieBonusTextBox.Location = new Point(313, 77);
+            CalculatorDamageCriticalDieBonusTextBox.MaxLength = 3;
+            CalculatorDamageCriticalDieBonusTextBox.Name = "CalculatorDamageCriticalDieBonusTextBox";
+            CalculatorDamageCriticalDieBonusTextBox.ReadOnly = true;
+            CalculatorDamageCriticalDieBonusTextBox.Size = new Size(25, 23);
+            CalculatorDamageCriticalDieBonusTextBox.TabIndex = 12;
+            CalculatorDamageCriticalDieBonusTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorDamageCriticalDieBonusTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
+            CalculatorDamageCriticalDieBonusTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            CalculatorDamageCriticalDieBonusTextBox.Leave += TextBox_LeaveClearLoneSymbol;
+            // 
+            // CalculatorDamageCriticalBleedDieSizeTextBox
+            // 
+            CalculatorDamageCriticalBleedDieSizeTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorDamageCriticalBleedDieSizeTextBox.Enabled = false;
+            CalculatorDamageCriticalBleedDieSizeTextBox.Location = new Point(269, 175);
+            CalculatorDamageCriticalBleedDieSizeTextBox.MaxLength = 3;
+            CalculatorDamageCriticalBleedDieSizeTextBox.Name = "CalculatorDamageCriticalBleedDieSizeTextBox";
+            CalculatorDamageCriticalBleedDieSizeTextBox.ReadOnly = true;
+            CalculatorDamageCriticalBleedDieSizeTextBox.Size = new Size(25, 23);
+            CalculatorDamageCriticalBleedDieSizeTextBox.TabIndex = 19;
+            CalculatorDamageCriticalBleedDieSizeTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorDamageCriticalBleedDieSizeTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorDamageCriticalBleedDieSizeTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            // 
+            // CalculatorDamageCriticalDieSizeTextBox
+            // 
+            CalculatorDamageCriticalDieSizeTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorDamageCriticalDieSizeTextBox.Enabled = false;
+            CalculatorDamageCriticalDieSizeTextBox.Location = new Point(269, 77);
+            CalculatorDamageCriticalDieSizeTextBox.MaxLength = 3;
+            CalculatorDamageCriticalDieSizeTextBox.Name = "CalculatorDamageCriticalDieSizeTextBox";
+            CalculatorDamageCriticalDieSizeTextBox.ReadOnly = true;
+            CalculatorDamageCriticalDieSizeTextBox.Size = new Size(25, 23);
+            CalculatorDamageCriticalDieSizeTextBox.TabIndex = 11;
+            CalculatorDamageCriticalDieSizeTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorDamageCriticalDieSizeTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorDamageCriticalDieSizeTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            // 
+            // CalculatorDamageCriticalBleedDieCountTextBox
+            // 
+            CalculatorDamageCriticalBleedDieCountTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorDamageCriticalBleedDieCountTextBox.Enabled = false;
+            CalculatorDamageCriticalBleedDieCountTextBox.Location = new Point(225, 175);
+            CalculatorDamageCriticalBleedDieCountTextBox.MaxLength = 3;
+            CalculatorDamageCriticalBleedDieCountTextBox.Name = "CalculatorDamageCriticalBleedDieCountTextBox";
+            CalculatorDamageCriticalBleedDieCountTextBox.ReadOnly = true;
+            CalculatorDamageCriticalBleedDieCountTextBox.Size = new Size(25, 23);
+            CalculatorDamageCriticalBleedDieCountTextBox.TabIndex = 18;
+            CalculatorDamageCriticalBleedDieCountTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorDamageCriticalBleedDieCountTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorDamageCriticalBleedDieCountTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            // 
+            // CalculatorDamageCriticalDieCountTextBox
+            // 
+            CalculatorDamageCriticalDieCountTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorDamageCriticalDieCountTextBox.Enabled = false;
+            CalculatorDamageCriticalDieCountTextBox.Location = new Point(225, 77);
+            CalculatorDamageCriticalDieCountTextBox.MaxLength = 3;
+            CalculatorDamageCriticalDieCountTextBox.Name = "CalculatorDamageCriticalDieCountTextBox";
+            CalculatorDamageCriticalDieCountTextBox.ReadOnly = true;
+            CalculatorDamageCriticalDieCountTextBox.Size = new Size(25, 23);
+            CalculatorDamageCriticalDieCountTextBox.TabIndex = 10;
+            CalculatorDamageCriticalDieCountTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorDamageCriticalDieCountTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorDamageCriticalDieCountTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            // 
+            // CalculatorDamageDieBonusTextBox
+            // 
+            CalculatorDamageDieBonusTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorDamageDieBonusTextBox.Enabled = false;
+            CalculatorDamageDieBonusTextBox.Location = new Point(313, 32);
+            CalculatorDamageDieBonusTextBox.MaxLength = 3;
+            CalculatorDamageDieBonusTextBox.Name = "CalculatorDamageDieBonusTextBox";
+            CalculatorDamageDieBonusTextBox.ReadOnly = true;
+            CalculatorDamageDieBonusTextBox.Size = new Size(25, 23);
+            CalculatorDamageDieBonusTextBox.TabIndex = 8;
+            CalculatorDamageDieBonusTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorDamageDieBonusTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
+            CalculatorDamageDieBonusTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            CalculatorDamageDieBonusTextBox.Leave += TextBox_LeaveClearLoneSymbol;
+            // 
+            // CalculatorDamageDieSizeTextBox
+            // 
+            CalculatorDamageDieSizeTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorDamageDieSizeTextBox.Enabled = false;
+            CalculatorDamageDieSizeTextBox.Location = new Point(269, 32);
+            CalculatorDamageDieSizeTextBox.MaxLength = 3;
+            CalculatorDamageDieSizeTextBox.Name = "CalculatorDamageDieSizeTextBox";
+            CalculatorDamageDieSizeTextBox.ReadOnly = true;
+            CalculatorDamageDieSizeTextBox.Size = new Size(25, 23);
+            CalculatorDamageDieSizeTextBox.TabIndex = 7;
+            CalculatorDamageDieSizeTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorDamageDieSizeTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorDamageDieSizeTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
+            // 
+            // CalculatorDamageDieCountTextBox
+            // 
+            CalculatorDamageDieCountTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorDamageDieCountTextBox.Enabled = false;
+            CalculatorDamageDieCountTextBox.Location = new Point(225, 32);
+            CalculatorDamageDieCountTextBox.MaxLength = 3;
+            CalculatorDamageDieCountTextBox.Name = "CalculatorDamageDieCountTextBox";
+            CalculatorDamageDieCountTextBox.ReadOnly = true;
+            CalculatorDamageDieCountTextBox.Size = new Size(25, 23);
+            CalculatorDamageDieCountTextBox.TabIndex = 6;
+            CalculatorDamageDieCountTextBox.Click += TextBox_MouseClickShowBatchComputation;
+            CalculatorDamageDieCountTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
+            CalculatorDamageDieCountTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
             // 
             // CalculatorDamageCriticalBleedDieLabel
             // 
@@ -1200,27 +1401,14 @@
             // 
             // CalculatorDamageSaveButton
             // 
-            CalculatorDamageSaveButton.Location = new Point(113, 176);
+            CalculatorDamageSaveButton.FlatStyle = FlatStyle.Flat;
+            CalculatorDamageSaveButton.Location = new Point(114, 176);
             CalculatorDamageSaveButton.Name = "CalculatorDamageSaveButton";
-            CalculatorDamageSaveButton.Size = new Size(106, 23);
+            CalculatorDamageSaveButton.Size = new Size(105, 23);
             CalculatorDamageSaveButton.TabIndex = 5;
             CalculatorDamageSaveButton.Text = "Save";
             CalculatorDamageSaveButton.UseVisualStyleBackColor = true;
             CalculatorDamageSaveButton.MouseClick += DamageSaveButton_MouseClick;
-            // 
-            // CalculatorDamageBleedDieBonusTextBox
-            // 
-            CalculatorDamageBleedDieBonusTextBox.Enabled = false;
-            CalculatorDamageBleedDieBonusTextBox.Location = new Point(313, 130);
-            CalculatorDamageBleedDieBonusTextBox.MaxLength = 3;
-            CalculatorDamageBleedDieBonusTextBox.Name = "CalculatorDamageBleedDieBonusTextBox";
-            CalculatorDamageBleedDieBonusTextBox.ReadOnly = true;
-            CalculatorDamageBleedDieBonusTextBox.Size = new Size(25, 23);
-            CalculatorDamageBleedDieBonusTextBox.TabIndex = 16;
-            CalculatorDamageBleedDieBonusTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorDamageBleedDieBonusTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
-            CalculatorDamageBleedDieBonusTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            CalculatorDamageBleedDieBonusTextBox.Leave += TextBox_LeaveClearLoneSymbol;
             // 
             // CalculatorDamageBleedDieCheckBox
             // 
@@ -1243,32 +1431,6 @@
             CalculatorDamageCriticalDieCheckBox.TabIndex = 9;
             CalculatorDamageCriticalDieCheckBox.UseVisualStyleBackColor = true;
             CalculatorDamageCriticalDieCheckBox.CheckedChanged += CheckBox_CheckChangedToggleTextBoxes;
-            // 
-            // CalculatorDamageBleedDieSizeTextBox
-            // 
-            CalculatorDamageBleedDieSizeTextBox.Enabled = false;
-            CalculatorDamageBleedDieSizeTextBox.Location = new Point(269, 130);
-            CalculatorDamageBleedDieSizeTextBox.MaxLength = 3;
-            CalculatorDamageBleedDieSizeTextBox.Name = "CalculatorDamageBleedDieSizeTextBox";
-            CalculatorDamageBleedDieSizeTextBox.ReadOnly = true;
-            CalculatorDamageBleedDieSizeTextBox.Size = new Size(25, 23);
-            CalculatorDamageBleedDieSizeTextBox.TabIndex = 15;
-            CalculatorDamageBleedDieSizeTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorDamageBleedDieSizeTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorDamageBleedDieSizeTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            // 
-            // CalculatorDamageBleedDieCountTextBox
-            // 
-            CalculatorDamageBleedDieCountTextBox.Enabled = false;
-            CalculatorDamageBleedDieCountTextBox.Location = new Point(225, 130);
-            CalculatorDamageBleedDieCountTextBox.MaxLength = 3;
-            CalculatorDamageBleedDieCountTextBox.Name = "CalculatorDamageBleedDieCountTextBox";
-            CalculatorDamageBleedDieCountTextBox.ReadOnly = true;
-            CalculatorDamageBleedDieCountTextBox.Size = new Size(25, 23);
-            CalculatorDamageBleedDieCountTextBox.TabIndex = 14;
-            CalculatorDamageBleedDieCountTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorDamageBleedDieCountTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorDamageBleedDieCountTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
             // 
             // CalculatorDamageDieSizeDLabel
             // 
@@ -1336,86 +1498,6 @@
             CalculatorDamageCritDieSizeDLabel.Text = "D";
             CalculatorDamageCritDieSizeDLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // CalculatorDamageCriticalBleedDieBonusTextBox
-            // 
-            CalculatorDamageCriticalBleedDieBonusTextBox.Enabled = false;
-            CalculatorDamageCriticalBleedDieBonusTextBox.Location = new Point(313, 175);
-            CalculatorDamageCriticalBleedDieBonusTextBox.MaxLength = 3;
-            CalculatorDamageCriticalBleedDieBonusTextBox.Name = "CalculatorDamageCriticalBleedDieBonusTextBox";
-            CalculatorDamageCriticalBleedDieBonusTextBox.ReadOnly = true;
-            CalculatorDamageCriticalBleedDieBonusTextBox.Size = new Size(25, 23);
-            CalculatorDamageCriticalBleedDieBonusTextBox.TabIndex = 20;
-            CalculatorDamageCriticalBleedDieBonusTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorDamageCriticalBleedDieBonusTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
-            CalculatorDamageCriticalBleedDieBonusTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            CalculatorDamageCriticalBleedDieBonusTextBox.Leave += TextBox_LeaveClearLoneSymbol;
-            // 
-            // CalculatorDamageCriticalDieBonusTextBox
-            // 
-            CalculatorDamageCriticalDieBonusTextBox.Enabled = false;
-            CalculatorDamageCriticalDieBonusTextBox.Location = new Point(313, 77);
-            CalculatorDamageCriticalDieBonusTextBox.MaxLength = 3;
-            CalculatorDamageCriticalDieBonusTextBox.Name = "CalculatorDamageCriticalDieBonusTextBox";
-            CalculatorDamageCriticalDieBonusTextBox.ReadOnly = true;
-            CalculatorDamageCriticalDieBonusTextBox.Size = new Size(25, 23);
-            CalculatorDamageCriticalDieBonusTextBox.TabIndex = 12;
-            CalculatorDamageCriticalDieBonusTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorDamageCriticalDieBonusTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
-            CalculatorDamageCriticalDieBonusTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            CalculatorDamageCriticalDieBonusTextBox.Leave += TextBox_LeaveClearLoneSymbol;
-            // 
-            // CalculatorDamageCriticalBleedDieSizeTextBox
-            // 
-            CalculatorDamageCriticalBleedDieSizeTextBox.Enabled = false;
-            CalculatorDamageCriticalBleedDieSizeTextBox.Location = new Point(269, 175);
-            CalculatorDamageCriticalBleedDieSizeTextBox.MaxLength = 3;
-            CalculatorDamageCriticalBleedDieSizeTextBox.Name = "CalculatorDamageCriticalBleedDieSizeTextBox";
-            CalculatorDamageCriticalBleedDieSizeTextBox.ReadOnly = true;
-            CalculatorDamageCriticalBleedDieSizeTextBox.Size = new Size(25, 23);
-            CalculatorDamageCriticalBleedDieSizeTextBox.TabIndex = 19;
-            CalculatorDamageCriticalBleedDieSizeTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorDamageCriticalBleedDieSizeTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorDamageCriticalBleedDieSizeTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            // 
-            // CalculatorDamageCriticalDieSizeTextBox
-            // 
-            CalculatorDamageCriticalDieSizeTextBox.Enabled = false;
-            CalculatorDamageCriticalDieSizeTextBox.Location = new Point(269, 77);
-            CalculatorDamageCriticalDieSizeTextBox.MaxLength = 3;
-            CalculatorDamageCriticalDieSizeTextBox.Name = "CalculatorDamageCriticalDieSizeTextBox";
-            CalculatorDamageCriticalDieSizeTextBox.ReadOnly = true;
-            CalculatorDamageCriticalDieSizeTextBox.Size = new Size(25, 23);
-            CalculatorDamageCriticalDieSizeTextBox.TabIndex = 11;
-            CalculatorDamageCriticalDieSizeTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorDamageCriticalDieSizeTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorDamageCriticalDieSizeTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            // 
-            // CalculatorDamageCriticalBleedDieCountTextBox
-            // 
-            CalculatorDamageCriticalBleedDieCountTextBox.Enabled = false;
-            CalculatorDamageCriticalBleedDieCountTextBox.Location = new Point(225, 175);
-            CalculatorDamageCriticalBleedDieCountTextBox.MaxLength = 3;
-            CalculatorDamageCriticalBleedDieCountTextBox.Name = "CalculatorDamageCriticalBleedDieCountTextBox";
-            CalculatorDamageCriticalBleedDieCountTextBox.ReadOnly = true;
-            CalculatorDamageCriticalBleedDieCountTextBox.Size = new Size(25, 23);
-            CalculatorDamageCriticalBleedDieCountTextBox.TabIndex = 18;
-            CalculatorDamageCriticalBleedDieCountTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorDamageCriticalBleedDieCountTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorDamageCriticalBleedDieCountTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            // 
-            // CalculatorDamageCriticalDieCountTextBox
-            // 
-            CalculatorDamageCriticalDieCountTextBox.Enabled = false;
-            CalculatorDamageCriticalDieCountTextBox.Location = new Point(225, 77);
-            CalculatorDamageCriticalDieCountTextBox.MaxLength = 3;
-            CalculatorDamageCriticalDieCountTextBox.Name = "CalculatorDamageCriticalDieCountTextBox";
-            CalculatorDamageCriticalDieCountTextBox.ReadOnly = true;
-            CalculatorDamageCriticalDieCountTextBox.Size = new Size(25, 23);
-            CalculatorDamageCriticalDieCountTextBox.TabIndex = 10;
-            CalculatorDamageCriticalDieCountTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorDamageCriticalDieCountTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorDamageCriticalDieCountTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            // 
             // CalculatorDamageDieSizeLabel
             // 
             CalculatorDamageDieSizeLabel.AutoSize = true;
@@ -1428,7 +1510,8 @@
             // 
             // CalculatorDamageAddNewButton
             // 
-            CalculatorDamageAddNewButton.Location = new Point(6, 152);
+            CalculatorDamageAddNewButton.FlatStyle = FlatStyle.Flat;
+            CalculatorDamageAddNewButton.Location = new Point(6, 150);
             CalculatorDamageAddNewButton.Name = "CalculatorDamageAddNewButton";
             CalculatorDamageAddNewButton.Size = new Size(213, 23);
             CalculatorDamageAddNewButton.TabIndex = 4;
@@ -1438,53 +1521,14 @@
             // 
             // CalculatorDamageDeleteButton
             // 
+            CalculatorDamageDeleteButton.FlatStyle = FlatStyle.Flat;
             CalculatorDamageDeleteButton.Location = new Point(6, 176);
             CalculatorDamageDeleteButton.Name = "CalculatorDamageDeleteButton";
-            CalculatorDamageDeleteButton.Size = new Size(107, 23);
+            CalculatorDamageDeleteButton.Size = new Size(106, 23);
             CalculatorDamageDeleteButton.TabIndex = 3;
             CalculatorDamageDeleteButton.Text = "Delete Selected";
             CalculatorDamageDeleteButton.UseVisualStyleBackColor = true;
             CalculatorDamageDeleteButton.MouseClick += DamageDeleteButton_MouseClick;
-            // 
-            // CalculatorDamageDieBonusTextBox
-            // 
-            CalculatorDamageDieBonusTextBox.Enabled = false;
-            CalculatorDamageDieBonusTextBox.Location = new Point(313, 32);
-            CalculatorDamageDieBonusTextBox.MaxLength = 3;
-            CalculatorDamageDieBonusTextBox.Name = "CalculatorDamageDieBonusTextBox";
-            CalculatorDamageDieBonusTextBox.ReadOnly = true;
-            CalculatorDamageDieBonusTextBox.Size = new Size(25, 23);
-            CalculatorDamageDieBonusTextBox.TabIndex = 8;
-            CalculatorDamageDieBonusTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorDamageDieBonusTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndSign;
-            CalculatorDamageDieBonusTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            CalculatorDamageDieBonusTextBox.Leave += TextBox_LeaveClearLoneSymbol;
-            // 
-            // CalculatorDamageDieSizeTextBox
-            // 
-            CalculatorDamageDieSizeTextBox.Enabled = false;
-            CalculatorDamageDieSizeTextBox.Location = new Point(269, 32);
-            CalculatorDamageDieSizeTextBox.MaxLength = 3;
-            CalculatorDamageDieSizeTextBox.Name = "CalculatorDamageDieSizeTextBox";
-            CalculatorDamageDieSizeTextBox.ReadOnly = true;
-            CalculatorDamageDieSizeTextBox.Size = new Size(25, 23);
-            CalculatorDamageDieSizeTextBox.TabIndex = 7;
-            CalculatorDamageDieSizeTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorDamageDieSizeTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorDamageDieSizeTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
-            // 
-            // CalculatorDamageDieCountTextBox
-            // 
-            CalculatorDamageDieCountTextBox.Enabled = false;
-            CalculatorDamageDieCountTextBox.Location = new Point(225, 32);
-            CalculatorDamageDieCountTextBox.MaxLength = 3;
-            CalculatorDamageDieCountTextBox.Name = "CalculatorDamageDieCountTextBox";
-            CalculatorDamageDieCountTextBox.ReadOnly = true;
-            CalculatorDamageDieCountTextBox.Size = new Size(25, 23);
-            CalculatorDamageDieCountTextBox.TabIndex = 6;
-            CalculatorDamageDieCountTextBox.Click += TextBox_MouseClickShowBatchComputation;
-            CalculatorDamageDieCountTextBox.TextChanged += TextBox_TextChangedFilterToDigits;
-            CalculatorDamageDieCountTextBox.KeyPress += TextBox_KeyPressFilterToDigits;
             // 
             // CalculatorDamageListBox
             // 
@@ -1508,6 +1552,7 @@
             // 
             // CalculatorDefaultSettingsButton
             // 
+            CalculatorDefaultSettingsButton.FlatStyle = FlatStyle.Flat;
             CalculatorDefaultSettingsButton.Location = new Point(6, 408);
             CalculatorDefaultSettingsButton.Name = "CalculatorDefaultSettingsButton";
             CalculatorDefaultSettingsButton.Size = new Size(113, 27);
@@ -1536,19 +1581,22 @@
             CalculatorVersionLabel.RightToLeft = RightToLeft.No;
             CalculatorVersionLabel.Size = new Size(138, 23);
             CalculatorVersionLabel.TabIndex = 12;
-            CalculatorVersionLabel.Text = "PFK V2.0.0";
+            CalculatorVersionLabel.Text = "PFK V2.1.1-proto-1";
             CalculatorVersionLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // PrimaryTabControl
             // 
+            PrimaryTabControl.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             PrimaryTabControl.Controls.Add(CalculatorTabPage);
             PrimaryTabControl.Controls.Add(GeneratorTabPage);
+            PrimaryTabControl.DrawMode = TabDrawMode.OwnerDrawFixed;
             PrimaryTabControl.Location = new Point(0, 0);
             PrimaryTabControl.Multiline = true;
             PrimaryTabControl.Name = "PrimaryTabControl";
             PrimaryTabControl.SelectedIndex = 0;
             PrimaryTabControl.Size = new Size(984, 471);
             PrimaryTabControl.TabIndex = 0;
+            PrimaryTabControl.DrawItem += PrimaryTabControl_DrawItem;
             // 
             // CalculatorTabPage
             // 
@@ -1586,10 +1634,10 @@
             // CalculatorBatchComputePopupGroupBox
             // 
             CalculatorBatchComputePopupGroupBox.Controls.Add(CalculatorBatchComputePopupStepPatternTextBox);
-            CalculatorBatchComputePopupGroupBox.Controls.Add(CalculatorBatchComputePopupDashLabel);
             CalculatorBatchComputePopupGroupBox.Controls.Add(CalculatorBatchComputePopupEndValueNumericUpDown);
             CalculatorBatchComputePopupGroupBox.Controls.Add(CalculatorBatchComputePopupLayerNumericUpDown);
             CalculatorBatchComputePopupGroupBox.Controls.Add(CalculatorBatchComputePopupStartValueNumericUpDown);
+            CalculatorBatchComputePopupGroupBox.Controls.Add(CalculatorBatchComputePopupDashLabel);
             CalculatorBatchComputePopupGroupBox.Controls.Add(CalculatorBatchComputePopupEndValueLabel);
             CalculatorBatchComputePopupGroupBox.Controls.Add(CalculatorBatchComputePopupLayerLabel);
             CalculatorBatchComputePopupGroupBox.Controls.Add(CalculatorBatchComputePopupStepPatternLabel);
@@ -1606,12 +1654,42 @@
             // 
             // CalculatorBatchComputePopupStepPatternTextBox
             // 
+            CalculatorBatchComputePopupStepPatternTextBox.BorderStyle = BorderStyle.FixedSingle;
             CalculatorBatchComputePopupStepPatternTextBox.Location = new Point(6, 81);
             CalculatorBatchComputePopupStepPatternTextBox.Name = "CalculatorBatchComputePopupStepPatternTextBox";
             CalculatorBatchComputePopupStepPatternTextBox.Size = new Size(74, 23);
             CalculatorBatchComputePopupStepPatternTextBox.TabIndex = 3;
             CalculatorBatchComputePopupStepPatternTextBox.TextChanged += TextBox_TextChangedFilterToDigitsAndCommaAndSign;
             CalculatorBatchComputePopupStepPatternTextBox.Leave += TextBox_LeaveClearLoneOrTrailingComma;
+            // 
+            // CalculatorBatchComputePopupEndValueNumericUpDown
+            // 
+            CalculatorBatchComputePopupEndValueNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorBatchComputePopupEndValueNumericUpDown.Location = new Point(104, 37);
+            CalculatorBatchComputePopupEndValueNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            CalculatorBatchComputePopupEndValueNumericUpDown.Name = "CalculatorBatchComputePopupEndValueNumericUpDown";
+            CalculatorBatchComputePopupEndValueNumericUpDown.Size = new Size(74, 23);
+            CalculatorBatchComputePopupEndValueNumericUpDown.TabIndex = 2;
+            CalculatorBatchComputePopupEndValueNumericUpDown.ValueChanged += NumericUpDown_ClearError;
+            // 
+            // CalculatorBatchComputePopupLayerNumericUpDown
+            // 
+            CalculatorBatchComputePopupLayerNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorBatchComputePopupLayerNumericUpDown.Location = new Point(104, 81);
+            CalculatorBatchComputePopupLayerNumericUpDown.Name = "CalculatorBatchComputePopupLayerNumericUpDown";
+            CalculatorBatchComputePopupLayerNumericUpDown.Size = new Size(74, 23);
+            CalculatorBatchComputePopupLayerNumericUpDown.TabIndex = 4;
+            CalculatorBatchComputePopupLayerNumericUpDown.ValueChanged += NumericUpDown_ClearError;
+            // 
+            // CalculatorBatchComputePopupStartValueNumericUpDown
+            // 
+            CalculatorBatchComputePopupStartValueNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorBatchComputePopupStartValueNumericUpDown.Location = new Point(6, 37);
+            CalculatorBatchComputePopupStartValueNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            CalculatorBatchComputePopupStartValueNumericUpDown.Name = "CalculatorBatchComputePopupStartValueNumericUpDown";
+            CalculatorBatchComputePopupStartValueNumericUpDown.Size = new Size(74, 23);
+            CalculatorBatchComputePopupStartValueNumericUpDown.TabIndex = 1;
+            CalculatorBatchComputePopupStartValueNumericUpDown.ValueChanged += NumericUpDown_ClearError;
             // 
             // CalculatorBatchComputePopupDashLabel
             // 
@@ -1622,36 +1700,11 @@
             CalculatorBatchComputePopupDashLabel.TabIndex = 3;
             CalculatorBatchComputePopupDashLabel.Text = "-";
             // 
-            // CalculatorBatchComputePopupEndValueNumericUpDown
-            // 
-            CalculatorBatchComputePopupEndValueNumericUpDown.Location = new Point(104, 37);
-            CalculatorBatchComputePopupEndValueNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-            CalculatorBatchComputePopupEndValueNumericUpDown.Name = "CalculatorBatchComputePopupEndValueNumericUpDown";
-            CalculatorBatchComputePopupEndValueNumericUpDown.Size = new Size(74, 23);
-            CalculatorBatchComputePopupEndValueNumericUpDown.TabIndex = 2;
-            CalculatorBatchComputePopupEndValueNumericUpDown.ValueChanged += NumericUpDown_ClearError;
-            // 
-            // CalculatorBatchComputePopupLayerNumericUpDown
-            // 
-            CalculatorBatchComputePopupLayerNumericUpDown.Location = new Point(104, 81);
-            CalculatorBatchComputePopupLayerNumericUpDown.Name = "CalculatorBatchComputePopupLayerNumericUpDown";
-            CalculatorBatchComputePopupLayerNumericUpDown.Size = new Size(74, 23);
-            CalculatorBatchComputePopupLayerNumericUpDown.TabIndex = 4;
-            CalculatorBatchComputePopupLayerNumericUpDown.ValueChanged += NumericUpDown_ClearError;
-            // 
-            // CalculatorBatchComputePopupStartValueNumericUpDown
-            // 
-            CalculatorBatchComputePopupStartValueNumericUpDown.Location = new Point(6, 37);
-            CalculatorBatchComputePopupStartValueNumericUpDown.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-            CalculatorBatchComputePopupStartValueNumericUpDown.Name = "CalculatorBatchComputePopupStartValueNumericUpDown";
-            CalculatorBatchComputePopupStartValueNumericUpDown.Size = new Size(74, 23);
-            CalculatorBatchComputePopupStartValueNumericUpDown.TabIndex = 1;
-            CalculatorBatchComputePopupStartValueNumericUpDown.ValueChanged += NumericUpDown_ClearError;
-            // 
             // CalculatorBatchComputePopupEndValueLabel
             // 
             CalculatorBatchComputePopupEndValueLabel.AutoSize = true;
             CalculatorBatchComputePopupEndValueLabel.Location = new Point(104, 19);
+            CalculatorBatchComputePopupEndValueLabel.MinimumSize = new Size(58, 15);
             CalculatorBatchComputePopupEndValueLabel.Name = "CalculatorBatchComputePopupEndValueLabel";
             CalculatorBatchComputePopupEndValueLabel.Size = new Size(58, 15);
             CalculatorBatchComputePopupEndValueLabel.TabIndex = 1;
@@ -1660,10 +1713,11 @@
             // 
             // CalculatorBatchComputePopupLayerLabel
             // 
-            CalculatorBatchComputePopupLayerLabel.AutoSize = true;
+            CalculatorBatchComputePopupLayerLabel.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             CalculatorBatchComputePopupLayerLabel.Location = new Point(104, 63);
+            CalculatorBatchComputePopupLayerLabel.MinimumSize = new Size(65, 15);
             CalculatorBatchComputePopupLayerLabel.Name = "CalculatorBatchComputePopupLayerLabel";
-            CalculatorBatchComputePopupLayerLabel.Size = new Size(61, 15);
+            CalculatorBatchComputePopupLayerLabel.Size = new Size(65, 15);
             CalculatorBatchComputePopupLayerLabel.TabIndex = 1;
             CalculatorBatchComputePopupLayerLabel.Text = "Step Layer";
             CalculatorBatchComputePopupLayerLabel.MouseEnter += Control_MouseHoverShowTooltip;
@@ -1682,6 +1736,7 @@
             // 
             CalculatorBatchComputePopupStartLabel.AutoSize = true;
             CalculatorBatchComputePopupStartLabel.Location = new Point(6, 19);
+            CalculatorBatchComputePopupStartLabel.MinimumSize = new Size(62, 15);
             CalculatorBatchComputePopupStartLabel.Name = "CalculatorBatchComputePopupStartLabel";
             CalculatorBatchComputePopupStartLabel.Size = new Size(62, 15);
             CalculatorBatchComputePopupStartLabel.TabIndex = 1;
@@ -1730,6 +1785,7 @@
             // 
             // CalculatorBatchComputeButton
             // 
+            CalculatorBatchComputeButton.FlatStyle = FlatStyle.Flat;
             CalculatorBatchComputeButton.Location = new Point(125, 408);
             CalculatorBatchComputeButton.Name = "CalculatorBatchComputeButton";
             CalculatorBatchComputeButton.Size = new Size(130, 27);
@@ -1740,18 +1796,20 @@
             // 
             // CalculatorDamageDistributionScottPlot
             // 
-            CalculatorDamageDistributionScottPlot.Location = new Point(612, 239);
+            CalculatorDamageDistributionScottPlot.Font = new Font("Cambria", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            CalculatorDamageDistributionScottPlot.Location = new Point(612, 223);
             CalculatorDamageDistributionScottPlot.Margin = new Padding(4, 3, 4, 3);
             CalculatorDamageDistributionScottPlot.Name = "CalculatorDamageDistributionScottPlot";
-            CalculatorDamageDistributionScottPlot.Size = new Size(358, 163);
+            CalculatorDamageDistributionScottPlot.Size = new Size(358, 152);
             CalculatorDamageDistributionScottPlot.TabIndex = 13;
             // 
             // CalculatorBatchComputeScottPlot
             // 
-            CalculatorBatchComputeScottPlot.Location = new Point(612, 15);
+            CalculatorBatchComputeScottPlot.Font = new Font("Cambria", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            CalculatorBatchComputeScottPlot.Location = new Point(612, 14);
             CalculatorBatchComputeScottPlot.Margin = new Padding(4, 3, 4, 3);
             CalculatorBatchComputeScottPlot.Name = "CalculatorBatchComputeScottPlot";
-            CalculatorBatchComputeScottPlot.Size = new Size(358, 387);
+            CalculatorBatchComputeScottPlot.Size = new Size(358, 361);
             CalculatorBatchComputeScottPlot.TabIndex = 17;
             CalculatorBatchComputeScottPlot.Visible = false;
             // 
@@ -2029,7 +2087,7 @@
             label1.RightToLeft = RightToLeft.No;
             label1.Size = new Size(178, 23);
             label1.TabIndex = 12;
-            label1.Text = "PFK V2.0.0";
+            label1.Text = "PFK V2.0.1";
             label1.TextAlign = ContentAlignment.MiddleRight;
             // 
             // button6
@@ -2043,8 +2101,8 @@
             // 
             // CalculatorWindow
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(983, 470);
             Controls.Add(PrimaryTabControl);
             Icon = (Icon)resources.GetObject("$this.Icon");

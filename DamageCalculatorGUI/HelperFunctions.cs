@@ -6,6 +6,20 @@ namespace DamageCalculatorGUI
 {
     internal class HelperFunctions
     {
+        public static void GetAllControls(Control control, List<Control> controlIDs)
+        {
+            // Store the current control
+            controlIDs.Add(control);
+            
+            // Check if the control has any children
+            if (control.Controls.Count > 0)
+            { // Get each child-control recursively
+                foreach (Control childControl in control.Controls)
+                { // Iterate over each child
+                    GetAllControls(childControl, controlIDs);
+                }
+            }
+        }
         public static T ClampAboveZero<T>(T value) where T : INumber<T>
         {
             return value <= T.Zero ? T.Zero : value;
