@@ -1,17 +1,19 @@
 ﻿
 using Pickings_For_Kurtulmak;
 using ScottPlot;
+using Syncfusion.Windows.Forms.Tools;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
+using Syncfusion.WinForms.Controls;
 using static DamageCalculatorGUI.DamageCalculator;
 
 
 namespace DamageCalculatorGUI
 {
-    public partial class CalculatorWindow : Form
+    public partial class CalculatorWindow : SfForm
     {
+
         // Current UI Settings
         public PFKColorPalette currentColorPallete;
         public List<Control> allWindowControls;
@@ -19,37 +21,73 @@ namespace DamageCalculatorGUI
         {
             { "pf2e", new(background: Color.FromArgb(alpha: 255, red: 242, green: 233, blue: 231),
                           entryNormal: Color.FromArgb(alpha: 255, red: 233, green: 227, blue: 222),
+                          entryNormalDark: Color.FromArgb(alpha: 255, red: 213, green: 207, blue: 202),
                           entryBatched: Color.FromArgb(alpha: 255, red: 234, green: 190, blue: 178),
                           text: Color.Black,
-                          buttonBackground: Color.FromArgb(alpha: 255, red: 120, green: 99, blue: 83),
+                          buttonText: Color.White,
+                          buttonBackground: Color.FromArgb(alpha: 255, red: 150, green: 124, blue: 105),
                           buttonIdle: Color.FromArgb(alpha: 255, red: 120, green: 99, blue: 83),
-                          buttonHovered: Color.FromArgb(alpha: 255, red: 150, green: 124, blue: 105),
-                          buttonPressed: Color.FromArgb(alpha: 255, red: 96, green: 79, blue: 67),
+                          buttonHovered: Color.FromArgb(alpha: 255, red: 105, green: 84, blue: 68),
+                          buttonPressed: Color.FromArgb(alpha: 255, red: 90, green: 69, blue: 53),
+                          exitButtonBackground: Color.FromArgb(alpha: 255, red: 150, green: 124, blue: 105),
+                          exitButtonHovered: Color.Crimson,
+                          exitButtonPressed: Color.DarkRed,
+                          exitButtonIdle: Color.FromArgb(alpha: 255, red: 120, green: 99, blue: 83),
+                          minimizeButtonBackground: Color.FromArgb(alpha: 255, red: 150, green: 124, blue: 105),
+                          minimizeButtonHovered: Color.LightSlateGray,
+                          minimizeButtonPressed: Color.SlateGray,
+                          minimizeButtonIdle: Color.FromArgb(alpha: 255, red: 120, green: 99, blue: 83),
                           fontName: "cambria",
                           fontSizeOverride: 0,
-                          border: Color.FromArgb(alpha: 255, red: 157, green: 151, blue: 148)) },
+                          border: Color.FromArgb(alpha: 255, red: 157, green: 151, blue: 148),
+                          graphBackground: Color.FromArgb(alpha: 255, red: 249, green: 240, blue: 238),
+                          graphBars: Color.FromArgb(alpha: 255, red: 214, green: 170, blue: 158)) },
             { "gray", new(background: SystemColors.Window,
-                          entryNormal: SystemColors.Window,
+                          entryNormal: SystemColors.Control,
+                          entryNormalDark: SystemColors.ControlDark,
                           entryBatched: Color.Lavender,
                           text: Color.Black,
-                          buttonBackground: Color.Transparent,
+                          buttonText: Color.Black,
+                          buttonBackground: SystemColors.Control,
                           buttonIdle: SystemColors.ButtonFace,
-                          buttonHovered: SystemColors.ButtonHighlight,
-                          buttonPressed: SystemColors.ButtonShadow,
+                          buttonHovered: SystemColors.ControlLight,
+                          buttonPressed: SystemColors.ControlDark,
+                          exitButtonBackground: Color.FromArgb(alpha: 255, red: 150, green: 124, blue: 105),
+                          exitButtonHovered: Color.Crimson,
+                          exitButtonPressed: Color.DarkRed,
+                          exitButtonIdle: Color.FromArgb(alpha: 255, red: 120, green: 99, blue: 83),
+                          minimizeButtonBackground: Color.FromArgb(alpha: 255, red: 150, green: 124, blue: 105),
+                          minimizeButtonHovered: Color.LightSlateGray,
+                          minimizeButtonPressed: Color.SlateGray,
+                          minimizeButtonIdle: Color.FromArgb(alpha: 255, red: 120, green: 99, blue: 83),
                           fontName: "segoe ui",
                           fontSizeOverride: 0,
-                          border: SystemColors.InactiveBorder) },
+                          border: SystemColors.InactiveBorder,
+                          graphBackground: SystemColors.Window,
+                          graphBars: SystemColors.ButtonHighlight) },
             { "dark", new(background: Color.FromArgb(alpha: 255, red: 43, green: 42, blue: 51),
                           entryNormal: Color.FromArgb(alpha: 255, red: 66, green: 65, blue: 77),
+                          entryNormalDark: Color.FromArgb(alpha: 255, red: 46, green: 45, blue: 57),
                           entryBatched: Color.FromArgb(alpha: 255, red: 66, green: 78, blue: 77),
                           text: Color.LightGray,
+                          buttonText: Color.LightGray,
                           buttonBackground: Color.FromArgb(alpha: 255, red: 59, green: 58, blue: 68),
                           buttonIdle: Color.FromArgb(alpha: 255, red: 59, green: 58, blue: 68),
                           buttonHovered: Color.FromArgb(alpha: 255, red: 74, green: 73, blue: 86),
                           buttonPressed: Color.FromArgb(alpha: 255, red: 46, green: 45, blue: 53),
+                          exitButtonBackground: Color.FromArgb(alpha: 255, red: 150, green: 124, blue: 105),
+                          exitButtonHovered: Color.Crimson,
+                          exitButtonPressed: Color.DarkRed,
+                          exitButtonIdle: Color.FromArgb(alpha: 255, red: 120, green: 99, blue: 83),
+                          minimizeButtonBackground: Color.FromArgb(alpha: 255, red: 150, green: 124, blue: 105),
+                          minimizeButtonHovered: Color.LightSlateGray,
+                          minimizeButtonPressed: Color.SlateGray,
+                          minimizeButtonIdle: Color.FromArgb(alpha: 255, red: 120, green: 99, blue: 83),
                           fontName: "segoe ui",
                           fontSizeOverride: 0,
-                          border: Color.FromArgb(alpha: 255, red: 25, green: 25, blue: 30)) }
+                          border: Color.FromArgb(alpha: 255, red: 25, green: 25, blue: 30),
+                          graphBackground: Color.FromArgb(alpha: 255, red: 63, green: 62, blue: 71),
+                          graphBars: Color.FromArgb(alpha: 255, red: 33, green: 32, blue: 41)) }
         };
 
         // Damage Stats Struct
@@ -69,6 +107,7 @@ namespace DamageCalculatorGUI
         private Dictionary<EncounterSetting, Dictionary<int, int>> batched_variables_last_value = new();
         private Dictionary<EncounterSetting, Dictionary<int, BatchModeSettings>> batched_variables = new();
         private Dictionary<EncounterSetting, Control> setting_to_control = new();
+        private Dictionary<int, List<TextBox>> tickbox_to_textboxes = new();
         private static readonly Dictionary<EncounterSetting, CheckBox> setting_to_checkbox = new();
         private static readonly Dictionary<EncounterSetting, Tuple<DieField, bool, bool>> setting_to_info = new() // Conversions to get die type, i.e. EncounterSetting to DieField, Bleed, and Crit respectively
         {
@@ -271,7 +310,7 @@ namespace DamageCalculatorGUI
             // Damage Computation Variables
             public int number_of_encounters = 10000;
             public int rounds_per_encounter = 6;
-            public Actions actions_per_round = default;
+            public RoundActions actions_per_round = default;
             public int magazine_size = 0;
             public int reload = 0;
             public int long_reload = 0;
@@ -324,6 +363,8 @@ namespace DamageCalculatorGUI
         }
         private void CalculatorWindowLoad(object sender, EventArgs e)
         {
+            currentColorPallete = colorPalettes["gray"];
+
             // Set graph appearances to be something normal
             InitializeGraphStartAppearance();
 
@@ -337,10 +378,11 @@ namespace DamageCalculatorGUI
             StoreSettingToControl();
             StoreControlToSetting();
             StoreSettingToCheckbox();
+            StoreTickboxToTextboxes();
 
             // Default Settings
             currEncounterSettings.ResetSettings();
-            ResetVisuals(currEncounterSettings);
+            ReloadVisuals(currEncounterSettings);
 
             // Lock Window Dimensions
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -356,9 +398,13 @@ namespace DamageCalculatorGUI
             // Populate the tracked-controls menu
             allWindowControls = new();
             HelperFunctions.GetAllControls(this, allWindowControls);
-            allWindowControls.Add(PrimaryTabControl);
             allWindowControls.Add(CalculatorMiscStatisticsCalculateStatsProgressBars);
-            LoadColorPallete(colorPalettes["dark"]);
+            allWindowControls.AddRange(MainTabControl.TabPages.Cast<TabPageAdv>());
+            LoadColorPallete(colorPalettes["pf2e"]);
+
+            // Reset the UI
+            currEncounterSettings.ResetSettings();
+            ReloadVisuals(currEncounterSettings);
         }
 
         private async void CalculateDamageStatsButton_MouseClick(object sender, MouseEventArgs e)
@@ -706,6 +752,40 @@ namespace DamageCalculatorGUI
             setting_to_checkbox.Add(EncounterSetting.volley, CalculatorReachVolleyIncrementCheckBox);
             setting_to_checkbox.Add(EncounterSetting.move_speed, CalculatorReachMovementSpeedCheckBox);
             setting_to_checkbox.Add(EncounterSetting.engagement_range, CalculatorEncounterEngagementRangeCheckBox);
+        }
+        private void StoreTickboxToTextboxes()
+        {
+            tickbox_to_textboxes.Clear();
+            tickbox_to_textboxes.Add(key: CalculatorAmmunitionMagazineSizeCheckBox.GetHashCode(),
+                                     value: new() { CalculatorAmmunitionMagazineSizeTextBox,
+                                                    CalculatorAmmunitionLongReloadTextBox });
+
+            tickbox_to_textboxes.Add(key: CalculatorDamageCriticalDieCheckBox.GetHashCode(),
+                                     value: new() { CalculatorDamageCriticalDieCountTextBox,
+                                                        CalculatorDamageCriticalDieSizeTextBox,
+                                                        CalculatorDamageCriticalDieBonusTextBox});
+
+            tickbox_to_textboxes.Add(key: CalculatorDamageBleedDieCheckBox.GetHashCode(),
+                                     value: new() { CalculatorDamageBleedDieCountTextBox,
+                                                        CalculatorDamageBleedDieSizeTextBox,
+                                                        CalculatorDamageBleedDieBonusTextBox});
+
+            tickbox_to_textboxes.Add(key: CalculatorDamageCriticalBleedDieCheckBox.GetHashCode(),
+                                     value: new() { CalculatorDamageCriticalBleedDieCountTextBox,
+                                                        CalculatorDamageCriticalBleedDieSizeTextBox,
+                                                        CalculatorDamageCriticalBleedDieBonusTextBox});
+
+            tickbox_to_textboxes.Add(key: CalculatorReachRangeIncrementCheckBox.GetHashCode(),
+                                     value: new() { CalculatorReachRangeIncrementTextBox });
+
+            tickbox_to_textboxes.Add(key: CalculatorReachVolleyIncrementCheckBox.GetHashCode(),
+                                     value: new() { CalculatorReachVolleyIncrementTextBox });
+
+            tickbox_to_textboxes.Add(key: CalculatorReachMovementSpeedCheckBox.GetHashCode(),
+                                     value: new() { CalculatorReachMovementSpeedTextBox });
+
+            tickbox_to_textboxes.Add(key: CalculatorEncounterEngagementRangeCheckBox.GetHashCode(),
+                                     value: new() { CalculatorEncounterEngagementRangeTextBox });
         }
 
         // To-do: Fix string listbox string not updating when batching (use new function)
@@ -1170,7 +1250,7 @@ namespace DamageCalculatorGUI
             CalculatorDamageDistributionScottPlot.Plot.SetAxisLimits(xMin: 0, xMax: 100, yMin: 0, yMax: 1000);
             CalculatorDamageDistributionScottPlot.Plot.SetOuterViewLimits(xMin: 0, xMax: 100, yMin: 0, yMax: 1000);
         }
-        private void ResetVisuals(EncounterSettings encounterSettings)
+        private void ReloadVisuals(EncounterSettings encounterSettings)
         {
             // Reset Visuals
             CalculatorEncounterNumberOfEncountersTextBox.Text = encounterSettings.number_of_encounters.ToString();
@@ -1191,14 +1271,32 @@ namespace DamageCalculatorGUI
             CalculatorAttackCriticalHitMinimumTextBox.Text = encounterSettings.crit_threshhold.ToString();
             CalculatorAttackMAPModifierTextBox.Text = encounterSettings.MAP_modifier.ToString();
 
-            CalculatorEncounterEngagementRangeCheckBox.Checked = true;
+
+            CalculatorAmmunitionMagazineSizeCheckBox.Checked = encounterSettings.magazine_size != GetDefaultSettingByControl(CalculatorAmmunitionMagazineSizeTextBox);
+            CalculatorAmmunitionMagazineSizeTextBox.Text = encounterSettings.magazine_size.ToString();
+            CalculatorAmmunitionLongReloadTextBox.Text = encounterSettings.magazine_size.ToString();
+            SelectCheckBoxForToggle(CalculatorAmmunitionMagazineSizeCheckBox);
+
+            CalculatorEncounterEngagementRangeCheckBox.Checked = encounterSettings.engagement_range != GetDefaultSettingByControl(CalculatorEncounterEngagementRangeTextBox);
             CalculatorEncounterEngagementRangeTextBox.Text = encounterSettings.engagement_range.ToString();
+            SelectCheckBoxForToggle(CalculatorEncounterEngagementRangeCheckBox);
+
             CalculatorReachMovementSpeedCheckBox.Checked = encounterSettings.seek_favorable_range;
             CalculatorReachMovementSpeedTextBox.Text = encounterSettings.move_speed.ToString();
-            CalculatorReachRangeIncrementCheckBox.Checked = true;
+            SelectCheckBoxForToggle(CalculatorReachMovementSpeedCheckBox);
+
+            CalculatorReachRangeIncrementCheckBox.Checked = encounterSettings.range != GetDefaultSettingByControl(CalculatorReachRangeIncrementTextBox);
             CalculatorReachRangeIncrementTextBox.Text = encounterSettings.range.ToString();
-            CalculatorReachVolleyIncrementCheckBox.Checked = true;
+            SelectCheckBoxForToggle(CalculatorReachRangeIncrementCheckBox);
+
+            CalculatorReachVolleyIncrementCheckBox.Checked = encounterSettings.volley != GetDefaultSettingByControl(CalculatorReachVolleyIncrementTextBox);
             CalculatorReachVolleyIncrementTextBox.Text = encounterSettings.volley.ToString();
+            SelectCheckBoxForToggle(CalculatorReachVolleyIncrementCheckBox);
+
+            SelectCheckBoxForToggle(CalculatorDamageBleedDieCheckBox);
+            SelectCheckBoxForToggle(CalculatorDamageCriticalBleedDieCheckBox);
+            SelectCheckBoxForToggle(CalculatorDamageCriticalDieCheckBox);
+
             ActiveControl = null;
         }
         private void UpdateStatisticsGUI(Tuple<int, int, int> percentiles)
@@ -1218,6 +1316,9 @@ namespace DamageCalculatorGUI
         {
             // Clear the Plot
             CalculatorDamageDistributionScottPlot.Plot.Clear();
+            CalculatorDamageDistributionScottPlot.Plot.Style(grid: currentColorPallete.border,
+                                                             axisLabel: currentColorPallete.text,
+                                                             dataBackground: currentColorPallete.graphBackground);
 
             // Get the maximum value in the list
             int maxKey = damageStats.damage_bins.Keys.Max();
@@ -1230,26 +1331,47 @@ namespace DamageCalculatorGUI
             double[] binEdges = Enumerable.Range(0, graphBins.Length).Select(x => (double)x).ToArray();
 
             // Render the Plot
-            ScottPlot.Plottable.BarPlot plot = CalculatorDamageDistributionScottPlot.Plot.AddBar(values: graphBins, positions: binEdges);
+            ScottPlot.Plottable.BarPlot plot = CalculatorDamageDistributionScottPlot.Plot.AddBar(values: graphBins,
+                                                                                                 positions: binEdges,
+                                                                                                 color: currentColorPallete.graphBars);
+
             // Configure the Plot
             plot.BarWidth = 1;
             CalculatorDamageDistributionScottPlot.Plot.YAxis.Label("Occurances");
-            CalculatorDamageDistributionScottPlot.Plot.XAxis.Label("Encounter Damage");
-            CalculatorDamageDistributionScottPlot.Plot.SetAxisLimits(yMin: 0, xMin: 0, xMax: maxKey, yMax: damageStats.damage_bins.Values.Max() * 1.2);
-            CalculatorDamageDistributionScottPlot.Plot.SetOuterViewLimits(yMin: 0, xMin: 0, xMax: maxKey, yMax: damageStats.damage_bins.Values.Max() * 1.2);
+            CalculatorDamageDistributionScottPlot.Plot.YAxis.TickLabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorDamageDistributionScottPlot.Plot.YAxis.LabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorDamageDistributionScottPlot.Plot.YAxis.Color(currentColorPallete.text);
+
+            CalculatorDamageDistributionScottPlot.Plot.XAxis.Label("Average Encounter Damage");
+            CalculatorDamageDistributionScottPlot.Plot.XAxis.TickLabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorDamageDistributionScottPlot.Plot.XAxis.LabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorDamageDistributionScottPlot.Plot.XAxis.Color(currentColorPallete.text);
+
+            CalculatorDamageDistributionScottPlot.Plot.SetAxisLimits(xMin: 0, yMin: 0,
+                                                                    xMax: maxKey, yMax: damageStats.damage_bins.Values.Max() * 1.2);
+            CalculatorDamageDistributionScottPlot.Plot.SetOuterViewLimits(yMin: 0, xMin: 0,
+                                                                    xMax: maxKey, yMax: damageStats.damage_bins.Values.Max() * 1.2);
+
             CalculatorDamageDistributionScottPlot.Plot.Legend(location: ScottPlot.Alignment.UpperLeft);
 
             Tuple<double, double, double> percentiles = new(percentiles_int.Item1 + ((percentiles_int.Item1 == 0) ? 0.25 : 0),
                                                             percentiles_int.Item2 + ((percentiles_int.Item2 == 0) ? 0.25 : 0),
                                                             percentiles_int.Item3 + ((percentiles_int.Item3 == 0) ? 0.25 : 0));
+
             if (percentiles.Item1 == percentiles.Item2 && percentiles.Item2 == percentiles.Item3)
             { // Catch when all three are the same
-                CalculatorDamageDistributionScottPlot.Plot.AddVerticalLine(x: percentiles.Item1, color: Color.Red, label: "Q1, Q2, Q3");
+                CalculatorDamageDistributionScottPlot.Plot.AddVerticalLine(x: percentiles.Item1,
+                                                                           color: Color.Red,
+                                                                           label: "Q1, Q2, Q3");
             }
             else if (percentiles.Item1 == percentiles.Item2)
             { // Catch when lower two percentiles are the same
-                CalculatorDamageDistributionScottPlot.Plot.AddVerticalLine(x: percentiles.Item1, color: Color.Red, label: "Q1, Q2");
-                CalculatorDamageDistributionScottPlot.Plot.AddVerticalLine(x: percentiles.Item3, color: Color.Orange, label: "Q3");
+                CalculatorDamageDistributionScottPlot.Plot.AddVerticalLine(x: percentiles.Item1,
+                                                                           color: Color.Red,
+                                                                           label: "Q1, Q2");
+                CalculatorDamageDistributionScottPlot.Plot.AddVerticalLine(x: percentiles.Item3,
+                                                                           color: Color.Orange,
+                                                                           label: "Q3");
             }
             else if (percentiles.Item2 == percentiles.Item3)
             { // Catch when upper two percentiles are the same
@@ -1262,7 +1384,8 @@ namespace DamageCalculatorGUI
                 CalculatorDamageDistributionScottPlot.Plot.AddVerticalLine(x: percentiles.Item2, color: Color.Red, label: "Q2");
                 CalculatorDamageDistributionScottPlot.Plot.AddVerticalLine(x: percentiles.Item3, color: Color.Orange, label: "Q3");
             }
-            CalculatorDamageDistributionScottPlot.Plot.Legend(location: ScottPlot.Alignment.UpperRight);
+            var legend = CalculatorDamageDistributionScottPlot.Plot.Legend(location: ScottPlot.Alignment.UpperRight);
+            legend.FillColor = currentColorPallete.background;
         }
         private void UpdateBatchGraph(BatchResults batch_results)
         {
@@ -1405,8 +1528,10 @@ namespace DamageCalculatorGUI
             // Apply the label
             CalculatorBatchComputeScottPlot.Plot.YAxis.Label(labelString);
             // Style size down, with a floor size of 8
-            CalculatorBatchComputeScottPlot.Plot.YAxis.LabelStyle(fontSize: 16 / numberOfLabelLines + 6, fontName: "cambria");
-            CalculatorBatchComputeScottPlot.Plot.YAxis.TickLabelStyle(fontName: "cambria");
+            CalculatorBatchComputeScottPlot.Plot.YAxis.LabelStyle(fontSize: 16 / numberOfLabelLines + 6);
+            CalculatorBatchComputeScottPlot.Plot.YAxis.TickLabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorBatchComputeScottPlot.Plot.YAxis.LabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorBatchComputeScottPlot.Plot.YAxis.Color(currentColorPallete.text);
 
             // Concatenate and assign y-tick values
             CalculatorBatchComputeScottPlot.Plot.YTicks(positions: Enumerable.Range(0, batch_results.dimensions[^1]).Select(x => x + 0.5).ToArray(),
@@ -1416,8 +1541,10 @@ namespace DamageCalculatorGUI
                                                                                                 .Select(encounterSettingValue => encounterSettingValue.ToString()),
                                                                                              separator: ", ")).ToArray());
             // Label the x-axis
-            CalculatorBatchComputeScottPlot.Plot.XAxis.Label("Encounter Damage", fontName: "cambria");
-            CalculatorBatchComputeScottPlot.Plot.XAxis.TickLabelStyle(fontName: "cambria");
+            CalculatorBatchComputeScottPlot.Plot.XAxis.Label("Encounter Damage");
+            CalculatorBatchComputeScottPlot.Plot.XAxis.TickLabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorBatchComputeScottPlot.Plot.XAxis.LabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorBatchComputeScottPlot.Plot.XAxis.Color(currentColorPallete.text);
 
             // Set the camera/axis limits
             CalculatorBatchComputeScottPlot.Plot.SetAxisLimits(xMin: 0, xMax: batch_results.max_width,
@@ -1428,6 +1555,7 @@ namespace DamageCalculatorGUI
             // Add & Configure the color bar
             var addedColorBar = CalculatorBatchComputeScottPlot.Plot.AddColorbar(addedHeatmap);
             addedColorBar.AutomaticTicks(formatter: ConvertDoubleToPercentageString);
+            addedColorBar.TickMarkColor = currentColorPallete.text;
         }
         private string ConvertDoubleToPercentageString(double value)
         {
@@ -1699,7 +1827,7 @@ namespace DamageCalculatorGUI
         //
         private async Task<DamageStats> ComputeAverageDamage_SINGLE(int number_of_encounters,
                                                         int rounds_per_encounter,
-                                                        Actions actions_per_round,
+                                                        RoundActions actions_per_round,
                                                         int reload_size,
                                                         int reload,
                                                         int long_reload,
@@ -1755,7 +1883,7 @@ namespace DamageCalculatorGUI
             {
                 number_of_encounters = GetValueFromControl(CalculatorEncounterNumberOfEncountersTextBox),
                 rounds_per_encounter = GetValueFromControl(CalculatorEncounterRoundsPerEncounterTextBox),
-                actions_per_round = new Actions(any: GetValueFromControl(CalculatorActionActionsPerRoundTextBox),
+                actions_per_round = new RoundActions(any: GetValueFromControl(CalculatorActionActionsPerRoundTextBox),
                                                 strike: GetValueFromControl(CalculatorActionExtraLimitedActionsStrikeNumericUpDown),
                                                 reload: GetValueFromControl(CalculatorActionExtraLimitedActionsReloadNumericUpDown),
                                                 long_reload: GetValueFromControl(CalculatorActionExtraLimitedActionsLongReloadNumericUpDown),
@@ -1929,64 +2057,25 @@ namespace DamageCalculatorGUI
         }
         private void SelectCheckBoxForToggle(CheckBox checkBox)
         {
-            int hash = checkBox.GetHashCode();
-
-            if (hash == CalculatorAmmunitionMagazineSizeCheckBox.GetHashCode())
-            { // Ammunition
-                CheckboxToggleTextbox(checkBox, new() { CalculatorAmmunitionMagazineSizeTextBox, CalculatorAmmunitionLongReloadTextBox });
-            }
-            // DAMAGE
-            else if (hash == CalculatorDamageCriticalDieCheckBox.GetHashCode())
-            { // Critical
-                CheckboxToggleTextbox(checkBox, new() { CalculatorDamageCriticalDieCountTextBox,
-                                                        CalculatorDamageCriticalDieSizeTextBox,
-                                                        CalculatorDamageCriticalDieBonusTextBox});
-            }
-            else if (hash == CalculatorDamageBleedDieCheckBox.GetHashCode())
-            { // Bleed
-                CheckboxToggleTextbox(checkBox, new() { CalculatorDamageBleedDieCountTextBox,
-                                                        CalculatorDamageBleedDieSizeTextBox,
-                                                        CalculatorDamageBleedDieBonusTextBox});
-            }
-            else if (hash == CalculatorDamageCriticalBleedDieCheckBox.GetHashCode())
-            { // Critical Bleed
-                CheckboxToggleTextbox(checkBox, new() { CalculatorDamageCriticalBleedDieCountTextBox,
-                                                        CalculatorDamageCriticalBleedDieSizeTextBox,
-                                                        CalculatorDamageCriticalBleedDieBonusTextBox});
-            }
-            // REACH
-            else if (hash == CalculatorReachRangeIncrementCheckBox.GetHashCode())
-            { // Range
-                CheckboxToggleTextbox(checkBox, new() { CalculatorReachRangeIncrementTextBox });
-            }
-            else if (hash == CalculatorReachVolleyIncrementCheckBox.GetHashCode())
-            { // Volley
-                CheckboxToggleTextbox(checkBox, new() { CalculatorReachVolleyIncrementTextBox });
-            }
-            else if (hash == CalculatorReachMovementSpeedCheckBox.GetHashCode())
-            { // Movement Speed
-                CheckboxToggleTextbox(checkBox, new() { CalculatorReachMovementSpeedTextBox });
-            }
-            // ENCOUNTER
-            else if (hash == CalculatorEncounterEngagementRangeCheckBox.GetHashCode())
-            { // Encounter
-                CheckboxToggleTextbox(checkBox, new() { CalculatorEncounterEngagementRangeTextBox });
-            }
+            CheckboxToggleTextbox(checkBox, tickbox_to_textboxes[checkBox.GetHashCode()]);
         }
         private void CheckboxToggleTextbox(CheckBox checkBox, List<TextBox> textBoxes)
         {
             foreach (TextBox textBox in textBoxes)
             {
-                textBox.Text = string.Empty;
                 if (checkBox.Checked)
                 {
+                    textBox.Text = GetValueFromControl(control: textBox).ToString();
                     textBox.Enabled = true;
                     textBox.ReadOnly = false;
+                    textBox.BackColor = currentColorPallete.entryNormal;
                 }
                 else
                 {
+                    textBox.Text = string.Empty;
                     textBox.Enabled = false;
                     textBox.ReadOnly = true;
+                    textBox.BackColor = currentColorPallete.entryNormalDark;
                     ActiveControl = null;
                 }
             }
@@ -1995,23 +2084,31 @@ namespace DamageCalculatorGUI
         // DAMAGE BUTTONS
         private void DamageDeleteButton_MouseClick(object sender, MouseEventArgs e)
         {
-            Control control = sender as Control;
-            EncounterSetting encounterSetting = control_hash_to_setting[control.GetHashCode()];
             int index = CalculatorDamageListBox.SelectedIndex;
             if (index != -1)
-            {
+            { // Only remove if an index is selected
                 // Check if there's any batched variables to potentially de-batch
                 if (batched_variables.Count > 0)
                 { // De-batch the given damage die
-                    foreach (var batchedVariableDict in batched_variables)
-                    {
-                        // Debatch all damage die variables at the given index
-                        batchedVariableDict.Value.Remove(index);
-                    }
+                    batched_variables.Where(batched_variable => batched_variable.Value.ContainsKey(index)) // Filter to batched variables at this index
+                                     .ToList()
+                                     .ForEach(removedSetting =>
+                                     { // Remove each of the found batched variable at this index
+                                         if (removedSetting.Value.Count > 1)
+                                         { // Only remove this index if there's other batched variables
+                                             batched_variables[removedSetting.Key].Remove(index);
+                                         }
+                                         else
+                                         { // Remove the whole variable if it's the only one
+                                             batched_variables.Remove(removedSetting.Key);
+                                         }
+                                     });
                 }
 
                 // Clear Old Data
                 DeleteDamageDice(index);
+                // Disable the UI
+                SetDamageDiceFieldsEnabled(false);
             }
         }
         private void DamageAddButton_MouseClick(object sender, MouseEventArgs e)
@@ -2057,9 +2154,11 @@ namespace DamageCalculatorGUI
                 CalculatorDamageCriticalDieCountTextBox.Text = (currDamageDie.Item2.Item1 != 0) // X != 0
                                                         ? currDamageDie.Item2.Item1.ToString()
                                                         : currDamageDie.Item1.Item1.ToString();
+
                 CalculatorDamageCriticalDieSizeTextBox.Text = (currDamageDie.Item2.Item2 != 0) // Y != 0
                                                         ? currDamageDie.Item2.Item2.ToString()
                                                         : currDamageDie.Item1.Item2.ToString();
+
                 CalculatorDamageCriticalDieBonusTextBox.Text = (currDamageDie.Item2.Item3 != 0) // Z != 0
                                                         ? currDamageDie.Item2.Item3.ToString()
                                                         : currDamageDie.Item1.Item3.ToString();
@@ -2068,6 +2167,7 @@ namespace DamageCalculatorGUI
             { // Clear the critical damage die textboxes and checkbox
                 CalculatorDamageCriticalDieCheckBox.Checked = false;
             }
+            SelectCheckBoxForToggle(CalculatorDamageCriticalDieCheckBox);
 
 
             // Bleed Die
@@ -2079,17 +2179,24 @@ namespace DamageCalculatorGUI
                 CalculatorDamageBleedDieCountTextBox.Text = (currBleedDie.Item1.Item1 != 0) // X != 0
                                                         ? currBleedDie.Item1.Item1.ToString()
                                                         : "0";
+
                 CalculatorDamageBleedDieSizeTextBox.Text = (currBleedDie.Item1.Item2 != 0) // Y != 0
                                                         ? currBleedDie.Item1.Item2.ToString()
                                                         : "0";
+
                 CalculatorDamageBleedDieBonusTextBox.Text = (currBleedDie.Item1.Item3 != 0) // Z != 0
                                                         ? currBleedDie.Item1.Item3.ToString()
                                                         : "0";
+
             }
             else
             { // Clear the bleed damage die textboxes and checkbox
                 CalculatorDamageBleedDieCheckBox.Checked = false;
             }
+            SelectCheckBoxForToggle(CalculatorDamageBleedDieCheckBox);
+
+            // To-do: Fix unticking box auto-population not providing accurate numbers
+            // To-do: Fix tick boxes not getting auto-darkened properly in damage die
 
             // Critical Bleed Damage Die
             if (currBleedDie.Item2.Item1 != 0 && currBleedDie.Item2.Item1 != currBleedDie.Item1.Item1
@@ -2100,9 +2207,11 @@ namespace DamageCalculatorGUI
                 CalculatorDamageCriticalBleedDieCountTextBox.Text = (currBleedDie.Item2.Item1 != 0) // X != 0
                                                         ? currBleedDie.Item2.Item1.ToString()
                                                         : currBleedDie.Item1.Item1.ToString();
+
                 CalculatorDamageCriticalBleedDieSizeTextBox.Text = (currBleedDie.Item2.Item2 != 0) // Y != 0
                                                         ? currBleedDie.Item2.Item2.ToString()
                                                         : currBleedDie.Item1.Item2.ToString();
+
                 CalculatorDamageCriticalBleedDieBonusTextBox.Text = (currBleedDie.Item2.Item3 != 0) // Z != 0
                                                         ? currBleedDie.Item2.Item3.ToString()
                                                         : currBleedDie.Item1.Item3.ToString();
@@ -2111,6 +2220,7 @@ namespace DamageCalculatorGUI
             { // Clear the critical damage die textboxes and checkbox
                 CalculatorDamageCriticalBleedDieCheckBox.Checked = false;
             }
+            SelectCheckBoxForToggle(CalculatorDamageCriticalBleedDieCheckBox);
 
             // Enable the UI
             SetDamageDiceFieldsEnabled(true);
@@ -2285,25 +2395,55 @@ namespace DamageCalculatorGUI
                 // Base Damage
                 CalculatorDamageDieCountTextBox.Enabled = true;
                 CalculatorDamageDieCountTextBox.ReadOnly = false;
+                CalculatorDamageDieCountTextBox.BackColor = currentColorPallete.entryNormal;
                 CalculatorDamageDieSizeTextBox.Enabled = true;
                 CalculatorDamageDieSizeTextBox.ReadOnly = false;
+                CalculatorDamageDieSizeTextBox.BackColor = currentColorPallete.entryNormal;
                 CalculatorDamageDieBonusTextBox.Enabled = true;
                 CalculatorDamageDieBonusTextBox.ReadOnly = false;
+                CalculatorDamageDieBonusTextBox.BackColor = currentColorPallete.entryNormal;
                 // Critical Damage
                 CalculatorDamageCriticalDieCheckBox.Enabled = true;
                 CalculatorDamageCriticalDieCountTextBox.Enabled = CalculatorDamageCriticalDieCheckBox.Checked;
+                CalculatorDamageCriticalDieCountTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
+                                                                    ? currentColorPallete.entryNormal
+                                                                    : currentColorPallete.entryNormalDark;
                 CalculatorDamageCriticalDieSizeTextBox.Enabled = CalculatorDamageCriticalDieCheckBox.Checked;
+                CalculatorDamageCriticalDieSizeTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
+                                                                    ? currentColorPallete.entryNormal
+                                                                    : currentColorPallete.entryNormalDark;
                 CalculatorDamageCriticalDieBonusTextBox.Enabled = CalculatorDamageCriticalDieCheckBox.Checked;
+                CalculatorDamageCriticalDieBonusTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
+                                                                    ? currentColorPallete.entryNormal
+                                                                    : currentColorPallete.entryNormalDark;
                 // Dot Damage
                 CalculatorDamageBleedDieCheckBox.Enabled = true;
                 CalculatorDamageBleedDieCountTextBox.Enabled = CalculatorDamageBleedDieCheckBox.Checked;
+                CalculatorDamageBleedDieCountTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
+                                                                    ? currentColorPallete.entryNormal
+                                                                    : currentColorPallete.entryNormalDark;
                 CalculatorDamageBleedDieSizeTextBox.Enabled = CalculatorDamageBleedDieCheckBox.Checked;
+                CalculatorDamageBleedDieSizeTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
+                                                                    ? currentColorPallete.entryNormal
+                                                                    : currentColorPallete.entryNormalDark;
                 CalculatorDamageBleedDieBonusTextBox.Enabled = CalculatorDamageBleedDieCheckBox.Checked;
+                CalculatorDamageBleedDieBonusTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
+                                                                    ? currentColorPallete.entryNormal
+                                                                    : currentColorPallete.entryNormalDark;
                 // Critical Dot Damage
                 CalculatorDamageCriticalBleedDieCheckBox.Enabled = true;
                 CalculatorDamageCriticalBleedDieCountTextBox.Enabled = CalculatorDamageCriticalBleedDieCheckBox.Checked;
+                CalculatorDamageCriticalBleedDieCountTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
+                                                                    ? currentColorPallete.entryNormal
+                                                                    : currentColorPallete.entryNormalDark;
                 CalculatorDamageCriticalBleedDieSizeTextBox.Enabled = CalculatorDamageCriticalBleedDieCheckBox.Checked;
+                CalculatorDamageCriticalBleedDieSizeTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
+                                                                    ? currentColorPallete.entryNormal
+                                                                    : currentColorPallete.entryNormalDark;
                 CalculatorDamageCriticalBleedDieBonusTextBox.Enabled = CalculatorDamageCriticalBleedDieCheckBox.Checked;
+                CalculatorDamageCriticalBleedDieBonusTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
+                                                                    ? currentColorPallete.entryNormal
+                                                                    : currentColorPallete.entryNormalDark;
             }
             else
             { // Disable each textbox/checkbox
@@ -2311,43 +2451,58 @@ namespace DamageCalculatorGUI
                 CalculatorDamageDieCountTextBox.Enabled = false;
                 CalculatorDamageDieCountTextBox.ReadOnly = true;
                 CalculatorDamageDieCountTextBox.Text = string.Empty;
+                CalculatorDamageDieCountTextBox.BackColor = currentColorPallete.entryNormalDark;
                 CalculatorDamageDieSizeTextBox.Enabled = false;
                 CalculatorDamageDieSizeTextBox.ReadOnly = true;
                 CalculatorDamageDieSizeTextBox.Text = string.Empty;
+                CalculatorDamageDieSizeTextBox.BackColor = currentColorPallete.entryNormalDark;
                 CalculatorDamageDieBonusTextBox.Enabled = false;
                 CalculatorDamageDieBonusTextBox.ReadOnly = true;
                 CalculatorDamageDieBonusTextBox.Text = string.Empty;
+                CalculatorDamageDieBonusTextBox.BackColor = currentColorPallete.entryNormalDark;
                 // Critical Damage
                 CalculatorDamageCriticalDieCheckBox.Enabled = false;
+                CalculatorDamageCriticalDieCheckBox.Checked = false;
                 CalculatorDamageCriticalDieCountTextBox.Enabled = false;
                 CalculatorDamageCriticalDieCountTextBox.Text = string.Empty;
+                CalculatorDamageCriticalDieCountTextBox.BackColor = currentColorPallete.entryNormalDark;
                 CalculatorDamageCriticalDieSizeTextBox.Enabled = false;
                 CalculatorDamageCriticalDieSizeTextBox.Text = string.Empty;
+                CalculatorDamageCriticalDieSizeTextBox.BackColor = currentColorPallete.entryNormalDark;
                 CalculatorDamageCriticalDieBonusTextBox.Enabled = false;
                 CalculatorDamageCriticalDieBonusTextBox.Text = string.Empty;
+                CalculatorDamageCriticalDieBonusTextBox.BackColor = currentColorPallete.entryNormalDark;
                 // Dot Damage
                 CalculatorDamageBleedDieCheckBox.Enabled = false;
+                CalculatorDamageBleedDieCheckBox.Checked = false;
                 CalculatorDamageBleedDieCountTextBox.Enabled = false;
                 CalculatorDamageBleedDieCountTextBox.Text = string.Empty;
+                CalculatorDamageBleedDieCountTextBox.BackColor = currentColorPallete.entryNormalDark;
                 CalculatorDamageBleedDieSizeTextBox.Enabled = false;
                 CalculatorDamageBleedDieSizeTextBox.Text = string.Empty;
+                CalculatorDamageBleedDieSizeTextBox.BackColor = currentColorPallete.entryNormalDark;
                 CalculatorDamageBleedDieBonusTextBox.Enabled = false;
                 CalculatorDamageBleedDieBonusTextBox.Text = string.Empty;
+                CalculatorDamageBleedDieBonusTextBox.BackColor = currentColorPallete.entryNormalDark;
                 // Critical Dot Damage
                 CalculatorDamageCriticalBleedDieCheckBox.Enabled = false;
+                CalculatorDamageCriticalBleedDieCheckBox.Checked = false;
                 CalculatorDamageCriticalBleedDieCountTextBox.Enabled = false;
                 CalculatorDamageCriticalBleedDieCountTextBox.Text = string.Empty;
+                CalculatorDamageCriticalBleedDieCountTextBox.BackColor = currentColorPallete.entryNormalDark;
                 CalculatorDamageCriticalBleedDieSizeTextBox.Enabled = false;
                 CalculatorDamageCriticalBleedDieSizeTextBox.Text = string.Empty;
+                CalculatorDamageCriticalBleedDieSizeTextBox.BackColor = currentColorPallete.entryNormalDark;
                 CalculatorDamageCriticalBleedDieBonusTextBox.Enabled = false;
                 CalculatorDamageCriticalBleedDieBonusTextBox.Text = string.Empty;
+                CalculatorDamageCriticalBleedDieBonusTextBox.BackColor = currentColorPallete.entryNormalDark;
             }
         }
 
         private void DefaultSettingsButton_Click(object sender, EventArgs e)
         {
             currEncounterSettings.ResetSettings();
-            ResetVisuals(currEncounterSettings);
+            ReloadVisuals(currEncounterSettings);
         }
 
         // MOUSE
@@ -2632,7 +2787,7 @@ namespace DamageCalculatorGUI
             batch_mode_selected = control;
 
             // Position Panel next to the clicked TextBox
-            CalculatorBatchComputePopupPanel.Location = CalculatorTabPage.PointToClient(control.PointToScreen(new Point(0, 0)));
+            CalculatorBatchComputePopupPanel.Location = MainTabControl.PointToClient(control.PointToScreen(new Point(0, 0)));
             CalculatorBatchComputePopupPanel.Location = new Point(x: CalculatorBatchComputePopupPanel.Location.X - 2,
                                                                   y: Math.Clamp(value: CalculatorBatchComputePopupPanel.Location.Y - 2, min: 0, max: 287));
 
@@ -3068,7 +3223,7 @@ namespace DamageCalculatorGUI
                 // Compute the Damage at the Current Iteration Step
                 Task<DamageStats> computeDamage = Task.Run(() => CalculateAverageDamage(number_of_encounters: computeVariables[EncounterSetting.number_of_encounters],
                                                         rounds_per_encounter: computeVariables[EncounterSetting.rounds_per_encounter],
-                                                        actions_per_round: new Actions(any: computeVariables[EncounterSetting.actions_per_round_any],
+                                                        actions_per_round: new RoundActions(any: computeVariables[EncounterSetting.actions_per_round_any],
                                                                                 strike: computeVariables[EncounterSetting.actions_per_round_strike],
                                                                                 stride: computeVariables[EncounterSetting.actions_per_round_stride],
                                                                                 draw: computeVariables[EncounterSetting.draw],
@@ -3109,7 +3264,7 @@ namespace DamageCalculatorGUI
                     foreach (var slice in binned_compute_layers[layer_index])
                     {
                         // To-do: Make 'gif' feature
-
+                         
                         foreach (var settingDict in slice.Item2)
                         {
                             int storedValue;
@@ -3356,6 +3511,11 @@ namespace DamageCalculatorGUI
                     });
                 }
             }
+
+            // Reset the Damage UI Visuals
+            SelectCheckBoxForToggle(CalculatorDamageBleedDieCheckBox);
+            SelectCheckBoxForToggle(CalculatorDamageCriticalBleedDieCheckBox);
+            SelectCheckBoxForToggle(CalculatorDamageCriticalDieCheckBox);
         }
 
         private void SetBatchFieldVisibility(EncounterSetting setting, bool show, Control control, int index)
@@ -3439,8 +3599,48 @@ namespace DamageCalculatorGUI
         }
         private void ApplyCurrentColorPallete()
         {
+            // Do TitleBar Styling
+            this.Style.TitleBar.CloseButtonForeColor = currentColorPallete.text;
+            this.Style.TitleBar.BackColor = currentColorPallete.background;
+
+
+            this.Style.TitleBar.CloseButtonForeColor = currentColorPallete.text;
+            this.Style.TitleBar.MinimizeButtonForeColor = currentColorPallete.text;
+
+            this.Style.TitleBar.CloseButtonHoverBackColor = currentColorPallete.exitButtonHovered;
+            this.Style.TitleBar.MinimizeButtonHoverBackColor = currentColorPallete.minimizeButtonHovered;
+
+            this.Style.TitleBar.CloseButtonPressedBackColor = currentColorPallete.exitButtonPressed;
+            this.Style.TitleBar.MinimizeButtonPressedBackColor = currentColorPallete.minimizeButtonPressed;
+
+            this.Style.TitleBar.Font = new(family: new FontFamily(currentColorPallete.fontName),
+                                           emSize: this.Style.TitleBar.Font.Size,
+                                           style: FontStyle.Bold,
+                                           unit: this.Style.TitleBar.Font.Unit);
+
+            this.Style.TitleBar.ForeColor = currentColorPallete.text;
+
+            // Style the graphs
+            CalculatorBatchComputeScottPlot.Plot.XAxis.TickLabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorBatchComputeScottPlot.Plot.XAxis.LabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorBatchComputeScottPlot.Plot.XAxis.Color(currentColorPallete.text);
+
+            CalculatorDamageDistributionScottPlot.Plot.XAxis.TickLabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorDamageDistributionScottPlot.Plot.XAxis.LabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorDamageDistributionScottPlot.Plot.XAxis.Color(currentColorPallete.text);
+
+            CalculatorDamageDistributionScottPlot.Plot.YAxis.TickLabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorDamageDistributionScottPlot.Plot.YAxis.LabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorDamageDistributionScottPlot.Plot.YAxis.Color(currentColorPallete.text);
+
+            CalculatorBatchComputeScottPlot.Plot.YAxis.TickLabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorBatchComputeScottPlot.Plot.YAxis.LabelStyle(fontName: currentColorPallete.fontName);
+            CalculatorBatchComputeScottPlot.Plot.YAxis.Color(currentColorPallete.text);
+
+            // Do every other sub-control's customizing
             int xHashCode = CalculatorBatchComputePopupXButton.GetHashCode();
             int oHashCode = CalculatorBatchComputePopupSaveButton.GetHashCode();
+
             // Iterate through every control, applying the respective color
             foreach (Control control in allWindowControls)
             {
@@ -3453,6 +3653,7 @@ namespace DamageCalculatorGUI
                             break;
                         case Button button:
                             control.BackColor = currentColorPallete.buttonBackground;
+                            button.FlatAppearance.BorderColor = Color.Black;
                             button.FlatAppearance.CheckedBackColor = currentColorPallete.buttonIdle;
                             button.FlatAppearance.MouseOverBackColor = currentColorPallete.buttonHovered;
                             button.FlatAppearance.MouseDownBackColor = currentColorPallete.buttonPressed;
@@ -3466,40 +3667,31 @@ namespace DamageCalculatorGUI
                             break;
                     }
 
-                    control.ForeColor = currentColorPallete.text;
-                    control.Font = new(familyName: currentColorPallete.fontName, emSize: 9 + currentColorPallete.fontSizeOverride, style: control.Font.Style, unit: control.Font.Unit);
+                    switch (control)
+                    {
+                        case TabPageAdv tab:
+                            tab.TabForeColor = currentColorPallete.text;
+                            break;
+                        case Button:
+                            control.ForeColor = currentColorPallete.buttonText;
+                            break;
+                        default:
+                            control.ForeColor = currentColorPallete.text;
+                            break;
+                    }
+                    control.Font = new(familyName: currentColorPallete.fontName,
+                                       emSize: 9 + currentColorPallete.fontSizeOverride,
+                                       style: control.Font.Style,
+                                       unit: control.Font.Unit);
                 }
-            }
-            PrimaryTabControl.Invalidate();
-            foreach (Control control in allWindowControls)
-            { // Redraw each window
-                control.Invalidate();
             }
         }
 
-        private void PrimaryTabControl_DrawItem(object sender, DrawItemEventArgs e)
+
+        // To-do: Fix title not aliasing at all??????? WHYYYYY
+        private void tabControlAdv1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Redraw the outer border
-            Rectangle tabPageBox = e.Bounds;
-            tabPageBox.Inflate(-2, -2); // shrink the box by 2 pixels on all sides
-            e.Graphics.FillRectangle(new SolidBrush(currentColorPallete.background), tabPageBox);
-            e.Graphics.DrawRectangle(new Pen(currentColorPallete.border, 5), tabPageBox);
 
-            // Set the background color of the tab
-            e.Graphics.FillRectangle(new SolidBrush(currentColorPallete.background), e.Bounds);
-
-            // Draw the text
-            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            // Draw the text of the tab
-            string tabText = PrimaryTabControl.TabPages[e.Index].Text;
-            e.Graphics.DrawString(s: tabText,
-                                  font: new Font(familyName: currentColorPallete.fontName,
-                                                    emSize: 9,
-                                                    style: PrimaryTabControl.Font.Style,
-                                                    unit: PrimaryTabControl.Font.Unit),
-                                  brush: new SolidBrush(currentColorPallete.text),
-                                  x: e.Bounds.X + (e.Bounds.Width - e.Graphics.MeasureString(tabText, PrimaryTabControl.Font).Width) / 2,
-                                  y: e.Bounds.Y + (e.Bounds.Height - e.Graphics.MeasureString(tabText, PrimaryTabControl.Font).Height) / 2);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace DamageCalculatorGUI
     {
         public static readonly FastRandom random = new();
 
-        public struct Actions
+        public struct RoundActions
         {
             public int any = 3;
             public int strike = 0;
@@ -15,7 +15,7 @@ namespace DamageCalculatorGUI
             public int draw = 0;
             public int stride = 0;
 
-            public Actions()
+            public RoundActions()
             {
                 any = 3;
                 strike = 0;
@@ -24,7 +24,7 @@ namespace DamageCalculatorGUI
                 draw = 0;
                 stride = 0;
             }
-            public Actions(int any = 0, int strike = 0, int reload = 0, int long_reload = 0, int draw = 0, int stride = 0)
+            public RoundActions(int any = 0, int strike = 0, int reload = 0, int long_reload = 0, int draw = 0, int stride = 0)
             {
                 this.any = any;
                 this.strike = strike;
@@ -113,7 +113,7 @@ namespace DamageCalculatorGUI
                                     int engagement_range = 30, int move_speed = 25, bool seek_favorable_range = false,
                                     int range = 1000, int volley = 0, // Range stats of the weapon
                                     List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>>? damage_dice_DOT = null,// Same as damage, but for DOT effects)
-                                    Actions actions_per_round = default)
+                                    RoundActions actions_per_round = default)
         {
             if (damage_dice_DOT is null)
             {
