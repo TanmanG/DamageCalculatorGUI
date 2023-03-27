@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using System.Security.AccessControl;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace DamageCalculatorGUI
 {
@@ -125,7 +126,7 @@ namespace DamageCalculatorGUI
             int extracted_array_size = original_array.GetLength(numDims - 1);
 
             Array extracted_array = Array.CreateInstance(elementType: original_array.GetType().GetElementType(), length: extracted_array_size);
-
+            
             for (int i = 0; i < extracted_array_size; i++)
             {
                 fullInd[^1] = i;
@@ -133,6 +134,12 @@ namespace DamageCalculatorGUI
             }
 
             return extracted_array;
+        }
+        public static Color GetContrastingBAWColor(Color input)
+        {
+            return (input.R + input.G + input.B) > 382
+                ? Color.Black
+                : Color.White;
         }
     }
 }
