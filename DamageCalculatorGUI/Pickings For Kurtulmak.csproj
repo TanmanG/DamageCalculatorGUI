@@ -38,8 +38,8 @@
 
   <ItemGroup>
     <PackageReference Include="ScottPlot.WinForms" Version="4.1.61" />
-    <PackageReference Include="Syncfusion.Core.WinForms" Version="20.4.0.54" />
-    <PackageReference Include="Syncfusion.Tools.Windows" Version="20.4.0.54" />
+    <PackageReference Include="Syncfusion.Core.WinForms" Version="21.1.35" />
+    <PackageReference Include="Syncfusion.Tools.Windows" Version="21.1.35" />
     <PackageReference Include="WinForms.DataVisualization" Version="1.7.0" />
   </ItemGroup>
 

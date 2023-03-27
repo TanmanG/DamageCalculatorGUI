@@ -1,4 +1,6 @@
-﻿namespace DamageCalculatorGUI
+﻿using Pickings_For_Kurtulmak;
+
+namespace DamageCalculatorGUI
 {
     partial class CalculatorWindow
     {
@@ -170,6 +172,43 @@
             CalculatorBatchComputeLayerViewControlLayerSelectListBox = new ListBox();
             MainTabControl = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             CalculatorTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            SettingsTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            SettingsThemeColorPopupGroupbox = new GroupBox();
+            SettingsThemeColorPopupFirstFontComboBox = new Syncfusion.Windows.Forms.Tools.FontComboBox();
+            SettingsThemeColorPopupFourthColorPicker = new Syncfusion.Windows.Forms.ColorPickerButton();
+            SettingsThemeColorPopupThirdColorPicker = new Syncfusion.Windows.Forms.ColorPickerButton();
+            SettingsThemeColorPopupSecondColorPicker = new Syncfusion.Windows.Forms.ColorPickerButton();
+            SettingsThemeColorPopupFirstColorPicker = new Syncfusion.Windows.Forms.ColorPickerButton();
+            SettingsThemeColorPopupSecondLabel = new Label();
+            SettingsThemeColorPopupFourthLabel = new Label();
+            SettingsThemeColorPopupThirdLabel = new Label();
+            SettingsThemeColorPopupFirstLabel = new Label();
+            SettingsThemeColorPopupOButton = new Button();
+            SettingsThemeColorPopupXButton = new Button();
+            SettingsThemeColorPopupThirdNumericUpDown = new Syncfusion.Windows.Forms.Tools.NumericUpDownExt();
+            SettingThemeGroupBox = new GroupBox();
+            SettingsThemeNameTextbox = new TextBox();
+            SettingsThemeNameListbox = new ListBox();
+            SettingsThemeMockupStatsGroupBox = new GroupBox();
+            SettingsThemeMockupListRemoveButton = new Button();
+            SettingsThemeMockupListAddButton = new Button();
+            SettingsThemeMockupWeaponTraitTextBox = new TextBox();
+            SettingsThemeMockupCritDieCountLabel = new Label();
+            SettingsThemeMockupWeaponTraitLabel = new Label();
+            SettingsThemeMockupWeaponTraitCheckbox = new CheckBox();
+            SettingsThemeMockupCritDieCountNumericUpDown = new NumericUpDown();
+            SettingsThemeMockupListBox = new ListBox();
+            SettingsThemeNameAddButton = new Button();
+            SettingsThemeMockupTabControl = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
+            SettingsThemeMockupCalculatorTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            SettingsThemeMockupScottPlot = new ScottPlot.FormsPlot();
+            SettingsThemeMockupResultsGroupBox = new GroupBox();
+            SettingsThemeMockupMedianLabel = new Label();
+            SettingsThemeMockupMedianTextBox = new TextBox();
+            SettingsThemeMockupMeanLabel = new Label();
+            SettingsThemeMockupMeanTextBox = new TextBox();
+            SettingsThemeMockupSettingsTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            SettingsThemeNameDeleteButton = new Button();
             GeneratorTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             GeneratorGenerationSettingsGroupBox = new GroupBox();
             groupBox2 = new GroupBox();
@@ -215,6 +254,16 @@
             ((System.ComponentModel.ISupportInitialize)MainTabControl).BeginInit();
             MainTabControl.SuspendLayout();
             CalculatorTabPage.SuspendLayout();
+            SettingsTabPage.SuspendLayout();
+            SettingsThemeColorPopupGroupbox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)SettingsThemeColorPopupThirdNumericUpDown).BeginInit();
+            SettingThemeGroupBox.SuspendLayout();
+            SettingsThemeMockupStatsGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)SettingsThemeMockupCritDieCountNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SettingsThemeMockupTabControl).BeginInit();
+            SettingsThemeMockupTabControl.SuspendLayout();
+            SettingsThemeMockupCalculatorTabPage.SuspendLayout();
+            SettingsThemeMockupResultsGroupBox.SuspendLayout();
             GeneratorTabPage.SuspendLayout();
             groupBox2.SuspendLayout();
             GeneratorEnabledWeaponTypesGroupBox.SuspendLayout();
@@ -741,9 +790,11 @@
             // CalculatorReachMovementSpeedCheckBox
             // 
             CalculatorReachMovementSpeedCheckBox.AutoSize = true;
-            CalculatorReachMovementSpeedCheckBox.Location = new Point(4, 108);
+            CalculatorReachMovementSpeedCheckBox.CheckAlign = ContentAlignment.MiddleCenter;
+            CalculatorReachMovementSpeedCheckBox.FlatStyle = FlatStyle.Popup;
+            CalculatorReachMovementSpeedCheckBox.Location = new Point(6, 109);
             CalculatorReachMovementSpeedCheckBox.Name = "CalculatorReachMovementSpeedCheckBox";
-            CalculatorReachMovementSpeedCheckBox.Size = new Size(15, 14);
+            CalculatorReachMovementSpeedCheckBox.Size = new Size(13, 12);
             CalculatorReachMovementSpeedCheckBox.TabIndex = 5;
             CalculatorReachMovementSpeedCheckBox.UseVisualStyleBackColor = true;
             CalculatorReachMovementSpeedCheckBox.CheckedChanged += CheckBox_CheckChangedToggleTextBoxes;
@@ -751,9 +802,11 @@
             // CalculatorReachVolleyIncrementCheckBox
             // 
             CalculatorReachVolleyIncrementCheckBox.AutoSize = true;
-            CalculatorReachVolleyIncrementCheckBox.Location = new Point(4, 63);
+            CalculatorReachVolleyIncrementCheckBox.CheckAlign = ContentAlignment.MiddleCenter;
+            CalculatorReachVolleyIncrementCheckBox.FlatStyle = FlatStyle.Popup;
+            CalculatorReachVolleyIncrementCheckBox.Location = new Point(6, 64);
             CalculatorReachVolleyIncrementCheckBox.Name = "CalculatorReachVolleyIncrementCheckBox";
-            CalculatorReachVolleyIncrementCheckBox.Size = new Size(15, 14);
+            CalculatorReachVolleyIncrementCheckBox.Size = new Size(13, 12);
             CalculatorReachVolleyIncrementCheckBox.TabIndex = 3;
             CalculatorReachVolleyIncrementCheckBox.UseVisualStyleBackColor = true;
             CalculatorReachVolleyIncrementCheckBox.CheckedChanged += CheckBox_CheckChangedToggleTextBoxes;
@@ -761,9 +814,11 @@
             // CalculatorReachRangeIncrementCheckBox
             // 
             CalculatorReachRangeIncrementCheckBox.AutoSize = true;
-            CalculatorReachRangeIncrementCheckBox.Location = new Point(4, 18);
+            CalculatorReachRangeIncrementCheckBox.CheckAlign = ContentAlignment.MiddleCenter;
+            CalculatorReachRangeIncrementCheckBox.FlatStyle = FlatStyle.Popup;
+            CalculatorReachRangeIncrementCheckBox.Location = new Point(6, 19);
             CalculatorReachRangeIncrementCheckBox.Name = "CalculatorReachRangeIncrementCheckBox";
-            CalculatorReachRangeIncrementCheckBox.Size = new Size(15, 14);
+            CalculatorReachRangeIncrementCheckBox.Size = new Size(13, 12);
             CalculatorReachRangeIncrementCheckBox.TabIndex = 1;
             CalculatorReachRangeIncrementCheckBox.UseVisualStyleBackColor = true;
             CalculatorReachRangeIncrementCheckBox.CheckedChanged += CheckBox_CheckChangedToggleTextBoxes;
@@ -884,9 +939,11 @@
             // CalculatorAmmunitionMagazineSizeCheckBox
             // 
             CalculatorAmmunitionMagazineSizeCheckBox.AutoSize = true;
-            CalculatorAmmunitionMagazineSizeCheckBox.Location = new Point(4, 63);
+            CalculatorAmmunitionMagazineSizeCheckBox.CheckAlign = ContentAlignment.MiddleCenter;
+            CalculatorAmmunitionMagazineSizeCheckBox.FlatStyle = FlatStyle.Popup;
+            CalculatorAmmunitionMagazineSizeCheckBox.Location = new Point(6, 64);
             CalculatorAmmunitionMagazineSizeCheckBox.Name = "CalculatorAmmunitionMagazineSizeCheckBox";
-            CalculatorAmmunitionMagazineSizeCheckBox.Size = new Size(15, 14);
+            CalculatorAmmunitionMagazineSizeCheckBox.Size = new Size(13, 12);
             CalculatorAmmunitionMagazineSizeCheckBox.TabIndex = 2;
             CalculatorAmmunitionMagazineSizeCheckBox.UseVisualStyleBackColor = true;
             CalculatorAmmunitionMagazineSizeCheckBox.CheckedChanged += CheckBox_CheckChangedToggleTextBoxes;
@@ -1097,9 +1154,11 @@
             // CalculatorEncounterEngagementRangeCheckBox
             // 
             CalculatorEncounterEngagementRangeCheckBox.AutoSize = true;
-            CalculatorEncounterEngagementRangeCheckBox.Location = new Point(4, 108);
+            CalculatorEncounterEngagementRangeCheckBox.CheckAlign = ContentAlignment.MiddleCenter;
+            CalculatorEncounterEngagementRangeCheckBox.FlatStyle = FlatStyle.Popup;
+            CalculatorEncounterEngagementRangeCheckBox.Location = new Point(6, 109);
             CalculatorEncounterEngagementRangeCheckBox.Name = "CalculatorEncounterEngagementRangeCheckBox";
-            CalculatorEncounterEngagementRangeCheckBox.Size = new Size(15, 14);
+            CalculatorEncounterEngagementRangeCheckBox.Size = new Size(13, 12);
             CalculatorEncounterEngagementRangeCheckBox.TabIndex = 3;
             CalculatorEncounterEngagementRangeCheckBox.UseVisualStyleBackColor = true;
             CalculatorEncounterEngagementRangeCheckBox.CheckedChanged += CheckBox_CheckChangedToggleTextBoxes;
@@ -1392,10 +1451,12 @@
             // CalculatorDamageCriticalBleedDieCheckBox
             // 
             CalculatorDamageCriticalBleedDieCheckBox.AutoSize = true;
+            CalculatorDamageCriticalBleedDieCheckBox.CheckAlign = ContentAlignment.MiddleCenter;
             CalculatorDamageCriticalBleedDieCheckBox.Enabled = false;
-            CalculatorDamageCriticalBleedDieCheckBox.Location = new Point(223, 158);
+            CalculatorDamageCriticalBleedDieCheckBox.FlatStyle = FlatStyle.Popup;
+            CalculatorDamageCriticalBleedDieCheckBox.Location = new Point(225, 159);
             CalculatorDamageCriticalBleedDieCheckBox.Name = "CalculatorDamageCriticalBleedDieCheckBox";
-            CalculatorDamageCriticalBleedDieCheckBox.Size = new Size(15, 14);
+            CalculatorDamageCriticalBleedDieCheckBox.Size = new Size(13, 12);
             CalculatorDamageCriticalBleedDieCheckBox.TabIndex = 17;
             CalculatorDamageCriticalBleedDieCheckBox.UseVisualStyleBackColor = true;
             CalculatorDamageCriticalBleedDieCheckBox.CheckedChanged += CheckBox_CheckChangedToggleTextBoxes;
@@ -1414,10 +1475,12 @@
             // CalculatorDamageBleedDieCheckBox
             // 
             CalculatorDamageBleedDieCheckBox.AutoSize = true;
+            CalculatorDamageBleedDieCheckBox.CheckAlign = ContentAlignment.MiddleCenter;
             CalculatorDamageBleedDieCheckBox.Enabled = false;
-            CalculatorDamageBleedDieCheckBox.Location = new Point(223, 112);
+            CalculatorDamageBleedDieCheckBox.FlatStyle = FlatStyle.Popup;
+            CalculatorDamageBleedDieCheckBox.Location = new Point(225, 113);
             CalculatorDamageBleedDieCheckBox.Name = "CalculatorDamageBleedDieCheckBox";
-            CalculatorDamageBleedDieCheckBox.Size = new Size(15, 14);
+            CalculatorDamageBleedDieCheckBox.Size = new Size(13, 12);
             CalculatorDamageBleedDieCheckBox.TabIndex = 13;
             CalculatorDamageBleedDieCheckBox.UseVisualStyleBackColor = true;
             CalculatorDamageBleedDieCheckBox.CheckedChanged += CheckBox_CheckChangedToggleTextBoxes;
@@ -1425,10 +1488,12 @@
             // CalculatorDamageCriticalDieCheckBox
             // 
             CalculatorDamageCriticalDieCheckBox.AutoSize = true;
+            CalculatorDamageCriticalDieCheckBox.CheckAlign = ContentAlignment.MiddleCenter;
             CalculatorDamageCriticalDieCheckBox.Enabled = false;
-            CalculatorDamageCriticalDieCheckBox.Location = new Point(223, 60);
+            CalculatorDamageCriticalDieCheckBox.FlatStyle = FlatStyle.Popup;
+            CalculatorDamageCriticalDieCheckBox.Location = new Point(225, 61);
             CalculatorDamageCriticalDieCheckBox.Name = "CalculatorDamageCriticalDieCheckBox";
-            CalculatorDamageCriticalDieCheckBox.Size = new Size(15, 14);
+            CalculatorDamageCriticalDieCheckBox.Size = new Size(13, 12);
             CalculatorDamageCriticalDieCheckBox.TabIndex = 9;
             CalculatorDamageCriticalDieCheckBox.UseVisualStyleBackColor = true;
             CalculatorDamageCriticalDieCheckBox.CheckedChanged += CheckBox_CheckChangedToggleTextBoxes;
@@ -1582,7 +1647,7 @@
             CalculatorVersionLabel.RightToLeft = RightToLeft.No;
             CalculatorVersionLabel.Size = new Size(138, 23);
             CalculatorVersionLabel.TabIndex = 12;
-            CalculatorVersionLabel.Text = "PFK V2.1.1-proto-1";
+            CalculatorVersionLabel.Text = "PFK V2.1.1-proto-3";
             CalculatorVersionLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // CalculatorBatchComputePopupPanel
@@ -1855,10 +1920,11 @@
             MainTabControl.BackColor = SystemColors.Control;
             MainTabControl.BeforeTouchSize = new Size(984, 470);
             MainTabControl.BorderWidth = 0;
+            MainTabControl.Controls.Add(SettingsTabPage);
             MainTabControl.Controls.Add(CalculatorTabPage);
             MainTabControl.Controls.Add(GeneratorTabPage);
             MainTabControl.FocusOnTabClick = false;
-            MainTabControl.Location = new Point(0, 0);
+            MainTabControl.Location = new Point(-5, 1);
             MainTabControl.Name = "MainTabControl";
             MainTabControl.Size = new Size(984, 470);
             MainTabControl.TabIndex = 0;
@@ -1890,6 +1956,439 @@
             CalculatorTabPage.TabIndex = 1;
             CalculatorTabPage.Text = "Calculator";
             CalculatorTabPage.ThemesEnabled = false;
+            // 
+            // SettingsTabPage
+            // 
+            SettingsTabPage.Controls.Add(SettingsThemeColorPopupGroupbox);
+            SettingsTabPage.Controls.Add(SettingThemeGroupBox);
+            SettingsTabPage.Image = null;
+            SettingsTabPage.ImageSize = new Size(16, 16);
+            SettingsTabPage.Location = new Point(1, 27);
+            SettingsTabPage.Name = "SettingsTabPage";
+            SettingsTabPage.ShowCloseButton = true;
+            SettingsTabPage.Size = new Size(981, 441);
+            SettingsTabPage.TabIndex = 3;
+            SettingsTabPage.Text = "Settings";
+            SettingsTabPage.ThemesEnabled = false;
+            // 
+            // SettingsThemeColorPopupGroupbox
+            // 
+            SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupFirstFontComboBox);
+            SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupFourthColorPicker);
+            SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupThirdColorPicker);
+            SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupSecondColorPicker);
+            SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupFirstColorPicker);
+            SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupSecondLabel);
+            SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupFourthLabel);
+            SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupThirdLabel);
+            SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupFirstLabel);
+            SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupOButton);
+            SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupXButton);
+            SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupThirdNumericUpDown);
+            SettingsThemeColorPopupGroupbox.FlatStyle = FlatStyle.Popup;
+            SettingsThemeColorPopupGroupbox.Location = new Point(510, 96);
+            SettingsThemeColorPopupGroupbox.Name = "SettingsThemeColorPopupGroupbox";
+            SettingsThemeColorPopupGroupbox.Size = new Size(185, 112);
+            SettingsThemeColorPopupGroupbox.TabIndex = 9;
+            SettingsThemeColorPopupGroupbox.TabStop = false;
+            SettingsThemeColorPopupGroupbox.Text = "Color Picker";
+            // 
+            // SettingsThemeColorPopupFirstFontComboBox
+            // 
+            SettingsThemeColorPopupFirstFontComboBox.BackColor = SystemColors.Window;
+            SettingsThemeColorPopupFirstFontComboBox.FlatStyle = FlatStyle.Popup;
+            SettingsThemeColorPopupFirstFontComboBox.FormattingEnabled = true;
+            SettingsThemeColorPopupFirstFontComboBox.Location = new Point(6, 35);
+            SettingsThemeColorPopupFirstFontComboBox.Name = "SettingsThemeColorPopupFirstFontComboBox";
+            SettingsThemeColorPopupFirstFontComboBox.ShowSymbolFontPreview = false;
+            SettingsThemeColorPopupFirstFontComboBox.Size = new Size(75, 24);
+            SettingsThemeColorPopupFirstFontComboBox.TabIndex = 1;
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ArrowButtonBackColor = Color.FromArgb(255, 255, 255);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ArrowButtonBorderColor = Color.FromArgb(225, 225, 225);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ArrowButtonDisabledBackColor = Color.FromArgb(225, 225, 225);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ArrowButtonDisabledBorderColor = Color.FromArgb(210, 210, 210);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ArrowButtonHoverBackColor = Color.FromArgb(114, 114, 114);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ArrowButtonHoverBorderColor = Color.FromArgb(94, 94, 94);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ArrowButtonPressedBackColor = Color.FromArgb(225, 225, 225);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ArrowButtonPressedBorderColor = Color.FromArgb(150, 150, 150);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ScrollBarBackColor = Color.FromArgb(225, 225, 225);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ThumbBorderColor = Color.FromArgb(171, 171, 171);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ThumbColor = Color.FromArgb(255, 255, 255);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ThumbDisabledBorderColor = Color.FromArgb(210, 210, 210);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ThumbDisabledColor = Color.FromArgb(225, 225, 225);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ThumbHoverBorderColor = Color.FromArgb(171, 171, 171);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ThumbHoverColor = Color.FromArgb(197, 197, 197);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ThumbPressedBorderColor = Color.FromArgb(150, 150, 150);
+            SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ThumbPressedColor = Color.FromArgb(197, 197, 197);
+            // 
+            // SettingsThemeColorPopupFourthColorPicker
+            // 
+            SettingsThemeColorPopupFourthColorPicker.FlatStyle = FlatStyle.Popup;
+            SettingsThemeColorPopupFourthColorPicker.Location = new Point(104, 81);
+            SettingsThemeColorPopupFourthColorPicker.Name = "SettingsThemeColorPopupFourthColorPicker";
+            SettingsThemeColorPopupFourthColorPicker.Size = new Size(75, 23);
+            SettingsThemeColorPopupFourthColorPicker.TabIndex = 4;
+            SettingsThemeColorPopupFourthColorPicker.Text = "Set Color";
+            SettingsThemeColorPopupFourthColorPicker.ColorSelected += SettingsThemeColorPopupColorPicker_ColorSelected;
+            // 
+            // SettingsThemeColorPopupThirdColorPicker
+            // 
+            SettingsThemeColorPopupThirdColorPicker.FlatStyle = FlatStyle.Popup;
+            SettingsThemeColorPopupThirdColorPicker.Location = new Point(6, 81);
+            SettingsThemeColorPopupThirdColorPicker.Name = "SettingsThemeColorPopupThirdColorPicker";
+            SettingsThemeColorPopupThirdColorPicker.Size = new Size(75, 23);
+            SettingsThemeColorPopupThirdColorPicker.TabIndex = 3;
+            SettingsThemeColorPopupThirdColorPicker.Text = "Set Color";
+            SettingsThemeColorPopupThirdColorPicker.ColorSelected += SettingsThemeColorPopupColorPicker_ColorSelected;
+            // 
+            // SettingsThemeColorPopupSecondColorPicker
+            // 
+            SettingsThemeColorPopupSecondColorPicker.FlatStyle = FlatStyle.Popup;
+            SettingsThemeColorPopupSecondColorPicker.Location = new Point(104, 37);
+            SettingsThemeColorPopupSecondColorPicker.Name = "SettingsThemeColorPopupSecondColorPicker";
+            SettingsThemeColorPopupSecondColorPicker.Size = new Size(75, 23);
+            SettingsThemeColorPopupSecondColorPicker.TabIndex = 2;
+            SettingsThemeColorPopupSecondColorPicker.Text = "Set Color";
+            SettingsThemeColorPopupSecondColorPicker.ColorSelected += SettingsThemeColorPopupColorPicker_ColorSelected;
+            // 
+            // SettingsThemeColorPopupFirstColorPicker
+            // 
+            SettingsThemeColorPopupFirstColorPicker.FlatStyle = FlatStyle.Popup;
+            SettingsThemeColorPopupFirstColorPicker.Location = new Point(6, 36);
+            SettingsThemeColorPopupFirstColorPicker.Name = "SettingsThemeColorPopupFirstColorPicker";
+            SettingsThemeColorPopupFirstColorPicker.Size = new Size(75, 23);
+            SettingsThemeColorPopupFirstColorPicker.TabIndex = 1;
+            SettingsThemeColorPopupFirstColorPicker.Text = "Set Color";
+            SettingsThemeColorPopupFirstColorPicker.ColorSelected += SettingsThemeColorPopupColorPicker_ColorSelected;
+            // 
+            // SettingsThemeColorPopupSecondLabel
+            // 
+            SettingsThemeColorPopupSecondLabel.AutoSize = true;
+            SettingsThemeColorPopupSecondLabel.Location = new Point(104, 19);
+            SettingsThemeColorPopupSecondLabel.MinimumSize = new Size(58, 15);
+            SettingsThemeColorPopupSecondLabel.Name = "SettingsThemeColorPopupSecondLabel";
+            SettingsThemeColorPopupSecondLabel.Size = new Size(58, 15);
+            SettingsThemeColorPopupSecondLabel.TabIndex = 0;
+            SettingsThemeColorPopupSecondLabel.Text = "End Value";
+            // 
+            // SettingsThemeColorPopupFourthLabel
+            // 
+            SettingsThemeColorPopupFourthLabel.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            SettingsThemeColorPopupFourthLabel.Location = new Point(104, 63);
+            SettingsThemeColorPopupFourthLabel.MinimumSize = new Size(65, 15);
+            SettingsThemeColorPopupFourthLabel.Name = "SettingsThemeColorPopupFourthLabel";
+            SettingsThemeColorPopupFourthLabel.Size = new Size(65, 15);
+            SettingsThemeColorPopupFourthLabel.TabIndex = 0;
+            SettingsThemeColorPopupFourthLabel.Text = "Step Layer";
+            // 
+            // SettingsThemeColorPopupThirdLabel
+            // 
+            SettingsThemeColorPopupThirdLabel.AutoSize = true;
+            SettingsThemeColorPopupThirdLabel.Location = new Point(6, 63);
+            SettingsThemeColorPopupThirdLabel.Name = "SettingsThemeColorPopupThirdLabel";
+            SettingsThemeColorPopupThirdLabel.Size = new Size(53, 15);
+            SettingsThemeColorPopupThirdLabel.TabIndex = 0;
+            SettingsThemeColorPopupThirdLabel.Text = "Step Size";
+            // 
+            // SettingsThemeColorPopupFirstLabel
+            // 
+            SettingsThemeColorPopupFirstLabel.AutoSize = true;
+            SettingsThemeColorPopupFirstLabel.Location = new Point(6, 19);
+            SettingsThemeColorPopupFirstLabel.MinimumSize = new Size(62, 15);
+            SettingsThemeColorPopupFirstLabel.Name = "SettingsThemeColorPopupFirstLabel";
+            SettingsThemeColorPopupFirstLabel.Size = new Size(62, 15);
+            SettingsThemeColorPopupFirstLabel.TabIndex = 0;
+            SettingsThemeColorPopupFirstLabel.Text = "Text Color";
+            // 
+            // SettingsThemeColorPopupOButton
+            // 
+            SettingsThemeColorPopupOButton.BackColor = Color.DarkSeaGreen;
+            SettingsThemeColorPopupOButton.FlatStyle = FlatStyle.Popup;
+            SettingsThemeColorPopupOButton.Font = new Font("BIZ UDPGothic", 7F, FontStyle.Bold, GraphicsUnit.Point);
+            SettingsThemeColorPopupOButton.ForeColor = SystemColors.ControlLightLight;
+            SettingsThemeColorPopupOButton.Location = new Point(161, 0);
+            SettingsThemeColorPopupOButton.Name = "SettingsThemeColorPopupOButton";
+            SettingsThemeColorPopupOButton.Size = new Size(18, 18);
+            SettingsThemeColorPopupOButton.TabIndex = 7;
+            SettingsThemeColorPopupOButton.Text = "O";
+            SettingsThemeColorPopupOButton.UseVisualStyleBackColor = false;
+            SettingsThemeColorPopupOButton.MouseClick += SettingsThemeColorPopupOButton_MouseClick;
+            // 
+            // SettingsThemeColorPopupXButton
+            // 
+            SettingsThemeColorPopupXButton.BackColor = Color.IndianRed;
+            SettingsThemeColorPopupXButton.FlatStyle = FlatStyle.Popup;
+            SettingsThemeColorPopupXButton.Font = new Font("BIZ UDPGothic", 7F, FontStyle.Bold, GraphicsUnit.Point);
+            SettingsThemeColorPopupXButton.ForeColor = SystemColors.ControlLightLight;
+            SettingsThemeColorPopupXButton.Location = new Point(137, 0);
+            SettingsThemeColorPopupXButton.Name = "SettingsThemeColorPopupXButton";
+            SettingsThemeColorPopupXButton.Size = new Size(18, 18);
+            SettingsThemeColorPopupXButton.TabIndex = 6;
+            SettingsThemeColorPopupXButton.Text = "X";
+            SettingsThemeColorPopupXButton.UseVisualStyleBackColor = false;
+            SettingsThemeColorPopupXButton.MouseClick += SettingsThemeColorPopupXButton_MouseClick;
+            // 
+            // SettingsThemeColorPopupThirdNumericUpDown
+            // 
+            SettingsThemeColorPopupThirdNumericUpDown.BeforeTouchSize = new Size(75, 23);
+            SettingsThemeColorPopupThirdNumericUpDown.Location = new Point(6, 81);
+            SettingsThemeColorPopupThirdNumericUpDown.Name = "SettingsThemeColorPopupThirdNumericUpDown";
+            SettingsThemeColorPopupThirdNumericUpDown.Size = new Size(75, 23);
+            SettingsThemeColorPopupThirdNumericUpDown.TabIndex = 3;
+            // 
+            // SettingThemeGroupBox
+            // 
+            SettingThemeGroupBox.Controls.Add(SettingsThemeNameTextbox);
+            SettingThemeGroupBox.Controls.Add(SettingsThemeNameListbox);
+            SettingThemeGroupBox.Controls.Add(SettingsThemeMockupStatsGroupBox);
+            SettingThemeGroupBox.Controls.Add(SettingsThemeNameAddButton);
+            SettingThemeGroupBox.Controls.Add(SettingsThemeMockupTabControl);
+            SettingThemeGroupBox.Controls.Add(SettingsThemeNameDeleteButton);
+            SettingThemeGroupBox.Location = new Point(11, 3);
+            SettingThemeGroupBox.Name = "SettingThemeGroupBox";
+            SettingThemeGroupBox.Size = new Size(396, 275);
+            SettingThemeGroupBox.TabIndex = 0;
+            SettingThemeGroupBox.TabStop = false;
+            SettingThemeGroupBox.Text = "Theme";
+            // 
+            // SettingsThemeNameTextbox
+            // 
+            SettingsThemeNameTextbox.Location = new Point(8, 22);
+            SettingsThemeNameTextbox.Name = "SettingsThemeNameTextbox";
+            SettingsThemeNameTextbox.Size = new Size(120, 23);
+            SettingsThemeNameTextbox.TabIndex = 9;
+            // 
+            // SettingsThemeNameListbox
+            // 
+            SettingsThemeNameListbox.FormattingEnabled = true;
+            SettingsThemeNameListbox.ItemHeight = 15;
+            SettingsThemeNameListbox.Location = new Point(8, 80);
+            SettingsThemeNameListbox.Name = "SettingsThemeNameListbox";
+            SettingsThemeNameListbox.Size = new Size(120, 154);
+            SettingsThemeNameListbox.TabIndex = 1;
+            SettingsThemeNameListbox.SelectedIndexChanged += SettingsThemeNameListbox_SelectedIndexChanged;
+            // 
+            // SettingsThemeMockupStatsGroupBox
+            // 
+            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupListRemoveButton);
+            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupListAddButton);
+            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupWeaponTraitTextBox);
+            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupCritDieCountLabel);
+            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupWeaponTraitLabel);
+            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupWeaponTraitCheckbox);
+            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupCritDieCountNumericUpDown);
+            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupListBox);
+            SettingsThemeMockupStatsGroupBox.Location = new Point(138, 49);
+            SettingsThemeMockupStatsGroupBox.Name = "SettingsThemeMockupStatsGroupBox";
+            SettingsThemeMockupStatsGroupBox.Size = new Size(98, 215);
+            SettingsThemeMockupStatsGroupBox.TabIndex = 1;
+            SettingsThemeMockupStatsGroupBox.TabStop = false;
+            SettingsThemeMockupStatsGroupBox.Text = "Stats";
+            // 
+            // SettingsThemeMockupListRemoveButton
+            // 
+            SettingsThemeMockupListRemoveButton.FlatStyle = FlatStyle.Popup;
+            SettingsThemeMockupListRemoveButton.Location = new Point(8, 186);
+            SettingsThemeMockupListRemoveButton.Name = "SettingsThemeMockupListRemoveButton";
+            SettingsThemeMockupListRemoveButton.Size = new Size(80, 23);
+            SettingsThemeMockupListRemoveButton.TabIndex = 6;
+            SettingsThemeMockupListRemoveButton.Text = "Remove";
+            SettingsThemeMockupListRemoveButton.UseVisualStyleBackColor = true;
+            SettingsThemeMockupListRemoveButton.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupListAddButton
+            // 
+            SettingsThemeMockupListAddButton.FlatStyle = FlatStyle.Popup;
+            SettingsThemeMockupListAddButton.Location = new Point(8, 162);
+            SettingsThemeMockupListAddButton.Name = "SettingsThemeMockupListAddButton";
+            SettingsThemeMockupListAddButton.Size = new Size(80, 23);
+            SettingsThemeMockupListAddButton.TabIndex = 5;
+            SettingsThemeMockupListAddButton.Text = "Add";
+            SettingsThemeMockupListAddButton.UseVisualStyleBackColor = true;
+            SettingsThemeMockupListAddButton.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupWeaponTraitTextBox
+            // 
+            SettingsThemeMockupWeaponTraitTextBox.BorderStyle = BorderStyle.FixedSingle;
+            SettingsThemeMockupWeaponTraitTextBox.Location = new Point(8, 36);
+            SettingsThemeMockupWeaponTraitTextBox.MaxLength = 3;
+            SettingsThemeMockupWeaponTraitTextBox.Name = "SettingsThemeMockupWeaponTraitTextBox";
+            SettingsThemeMockupWeaponTraitTextBox.Size = new Size(78, 23);
+            SettingsThemeMockupWeaponTraitTextBox.TabIndex = 2;
+            SettingsThemeMockupWeaponTraitTextBox.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupCritDieCountLabel
+            // 
+            SettingsThemeMockupCritDieCountLabel.AutoSize = true;
+            SettingsThemeMockupCritDieCountLabel.Location = new Point(6, 62);
+            SettingsThemeMockupCritDieCountLabel.Name = "SettingsThemeMockupCritDieCountLabel";
+            SettingsThemeMockupCritDieCountLabel.Size = new Size(82, 15);
+            SettingsThemeMockupCritDieCountLabel.TabIndex = 13;
+            SettingsThemeMockupCritDieCountLabel.Text = "Crit Die Count";
+            SettingsThemeMockupCritDieCountLabel.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupWeaponTraitLabel
+            // 
+            SettingsThemeMockupWeaponTraitLabel.AutoSize = true;
+            SettingsThemeMockupWeaponTraitLabel.Location = new Point(20, 18);
+            SettingsThemeMockupWeaponTraitLabel.Name = "SettingsThemeMockupWeaponTraitLabel";
+            SettingsThemeMockupWeaponTraitLabel.Size = new Size(76, 15);
+            SettingsThemeMockupWeaponTraitLabel.TabIndex = 13;
+            SettingsThemeMockupWeaponTraitLabel.Text = "Weapon Trait";
+            SettingsThemeMockupWeaponTraitLabel.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupWeaponTraitCheckbox
+            // 
+            SettingsThemeMockupWeaponTraitCheckbox.AutoSize = true;
+            SettingsThemeMockupWeaponTraitCheckbox.FlatStyle = FlatStyle.Popup;
+            SettingsThemeMockupWeaponTraitCheckbox.Location = new Point(7, 20);
+            SettingsThemeMockupWeaponTraitCheckbox.Name = "SettingsThemeMockupWeaponTraitCheckbox";
+            SettingsThemeMockupWeaponTraitCheckbox.Size = new Size(13, 12);
+            SettingsThemeMockupWeaponTraitCheckbox.TabIndex = 1;
+            SettingsThemeMockupWeaponTraitCheckbox.UseVisualStyleBackColor = true;
+            SettingsThemeMockupWeaponTraitCheckbox.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupCritDieCountNumericUpDown
+            // 
+            SettingsThemeMockupCritDieCountNumericUpDown.BackColor = SystemColors.Window;
+            SettingsThemeMockupCritDieCountNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
+            SettingsThemeMockupCritDieCountNumericUpDown.Location = new Point(8, 80);
+            SettingsThemeMockupCritDieCountNumericUpDown.Name = "SettingsThemeMockupCritDieCountNumericUpDown";
+            SettingsThemeMockupCritDieCountNumericUpDown.Size = new Size(80, 23);
+            SettingsThemeMockupCritDieCountNumericUpDown.TabIndex = 3;
+            SettingsThemeMockupCritDieCountNumericUpDown.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupListBox
+            // 
+            SettingsThemeMockupListBox.BorderStyle = BorderStyle.FixedSingle;
+            SettingsThemeMockupListBox.FormattingEnabled = true;
+            SettingsThemeMockupListBox.ItemHeight = 15;
+            SettingsThemeMockupListBox.Location = new Point(8, 109);
+            SettingsThemeMockupListBox.Name = "SettingsThemeMockupListBox";
+            SettingsThemeMockupListBox.Size = new Size(81, 47);
+            SettingsThemeMockupListBox.TabIndex = 4;
+            SettingsThemeMockupListBox.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeNameAddButton
+            // 
+            SettingsThemeNameAddButton.FlatStyle = FlatStyle.Popup;
+            SettingsThemeNameAddButton.Location = new Point(8, 51);
+            SettingsThemeNameAddButton.Name = "SettingsThemeNameAddButton";
+            SettingsThemeNameAddButton.Size = new Size(120, 23);
+            SettingsThemeNameAddButton.TabIndex = 3;
+            SettingsThemeNameAddButton.Text = "Create New Theme";
+            SettingsThemeNameAddButton.UseVisualStyleBackColor = true;
+            SettingsThemeNameAddButton.MouseClick += SettingsThemeNameAddButton_MouseClick;
+            // 
+            // SettingsThemeMockupTabControl
+            // 
+            SettingsThemeMockupTabControl.BeforeTouchSize = new Size(258, 247);
+            SettingsThemeMockupTabControl.Controls.Add(SettingsThemeMockupCalculatorTabPage);
+            SettingsThemeMockupTabControl.Controls.Add(SettingsThemeMockupSettingsTabPage);
+            SettingsThemeMockupTabControl.Enabled = false;
+            SettingsThemeMockupTabControl.Location = new Point(133, 22);
+            SettingsThemeMockupTabControl.Name = "SettingsThemeMockupTabControl";
+            SettingsThemeMockupTabControl.Size = new Size(258, 247);
+            SettingsThemeMockupTabControl.TabIndex = 8;
+            SettingsThemeMockupTabControl.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupCalculatorTabPage
+            // 
+            SettingsThemeMockupCalculatorTabPage.Controls.Add(SettingsThemeMockupScottPlot);
+            SettingsThemeMockupCalculatorTabPage.Controls.Add(SettingsThemeMockupResultsGroupBox);
+            SettingsThemeMockupCalculatorTabPage.Image = null;
+            SettingsThemeMockupCalculatorTabPage.ImageSize = new Size(16, 16);
+            SettingsThemeMockupCalculatorTabPage.Location = new Point(1, 27);
+            SettingsThemeMockupCalculatorTabPage.Name = "SettingsThemeMockupCalculatorTabPage";
+            SettingsThemeMockupCalculatorTabPage.ShowCloseButton = true;
+            SettingsThemeMockupCalculatorTabPage.Size = new Size(255, 218);
+            SettingsThemeMockupCalculatorTabPage.TabIndex = 2;
+            SettingsThemeMockupCalculatorTabPage.Text = "Calculator";
+            SettingsThemeMockupCalculatorTabPage.ThemesEnabled = false;
+            // 
+            // SettingsThemeMockupScottPlot
+            // 
+            SettingsThemeMockupScottPlot.Location = new Point(103, 68);
+            SettingsThemeMockupScottPlot.Margin = new Padding(0);
+            SettingsThemeMockupScottPlot.Name = "SettingsThemeMockupScottPlot";
+            SettingsThemeMockupScottPlot.Size = new Size(152, 147);
+            SettingsThemeMockupScottPlot.TabIndex = 3;
+            SettingsThemeMockupScottPlot.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupResultsGroupBox
+            // 
+            SettingsThemeMockupResultsGroupBox.Controls.Add(SettingsThemeMockupMedianLabel);
+            SettingsThemeMockupResultsGroupBox.Controls.Add(SettingsThemeMockupMedianTextBox);
+            SettingsThemeMockupResultsGroupBox.Controls.Add(SettingsThemeMockupMeanLabel);
+            SettingsThemeMockupResultsGroupBox.Controls.Add(SettingsThemeMockupMeanTextBox);
+            SettingsThemeMockupResultsGroupBox.Location = new Point(106, 0);
+            SettingsThemeMockupResultsGroupBox.Name = "SettingsThemeMockupResultsGroupBox";
+            SettingsThemeMockupResultsGroupBox.Size = new Size(143, 65);
+            SettingsThemeMockupResultsGroupBox.TabIndex = 2;
+            SettingsThemeMockupResultsGroupBox.TabStop = false;
+            SettingsThemeMockupResultsGroupBox.Text = "Results";
+            // 
+            // SettingsThemeMockupMedianLabel
+            // 
+            SettingsThemeMockupMedianLabel.AutoSize = true;
+            SettingsThemeMockupMedianLabel.Location = new Point(74, 18);
+            SettingsThemeMockupMedianLabel.Name = "SettingsThemeMockupMedianLabel";
+            SettingsThemeMockupMedianLabel.Size = new Size(47, 15);
+            SettingsThemeMockupMedianLabel.TabIndex = 1;
+            SettingsThemeMockupMedianLabel.Text = "Median";
+            SettingsThemeMockupMedianLabel.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupMedianTextBox
+            // 
+            SettingsThemeMockupMedianTextBox.BorderStyle = BorderStyle.FixedSingle;
+            SettingsThemeMockupMedianTextBox.Location = new Point(74, 35);
+            SettingsThemeMockupMedianTextBox.Name = "SettingsThemeMockupMedianTextBox";
+            SettingsThemeMockupMedianTextBox.ReadOnly = true;
+            SettingsThemeMockupMedianTextBox.Size = new Size(63, 23);
+            SettingsThemeMockupMedianTextBox.TabIndex = 2;
+            SettingsThemeMockupMedianTextBox.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupMeanLabel
+            // 
+            SettingsThemeMockupMeanLabel.AutoSize = true;
+            SettingsThemeMockupMeanLabel.Location = new Point(6, 18);
+            SettingsThemeMockupMeanLabel.Name = "SettingsThemeMockupMeanLabel";
+            SettingsThemeMockupMeanLabel.Size = new Size(37, 15);
+            SettingsThemeMockupMeanLabel.TabIndex = 1;
+            SettingsThemeMockupMeanLabel.Text = "Mean";
+            SettingsThemeMockupMeanLabel.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupMeanTextBox
+            // 
+            SettingsThemeMockupMeanTextBox.BorderStyle = BorderStyle.FixedSingle;
+            SettingsThemeMockupMeanTextBox.Location = new Point(6, 35);
+            SettingsThemeMockupMeanTextBox.Name = "SettingsThemeMockupMeanTextBox";
+            SettingsThemeMockupMeanTextBox.ReadOnly = true;
+            SettingsThemeMockupMeanTextBox.Size = new Size(63, 23);
+            SettingsThemeMockupMeanTextBox.TabIndex = 1;
+            SettingsThemeMockupMeanTextBox.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupSettingsTabPage
+            // 
+            SettingsThemeMockupSettingsTabPage.Image = null;
+            SettingsThemeMockupSettingsTabPage.ImageSize = new Size(16, 16);
+            SettingsThemeMockupSettingsTabPage.Location = new Point(1, 27);
+            SettingsThemeMockupSettingsTabPage.Name = "SettingsThemeMockupSettingsTabPage";
+            SettingsThemeMockupSettingsTabPage.ShowCloseButton = true;
+            SettingsThemeMockupSettingsTabPage.Size = new Size(255, 218);
+            SettingsThemeMockupSettingsTabPage.TabIndex = 1;
+            SettingsThemeMockupSettingsTabPage.Text = "Settings";
+            SettingsThemeMockupSettingsTabPage.ThemesEnabled = false;
+            // 
+            // SettingsThemeNameDeleteButton
+            // 
+            SettingsThemeNameDeleteButton.FlatStyle = FlatStyle.Popup;
+            SettingsThemeNameDeleteButton.Location = new Point(8, 240);
+            SettingsThemeNameDeleteButton.Name = "SettingsThemeNameDeleteButton";
+            SettingsThemeNameDeleteButton.Size = new Size(120, 23);
+            SettingsThemeNameDeleteButton.TabIndex = 2;
+            SettingsThemeNameDeleteButton.Text = "Delete";
+            SettingsThemeNameDeleteButton.UseVisualStyleBackColor = true;
             // 
             // GeneratorTabPage
             // 
@@ -2094,7 +2593,7 @@
             label1.RightToLeft = RightToLeft.No;
             label1.Size = new Size(178, 23);
             label1.TabIndex = 25;
-            label1.Text = "PFK V2.0.1";
+            label1.Text = "PFK V2.1.1-proto-3";
             label1.TextAlign = ContentAlignment.MiddleRight;
             // 
             // button6
@@ -2112,7 +2611,7 @@
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.ActiveBorder;
             CanApplyTheme = false;
-            ClientSize = new Size(973, 474);
+            ClientSize = new Size(968, 471);
             Controls.Add(MainTabControl);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -2162,6 +2661,20 @@
             MainTabControl.ResumeLayout(false);
             CalculatorTabPage.ResumeLayout(false);
             CalculatorTabPage.PerformLayout();
+            SettingsTabPage.ResumeLayout(false);
+            SettingsThemeColorPopupGroupbox.ResumeLayout(false);
+            SettingsThemeColorPopupGroupbox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)SettingsThemeColorPopupThirdNumericUpDown).EndInit();
+            SettingThemeGroupBox.ResumeLayout(false);
+            SettingThemeGroupBox.PerformLayout();
+            SettingsThemeMockupStatsGroupBox.ResumeLayout(false);
+            SettingsThemeMockupStatsGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)SettingsThemeMockupCritDieCountNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SettingsThemeMockupTabControl).EndInit();
+            SettingsThemeMockupTabControl.ResumeLayout(false);
+            SettingsThemeMockupCalculatorTabPage.ResumeLayout(false);
+            SettingsThemeMockupResultsGroupBox.ResumeLayout(false);
+            SettingsThemeMockupResultsGroupBox.PerformLayout();
             GeneratorTabPage.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
@@ -2336,5 +2849,42 @@
         private CheckedListBox checkedListBox1;
         private Label label1;
         private Button button6;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv SettingsTabPage;
+        private GroupBox SettingThemeGroupBox;
+        private Button SettingsThemeNameDeleteButton;
+        private Button SettingsThemeNameAddButton;
+        private Syncfusion.Windows.Forms.Tools.TabControlAdv SettingsThemeMockupTabControl;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv SettingsThemeMockupSettingsTabPage;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv SettingsThemeMockupCalculatorTabPage;
+        private GroupBox SettingsThemeMockupStatsGroupBox;
+        private NumericUpDown SettingsThemeMockupCritDieCountNumericUpDown;
+        private ScottPlot.FormsPlot SettingsThemeMockupScottPlot;
+        private GroupBox SettingsThemeMockupResultsGroupBox;
+        private Label SettingsThemeMockupMedianLabel;
+        private TextBox SettingsThemeMockupMedianTextBox;
+        private Label SettingsThemeMockupMeanLabel;
+        private TextBox SettingsThemeMockupMeanTextBox;
+        private Button SettingsThemeMockupListRemoveButton;
+        private Button SettingsThemeMockupListAddButton;
+        private TextBox SettingsThemeMockupWeaponTraitTextBox;
+        private Label SettingsThemeMockupCritDieCountLabel;
+        private Label SettingsThemeMockupWeaponTraitLabel;
+        private CheckBox SettingsThemeMockupWeaponTraitCheckbox;
+        private ListBox SettingsThemeMockupListBox;
+        private ListBox SettingsThemeNameListbox;
+        private TextBox SettingsThemeNameTextbox;
+        private GroupBox SettingsThemeColorPopupGroupbox;
+        private Syncfusion.Windows.Forms.ColorPickerButton SettingsThemeColorPopupFourthColorPicker;
+        private Syncfusion.Windows.Forms.ColorPickerButton SettingsThemeColorPopupThirdColorPicker;
+        private Syncfusion.Windows.Forms.ColorPickerButton SettingsThemeColorPopupSecondColorPicker;
+        private Syncfusion.Windows.Forms.ColorPickerButton SettingsThemeColorPopupFirstColorPicker;
+        private Label SettingsThemeColorPopupSecondLabel;
+        private Label SettingsThemeColorPopupFourthLabel;
+        private Label SettingsThemeColorPopupThirdLabel;
+        private Label SettingsThemeColorPopupFirstLabel;
+        private Button SettingsThemeColorPopupOButton;
+        private Button SettingsThemeColorPopupXButton;
+        private Syncfusion.Windows.Forms.Tools.NumericUpDownExt SettingsThemeColorPopupThirdNumericUpDown;
+        private Syncfusion.Windows.Forms.Tools.FontComboBox SettingsThemeColorPopupFirstFontComboBox;
     }
 }
