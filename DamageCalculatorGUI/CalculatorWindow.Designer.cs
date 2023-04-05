@@ -36,22 +36,22 @@ namespace DamageCalculatorGUI
             CalculatorEncounterStatisticsMeanLabel = new Label();
             CalculatorEncounterStatisticsMeanTextBox = new TextBox();
             CalculatorMiscStatisticsGroupBox = new GroupBox();
-            CalculatorMiscStatisticsAccuracyMeanLabel = new Label();
-            CalculatorMiscStatisticsAttackDamageMeanLabel = new Label();
             CalculatorMiscStatisticsAccuracyMeanTextBox = new TextBox();
-            CalculatorMiscStatisticsRoundDamageMeanLabel = new Label();
             CalculatorMiscStatisticsAttackDamageMeanTextBox = new TextBox();
             CalculatorMiscStatisticsRoundDamageMeanTextBox = new TextBox();
+            CalculatorMiscStatisticsAccuracyMeanLabel = new Label();
+            CalculatorMiscStatisticsAttackDamageMeanLabel = new Label();
+            CalculatorMiscStatisticsRoundDamageMeanLabel = new Label();
             CalculatorBCLGLabel = new Label();
             CalculatorWarningLabel = new Label();
             CalculatorMiscStatisticsCalculateStatsProgressBars = new ProgressBar();
             CalculatorEncounterStatisticsGroupBox = new GroupBox();
-            CalculatorEncounterStatisticsLowerQuartileLabel = new Label();
-            CalculatorEncounterStatisticsUpperQuartileLabel = new Label();
             CalculatorEncounterStatisticsLowerQuartileBoxTextBox = new TextBox();
-            CalculatorEncounterStatisticsMedianLabel = new Label();
             CalculatorEncounterStatisticsUpperQuartileTextBox = new TextBox();
             CalculatorEncounterStatisticsMedianTextBox = new TextBox();
+            CalculatorEncounterStatisticsLowerQuartileLabel = new Label();
+            CalculatorEncounterStatisticsUpperQuartileLabel = new Label();
+            CalculatorEncounterStatisticsMedianLabel = new Label();
             CalculatorSettingsGroupBox = new GroupBox();
             CalculatorActionGroupBox = new GroupBox();
             CalculatorActionExtraLimitedActionsDrawNumericUpDown = new NumericUpDown();
@@ -171,7 +171,6 @@ namespace DamageCalculatorGUI
             CalculatorBatchComputeLayerViewControlValuesAtLayerListBox = new ListBox();
             CalculatorBatchComputeLayerViewControlLayerSelectListBox = new ListBox();
             MainTabControl = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
-            CalculatorTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             SettingsTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             SettingsThemeColorPopupGroupbox = new GroupBox();
             SettingsThemeColorPopupFirstFontComboBox = new Syncfusion.Windows.Forms.Tools.FontComboBox();
@@ -187,28 +186,33 @@ namespace DamageCalculatorGUI
             SettingsThemeColorPopupXButton = new Button();
             SettingsThemeColorPopupThirdNumericUpDown = new Syncfusion.Windows.Forms.Tools.NumericUpDownExt();
             SettingThemeGroupBox = new GroupBox();
-            SettingsThemeNameTextbox = new TextBox();
-            SettingsThemeNameListbox = new ListBox();
-            SettingsThemeMockupStatsGroupBox = new GroupBox();
-            SettingsThemeMockupListRemoveButton = new Button();
-            SettingsThemeMockupListAddButton = new Button();
-            SettingsThemeMockupWeaponTraitTextBox = new TextBox();
-            SettingsThemeMockupCritDieCountLabel = new Label();
-            SettingsThemeMockupWeaponTraitLabel = new Label();
-            SettingsThemeMockupWeaponTraitCheckbox = new CheckBox();
-            SettingsThemeMockupCritDieCountNumericUpDown = new NumericUpDown();
-            SettingsThemeMockupListBox = new ListBox();
-            SettingsThemeNameAddButton = new Button();
             SettingsThemeMockupTabControl = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             SettingsThemeMockupCalculatorTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            SettingsThemeMockupGraphGroupBox = new GroupBox();
             SettingsThemeMockupScottPlot = new ScottPlot.FormsPlot();
             SettingsThemeMockupResultsGroupBox = new GroupBox();
-            SettingsThemeMockupMedianLabel = new Label();
-            SettingsThemeMockupMedianTextBox = new TextBox();
-            SettingsThemeMockupMeanLabel = new Label();
-            SettingsThemeMockupMeanTextBox = new TextBox();
+            SettingsThemeMockupResultsMedianTextBox = new TextBox();
+            SettingsThemeMockupResultsMeanTextBox = new TextBox();
+            SettingsThemeMockupResultsMeanLabel = new Label();
+            SettingsThemeMockupResultsMedianLabel = new Label();
+            SettingsThemeMockupStatsGroupBox = new GroupBox();
+            SettingsThemeMockupListRemoveButton = new Button();
+            SettingsThemeMockupWeaponTraitTextBox = new TextBox();
+            SettingsThemeMockupListBox = new ListBox();
+            SettingsThemeMockupListAddButton = new Button();
+            SettingsThemeMockupCritDieCountNumericUpDown = new NumericUpDown();
+            SettingsThemeMockupWeaponTraitCheckbox = new CheckBox();
+            SettingsThemeMockupWeaponTraitLabel = new Label();
+            SettingsThemeMockupCritDieCountLabel = new Label();
             SettingsThemeMockupSettingsTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            panel2 = new Panel();
+            SettingsThemeNameTextbox = new TextBox();
+            SettingsThemeNameEditButton = new Button();
+            SettingsThemeNameSaveButton = new Button();
             SettingsThemeNameDeleteButton = new Button();
+            SettingsThemeNameAddButton = new Button();
+            SettingsThemeNameListbox = new ListBox();
+            CalculatorTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             GeneratorTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             GeneratorGenerationSettingsGroupBox = new GroupBox();
             groupBox2 = new GroupBox();
@@ -253,17 +257,19 @@ namespace DamageCalculatorGUI
             CalculatorBatchComputeLayerViewControlGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)MainTabControl).BeginInit();
             MainTabControl.SuspendLayout();
-            CalculatorTabPage.SuspendLayout();
             SettingsTabPage.SuspendLayout();
             SettingsThemeColorPopupGroupbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)SettingsThemeColorPopupThirdNumericUpDown).BeginInit();
             SettingThemeGroupBox.SuspendLayout();
-            SettingsThemeMockupStatsGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)SettingsThemeMockupCritDieCountNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SettingsThemeMockupTabControl).BeginInit();
             SettingsThemeMockupTabControl.SuspendLayout();
             SettingsThemeMockupCalculatorTabPage.SuspendLayout();
+            SettingsThemeMockupGraphGroupBox.SuspendLayout();
             SettingsThemeMockupResultsGroupBox.SuspendLayout();
+            SettingsThemeMockupStatsGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)SettingsThemeMockupCritDieCountNumericUpDown).BeginInit();
+            panel2.SuspendLayout();
+            CalculatorTabPage.SuspendLayout();
             GeneratorTabPage.SuspendLayout();
             groupBox2.SuspendLayout();
             GeneratorEnabledWeaponTypesGroupBox.SuspendLayout();
@@ -306,18 +312,48 @@ namespace DamageCalculatorGUI
             // 
             // CalculatorMiscStatisticsGroupBox
             // 
-            CalculatorMiscStatisticsGroupBox.Controls.Add(CalculatorMiscStatisticsAccuracyMeanLabel);
-            CalculatorMiscStatisticsGroupBox.Controls.Add(CalculatorMiscStatisticsAttackDamageMeanLabel);
             CalculatorMiscStatisticsGroupBox.Controls.Add(CalculatorMiscStatisticsAccuracyMeanTextBox);
-            CalculatorMiscStatisticsGroupBox.Controls.Add(CalculatorMiscStatisticsRoundDamageMeanLabel);
             CalculatorMiscStatisticsGroupBox.Controls.Add(CalculatorMiscStatisticsAttackDamageMeanTextBox);
             CalculatorMiscStatisticsGroupBox.Controls.Add(CalculatorMiscStatisticsRoundDamageMeanTextBox);
+            CalculatorMiscStatisticsGroupBox.Controls.Add(CalculatorMiscStatisticsAccuracyMeanLabel);
+            CalculatorMiscStatisticsGroupBox.Controls.Add(CalculatorMiscStatisticsAttackDamageMeanLabel);
+            CalculatorMiscStatisticsGroupBox.Controls.Add(CalculatorMiscStatisticsRoundDamageMeanLabel);
             CalculatorMiscStatisticsGroupBox.Location = new Point(791, 0);
             CalculatorMiscStatisticsGroupBox.Name = "CalculatorMiscStatisticsGroupBox";
             CalculatorMiscStatisticsGroupBox.Size = new Size(176, 227);
             CalculatorMiscStatisticsGroupBox.TabIndex = 3;
             CalculatorMiscStatisticsGroupBox.TabStop = false;
-            CalculatorMiscStatisticsGroupBox.Text = "Misc Statistics";
+            CalculatorMiscStatisticsGroupBox.Text = "Misc Stats";
+            // 
+            // CalculatorMiscStatisticsAccuracyMeanTextBox
+            // 
+            CalculatorMiscStatisticsAccuracyMeanTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorMiscStatisticsAccuracyMeanTextBox.Location = new Point(6, 125);
+            CalculatorMiscStatisticsAccuracyMeanTextBox.Name = "CalculatorMiscStatisticsAccuracyMeanTextBox";
+            CalculatorMiscStatisticsAccuracyMeanTextBox.ReadOnly = true;
+            CalculatorMiscStatisticsAccuracyMeanTextBox.Size = new Size(162, 23);
+            CalculatorMiscStatisticsAccuracyMeanTextBox.TabIndex = 4;
+            CalculatorMiscStatisticsAccuracyMeanTextBox.TabStop = false;
+            // 
+            // CalculatorMiscStatisticsAttackDamageMeanTextBox
+            // 
+            CalculatorMiscStatisticsAttackDamageMeanTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorMiscStatisticsAttackDamageMeanTextBox.Location = new Point(6, 81);
+            CalculatorMiscStatisticsAttackDamageMeanTextBox.Name = "CalculatorMiscStatisticsAttackDamageMeanTextBox";
+            CalculatorMiscStatisticsAttackDamageMeanTextBox.ReadOnly = true;
+            CalculatorMiscStatisticsAttackDamageMeanTextBox.Size = new Size(162, 23);
+            CalculatorMiscStatisticsAttackDamageMeanTextBox.TabIndex = 3;
+            CalculatorMiscStatisticsAttackDamageMeanTextBox.TabStop = false;
+            // 
+            // CalculatorMiscStatisticsRoundDamageMeanTextBox
+            // 
+            CalculatorMiscStatisticsRoundDamageMeanTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorMiscStatisticsRoundDamageMeanTextBox.Location = new Point(6, 37);
+            CalculatorMiscStatisticsRoundDamageMeanTextBox.Name = "CalculatorMiscStatisticsRoundDamageMeanTextBox";
+            CalculatorMiscStatisticsRoundDamageMeanTextBox.ReadOnly = true;
+            CalculatorMiscStatisticsRoundDamageMeanTextBox.Size = new Size(162, 23);
+            CalculatorMiscStatisticsRoundDamageMeanTextBox.TabIndex = 2;
+            CalculatorMiscStatisticsRoundDamageMeanTextBox.TabStop = false;
             // 
             // CalculatorMiscStatisticsAccuracyMeanLabel
             // 
@@ -339,45 +375,15 @@ namespace DamageCalculatorGUI
             CalculatorMiscStatisticsAttackDamageMeanLabel.Text = "Attack Damage Mean";
             CalculatorMiscStatisticsAttackDamageMeanLabel.MouseEnter += Control_MouseHoverShowTooltip;
             // 
-            // CalculatorMiscStatisticsAccuracyMeanTextBox
-            // 
-            CalculatorMiscStatisticsAccuracyMeanTextBox.BorderStyle = BorderStyle.FixedSingle;
-            CalculatorMiscStatisticsAccuracyMeanTextBox.Location = new Point(6, 125);
-            CalculatorMiscStatisticsAccuracyMeanTextBox.Name = "CalculatorMiscStatisticsAccuracyMeanTextBox";
-            CalculatorMiscStatisticsAccuracyMeanTextBox.ReadOnly = true;
-            CalculatorMiscStatisticsAccuracyMeanTextBox.Size = new Size(162, 23);
-            CalculatorMiscStatisticsAccuracyMeanTextBox.TabIndex = 4;
-            CalculatorMiscStatisticsAccuracyMeanTextBox.TabStop = false;
-            // 
             // CalculatorMiscStatisticsRoundDamageMeanLabel
             // 
             CalculatorMiscStatisticsRoundDamageMeanLabel.AutoSize = true;
             CalculatorMiscStatisticsRoundDamageMeanLabel.Location = new Point(6, 19);
             CalculatorMiscStatisticsRoundDamageMeanLabel.Name = "CalculatorMiscStatisticsRoundDamageMeanLabel";
-            CalculatorMiscStatisticsRoundDamageMeanLabel.Size = new Size(168, 15);
+            CalculatorMiscStatisticsRoundDamageMeanLabel.Size = new Size(122, 15);
             CalculatorMiscStatisticsRoundDamageMeanLabel.TabIndex = 2;
-            CalculatorMiscStatisticsRoundDamageMeanLabel.Text = "Combat Round Damage Mean";
+            CalculatorMiscStatisticsRoundDamageMeanLabel.Text = "Round Damage Mean";
             CalculatorMiscStatisticsRoundDamageMeanLabel.MouseEnter += Control_MouseHoverShowTooltip;
-            // 
-            // CalculatorMiscStatisticsAttackDamageMeanTextBox
-            // 
-            CalculatorMiscStatisticsAttackDamageMeanTextBox.BorderStyle = BorderStyle.FixedSingle;
-            CalculatorMiscStatisticsAttackDamageMeanTextBox.Location = new Point(6, 81);
-            CalculatorMiscStatisticsAttackDamageMeanTextBox.Name = "CalculatorMiscStatisticsAttackDamageMeanTextBox";
-            CalculatorMiscStatisticsAttackDamageMeanTextBox.ReadOnly = true;
-            CalculatorMiscStatisticsAttackDamageMeanTextBox.Size = new Size(162, 23);
-            CalculatorMiscStatisticsAttackDamageMeanTextBox.TabIndex = 3;
-            CalculatorMiscStatisticsAttackDamageMeanTextBox.TabStop = false;
-            // 
-            // CalculatorMiscStatisticsRoundDamageMeanTextBox
-            // 
-            CalculatorMiscStatisticsRoundDamageMeanTextBox.BorderStyle = BorderStyle.FixedSingle;
-            CalculatorMiscStatisticsRoundDamageMeanTextBox.Location = new Point(6, 37);
-            CalculatorMiscStatisticsRoundDamageMeanTextBox.Name = "CalculatorMiscStatisticsRoundDamageMeanTextBox";
-            CalculatorMiscStatisticsRoundDamageMeanTextBox.ReadOnly = true;
-            CalculatorMiscStatisticsRoundDamageMeanTextBox.Size = new Size(162, 23);
-            CalculatorMiscStatisticsRoundDamageMeanTextBox.TabIndex = 2;
-            CalculatorMiscStatisticsRoundDamageMeanTextBox.TabStop = false;
             // 
             // CalculatorBCLGLabel
             // 
@@ -414,20 +420,50 @@ namespace DamageCalculatorGUI
             // 
             // CalculatorEncounterStatisticsGroupBox
             // 
-            CalculatorEncounterStatisticsGroupBox.Controls.Add(CalculatorEncounterStatisticsLowerQuartileLabel);
-            CalculatorEncounterStatisticsGroupBox.Controls.Add(CalculatorEncounterStatisticsUpperQuartileLabel);
             CalculatorEncounterStatisticsGroupBox.Controls.Add(CalculatorEncounterStatisticsLowerQuartileBoxTextBox);
-            CalculatorEncounterStatisticsGroupBox.Controls.Add(CalculatorEncounterStatisticsMedianLabel);
             CalculatorEncounterStatisticsGroupBox.Controls.Add(CalculatorEncounterStatisticsUpperQuartileTextBox);
-            CalculatorEncounterStatisticsGroupBox.Controls.Add(CalculatorEncounterStatisticsMeanLabel);
             CalculatorEncounterStatisticsGroupBox.Controls.Add(CalculatorEncounterStatisticsMedianTextBox);
             CalculatorEncounterStatisticsGroupBox.Controls.Add(CalculatorEncounterStatisticsMeanTextBox);
+            CalculatorEncounterStatisticsGroupBox.Controls.Add(CalculatorEncounterStatisticsLowerQuartileLabel);
+            CalculatorEncounterStatisticsGroupBox.Controls.Add(CalculatorEncounterStatisticsUpperQuartileLabel);
+            CalculatorEncounterStatisticsGroupBox.Controls.Add(CalculatorEncounterStatisticsMedianLabel);
+            CalculatorEncounterStatisticsGroupBox.Controls.Add(CalculatorEncounterStatisticsMeanLabel);
             CalculatorEncounterStatisticsGroupBox.Location = new Point(609, 0);
             CalculatorEncounterStatisticsGroupBox.Name = "CalculatorEncounterStatisticsGroupBox";
             CalculatorEncounterStatisticsGroupBox.Size = new Size(176, 227);
             CalculatorEncounterStatisticsGroupBox.TabIndex = 2;
             CalculatorEncounterStatisticsGroupBox.TabStop = false;
-            CalculatorEncounterStatisticsGroupBox.Text = "Encounter Damage Statistics";
+            CalculatorEncounterStatisticsGroupBox.Text = "Encounter Stats";
+            // 
+            // CalculatorEncounterStatisticsLowerQuartileBoxTextBox
+            // 
+            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.Location = new Point(6, 169);
+            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.Name = "CalculatorEncounterStatisticsLowerQuartileBoxTextBox";
+            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.ReadOnly = true;
+            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.Size = new Size(162, 23);
+            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.TabIndex = 3;
+            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.TabStop = false;
+            // 
+            // CalculatorEncounterStatisticsUpperQuartileTextBox
+            // 
+            CalculatorEncounterStatisticsUpperQuartileTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorEncounterStatisticsUpperQuartileTextBox.Location = new Point(6, 81);
+            CalculatorEncounterStatisticsUpperQuartileTextBox.Name = "CalculatorEncounterStatisticsUpperQuartileTextBox";
+            CalculatorEncounterStatisticsUpperQuartileTextBox.ReadOnly = true;
+            CalculatorEncounterStatisticsUpperQuartileTextBox.Size = new Size(162, 23);
+            CalculatorEncounterStatisticsUpperQuartileTextBox.TabIndex = 2;
+            CalculatorEncounterStatisticsUpperQuartileTextBox.TabStop = false;
+            // 
+            // CalculatorEncounterStatisticsMedianTextBox
+            // 
+            CalculatorEncounterStatisticsMedianTextBox.BorderStyle = BorderStyle.FixedSingle;
+            CalculatorEncounterStatisticsMedianTextBox.Location = new Point(6, 125);
+            CalculatorEncounterStatisticsMedianTextBox.Name = "CalculatorEncounterStatisticsMedianTextBox";
+            CalculatorEncounterStatisticsMedianTextBox.ReadOnly = true;
+            CalculatorEncounterStatisticsMedianTextBox.Size = new Size(162, 23);
+            CalculatorEncounterStatisticsMedianTextBox.TabIndex = 1;
+            CalculatorEncounterStatisticsMedianTextBox.TabStop = false;
             // 
             // CalculatorEncounterStatisticsLowerQuartileLabel
             // 
@@ -449,16 +485,6 @@ namespace DamageCalculatorGUI
             CalculatorEncounterStatisticsUpperQuartileLabel.Text = "Upper Quartile";
             CalculatorEncounterStatisticsUpperQuartileLabel.MouseEnter += Control_MouseHoverShowTooltip;
             // 
-            // CalculatorEncounterStatisticsLowerQuartileBoxTextBox
-            // 
-            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.BorderStyle = BorderStyle.FixedSingle;
-            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.Location = new Point(6, 169);
-            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.Name = "CalculatorEncounterStatisticsLowerQuartileBoxTextBox";
-            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.ReadOnly = true;
-            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.Size = new Size(162, 23);
-            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.TabIndex = 3;
-            CalculatorEncounterStatisticsLowerQuartileBoxTextBox.TabStop = false;
-            // 
             // CalculatorEncounterStatisticsMedianLabel
             // 
             CalculatorEncounterStatisticsMedianLabel.AutoSize = true;
@@ -468,26 +494,6 @@ namespace DamageCalculatorGUI
             CalculatorEncounterStatisticsMedianLabel.TabIndex = 2;
             CalculatorEncounterStatisticsMedianLabel.Text = "Median";
             CalculatorEncounterStatisticsMedianLabel.MouseEnter += Control_MouseHoverShowTooltip;
-            // 
-            // CalculatorEncounterStatisticsUpperQuartileTextBox
-            // 
-            CalculatorEncounterStatisticsUpperQuartileTextBox.BorderStyle = BorderStyle.FixedSingle;
-            CalculatorEncounterStatisticsUpperQuartileTextBox.Location = new Point(6, 81);
-            CalculatorEncounterStatisticsUpperQuartileTextBox.Name = "CalculatorEncounterStatisticsUpperQuartileTextBox";
-            CalculatorEncounterStatisticsUpperQuartileTextBox.ReadOnly = true;
-            CalculatorEncounterStatisticsUpperQuartileTextBox.Size = new Size(162, 23);
-            CalculatorEncounterStatisticsUpperQuartileTextBox.TabIndex = 2;
-            CalculatorEncounterStatisticsUpperQuartileTextBox.TabStop = false;
-            // 
-            // CalculatorEncounterStatisticsMedianTextBox
-            // 
-            CalculatorEncounterStatisticsMedianTextBox.BorderStyle = BorderStyle.FixedSingle;
-            CalculatorEncounterStatisticsMedianTextBox.Location = new Point(6, 125);
-            CalculatorEncounterStatisticsMedianTextBox.Name = "CalculatorEncounterStatisticsMedianTextBox";
-            CalculatorEncounterStatisticsMedianTextBox.ReadOnly = true;
-            CalculatorEncounterStatisticsMedianTextBox.Size = new Size(162, 23);
-            CalculatorEncounterStatisticsMedianTextBox.TabIndex = 1;
-            CalculatorEncounterStatisticsMedianTextBox.TabStop = false;
             // 
             // CalculatorSettingsGroupBox
             // 
@@ -1070,6 +1076,7 @@ namespace DamageCalculatorGUI
             // CalculatorAttackBonusToHitLabel
             // 
             CalculatorAttackBonusToHitLabel.AutoSize = true;
+            CalculatorAttackBonusToHitLabel.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             CalculatorAttackBonusToHitLabel.Location = new Point(6, 19);
             CalculatorAttackBonusToHitLabel.Name = "CalculatorAttackBonusToHitLabel";
             CalculatorAttackBonusToHitLabel.Size = new Size(74, 15);
@@ -1825,25 +1832,28 @@ namespace DamageCalculatorGUI
             // 
             // CalculatorDamageDistributionScottPlot
             // 
+            CalculatorDamageDistributionScottPlot.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             CalculatorDamageDistributionScottPlot.Font = new Font("Cambria", 9F, FontStyle.Bold, GraphicsUnit.Point);
             CalculatorDamageDistributionScottPlot.Location = new Point(609, 217);
             CalculatorDamageDistributionScottPlot.Margin = new Padding(4, 3, 4, 3);
             CalculatorDamageDistributionScottPlot.Name = "CalculatorDamageDistributionScottPlot";
-            CalculatorDamageDistributionScottPlot.Size = new Size(358, 152);
+            CalculatorDamageDistributionScottPlot.Size = new Size(358, 179);
             CalculatorDamageDistributionScottPlot.TabIndex = 13;
             // 
             // CalculatorBatchComputeScottPlot
             // 
+            CalculatorBatchComputeScottPlot.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             CalculatorBatchComputeScottPlot.Font = new Font("Cambria", 9F, FontStyle.Bold, GraphicsUnit.Point);
             CalculatorBatchComputeScottPlot.Location = new Point(609, 8);
             CalculatorBatchComputeScottPlot.Margin = new Padding(4, 3, 4, 3);
             CalculatorBatchComputeScottPlot.Name = "CalculatorBatchComputeScottPlot";
-            CalculatorBatchComputeScottPlot.Size = new Size(358, 361);
+            CalculatorBatchComputeScottPlot.Size = new Size(358, 388);
             CalculatorBatchComputeScottPlot.TabIndex = 17;
             CalculatorBatchComputeScottPlot.Visible = false;
             // 
             // CalculatorBatchComputeLayerViewControlGroupBox
             // 
+            CalculatorBatchComputeLayerViewControlGroupBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             CalculatorBatchComputeLayerViewControlGroupBox.Controls.Add(CalculatorBatchComputeLayerViewControlStepSelectLabel);
             CalculatorBatchComputeLayerViewControlGroupBox.Controls.Add(CalculatorBatchComputeLayerViewControlValuesAtLayerLabel);
             CalculatorBatchComputeLayerViewControlGroupBox.Controls.Add(CalculatorBatchComputeLayerViewControlLayerSelectLabel);
@@ -1918,55 +1928,34 @@ namespace DamageCalculatorGUI
             // MainTabControl
             // 
             MainTabControl.BackColor = SystemColors.Control;
-            MainTabControl.BeforeTouchSize = new Size(984, 470);
+            MainTabControl.BeforeTouchSize = new Size(984, 471);
             MainTabControl.BorderWidth = 0;
             MainTabControl.Controls.Add(SettingsTabPage);
             MainTabControl.Controls.Add(CalculatorTabPage);
             MainTabControl.Controls.Add(GeneratorTabPage);
+            MainTabControl.Dock = DockStyle.Fill;
             MainTabControl.FocusOnTabClick = false;
-            MainTabControl.Location = new Point(-5, 1);
+            MainTabControl.ItemSize = new Size(79, 22);
+            MainTabControl.Location = new Point(0, 0);
+            MainTabControl.MinimumSize = new Size(984, 470);
             MainTabControl.Name = "MainTabControl";
-            MainTabControl.Size = new Size(984, 470);
+            MainTabControl.Size = new Size(984, 471);
             MainTabControl.TabIndex = 0;
             MainTabControl.ThemeName = "TabRenderer3D";
             MainTabControl.ThemeStyle.PrimitiveButtonStyle.DisabledNextPageImage = null;
-            MainTabControl.SelectedIndexChanged += tabControlAdv1_SelectedIndexChanged;
-            // 
-            // CalculatorTabPage
-            // 
-            CalculatorTabPage.Controls.Add(CalculatorEncounterStatisticsGroupBox);
-            CalculatorTabPage.Controls.Add(CalculatorMiscStatisticsGroupBox);
-            CalculatorTabPage.Controls.Add(CalculatorSettingsGroupBox);
-            CalculatorTabPage.Controls.Add(CalculatorBatchComputePopupPanel);
-            CalculatorTabPage.Controls.Add(CalculatorBatchComputeLayerViewControlGroupBox);
-            CalculatorTabPage.Controls.Add(CalculatorEMELabel);
-            CalculatorTabPage.Controls.Add(CalculatorBCLGLabel);
-            CalculatorTabPage.Controls.Add(CalculatorDamageDistributionScottPlot);
-            CalculatorTabPage.Controls.Add(CalculatorBatchComputeButton);
-            CalculatorTabPage.Controls.Add(CalculatorVersionLabel);
-            CalculatorTabPage.Controls.Add(CalculatorWarningLabel);
-            CalculatorTabPage.Controls.Add(CalculatorDefaultSettingsButton);
-            CalculatorTabPage.Controls.Add(CalculatorBatchComputeScottPlot);
-            CalculatorTabPage.Image = null;
-            CalculatorTabPage.ImageSize = new Size(16, 16);
-            CalculatorTabPage.Location = new Point(1, 27);
-            CalculatorTabPage.Name = "CalculatorTabPage";
-            CalculatorTabPage.ShowCloseButton = true;
-            CalculatorTabPage.Size = new Size(981, 441);
-            CalculatorTabPage.TabIndex = 1;
-            CalculatorTabPage.Text = "Calculator";
-            CalculatorTabPage.ThemesEnabled = false;
             // 
             // SettingsTabPage
             // 
+            SettingsTabPage.AutoSize = true;
+            SettingsTabPage.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             SettingsTabPage.Controls.Add(SettingsThemeColorPopupGroupbox);
             SettingsTabPage.Controls.Add(SettingThemeGroupBox);
             SettingsTabPage.Image = null;
             SettingsTabPage.ImageSize = new Size(16, 16);
-            SettingsTabPage.Location = new Point(1, 27);
+            SettingsTabPage.Location = new Point(1, 25);
             SettingsTabPage.Name = "SettingsTabPage";
             SettingsTabPage.ShowCloseButton = true;
-            SettingsTabPage.Size = new Size(981, 441);
+            SettingsTabPage.Size = new Size(981, 444);
             SettingsTabPage.TabIndex = 3;
             SettingsTabPage.Text = "Settings";
             SettingsTabPage.ThemesEnabled = false;
@@ -1986,22 +1975,24 @@ namespace DamageCalculatorGUI
             SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupXButton);
             SettingsThemeColorPopupGroupbox.Controls.Add(SettingsThemeColorPopupThirdNumericUpDown);
             SettingsThemeColorPopupGroupbox.FlatStyle = FlatStyle.Popup;
-            SettingsThemeColorPopupGroupbox.Location = new Point(510, 96);
+            SettingsThemeColorPopupGroupbox.Location = new Point(599, 55);
             SettingsThemeColorPopupGroupbox.Name = "SettingsThemeColorPopupGroupbox";
             SettingsThemeColorPopupGroupbox.Size = new Size(185, 112);
             SettingsThemeColorPopupGroupbox.TabIndex = 9;
             SettingsThemeColorPopupGroupbox.TabStop = false;
             SettingsThemeColorPopupGroupbox.Text = "Color Picker";
+            SettingsThemeColorPopupGroupbox.Visible = false;
             // 
             // SettingsThemeColorPopupFirstFontComboBox
             // 
             SettingsThemeColorPopupFirstFontComboBox.BackColor = SystemColors.Window;
+            SettingsThemeColorPopupFirstFontComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             SettingsThemeColorPopupFirstFontComboBox.FlatStyle = FlatStyle.Popup;
             SettingsThemeColorPopupFirstFontComboBox.FormattingEnabled = true;
             SettingsThemeColorPopupFirstFontComboBox.Location = new Point(6, 35);
             SettingsThemeColorPopupFirstFontComboBox.Name = "SettingsThemeColorPopupFirstFontComboBox";
             SettingsThemeColorPopupFirstFontComboBox.ShowSymbolFontPreview = false;
-            SettingsThemeColorPopupFirstFontComboBox.Size = new Size(75, 24);
+            SettingsThemeColorPopupFirstFontComboBox.Size = new Size(173, 24);
             SettingsThemeColorPopupFirstFontComboBox.TabIndex = 1;
             SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ArrowButtonBackColor = Color.FromArgb(255, 255, 255);
             SettingsThemeColorPopupFirstFontComboBox.ThemeStyle.ScrollBarStyle.ArrowButtonBorderColor = Color.FromArgb(225, 225, 225);
@@ -2132,55 +2123,145 @@ namespace DamageCalculatorGUI
             // 
             SettingsThemeColorPopupThirdNumericUpDown.BeforeTouchSize = new Size(75, 23);
             SettingsThemeColorPopupThirdNumericUpDown.Location = new Point(6, 81);
+            SettingsThemeColorPopupThirdNumericUpDown.Maximum = new decimal(new int[] { 25, 0, 0, 0 });
             SettingsThemeColorPopupThirdNumericUpDown.Name = "SettingsThemeColorPopupThirdNumericUpDown";
             SettingsThemeColorPopupThirdNumericUpDown.Size = new Size(75, 23);
             SettingsThemeColorPopupThirdNumericUpDown.TabIndex = 3;
             // 
             // SettingThemeGroupBox
             // 
-            SettingThemeGroupBox.Controls.Add(SettingsThemeNameTextbox);
-            SettingThemeGroupBox.Controls.Add(SettingsThemeNameListbox);
-            SettingThemeGroupBox.Controls.Add(SettingsThemeMockupStatsGroupBox);
-            SettingThemeGroupBox.Controls.Add(SettingsThemeNameAddButton);
+            SettingThemeGroupBox.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             SettingThemeGroupBox.Controls.Add(SettingsThemeMockupTabControl);
-            SettingThemeGroupBox.Controls.Add(SettingsThemeNameDeleteButton);
-            SettingThemeGroupBox.Location = new Point(11, 3);
+            SettingThemeGroupBox.Controls.Add(panel2);
+            SettingThemeGroupBox.Location = new Point(3, 12);
             SettingThemeGroupBox.Name = "SettingThemeGroupBox";
-            SettingThemeGroupBox.Size = new Size(396, 275);
+            SettingThemeGroupBox.Size = new Size(505, 353);
             SettingThemeGroupBox.TabIndex = 0;
             SettingThemeGroupBox.TabStop = false;
             SettingThemeGroupBox.Text = "Theme";
             // 
-            // SettingsThemeNameTextbox
+            // SettingsThemeMockupTabControl
             // 
-            SettingsThemeNameTextbox.Location = new Point(8, 22);
-            SettingsThemeNameTextbox.Name = "SettingsThemeNameTextbox";
-            SettingsThemeNameTextbox.Size = new Size(120, 23);
-            SettingsThemeNameTextbox.TabIndex = 9;
+            SettingsThemeMockupTabControl.BeforeTouchSize = new Size(358, 324);
+            SettingsThemeMockupTabControl.Controls.Add(SettingsThemeMockupCalculatorTabPage);
+            SettingsThemeMockupTabControl.Controls.Add(SettingsThemeMockupSettingsTabPage);
+            SettingsThemeMockupTabControl.Location = new Point(139, 22);
+            SettingsThemeMockupTabControl.Name = "SettingsThemeMockupTabControl";
+            SettingsThemeMockupTabControl.Size = new Size(358, 324);
+            SettingsThemeMockupTabControl.TabIndex = 8;
+            SettingsThemeMockupTabControl.ThemeStyle.PrimitiveButtonStyle.DisabledNextPageImage = null;
+            SettingsThemeMockupTabControl.MouseClick += SettingsColorMockupClicked;
             // 
-            // SettingsThemeNameListbox
+            // SettingsThemeMockupCalculatorTabPage
             // 
-            SettingsThemeNameListbox.FormattingEnabled = true;
-            SettingsThemeNameListbox.ItemHeight = 15;
-            SettingsThemeNameListbox.Location = new Point(8, 80);
-            SettingsThemeNameListbox.Name = "SettingsThemeNameListbox";
-            SettingsThemeNameListbox.Size = new Size(120, 154);
-            SettingsThemeNameListbox.TabIndex = 1;
-            SettingsThemeNameListbox.SelectedIndexChanged += SettingsThemeNameListbox_SelectedIndexChanged;
+            SettingsThemeMockupCalculatorTabPage.AutoSize = true;
+            SettingsThemeMockupCalculatorTabPage.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            SettingsThemeMockupCalculatorTabPage.Controls.Add(SettingsThemeMockupGraphGroupBox);
+            SettingsThemeMockupCalculatorTabPage.Controls.Add(SettingsThemeMockupResultsGroupBox);
+            SettingsThemeMockupCalculatorTabPage.Controls.Add(SettingsThemeMockupStatsGroupBox);
+            SettingsThemeMockupCalculatorTabPage.Image = null;
+            SettingsThemeMockupCalculatorTabPage.ImageSize = new Size(16, 16);
+            SettingsThemeMockupCalculatorTabPage.Location = new Point(1, 27);
+            SettingsThemeMockupCalculatorTabPage.Name = "SettingsThemeMockupCalculatorTabPage";
+            SettingsThemeMockupCalculatorTabPage.Padding = new Padding(1);
+            SettingsThemeMockupCalculatorTabPage.ShowCloseButton = true;
+            SettingsThemeMockupCalculatorTabPage.Size = new Size(355, 295);
+            SettingsThemeMockupCalculatorTabPage.TabIndex = 2;
+            SettingsThemeMockupCalculatorTabPage.Text = "Calculator";
+            SettingsThemeMockupCalculatorTabPage.ThemesEnabled = false;
+            // 
+            // SettingsThemeMockupGraphGroupBox
+            // 
+            SettingsThemeMockupGraphGroupBox.Controls.Add(SettingsThemeMockupScottPlot);
+            SettingsThemeMockupGraphGroupBox.Location = new Point(114, 92);
+            SettingsThemeMockupGraphGroupBox.Name = "SettingsThemeMockupGraphGroupBox";
+            SettingsThemeMockupGraphGroupBox.Size = new Size(236, 195);
+            SettingsThemeMockupGraphGroupBox.TabIndex = 5;
+            SettingsThemeMockupGraphGroupBox.TabStop = false;
+            SettingsThemeMockupGraphGroupBox.Text = "Graph";
+            // 
+            // SettingsThemeMockupScottPlot
+            // 
+            SettingsThemeMockupScottPlot.AutoSize = true;
+            SettingsThemeMockupScottPlot.Dock = DockStyle.Fill;
+            SettingsThemeMockupScottPlot.Location = new Point(3, 19);
+            SettingsThemeMockupScottPlot.Margin = new Padding(1);
+            SettingsThemeMockupScottPlot.Name = "SettingsThemeMockupScottPlot";
+            SettingsThemeMockupScottPlot.Size = new Size(230, 173);
+            SettingsThemeMockupScottPlot.TabIndex = 3;
+            SettingsThemeMockupScottPlot.LeftClicked += SettingsThemeMockupScottPlot_LeftClick;
+            SettingsThemeMockupScottPlot.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupResultsGroupBox
+            // 
+            SettingsThemeMockupResultsGroupBox.AutoSize = true;
+            SettingsThemeMockupResultsGroupBox.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            SettingsThemeMockupResultsGroupBox.Controls.Add(SettingsThemeMockupResultsMedianTextBox);
+            SettingsThemeMockupResultsGroupBox.Controls.Add(SettingsThemeMockupResultsMeanTextBox);
+            SettingsThemeMockupResultsGroupBox.Controls.Add(SettingsThemeMockupResultsMeanLabel);
+            SettingsThemeMockupResultsGroupBox.Controls.Add(SettingsThemeMockupResultsMedianLabel);
+            SettingsThemeMockupResultsGroupBox.Location = new Point(114, 4);
+            SettingsThemeMockupResultsGroupBox.Name = "SettingsThemeMockupResultsGroupBox";
+            SettingsThemeMockupResultsGroupBox.Size = new Size(236, 82);
+            SettingsThemeMockupResultsGroupBox.TabIndex = 4;
+            SettingsThemeMockupResultsGroupBox.TabStop = false;
+            SettingsThemeMockupResultsGroupBox.Text = "Results";
+            // 
+            // SettingsThemeMockupResultsMedianTextBox
+            // 
+            SettingsThemeMockupResultsMedianTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            SettingsThemeMockupResultsMedianTextBox.BorderStyle = BorderStyle.FixedSingle;
+            SettingsThemeMockupResultsMedianTextBox.Location = new Point(136, 37);
+            SettingsThemeMockupResultsMedianTextBox.Name = "SettingsThemeMockupResultsMedianTextBox";
+            SettingsThemeMockupResultsMedianTextBox.ReadOnly = true;
+            SettingsThemeMockupResultsMedianTextBox.Size = new Size(94, 23);
+            SettingsThemeMockupResultsMedianTextBox.TabIndex = 0;
+            // 
+            // SettingsThemeMockupResultsMeanTextBox
+            // 
+            SettingsThemeMockupResultsMeanTextBox.BorderStyle = BorderStyle.FixedSingle;
+            SettingsThemeMockupResultsMeanTextBox.Location = new Point(6, 37);
+            SettingsThemeMockupResultsMeanTextBox.Name = "SettingsThemeMockupResultsMeanTextBox";
+            SettingsThemeMockupResultsMeanTextBox.ReadOnly = true;
+            SettingsThemeMockupResultsMeanTextBox.Size = new Size(94, 23);
+            SettingsThemeMockupResultsMeanTextBox.TabIndex = 0;
+            // 
+            // SettingsThemeMockupResultsMeanLabel
+            // 
+            SettingsThemeMockupResultsMeanLabel.AutoSize = true;
+            SettingsThemeMockupResultsMeanLabel.Location = new Point(6, 19);
+            SettingsThemeMockupResultsMeanLabel.Name = "SettingsThemeMockupResultsMeanLabel";
+            SettingsThemeMockupResultsMeanLabel.Size = new Size(37, 15);
+            SettingsThemeMockupResultsMeanLabel.TabIndex = 13;
+            SettingsThemeMockupResultsMeanLabel.Text = "Mean";
+            SettingsThemeMockupResultsMeanLabel.MouseClick += SettingsColorMockupClicked;
+            // 
+            // SettingsThemeMockupResultsMedianLabel
+            // 
+            SettingsThemeMockupResultsMedianLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            SettingsThemeMockupResultsMedianLabel.AutoSize = true;
+            SettingsThemeMockupResultsMedianLabel.Location = new Point(136, 19);
+            SettingsThemeMockupResultsMedianLabel.Name = "SettingsThemeMockupResultsMedianLabel";
+            SettingsThemeMockupResultsMedianLabel.Size = new Size(47, 15);
+            SettingsThemeMockupResultsMedianLabel.TabIndex = 13;
+            SettingsThemeMockupResultsMedianLabel.Text = "Median";
+            SettingsThemeMockupResultsMedianLabel.MouseClick += SettingsColorMockupClicked;
             // 
             // SettingsThemeMockupStatsGroupBox
             // 
+            SettingsThemeMockupStatsGroupBox.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupListRemoveButton);
-            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupListAddButton);
             SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupWeaponTraitTextBox);
-            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupCritDieCountLabel);
-            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupWeaponTraitLabel);
-            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupWeaponTraitCheckbox);
-            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupCritDieCountNumericUpDown);
             SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupListBox);
-            SettingsThemeMockupStatsGroupBox.Location = new Point(138, 49);
+            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupListAddButton);
+            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupCritDieCountNumericUpDown);
+            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupWeaponTraitCheckbox);
+            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupWeaponTraitLabel);
+            SettingsThemeMockupStatsGroupBox.Controls.Add(SettingsThemeMockupCritDieCountLabel);
+            SettingsThemeMockupStatsGroupBox.Location = new Point(4, 4);
             SettingsThemeMockupStatsGroupBox.Name = "SettingsThemeMockupStatsGroupBox";
-            SettingsThemeMockupStatsGroupBox.Size = new Size(98, 215);
+            SettingsThemeMockupStatsGroupBox.Padding = new Padding(0);
+            SettingsThemeMockupStatsGroupBox.Size = new Size(104, 283);
             SettingsThemeMockupStatsGroupBox.TabIndex = 1;
             SettingsThemeMockupStatsGroupBox.TabStop = false;
             SettingsThemeMockupStatsGroupBox.Text = "Stats";
@@ -2188,185 +2269,92 @@ namespace DamageCalculatorGUI
             // SettingsThemeMockupListRemoveButton
             // 
             SettingsThemeMockupListRemoveButton.FlatStyle = FlatStyle.Popup;
-            SettingsThemeMockupListRemoveButton.Location = new Point(8, 186);
+            SettingsThemeMockupListRemoveButton.Location = new Point(3, 255);
+            SettingsThemeMockupListRemoveButton.Margin = new Padding(3, 3, 3, 0);
             SettingsThemeMockupListRemoveButton.Name = "SettingsThemeMockupListRemoveButton";
-            SettingsThemeMockupListRemoveButton.Size = new Size(80, 23);
+            SettingsThemeMockupListRemoveButton.Size = new Size(97, 23);
             SettingsThemeMockupListRemoveButton.TabIndex = 6;
             SettingsThemeMockupListRemoveButton.Text = "Remove";
             SettingsThemeMockupListRemoveButton.UseVisualStyleBackColor = true;
             SettingsThemeMockupListRemoveButton.MouseClick += SettingsColorMockupClicked;
             // 
-            // SettingsThemeMockupListAddButton
-            // 
-            SettingsThemeMockupListAddButton.FlatStyle = FlatStyle.Popup;
-            SettingsThemeMockupListAddButton.Location = new Point(8, 162);
-            SettingsThemeMockupListAddButton.Name = "SettingsThemeMockupListAddButton";
-            SettingsThemeMockupListAddButton.Size = new Size(80, 23);
-            SettingsThemeMockupListAddButton.TabIndex = 5;
-            SettingsThemeMockupListAddButton.Text = "Add";
-            SettingsThemeMockupListAddButton.UseVisualStyleBackColor = true;
-            SettingsThemeMockupListAddButton.MouseClick += SettingsColorMockupClicked;
-            // 
             // SettingsThemeMockupWeaponTraitTextBox
             // 
             SettingsThemeMockupWeaponTraitTextBox.BorderStyle = BorderStyle.FixedSingle;
-            SettingsThemeMockupWeaponTraitTextBox.Location = new Point(8, 36);
+            SettingsThemeMockupWeaponTraitTextBox.Location = new Point(3, 37);
+            SettingsThemeMockupWeaponTraitTextBox.Margin = new Padding(3, 0, 3, 3);
             SettingsThemeMockupWeaponTraitTextBox.MaxLength = 3;
             SettingsThemeMockupWeaponTraitTextBox.Name = "SettingsThemeMockupWeaponTraitTextBox";
-            SettingsThemeMockupWeaponTraitTextBox.Size = new Size(78, 23);
+            SettingsThemeMockupWeaponTraitTextBox.Size = new Size(97, 23);
             SettingsThemeMockupWeaponTraitTextBox.TabIndex = 2;
             SettingsThemeMockupWeaponTraitTextBox.MouseClick += SettingsColorMockupClicked;
-            // 
-            // SettingsThemeMockupCritDieCountLabel
-            // 
-            SettingsThemeMockupCritDieCountLabel.AutoSize = true;
-            SettingsThemeMockupCritDieCountLabel.Location = new Point(6, 62);
-            SettingsThemeMockupCritDieCountLabel.Name = "SettingsThemeMockupCritDieCountLabel";
-            SettingsThemeMockupCritDieCountLabel.Size = new Size(82, 15);
-            SettingsThemeMockupCritDieCountLabel.TabIndex = 13;
-            SettingsThemeMockupCritDieCountLabel.Text = "Crit Die Count";
-            SettingsThemeMockupCritDieCountLabel.MouseClick += SettingsColorMockupClicked;
-            // 
-            // SettingsThemeMockupWeaponTraitLabel
-            // 
-            SettingsThemeMockupWeaponTraitLabel.AutoSize = true;
-            SettingsThemeMockupWeaponTraitLabel.Location = new Point(20, 18);
-            SettingsThemeMockupWeaponTraitLabel.Name = "SettingsThemeMockupWeaponTraitLabel";
-            SettingsThemeMockupWeaponTraitLabel.Size = new Size(76, 15);
-            SettingsThemeMockupWeaponTraitLabel.TabIndex = 13;
-            SettingsThemeMockupWeaponTraitLabel.Text = "Weapon Trait";
-            SettingsThemeMockupWeaponTraitLabel.MouseClick += SettingsColorMockupClicked;
-            // 
-            // SettingsThemeMockupWeaponTraitCheckbox
-            // 
-            SettingsThemeMockupWeaponTraitCheckbox.AutoSize = true;
-            SettingsThemeMockupWeaponTraitCheckbox.FlatStyle = FlatStyle.Popup;
-            SettingsThemeMockupWeaponTraitCheckbox.Location = new Point(7, 20);
-            SettingsThemeMockupWeaponTraitCheckbox.Name = "SettingsThemeMockupWeaponTraitCheckbox";
-            SettingsThemeMockupWeaponTraitCheckbox.Size = new Size(13, 12);
-            SettingsThemeMockupWeaponTraitCheckbox.TabIndex = 1;
-            SettingsThemeMockupWeaponTraitCheckbox.UseVisualStyleBackColor = true;
-            SettingsThemeMockupWeaponTraitCheckbox.MouseClick += SettingsColorMockupClicked;
-            // 
-            // SettingsThemeMockupCritDieCountNumericUpDown
-            // 
-            SettingsThemeMockupCritDieCountNumericUpDown.BackColor = SystemColors.Window;
-            SettingsThemeMockupCritDieCountNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
-            SettingsThemeMockupCritDieCountNumericUpDown.Location = new Point(8, 80);
-            SettingsThemeMockupCritDieCountNumericUpDown.Name = "SettingsThemeMockupCritDieCountNumericUpDown";
-            SettingsThemeMockupCritDieCountNumericUpDown.Size = new Size(80, 23);
-            SettingsThemeMockupCritDieCountNumericUpDown.TabIndex = 3;
-            SettingsThemeMockupCritDieCountNumericUpDown.MouseClick += SettingsColorMockupClicked;
             // 
             // SettingsThemeMockupListBox
             // 
             SettingsThemeMockupListBox.BorderStyle = BorderStyle.FixedSingle;
             SettingsThemeMockupListBox.FormattingEnabled = true;
             SettingsThemeMockupListBox.ItemHeight = 15;
-            SettingsThemeMockupListBox.Location = new Point(8, 109);
+            SettingsThemeMockupListBox.Location = new Point(3, 113);
             SettingsThemeMockupListBox.Name = "SettingsThemeMockupListBox";
-            SettingsThemeMockupListBox.Size = new Size(81, 47);
+            SettingsThemeMockupListBox.Size = new Size(97, 107);
             SettingsThemeMockupListBox.TabIndex = 4;
             SettingsThemeMockupListBox.MouseClick += SettingsColorMockupClicked;
             // 
-            // SettingsThemeNameAddButton
+            // SettingsThemeMockupListAddButton
             // 
-            SettingsThemeNameAddButton.FlatStyle = FlatStyle.Popup;
-            SettingsThemeNameAddButton.Location = new Point(8, 51);
-            SettingsThemeNameAddButton.Name = "SettingsThemeNameAddButton";
-            SettingsThemeNameAddButton.Size = new Size(120, 23);
-            SettingsThemeNameAddButton.TabIndex = 3;
-            SettingsThemeNameAddButton.Text = "Create New Theme";
-            SettingsThemeNameAddButton.UseVisualStyleBackColor = true;
-            SettingsThemeNameAddButton.MouseClick += SettingsThemeNameAddButton_MouseClick;
+            SettingsThemeMockupListAddButton.FlatStyle = FlatStyle.Popup;
+            SettingsThemeMockupListAddButton.Location = new Point(3, 226);
+            SettingsThemeMockupListAddButton.Name = "SettingsThemeMockupListAddButton";
+            SettingsThemeMockupListAddButton.Size = new Size(98, 23);
+            SettingsThemeMockupListAddButton.TabIndex = 5;
+            SettingsThemeMockupListAddButton.Text = "Add";
+            SettingsThemeMockupListAddButton.UseVisualStyleBackColor = true;
+            SettingsThemeMockupListAddButton.MouseClick += SettingsColorMockupClicked;
             // 
-            // SettingsThemeMockupTabControl
+            // SettingsThemeMockupCritDieCountNumericUpDown
             // 
-            SettingsThemeMockupTabControl.BeforeTouchSize = new Size(258, 247);
-            SettingsThemeMockupTabControl.Controls.Add(SettingsThemeMockupCalculatorTabPage);
-            SettingsThemeMockupTabControl.Controls.Add(SettingsThemeMockupSettingsTabPage);
-            SettingsThemeMockupTabControl.Enabled = false;
-            SettingsThemeMockupTabControl.Location = new Point(133, 22);
-            SettingsThemeMockupTabControl.Name = "SettingsThemeMockupTabControl";
-            SettingsThemeMockupTabControl.Size = new Size(258, 247);
-            SettingsThemeMockupTabControl.TabIndex = 8;
-            SettingsThemeMockupTabControl.MouseClick += SettingsColorMockupClicked;
+            SettingsThemeMockupCritDieCountNumericUpDown.BackColor = SystemColors.Window;
+            SettingsThemeMockupCritDieCountNumericUpDown.BorderStyle = BorderStyle.FixedSingle;
+            SettingsThemeMockupCritDieCountNumericUpDown.Location = new Point(3, 84);
+            SettingsThemeMockupCritDieCountNumericUpDown.Margin = new Padding(3, 0, 3, 3);
+            SettingsThemeMockupCritDieCountNumericUpDown.Name = "SettingsThemeMockupCritDieCountNumericUpDown";
+            SettingsThemeMockupCritDieCountNumericUpDown.Size = new Size(97, 23);
+            SettingsThemeMockupCritDieCountNumericUpDown.TabIndex = 3;
+            SettingsThemeMockupCritDieCountNumericUpDown.MouseClick += SettingsColorMockupClicked;
             // 
-            // SettingsThemeMockupCalculatorTabPage
+            // SettingsThemeMockupWeaponTraitCheckbox
             // 
-            SettingsThemeMockupCalculatorTabPage.Controls.Add(SettingsThemeMockupScottPlot);
-            SettingsThemeMockupCalculatorTabPage.Controls.Add(SettingsThemeMockupResultsGroupBox);
-            SettingsThemeMockupCalculatorTabPage.Image = null;
-            SettingsThemeMockupCalculatorTabPage.ImageSize = new Size(16, 16);
-            SettingsThemeMockupCalculatorTabPage.Location = new Point(1, 27);
-            SettingsThemeMockupCalculatorTabPage.Name = "SettingsThemeMockupCalculatorTabPage";
-            SettingsThemeMockupCalculatorTabPage.ShowCloseButton = true;
-            SettingsThemeMockupCalculatorTabPage.Size = new Size(255, 218);
-            SettingsThemeMockupCalculatorTabPage.TabIndex = 2;
-            SettingsThemeMockupCalculatorTabPage.Text = "Calculator";
-            SettingsThemeMockupCalculatorTabPage.ThemesEnabled = false;
+            SettingsThemeMockupWeaponTraitCheckbox.AutoSize = true;
+            SettingsThemeMockupWeaponTraitCheckbox.FlatStyle = FlatStyle.Popup;
+            SettingsThemeMockupWeaponTraitCheckbox.Location = new Point(3, 22);
+            SettingsThemeMockupWeaponTraitCheckbox.Margin = new Padding(3, 3, 0, 3);
+            SettingsThemeMockupWeaponTraitCheckbox.Name = "SettingsThemeMockupWeaponTraitCheckbox";
+            SettingsThemeMockupWeaponTraitCheckbox.Size = new Size(13, 12);
+            SettingsThemeMockupWeaponTraitCheckbox.TabIndex = 1;
+            SettingsThemeMockupWeaponTraitCheckbox.UseVisualStyleBackColor = true;
+            SettingsThemeMockupWeaponTraitCheckbox.MouseClick += SettingsColorMockupClicked;
             // 
-            // SettingsThemeMockupScottPlot
+            // SettingsThemeMockupWeaponTraitLabel
             // 
-            SettingsThemeMockupScottPlot.Location = new Point(103, 68);
-            SettingsThemeMockupScottPlot.Margin = new Padding(0);
-            SettingsThemeMockupScottPlot.Name = "SettingsThemeMockupScottPlot";
-            SettingsThemeMockupScottPlot.Size = new Size(152, 147);
-            SettingsThemeMockupScottPlot.TabIndex = 3;
-            SettingsThemeMockupScottPlot.MouseClick += SettingsColorMockupClicked;
+            SettingsThemeMockupWeaponTraitLabel.AutoSize = true;
+            SettingsThemeMockupWeaponTraitLabel.Location = new Point(16, 19);
+            SettingsThemeMockupWeaponTraitLabel.Margin = new Padding(0, 3, 3, 3);
+            SettingsThemeMockupWeaponTraitLabel.Name = "SettingsThemeMockupWeaponTraitLabel";
+            SettingsThemeMockupWeaponTraitLabel.Size = new Size(76, 15);
+            SettingsThemeMockupWeaponTraitLabel.TabIndex = 13;
+            SettingsThemeMockupWeaponTraitLabel.Text = "Weapon Trait";
+            SettingsThemeMockupWeaponTraitLabel.MouseClick += SettingsColorMockupClicked;
             // 
-            // SettingsThemeMockupResultsGroupBox
+            // SettingsThemeMockupCritDieCountLabel
             // 
-            SettingsThemeMockupResultsGroupBox.Controls.Add(SettingsThemeMockupMedianLabel);
-            SettingsThemeMockupResultsGroupBox.Controls.Add(SettingsThemeMockupMedianTextBox);
-            SettingsThemeMockupResultsGroupBox.Controls.Add(SettingsThemeMockupMeanLabel);
-            SettingsThemeMockupResultsGroupBox.Controls.Add(SettingsThemeMockupMeanTextBox);
-            SettingsThemeMockupResultsGroupBox.Location = new Point(106, 0);
-            SettingsThemeMockupResultsGroupBox.Name = "SettingsThemeMockupResultsGroupBox";
-            SettingsThemeMockupResultsGroupBox.Size = new Size(143, 65);
-            SettingsThemeMockupResultsGroupBox.TabIndex = 2;
-            SettingsThemeMockupResultsGroupBox.TabStop = false;
-            SettingsThemeMockupResultsGroupBox.Text = "Results";
-            // 
-            // SettingsThemeMockupMedianLabel
-            // 
-            SettingsThemeMockupMedianLabel.AutoSize = true;
-            SettingsThemeMockupMedianLabel.Location = new Point(74, 18);
-            SettingsThemeMockupMedianLabel.Name = "SettingsThemeMockupMedianLabel";
-            SettingsThemeMockupMedianLabel.Size = new Size(47, 15);
-            SettingsThemeMockupMedianLabel.TabIndex = 1;
-            SettingsThemeMockupMedianLabel.Text = "Median";
-            SettingsThemeMockupMedianLabel.MouseClick += SettingsColorMockupClicked;
-            // 
-            // SettingsThemeMockupMedianTextBox
-            // 
-            SettingsThemeMockupMedianTextBox.BorderStyle = BorderStyle.FixedSingle;
-            SettingsThemeMockupMedianTextBox.Location = new Point(74, 35);
-            SettingsThemeMockupMedianTextBox.Name = "SettingsThemeMockupMedianTextBox";
-            SettingsThemeMockupMedianTextBox.ReadOnly = true;
-            SettingsThemeMockupMedianTextBox.Size = new Size(63, 23);
-            SettingsThemeMockupMedianTextBox.TabIndex = 2;
-            SettingsThemeMockupMedianTextBox.MouseClick += SettingsColorMockupClicked;
-            // 
-            // SettingsThemeMockupMeanLabel
-            // 
-            SettingsThemeMockupMeanLabel.AutoSize = true;
-            SettingsThemeMockupMeanLabel.Location = new Point(6, 18);
-            SettingsThemeMockupMeanLabel.Name = "SettingsThemeMockupMeanLabel";
-            SettingsThemeMockupMeanLabel.Size = new Size(37, 15);
-            SettingsThemeMockupMeanLabel.TabIndex = 1;
-            SettingsThemeMockupMeanLabel.Text = "Mean";
-            SettingsThemeMockupMeanLabel.MouseClick += SettingsColorMockupClicked;
-            // 
-            // SettingsThemeMockupMeanTextBox
-            // 
-            SettingsThemeMockupMeanTextBox.BorderStyle = BorderStyle.FixedSingle;
-            SettingsThemeMockupMeanTextBox.Location = new Point(6, 35);
-            SettingsThemeMockupMeanTextBox.Name = "SettingsThemeMockupMeanTextBox";
-            SettingsThemeMockupMeanTextBox.ReadOnly = true;
-            SettingsThemeMockupMeanTextBox.Size = new Size(63, 23);
-            SettingsThemeMockupMeanTextBox.TabIndex = 1;
-            SettingsThemeMockupMeanTextBox.MouseClick += SettingsColorMockupClicked;
+            SettingsThemeMockupCritDieCountLabel.AutoSize = true;
+            SettingsThemeMockupCritDieCountLabel.Location = new Point(3, 66);
+            SettingsThemeMockupCritDieCountLabel.Margin = new Padding(3);
+            SettingsThemeMockupCritDieCountLabel.Name = "SettingsThemeMockupCritDieCountLabel";
+            SettingsThemeMockupCritDieCountLabel.Size = new Size(82, 15);
+            SettingsThemeMockupCritDieCountLabel.TabIndex = 13;
+            SettingsThemeMockupCritDieCountLabel.Text = "Crit Die Count";
+            SettingsThemeMockupCritDieCountLabel.MouseClick += SettingsColorMockupClicked;
             // 
             // SettingsThemeMockupSettingsTabPage
             // 
@@ -2375,20 +2363,118 @@ namespace DamageCalculatorGUI
             SettingsThemeMockupSettingsTabPage.Location = new Point(1, 27);
             SettingsThemeMockupSettingsTabPage.Name = "SettingsThemeMockupSettingsTabPage";
             SettingsThemeMockupSettingsTabPage.ShowCloseButton = true;
-            SettingsThemeMockupSettingsTabPage.Size = new Size(255, 218);
+            SettingsThemeMockupSettingsTabPage.Size = new Size(355, 295);
             SettingsThemeMockupSettingsTabPage.TabIndex = 1;
             SettingsThemeMockupSettingsTabPage.Text = "Settings";
             SettingsThemeMockupSettingsTabPage.ThemesEnabled = false;
             // 
+            // panel2
+            // 
+            panel2.Controls.Add(SettingsThemeNameTextbox);
+            panel2.Controls.Add(SettingsThemeNameEditButton);
+            panel2.Controls.Add(SettingsThemeNameSaveButton);
+            panel2.Controls.Add(SettingsThemeNameDeleteButton);
+            panel2.Controls.Add(SettingsThemeNameAddButton);
+            panel2.Controls.Add(SettingsThemeNameListbox);
+            panel2.Location = new Point(6, 22);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(127, 317);
+            panel2.TabIndex = 1;
+            // 
+            // SettingsThemeNameTextbox
+            // 
+            SettingsThemeNameTextbox.Location = new Point(0, 31);
+            SettingsThemeNameTextbox.Margin = new Padding(0, 3, 0, 3);
+            SettingsThemeNameTextbox.Name = "SettingsThemeNameTextbox";
+            SettingsThemeNameTextbox.Size = new Size(127, 23);
+            SettingsThemeNameTextbox.TabIndex = 2;
+            // 
+            // SettingsThemeNameEditButton
+            // 
+            SettingsThemeNameEditButton.FlatStyle = FlatStyle.Popup;
+            SettingsThemeNameEditButton.Location = new Point(0, 235);
+            SettingsThemeNameEditButton.Margin = new Padding(0, 3, 0, 0);
+            SettingsThemeNameEditButton.MinimumSize = new Size(120, 25);
+            SettingsThemeNameEditButton.Name = "SettingsThemeNameEditButton";
+            SettingsThemeNameEditButton.Size = new Size(127, 25);
+            SettingsThemeNameEditButton.TabIndex = 4;
+            SettingsThemeNameEditButton.Text = "Load Selected";
+            SettingsThemeNameEditButton.UseVisualStyleBackColor = true;
+            SettingsThemeNameEditButton.MouseClick += SettingsThemeNameLoadButton_MouseClick;
+            // 
+            // SettingsThemeNameSaveButton
+            // 
+            SettingsThemeNameSaveButton.FlatStyle = FlatStyle.Popup;
+            SettingsThemeNameSaveButton.Location = new Point(0, 291);
+            SettingsThemeNameSaveButton.Margin = new Padding(0, 3, 0, 0);
+            SettingsThemeNameSaveButton.MinimumSize = new Size(120, 25);
+            SettingsThemeNameSaveButton.Name = "SettingsThemeNameSaveButton";
+            SettingsThemeNameSaveButton.Size = new Size(127, 25);
+            SettingsThemeNameSaveButton.TabIndex = 4;
+            SettingsThemeNameSaveButton.Text = "Save To Selected";
+            SettingsThemeNameSaveButton.UseVisualStyleBackColor = true;
+            SettingsThemeNameSaveButton.MouseClick += SettingsThemeNameSaveButton_MouseClick;
+            // 
             // SettingsThemeNameDeleteButton
             // 
             SettingsThemeNameDeleteButton.FlatStyle = FlatStyle.Popup;
-            SettingsThemeNameDeleteButton.Location = new Point(8, 240);
+            SettingsThemeNameDeleteButton.Location = new Point(0, 263);
+            SettingsThemeNameDeleteButton.Margin = new Padding(0, 3, 0, 0);
+            SettingsThemeNameDeleteButton.MinimumSize = new Size(120, 25);
             SettingsThemeNameDeleteButton.Name = "SettingsThemeNameDeleteButton";
-            SettingsThemeNameDeleteButton.Size = new Size(120, 23);
-            SettingsThemeNameDeleteButton.TabIndex = 2;
-            SettingsThemeNameDeleteButton.Text = "Delete";
+            SettingsThemeNameDeleteButton.Size = new Size(127, 25);
+            SettingsThemeNameDeleteButton.TabIndex = 4;
+            SettingsThemeNameDeleteButton.Text = "Delete Selected";
             SettingsThemeNameDeleteButton.UseVisualStyleBackColor = true;
+            SettingsThemeNameDeleteButton.MouseClick += SettingsThemeNameDeleteButton_MouseClick;
+            // 
+            // SettingsThemeNameAddButton
+            // 
+            SettingsThemeNameAddButton.FlatStyle = FlatStyle.Popup;
+            SettingsThemeNameAddButton.Location = new Point(0, 0);
+            SettingsThemeNameAddButton.Margin = new Padding(0, 3, 0, 3);
+            SettingsThemeNameAddButton.Name = "SettingsThemeNameAddButton";
+            SettingsThemeNameAddButton.Size = new Size(127, 25);
+            SettingsThemeNameAddButton.TabIndex = 1;
+            SettingsThemeNameAddButton.Text = "Create New Theme";
+            SettingsThemeNameAddButton.UseVisualStyleBackColor = true;
+            SettingsThemeNameAddButton.MouseClick += SettingsThemeNameAddButton_MouseClick;
+            // 
+            // SettingsThemeNameListbox
+            // 
+            SettingsThemeNameListbox.FormattingEnabled = true;
+            SettingsThemeNameListbox.ItemHeight = 15;
+            SettingsThemeNameListbox.Location = new Point(0, 60);
+            SettingsThemeNameListbox.Margin = new Padding(0, 3, 0, 3);
+            SettingsThemeNameListbox.Name = "SettingsThemeNameListbox";
+            SettingsThemeNameListbox.Size = new Size(127, 169);
+            SettingsThemeNameListbox.TabIndex = 3;
+            SettingsThemeNameListbox.SelectedIndexChanged += SettingsThemeNameListbox_SelectedIndexChanged;
+            // 
+            // CalculatorTabPage
+            // 
+            CalculatorTabPage.Controls.Add(CalculatorVersionLabel);
+            CalculatorTabPage.Controls.Add(CalculatorEncounterStatisticsGroupBox);
+            CalculatorTabPage.Controls.Add(CalculatorMiscStatisticsGroupBox);
+            CalculatorTabPage.Controls.Add(CalculatorSettingsGroupBox);
+            CalculatorTabPage.Controls.Add(CalculatorBatchComputePopupPanel);
+            CalculatorTabPage.Controls.Add(CalculatorEMELabel);
+            CalculatorTabPage.Controls.Add(CalculatorBCLGLabel);
+            CalculatorTabPage.Controls.Add(CalculatorDamageDistributionScottPlot);
+            CalculatorTabPage.Controls.Add(CalculatorBatchComputeButton);
+            CalculatorTabPage.Controls.Add(CalculatorWarningLabel);
+            CalculatorTabPage.Controls.Add(CalculatorDefaultSettingsButton);
+            CalculatorTabPage.Controls.Add(CalculatorBatchComputeScottPlot);
+            CalculatorTabPage.Controls.Add(CalculatorBatchComputeLayerViewControlGroupBox);
+            CalculatorTabPage.Image = null;
+            CalculatorTabPage.ImageSize = new Size(16, 16);
+            CalculatorTabPage.Location = new Point(1, 25);
+            CalculatorTabPage.Name = "CalculatorTabPage";
+            CalculatorTabPage.ShowCloseButton = true;
+            CalculatorTabPage.Size = new Size(981, 444);
+            CalculatorTabPage.TabIndex = 1;
+            CalculatorTabPage.Text = "Calculator";
+            CalculatorTabPage.ThemesEnabled = false;
             // 
             // GeneratorTabPage
             // 
@@ -2399,10 +2485,10 @@ namespace DamageCalculatorGUI
             GeneratorTabPage.Controls.Add(button6);
             GeneratorTabPage.Image = null;
             GeneratorTabPage.ImageSize = new Size(16, 16);
-            GeneratorTabPage.Location = new Point(1, 27);
+            GeneratorTabPage.Location = new Point(1, 25);
             GeneratorTabPage.Name = "GeneratorTabPage";
             GeneratorTabPage.ShowCloseButton = true;
-            GeneratorTabPage.Size = new Size(981, 441);
+            GeneratorTabPage.Size = new Size(981, 444);
             GeneratorTabPage.TabIndex = 2;
             GeneratorTabPage.Text = "Generator";
             GeneratorTabPage.ThemesEnabled = false;
@@ -2617,6 +2703,8 @@ namespace DamageCalculatorGUI
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             IconSize = new Size(24, 24);
+            MinimizeBox = false;
+            MinimumSize = new Size(984, 510);
             Name = "CalculatorWindow";
             Padding = new Padding(0);
             Style.BackColor = SystemColors.ActiveBorder;
@@ -2624,6 +2712,7 @@ namespace DamageCalculatorGUI
             Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
             Style.ShadowOpacity = 0;
             Text = "Pickings for Kurtulmak";
+            FormClosing += CalculatorWindow_FormClosing;
             Load += CalculatorWindowLoad;
             CalculatorMiscStatisticsGroupBox.ResumeLayout(false);
             CalculatorMiscStatisticsGroupBox.PerformLayout();
@@ -2659,22 +2748,28 @@ namespace DamageCalculatorGUI
             CalculatorBatchComputeLayerViewControlGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)MainTabControl).EndInit();
             MainTabControl.ResumeLayout(false);
-            CalculatorTabPage.ResumeLayout(false);
-            CalculatorTabPage.PerformLayout();
+            MainTabControl.PerformLayout();
             SettingsTabPage.ResumeLayout(false);
             SettingsThemeColorPopupGroupbox.ResumeLayout(false);
             SettingsThemeColorPopupGroupbox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)SettingsThemeColorPopupThirdNumericUpDown).EndInit();
             SettingThemeGroupBox.ResumeLayout(false);
-            SettingThemeGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)SettingsThemeMockupTabControl).EndInit();
+            SettingsThemeMockupTabControl.ResumeLayout(false);
+            SettingsThemeMockupTabControl.PerformLayout();
+            SettingsThemeMockupCalculatorTabPage.ResumeLayout(false);
+            SettingsThemeMockupCalculatorTabPage.PerformLayout();
+            SettingsThemeMockupGraphGroupBox.ResumeLayout(false);
+            SettingsThemeMockupGraphGroupBox.PerformLayout();
+            SettingsThemeMockupResultsGroupBox.ResumeLayout(false);
+            SettingsThemeMockupResultsGroupBox.PerformLayout();
             SettingsThemeMockupStatsGroupBox.ResumeLayout(false);
             SettingsThemeMockupStatsGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)SettingsThemeMockupCritDieCountNumericUpDown).EndInit();
-            ((System.ComponentModel.ISupportInitialize)SettingsThemeMockupTabControl).EndInit();
-            SettingsThemeMockupTabControl.ResumeLayout(false);
-            SettingsThemeMockupCalculatorTabPage.ResumeLayout(false);
-            SettingsThemeMockupResultsGroupBox.ResumeLayout(false);
-            SettingsThemeMockupResultsGroupBox.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            CalculatorTabPage.ResumeLayout(false);
+            CalculatorTabPage.PerformLayout();
             GeneratorTabPage.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
@@ -2886,5 +2981,17 @@ namespace DamageCalculatorGUI
         private Button SettingsThemeColorPopupXButton;
         private Syncfusion.Windows.Forms.Tools.NumericUpDownExt SettingsThemeColorPopupThirdNumericUpDown;
         private Syncfusion.Windows.Forms.Tools.FontComboBox SettingsThemeColorPopupFirstFontComboBox;
+        private GroupBox groupBox4;
+        private Label label8;
+        private Label label7;
+        private TextBox textBox2;
+        private TextBox SettingsThemeMockupResultsMeanTextBox;
+        private TextBox SettingsThemeMockupResultsMedianTextBox;
+        private Label SettingsThemeMockupResultsMedianLabel;
+        private Label SettingsThemeMockupResultsMeanLabel;
+        private GroupBox SettingsThemeMockupGraphGroupBox;
+        private Panel panel2;
+        private Button SettingsThemeNameSaveButton;
+        private Button SettingsThemeNameEditButton;
     }
 }

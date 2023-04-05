@@ -13,6 +13,11 @@ using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
 using Syncfusion.Windows.Forms;
+using System.Drawing.Text;
+using ScottPlot.Plottable;
+using ScottPlot.Renderable;
+using ScottPlot.Drawing.Colormaps;
+using System.Text.Json.Serialization;
 
 namespace DamageCalculatorGUI
 {
@@ -29,17 +34,20 @@ namespace DamageCalculatorGUI
             // Load Color Palettes
             if (!ReadColorPalettes())
             { // Store the a default color palette
-                if (colorPalettes.TryAdd(key: "pf2e", value: PFKColorPalette.GetDefaultPalette("pf2e")))
+                if (!colorPalettes.ContainsKey("pf2e"))
                 {
-                    WriteColorPalette(colorPalettes["pf2e"]);
+                    colorPalettes.Add(key: "pf2e", value: PFKColorPalette.GetDefaultPalette("pf2e"));
+                    WriteColorPalette(colorPalettes["pf2e"], "pf2e");
                 }
-                if (colorPalettes.TryAdd(key: "gray", value: PFKColorPalette.GetDefaultPalette("gray")))
+                if (!colorPalettes.ContainsKey("light"))
                 {
-                    WriteColorPalette(colorPalettes["gray"]);
+                    colorPalettes.TryAdd(key: "light", value: PFKColorPalette.GetDefaultPalette("light"));
+                    WriteColorPalette(colorPalettes["light"], "light");
                 }
-                if (colorPalettes.TryAdd(key: "dark", value: PFKColorPalette.GetDefaultPalette("dark")))
+                if (!colorPalettes.ContainsKey("dark"))
                 {
-                    WriteColorPalette(colorPalettes["dark"]);
+                    colorPalettes.TryAdd(key: "dark", value: PFKColorPalette.GetDefaultPalette("dark"));
+                    WriteColorPalette(colorPalettes["dark"], "dark");
                 }
             }
 
@@ -48,16 +56,18 @@ namespace DamageCalculatorGUI
             { // Generate default settings if none found/couldn't read properly
                 PFKSettings = new()
                 {
-                    currentColorPallete = colorPalettes.ElementAt(0).Value
+                    CurrentColorPallete = colorPalettes.ElementAt(0).Value
                 };
                 WriteSettings();
             }
             else
             { // Double-check loaded settings for erroneous data
-                if (PFKSettings.currentColorPallete is null || !colorPalettes.ContainsKey(PFKSettings.currentColorPallete.PaletteName))
-                { // Catch bad palette data and load default
-                    PFKSettings.currentColorPallete = colorPalettes.ElementAt(0).Value;
+                if (PFKSettings.CurrentColorPallete is null)
+                { // Catch bad palette data and load default (top of the list)
+                    LoadColorPallete(colorPalettes.OrderBy(paletteKVP => paletteKVP.Key)
+                                                  .First().Value);
                 }
+                // Else: Nothing to do, as ReadSettings() succeeding is a win.
             }
 
             // Set graph appearances to be something normal
@@ -95,16 +105,19 @@ namespace DamageCalculatorGUI
 
             // Reset the UI
             currEncounterSettings.ResetSettings();
-            LoadColorPallete("pf2e");
             ApplyCurrentColorPallete();
             ReloadVisuals(currEncounterSettings);
 
             // Update the graphs to fix some scuffed rendering problems
-            CalculatorBatchComputeScottPlot.Render();
-            CalculatorDamageDistributionScottPlot.Render();
+            CalculatorBatchComputeScottPlot.Refresh();
+            CalculatorDamageDistributionScottPlot.Refresh();
 
             // Load to the Settings UI
             UpdateSettingsThemesListbox();
+        }
+        private void CalculatorWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            WriteSettings();
         }
 
         // Current UI Settings
@@ -330,18 +343,18 @@ namespace DamageCalculatorGUI
         public struct EncounterSettings
         {
             // Damage Computation Variables
-            public int number_of_encounters = 10000;
-            public int rounds_per_encounter = 6;
-            public RoundActions actions_per_round = default;
-            public int magazine_size = 0;
-            public int reload = 0;
-            public int long_reload = 0;
-            public int draw = 0;
+            public int number_of_encounters = 10000; // Total rounds to simulate
+            public int rounds_per_encounter = 6; // Rounds per simulated encounter
+            public RoundActions actions_per_round = default; // Actions per round
+            public int magazine_size = 0; // Number of shots per Long Reload
+            public int reload = 0; // Actions to reload each shot
+            public int long_reload = 0; // Actions to reload the magazine.
+            public int draw = 0; // Actions to draw the weapon.
             public List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>> damage_dice = new(); // List of <X, Y. Z> <M, N, O> where XDY+Z, on crit MDN+O
             public int bonus_to_hit = 0; // Bonus added to-hit.
             public int AC = 0; // AC to test against. Tie attack roll hits.
             public int crit_threshhold = 0; // Raw attack roll at and above this critically strike.
-            public int MAP_modifier = 0; // Modifier applied to MAP. By default 0 and thus -5, -10.
+            public int MAP_modifier = 0; // Modifier applied to MAP. By default 0 and thus -5+(0), -10+(0) per strike.
             public int engagement_range = 0; // Range to start the combat encounter at.
             public int move_speed = 0; // Distance covered by Stride.
             public bool seek_favorable_range = false; // Whether to Stride to an optimal firing position before firing.
@@ -458,13 +471,13 @@ namespace DamageCalculatorGUI
                     }
 
                     // Visually Update Graphs
-                    CalculatorBatchComputeScottPlot.Render();
-                    CalculatorDamageDistributionScottPlot.Render();
+                    CalculatorBatchComputeScottPlot.Refresh();
+                    CalculatorDamageDistributionScottPlot.Refresh();
                 }
                 catch (Exception ex)
                 { // Exception caught!
                     computing_damage = false;
-                    PushErrorMessages(ex);
+                    PushErrorCalculatorVariableErrorMessages(ex);
                     return;
                 }
             }
@@ -757,8 +770,6 @@ namespace DamageCalculatorGUI
             tickbox_to_textboxes.Add(key: CalculatorEncounterEngagementRangeCheckBox.GetHashCode(),
                                      value: new() { CalculatorEncounterEngagementRangeTextBox });
         }
-
-        // To-do: Fix string listbox string not updating when batching (use new function)
 
         // SETTINGS
         // Set the given setting
@@ -1143,7 +1154,7 @@ namespace DamageCalculatorGUI
                     return int.TryParse(textBox.Text, out int result) ? result : GetDefaultSettingByControl(control);
                 case NumericUpDown numericUpDown:
                     return (int)numericUpDown.Value;
-                case ListBox listBox: // To-do: Fix this not properly getting die values??? Oh I think it may because straight parsing doesn't work here hurr durr
+                case ListBox listBox: // To-do: Investigate if this is actually being ran on ListBoxes
                     return listBox.Items.Count > index ? int.Parse((string)listBox.Items[index]) : GetDefaultSettingByControl(control);
                 case CheckBox checkBox:
                     return checkBox.Checked ? 1 : 0;
@@ -1227,17 +1238,17 @@ namespace DamageCalculatorGUI
             if (setting_to_checkbox.TryGetValue(encounterSetting, out var checkbox) && !checkbox.Checked) // Check if control is unticked
             { // Reload non-batched, checkbox regulated control appearance
                 control.Text = string.Empty;
-                control.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                control.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
             }
             else if (batch_mode_enabled && batched_variables.ContainsKey(encounterSetting)) // Check if control is batched
             {// Reload batched, regulated control appearance
                 control.Text = "BATCHED";
-                control.BackColor = PFKSettings.currentColorPallete.EntryBatched;
+                control.BackColor = PFKSettings.CurrentColorPallete.EntryBatched;
             }
             else // Default to normal
             {
                 control.Text = settingValue;
-                control.BackColor = PFKSettings.currentColorPallete.EntryNormal;
+                control.BackColor = PFKSettings.CurrentColorPallete.EntryNormal;
             }
         }
         private void ReloadControl(NumericUpDown control, int settingValue)
@@ -1247,21 +1258,26 @@ namespace DamageCalculatorGUI
             if (setting_to_checkbox.TryGetValue(encounterSetting, out var checkbox) && !checkbox.Checked) // Check if control is unticked
             { // Reload non-batched, checkbox regulated control appearance
                 control.Value = settingValue;
-                control.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                control.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
             }
             else if (batch_mode_enabled && batched_variables.ContainsKey(encounterSetting)) // Check if control is batched
             {// Reload batched, regulated control appearance
                 control.Value = 0;
-                control.BackColor = PFKSettings.currentColorPallete.EntryBatched;
+                control.BackColor = PFKSettings.CurrentColorPallete.EntryBatched;
             }
             else // Default to normal
             {
                 control.Value = settingValue;
-                control.BackColor = PFKSettings.currentColorPallete.EntryNormal;
+                control.BackColor = PFKSettings.CurrentColorPallete.EntryNormal;
             }
         }
         private void ReloadVisuals(EncounterSettings encounterSettings)
         {
+            // Reload the ScottPlots
+            CalculatorBatchComputeScottPlot.Refresh();
+            CalculatorDamageDistributionScottPlot.Refresh();
+            SettingsThemeMockupScottPlot.Refresh();
+
             // Reload the Encounter GroupBox
             ReloadControl(CalculatorEncounterNumberOfEncountersTextBox, encounterSettings.number_of_encounters.ToString());
             ReloadControl(CalculatorEncounterRoundsPerEncounterTextBox, encounterSettings.rounds_per_encounter.ToString());
@@ -1321,13 +1337,16 @@ namespace DamageCalculatorGUI
             CalculatorMiscStatisticsAttackDamageMeanTextBox.Text = Math.Round(damageStats.average_hit_damage, 2).ToString();
             CalculatorMiscStatisticsAccuracyMeanTextBox.Text = (Math.Round(damageStats.average_accuracy * 100, 2)).ToString() + "%";
         }
+
+        BarPlot CalculatorDamageDistributionScottPlotBarPlot = null;
+        Legend CalculatorDamageDistributionScottPlotLegend = null;
         private void UpdateBaseGraph(Tuple<int, int, int> percentiles_int)
         {
             // Clear the Plot
             CalculatorDamageDistributionScottPlot.Plot.Clear();
-            CalculatorDamageDistributionScottPlot.Plot.Style(grid: PFKSettings.currentColorPallete.Border,
-                                                             axisLabel: PFKSettings.currentColorPallete.Text,
-                                                             dataBackground: PFKSettings.currentColorPallete.GraphBackground);
+            CalculatorDamageDistributionScottPlot.Plot.Style(grid: PFKSettings.CurrentColorPallete.Border,
+                                                             axisLabel: PFKSettings.CurrentColorPallete.Text,
+                                                             dataBackground: PFKSettings.CurrentColorPallete.GraphBackground);
 
             // Get the maximum value in the list
             int maxKey = damageStats.damage_bins.Keys.Max();
@@ -1340,21 +1359,21 @@ namespace DamageCalculatorGUI
             double[] binEdges = Enumerable.Range(0, graphBins.Length).Select(x => (double)x).ToArray();
 
             // Render the Plot
-            ScottPlot.Plottable.BarPlot plot = CalculatorDamageDistributionScottPlot.Plot.AddBar(values: graphBins,
+            CalculatorDamageDistributionScottPlotBarPlot = CalculatorDamageDistributionScottPlot.Plot.AddBar(values: graphBins,
                                                                                                  positions: binEdges,
-                                                                                                 color: PFKSettings.currentColorPallete.GraphBars);
+                                                                                                 color: PFKSettings.CurrentColorPallete.GraphBars);
 
             // Configure the Plot
-            plot.BarWidth = 1;
+            CalculatorDamageDistributionScottPlotBarPlot.BarWidth = 1;
             CalculatorDamageDistributionScottPlot.Plot.YAxis.Label("Occurances");
-            CalculatorDamageDistributionScottPlot.Plot.YAxis.TickLabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorDamageDistributionScottPlot.Plot.YAxis.LabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorDamageDistributionScottPlot.Plot.YAxis.Color(PFKSettings.currentColorPallete.Text);
+            CalculatorDamageDistributionScottPlot.Plot.YAxis.TickLabelStyle(fontName: PFKSettings.CurrentColorPallete.FontName);
+            CalculatorDamageDistributionScottPlot.Plot.YAxis.LabelStyle(fontName: PFKSettings.CurrentColorPallete.FontName);
+            CalculatorDamageDistributionScottPlot.Plot.YAxis.Color(PFKSettings.CurrentColorPallete.Text);
 
             CalculatorDamageDistributionScottPlot.Plot.XAxis.Label("Average Encounter Damage");
-            CalculatorDamageDistributionScottPlot.Plot.XAxis.TickLabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorDamageDistributionScottPlot.Plot.XAxis.LabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorDamageDistributionScottPlot.Plot.XAxis.Color(PFKSettings.currentColorPallete.Text);
+            CalculatorDamageDistributionScottPlot.Plot.XAxis.TickLabelStyle(fontName: PFKSettings.CurrentColorPallete.FontName);
+            CalculatorDamageDistributionScottPlot.Plot.XAxis.LabelStyle(fontName: PFKSettings.CurrentColorPallete.FontName);
+            CalculatorDamageDistributionScottPlot.Plot.XAxis.Color(PFKSettings.CurrentColorPallete.Text);
 
             CalculatorDamageDistributionScottPlot.Plot.SetAxisLimits(xMin: 0, yMin: 0,
                                                                     xMax: maxKey, yMax: damageStats.damage_bins.Values.Max() * 1.2);
@@ -1393,8 +1412,9 @@ namespace DamageCalculatorGUI
                 CalculatorDamageDistributionScottPlot.Plot.AddVerticalLine(x: percentiles.Item2, color: Color.Red, label: "Q2");
                 CalculatorDamageDistributionScottPlot.Plot.AddVerticalLine(x: percentiles.Item3, color: Color.Orange, label: "Q3");
             }
-            var legend = CalculatorDamageDistributionScottPlot.Plot.Legend(location: ScottPlot.Alignment.UpperRight);
-            legend.FillColor = PFKSettings.currentColorPallete.Background;
+            CalculatorDamageDistributionScottPlotLegend = CalculatorDamageDistributionScottPlot.Plot.Legend(location: ScottPlot.Alignment.UpperRight);
+            CalculatorDamageDistributionScottPlotLegend.FillColor = PFKSettings.CurrentColorPallete.Background;
+            CalculatorDamageDistributionScottPlotLegend.FontColor = PFKSettings.CurrentColorPallete.Text;
         }
         private void UpdateBatchGraph(BatchResults batch_results)
         {
@@ -1441,6 +1461,8 @@ namespace DamageCalculatorGUI
 
             return processed_data;
         }
+
+        Colorbar CalculatorBatchComputeScottPlotColorbar = null;
         private void UpdateBatchGraph_RENDER_GRAPH(BatchResults batch_results, int[] batch_selected)
         {
             // Render the Plot
@@ -1538,9 +1560,9 @@ namespace DamageCalculatorGUI
             CalculatorBatchComputeScottPlot.Plot.YAxis.Label(labelString);
             // Style size down, with a floor size of 8
             CalculatorBatchComputeScottPlot.Plot.YAxis.LabelStyle(fontSize: 16 / numberOfLabelLines + 6);
-            CalculatorBatchComputeScottPlot.Plot.YAxis.TickLabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorBatchComputeScottPlot.Plot.YAxis.LabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorBatchComputeScottPlot.Plot.YAxis.Color(PFKSettings.currentColorPallete.Text);
+            CalculatorBatchComputeScottPlot.Plot.YAxis.TickLabelStyle(fontName: PFKSettings.CurrentColorPallete.FontName);
+            CalculatorBatchComputeScottPlot.Plot.YAxis.LabelStyle(fontName: PFKSettings.CurrentColorPallete.FontName);
+            CalculatorBatchComputeScottPlot.Plot.YAxis.Color(PFKSettings.CurrentColorPallete.Text);
 
             // Concatenate and assign y-tick values
             CalculatorBatchComputeScottPlot.Plot.YTicks(positions: Enumerable.Range(0, batch_results.dimensions[^1]).Select(x => x + 0.5).ToArray(),
@@ -1551,9 +1573,9 @@ namespace DamageCalculatorGUI
                                                                                              separator: ", ")).ToArray());
             // Label the x-axis
             CalculatorBatchComputeScottPlot.Plot.XAxis.Label("Encounter Damage");
-            CalculatorBatchComputeScottPlot.Plot.XAxis.TickLabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorBatchComputeScottPlot.Plot.XAxis.LabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorBatchComputeScottPlot.Plot.XAxis.Color(PFKSettings.currentColorPallete.Text);
+            CalculatorBatchComputeScottPlot.Plot.XAxis.TickLabelStyle(fontName: PFKSettings.CurrentColorPallete.FontName);
+            CalculatorBatchComputeScottPlot.Plot.XAxis.LabelStyle(fontName: PFKSettings.CurrentColorPallete.FontName);
+            CalculatorBatchComputeScottPlot.Plot.XAxis.Color(PFKSettings.CurrentColorPallete.Text);
 
             // Set the camera/axis limits
             CalculatorBatchComputeScottPlot.Plot.SetAxisLimits(xMin: 0, xMax: batch_results.max_width,
@@ -1562,9 +1584,10 @@ namespace DamageCalculatorGUI
                                                                     yMin: 0, yMax: batch_results.dimensions[^1]);
 
             // Add & Configure the color bar
-            var addedColorBar = CalculatorBatchComputeScottPlot.Plot.AddColorbar(addedHeatmap);
-            addedColorBar.AutomaticTicks(formatter: ConvertDoubleToPercentageString);
-            addedColorBar.TickMarkColor = PFKSettings.currentColorPallete.Text;
+            CalculatorBatchComputeScottPlotColorbar = CalculatorBatchComputeScottPlot.Plot.AddColorbar(addedHeatmap);
+            CalculatorBatchComputeScottPlotColorbar.AutomaticTicks(formatter: ConvertDoubleToPercentageString);
+            CalculatorBatchComputeScottPlotColorbar.TickMarkColor = PFKSettings.CurrentColorPallete.Text;
+            CalculatorBatchComputeScottPlotColorbar.TickLabelFont.Color = PFKSettings.CurrentColorPallete.Text;
         }
         private string ConvertDoubleToPercentageString(double value)
         {
@@ -1718,7 +1741,7 @@ namespace DamageCalculatorGUI
             if (ex.Data.Count > 0)
                 throw ex;
         }
-        private void PushErrorMessages(Exception ex)
+        private void PushErrorCalculatorVariableErrorMessages(Exception ex)
         {
             foreach (int errorCode in ex.Data.Keys)
             {
@@ -2035,7 +2058,6 @@ namespace DamageCalculatorGUI
                 textBox.Text = textBox.Text[..(textBox.TextLength - 1)];
         }
 
-
         [GeneratedRegex(@"([^\d\,\+\-])")] // abc or = etc
         private static partial Regex DigitCommaSignRegex();
         [GeneratedRegex(@"[^\d-+]")] // abc or =, etc
@@ -2077,14 +2099,14 @@ namespace DamageCalculatorGUI
                     textBox.Text = GetValueFromControl(control: textBox).ToString();
                     textBox.Enabled = true;
                     textBox.ReadOnly = false;
-                    textBox.BackColor = PFKSettings.currentColorPallete.EntryNormal;
+                    textBox.BackColor = PFKSettings.CurrentColorPallete.EntryNormal;
                 }
                 else
                 {
                     textBox.Text = string.Empty;
                     textBox.Enabled = false;
                     textBox.ReadOnly = true;
-                    textBox.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                    textBox.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
                     ActiveControl = null;
                 }
             }
@@ -2204,8 +2226,9 @@ namespace DamageCalculatorGUI
             }
             SelectCheckBoxForToggle(CalculatorDamageBleedDieCheckBox);
 
-            // To-do: Fix unticking box auto-population not providing accurate numbers
+            // To-do: DONE - Fix unticking box auto-population not providing accurate numbers
             // To-do: Fix tick boxes not getting auto-darkened properly in damage die
+            // To-do: Fix tickboxes being the wrong color when set to disabled/readonly
 
             // Critical Bleed Damage Die
             if (currBleedDie.Item2.Item1 != 0 && currBleedDie.Item2.Item1 != currBleedDie.Item1.Item1
@@ -2404,55 +2427,55 @@ namespace DamageCalculatorGUI
                 // Base Damage
                 CalculatorDamageDieCountTextBox.Enabled = true;
                 CalculatorDamageDieCountTextBox.ReadOnly = false;
-                CalculatorDamageDieCountTextBox.BackColor = PFKSettings.currentColorPallete.EntryNormal;
+                CalculatorDamageDieCountTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryNormal;
                 CalculatorDamageDieSizeTextBox.Enabled = true;
                 CalculatorDamageDieSizeTextBox.ReadOnly = false;
-                CalculatorDamageDieSizeTextBox.BackColor = PFKSettings.currentColorPallete.EntryNormal;
+                CalculatorDamageDieSizeTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryNormal;
                 CalculatorDamageDieBonusTextBox.Enabled = true;
                 CalculatorDamageDieBonusTextBox.ReadOnly = false;
-                CalculatorDamageDieBonusTextBox.BackColor = PFKSettings.currentColorPallete.EntryNormal;
+                CalculatorDamageDieBonusTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryNormal;
                 // Critical Damage
                 CalculatorDamageCriticalDieCheckBox.Enabled = true;
                 CalculatorDamageCriticalDieCountTextBox.Enabled = CalculatorDamageCriticalDieCheckBox.Checked;
                 CalculatorDamageCriticalDieCountTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
-                                                                    ? PFKSettings.currentColorPallete.EntryNormal
-                                                                    : PFKSettings.currentColorPallete.EntryDisabled;
+                                                                    ? PFKSettings.CurrentColorPallete.EntryNormal
+                                                                    : PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageCriticalDieSizeTextBox.Enabled = CalculatorDamageCriticalDieCheckBox.Checked;
                 CalculatorDamageCriticalDieSizeTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
-                                                                    ? PFKSettings.currentColorPallete.EntryNormal
-                                                                    : PFKSettings.currentColorPallete.EntryDisabled;
+                                                                    ? PFKSettings.CurrentColorPallete.EntryNormal
+                                                                    : PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageCriticalDieBonusTextBox.Enabled = CalculatorDamageCriticalDieCheckBox.Checked;
                 CalculatorDamageCriticalDieBonusTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
-                                                                    ? PFKSettings.currentColorPallete.EntryNormal
-                                                                    : PFKSettings.currentColorPallete.EntryDisabled;
+                                                                    ? PFKSettings.CurrentColorPallete.EntryNormal
+                                                                    : PFKSettings.CurrentColorPallete.EntryDisabled;
                 // Dot Damage
                 CalculatorDamageBleedDieCheckBox.Enabled = true;
                 CalculatorDamageBleedDieCountTextBox.Enabled = CalculatorDamageBleedDieCheckBox.Checked;
                 CalculatorDamageBleedDieCountTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
-                                                                    ? PFKSettings.currentColorPallete.EntryNormal
-                                                                    : PFKSettings.currentColorPallete.EntryDisabled;
+                                                                    ? PFKSettings.CurrentColorPallete.EntryNormal
+                                                                    : PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageBleedDieSizeTextBox.Enabled = CalculatorDamageBleedDieCheckBox.Checked;
                 CalculatorDamageBleedDieSizeTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
-                                                                    ? PFKSettings.currentColorPallete.EntryNormal
-                                                                    : PFKSettings.currentColorPallete.EntryDisabled;
+                                                                    ? PFKSettings.CurrentColorPallete.EntryNormal
+                                                                    : PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageBleedDieBonusTextBox.Enabled = CalculatorDamageBleedDieCheckBox.Checked;
                 CalculatorDamageBleedDieBonusTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
-                                                                    ? PFKSettings.currentColorPallete.EntryNormal
-                                                                    : PFKSettings.currentColorPallete.EntryDisabled;
+                                                                    ? PFKSettings.CurrentColorPallete.EntryNormal
+                                                                    : PFKSettings.CurrentColorPallete.EntryDisabled;
                 // Critical Dot Damage
                 CalculatorDamageCriticalBleedDieCheckBox.Enabled = true;
                 CalculatorDamageCriticalBleedDieCountTextBox.Enabled = CalculatorDamageCriticalBleedDieCheckBox.Checked;
                 CalculatorDamageCriticalBleedDieCountTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
-                                                                    ? PFKSettings.currentColorPallete.EntryNormal
-                                                                    : PFKSettings.currentColorPallete.EntryDisabled;
+                                                                    ? PFKSettings.CurrentColorPallete.EntryNormal
+                                                                    : PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageCriticalBleedDieSizeTextBox.Enabled = CalculatorDamageCriticalBleedDieCheckBox.Checked;
                 CalculatorDamageCriticalBleedDieSizeTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
-                                                                    ? PFKSettings.currentColorPallete.EntryNormal
-                                                                    : PFKSettings.currentColorPallete.EntryDisabled;
+                                                                    ? PFKSettings.CurrentColorPallete.EntryNormal
+                                                                    : PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageCriticalBleedDieBonusTextBox.Enabled = CalculatorDamageCriticalBleedDieCheckBox.Checked;
                 CalculatorDamageCriticalBleedDieBonusTextBox.BackColor = CalculatorDamageCriticalDieCheckBox.Checked
-                                                                    ? PFKSettings.currentColorPallete.EntryNormal
-                                                                    : PFKSettings.currentColorPallete.EntryDisabled;
+                                                                    ? PFKSettings.CurrentColorPallete.EntryNormal
+                                                                    : PFKSettings.CurrentColorPallete.EntryDisabled;
             }
             else
             { // Disable each textbox/checkbox
@@ -2460,51 +2483,51 @@ namespace DamageCalculatorGUI
                 CalculatorDamageDieCountTextBox.Enabled = false;
                 CalculatorDamageDieCountTextBox.ReadOnly = true;
                 CalculatorDamageDieCountTextBox.Text = string.Empty;
-                CalculatorDamageDieCountTextBox.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                CalculatorDamageDieCountTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageDieSizeTextBox.Enabled = false;
                 CalculatorDamageDieSizeTextBox.ReadOnly = true;
                 CalculatorDamageDieSizeTextBox.Text = string.Empty;
-                CalculatorDamageDieSizeTextBox.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                CalculatorDamageDieSizeTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageDieBonusTextBox.Enabled = false;
                 CalculatorDamageDieBonusTextBox.ReadOnly = true;
                 CalculatorDamageDieBonusTextBox.Text = string.Empty;
-                CalculatorDamageDieBonusTextBox.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                CalculatorDamageDieBonusTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
                 // Critical Damage
                 CalculatorDamageCriticalDieCheckBox.Enabled = false;
                 CalculatorDamageCriticalDieCheckBox.Checked = false;
                 CalculatorDamageCriticalDieCountTextBox.Enabled = false;
                 CalculatorDamageCriticalDieCountTextBox.Text = string.Empty;
-                CalculatorDamageCriticalDieCountTextBox.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                CalculatorDamageCriticalDieCountTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageCriticalDieSizeTextBox.Enabled = false;
                 CalculatorDamageCriticalDieSizeTextBox.Text = string.Empty;
-                CalculatorDamageCriticalDieSizeTextBox.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                CalculatorDamageCriticalDieSizeTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageCriticalDieBonusTextBox.Enabled = false;
                 CalculatorDamageCriticalDieBonusTextBox.Text = string.Empty;
-                CalculatorDamageCriticalDieBonusTextBox.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                CalculatorDamageCriticalDieBonusTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
                 // Dot Damage
                 CalculatorDamageBleedDieCheckBox.Enabled = false;
                 CalculatorDamageBleedDieCheckBox.Checked = false;
                 CalculatorDamageBleedDieCountTextBox.Enabled = false;
                 CalculatorDamageBleedDieCountTextBox.Text = string.Empty;
-                CalculatorDamageBleedDieCountTextBox.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                CalculatorDamageBleedDieCountTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageBleedDieSizeTextBox.Enabled = false;
                 CalculatorDamageBleedDieSizeTextBox.Text = string.Empty;
-                CalculatorDamageBleedDieSizeTextBox.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                CalculatorDamageBleedDieSizeTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageBleedDieBonusTextBox.Enabled = false;
                 CalculatorDamageBleedDieBonusTextBox.Text = string.Empty;
-                CalculatorDamageBleedDieBonusTextBox.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                CalculatorDamageBleedDieBonusTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
                 // Critical Dot Damage
                 CalculatorDamageCriticalBleedDieCheckBox.Enabled = false;
                 CalculatorDamageCriticalBleedDieCheckBox.Checked = false;
                 CalculatorDamageCriticalBleedDieCountTextBox.Enabled = false;
                 CalculatorDamageCriticalBleedDieCountTextBox.Text = string.Empty;
-                CalculatorDamageCriticalBleedDieCountTextBox.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                CalculatorDamageCriticalBleedDieCountTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageCriticalBleedDieSizeTextBox.Enabled = false;
                 CalculatorDamageCriticalBleedDieSizeTextBox.Text = string.Empty;
-                CalculatorDamageCriticalBleedDieSizeTextBox.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                CalculatorDamageCriticalBleedDieSizeTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
                 CalculatorDamageCriticalBleedDieBonusTextBox.Enabled = false;
                 CalculatorDamageCriticalBleedDieBonusTextBox.Text = string.Empty;
-                CalculatorDamageCriticalBleedDieBonusTextBox.BackColor = PFKSettings.currentColorPallete.EntryDisabled;
+                CalculatorDamageCriticalBleedDieBonusTextBox.BackColor = PFKSettings.CurrentColorPallete.EntryDisabled;
             }
         }
 
@@ -2837,7 +2860,7 @@ namespace DamageCalculatorGUI
                 SetFieldLookToBatched(control: control, locked: true, setting: encounterSetting, index: index);
 
                 // Update Visuals of Batched Control
-                batch_mode_selected.BackColor = PFKSettings.currentColorPallete.EntryBatched;
+                batch_mode_selected.BackColor = PFKSettings.CurrentColorPallete.EntryBatched;
             }
             else
             { // Unbatch Variable
@@ -2849,7 +2872,7 @@ namespace DamageCalculatorGUI
                 TryRemoveBatchedVariable(setting: encounterSetting, index: index, removeLastValue: true);
 
                 // Update visuals on Unbatched Control
-                batch_mode_selected.BackColor = PFKSettings.currentColorPallete.EntryNormal;
+                batch_mode_selected.BackColor = PFKSettings.CurrentColorPallete.EntryNormal;
             }
         }
         private void TryRemoveBatchedVariable(EncounterSetting setting, int index, bool removeLastValue = false)
@@ -2877,16 +2900,24 @@ namespace DamageCalculatorGUI
         private void SetBatchGraphSizeSmall(bool state)
         {
             if (state)
-            {
+            { // SMALL
                 // Adjust graph size to accomodate the intrusion
-                CalculatorBatchComputeScottPlot.Height = 250;
-                CalculatorBatchComputeScottPlot.Location = new(CalculatorBatchComputeScottPlot.Location.X, 157);
+                // IDEAL LOCAT: (62%, 33.333%) % of page size
+                CalculatorBatchComputeScottPlot.Location = new(x: (int)(CalculatorTabPage.Size.Width * 0.62),
+                                                               y: (int)(CalculatorTabPage.Size.Height * 0.333));
+                // IDEAL SIZES: (36.5%, 25.3%) % of page size
+                CalculatorBatchComputeScottPlot.Size = new(width: (int)(CalculatorTabPage.Size.Width * 0.365),
+                                                           height: (int)(CalculatorTabPage.Size.Height * 0.56));
             }
             else
-            {
+            { // BIG
                 // Adjust graph size to fill the gap
-                CalculatorBatchComputeScottPlot.Height = 387;
-                CalculatorBatchComputeScottPlot.Location = new(CalculatorBatchComputeScottPlot.Location.X, 15);
+                // IDEAL LOCAT: (62%, 1.8%) % of page size
+                CalculatorBatchComputeScottPlot.Location = new(x: (int)(CalculatorTabPage.Size.Width * 0.62),
+                                                               y: (int)(CalculatorTabPage.Size.Height * 0.018));
+                // IDEAL SIZES: (36.5%, 87.4%)  % of page size
+                CalculatorBatchComputeScottPlot.Size = new(width: (int)(CalculatorTabPage.Size.Width * 0.365),
+                                                           height: (int)(CalculatorTabPage.Size.Height * 0.874));
             }
         }
         private void SetBatchLayerViewControlVisibility(bool state)
@@ -3044,6 +3075,8 @@ namespace DamageCalculatorGUI
         {
             PushError(CalculatorBatchComputePopupStepPatternTextBox, "", replace: true);
         }
+
+        // To-do: Go through and organize functions. This is a mess!
 
         // Batch Computation
         public static async Task<BatchResults> ComputeAverageDamage_BATCH(EncounterSettings encounter_settings,
@@ -3480,6 +3513,55 @@ namespace DamageCalculatorGUI
                                         .ToArray();
         }
 
+        private void SetBatchFieldVisibility(EncounterSetting setting, bool show, Control control, int index)
+        {
+            if (show)
+            {
+                SetFieldLookToBatched(control, true, setting, index);
+
+                // Update Visuals of Batched Control
+                control.BackColor = PFKSettings.CurrentColorPallete.EntryBatched;
+            }
+            else
+            { // Unbatch Variable
+                SetFieldLookToBatched(control, false, setting, index);
+
+                // Update visuals on Unbatched Control
+                control.BackColor = PFKSettings.CurrentColorPallete.EntryNormal;
+            }
+        }
+        private void SetFieldLookToBatched(Control control, bool locked, EncounterSetting setting, int index)
+        {
+            if (locked)
+            {
+                // Lock the Input on the Field
+                if (control is TextBox textBox)
+                {
+                    textBox.ReadOnly = true;
+                    textBox.Text = "BATCHED";
+                }
+                else if (control is NumericUpDown numericUpDown)
+                {
+                    numericUpDown.ReadOnly = true;
+                    numericUpDown.Text = "BATCHED";
+                }
+            }
+            else if (batched_variables.TryGetValue(setting, out var encounterSettingDict) && encounterSettingDict.ContainsKey(index))
+            {
+                // Unlock the Input on the Field
+                if (control is TextBox textBox)
+                {
+                    textBox.ReadOnly = false;
+                    textBox.Text = batched_variables_last_value[setting][index].ToString();
+                }
+                else if (control is NumericUpDown numericUpDown)
+                {
+                    numericUpDown.ReadOnly = false;
+                    numericUpDown.Value = batched_variables_last_value[setting][index];
+                }
+            }
+        }
+
         private void CalculatorDamageListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int index = CalculatorDamageListBox.SelectedIndex;
@@ -3526,64 +3608,12 @@ namespace DamageCalculatorGUI
             SelectCheckBoxForToggle(CalculatorDamageCriticalBleedDieCheckBox);
             SelectCheckBoxForToggle(CalculatorDamageCriticalDieCheckBox);
         }
-
-        private void SetBatchFieldVisibility(EncounterSetting setting, bool show, Control control, int index)
-        {
-            if (show)
-            {
-                SetFieldLookToBatched(control, true, setting, index);
-
-                // Update Visuals of Batched Control
-                control.BackColor = PFKSettings.currentColorPallete.EntryBatched;
-            }
-            else
-            { // Unbatch Variable
-                SetFieldLookToBatched(control, false, setting, index);
-
-                // Update visuals on Unbatched Control
-                control.BackColor = PFKSettings.currentColorPallete.EntryNormal;
-            }
-        }
-
-        private void SetFieldLookToBatched(Control control, bool locked, EncounterSetting setting, int index)
-        {
-            if (locked)
-            {
-                // Lock the Input on the Field
-                if (control is TextBox textBox)
-                {
-                    textBox.ReadOnly = true;
-                    textBox.Text = "BATCHED";
-                }
-                else if (control is NumericUpDown numericUpDown)
-                {
-                    numericUpDown.ReadOnly = true;
-                    numericUpDown.Text = "BATCHED";
-                }
-            }
-            else if (batched_variables.TryGetValue(setting, out var encounterSettingDict) && encounterSettingDict.ContainsKey(index))
-            {
-                // Unlock the Input on the Field
-                if (control is TextBox textBox)
-                {
-                    textBox.ReadOnly = false;
-                    textBox.Text = batched_variables_last_value[setting][index].ToString();
-                }
-                else if (control is NumericUpDown numericUpDown)
-                {
-                    numericUpDown.ReadOnly = false;
-                    numericUpDown.Value = batched_variables_last_value[setting][index];
-                }
-            }
-        }
-
         private void CalculatorBatchComputeLayerViewControlLayerSelectListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Populate each box with the selected value
             SetBatchComputeLayerSelectionOnVariables(CalculatorBatchComputeLayerViewControlLayerSelectListBox.SelectedIndex);
             SetBatchComputeLayerSelectionOnStep(CalculatorBatchComputeLayerViewControlLayerSelectListBox.SelectedIndex);
         }
-
         private void CalculatorBatchComputeLayerViewControlStepSelectComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
             // Update the selected index
@@ -3596,7 +3626,7 @@ namespace DamageCalculatorGUI
             UpdateBatchGraph(damageStats_BATCH);
 
             // Visually Update The Graph
-            CalculatorBatchComputeScottPlot.Render();
+            CalculatorBatchComputeScottPlot.Refresh();
         }
 
         // FONT & COLOR MANAGEMENT
@@ -3604,54 +3634,38 @@ namespace DamageCalculatorGUI
         private void LoadColorPallete(PFKColorPalette pallete)
         {
             // Store the current pallete
-            PFKSettings.currentColorPallete = pallete;
-            ApplyCurrentColorPallete();
-        }
-        private void LoadColorPallete(string pallete)
-        {
-            // Store the current pallete
-            PFKSettings.currentColorPallete = colorPalettes[pallete];
+            PFKSettings.CurrentColorPallete = new(pallete);
             ApplyCurrentColorPallete();
         }
         private void ApplyCurrentColorPallete()
         {
+            Size sizeInitial = CalculatorActionActionsPerRoundLabel.Size;
+            Size sizeScottPlotNormalInitial = CalculatorBatchComputeScottPlot.Size;
+            Size sizeScottPlotBatchInitial = CalculatorDamageDistributionScottPlot.Size;
+
+            Point locationScottPlotNormalInitial = CalculatorDamageDistributionScottPlot.Location;
+            Point locationScottPlotBatchInitial = CalculatorBatchComputeScottPlot.Location;
+
             // Do TitleBar Styling
-            this.Style.TitleBar.CloseButtonForeColor = PFKSettings.currentColorPallete.Text;
-            this.Style.TitleBar.BackColor = PFKSettings.currentColorPallete.Background;
+            this.Style.TitleBar.CloseButtonForeColor = PFKSettings.CurrentColorPallete.Text;
+            this.Style.TitleBar.BackColor = PFKSettings.CurrentColorPallete.Background;
 
 
-            this.Style.TitleBar.CloseButtonForeColor = PFKSettings.currentColorPallete.Text;
-            this.Style.TitleBar.MinimizeButtonForeColor = PFKSettings.currentColorPallete.Text;
+            this.Style.TitleBar.CloseButtonForeColor = PFKSettings.CurrentColorPallete.Text;
+            this.Style.TitleBar.MinimizeButtonForeColor = PFKSettings.CurrentColorPallete.Text;
 
-            this.Style.TitleBar.CloseButtonHoverBackColor = PFKSettings.currentColorPallete.ExitButtonHovered;
-            this.Style.TitleBar.MinimizeButtonHoverBackColor = PFKSettings.currentColorPallete.MinimizeButtonHovered;
+            this.Style.TitleBar.CloseButtonHoverBackColor = PFKSettings.CurrentColorPallete.ExitButtonHovered;
+            this.Style.TitleBar.MinimizeButtonHoverBackColor = PFKSettings.CurrentColorPallete.MinimizeButtonHovered;
 
-            this.Style.TitleBar.CloseButtonPressedBackColor = PFKSettings.currentColorPallete.ExitButtonPressed;
-            this.Style.TitleBar.MinimizeButtonPressedBackColor = PFKSettings.currentColorPallete.MinimizeButtonPressed;
+            this.Style.TitleBar.CloseButtonPressedBackColor = PFKSettings.CurrentColorPallete.ExitButtonPressed;
+            this.Style.TitleBar.MinimizeButtonPressedBackColor = PFKSettings.CurrentColorPallete.MinimizeButtonPressed;
 
-            this.Style.TitleBar.Font = new(family: new FontFamily(PFKSettings.currentColorPallete.FontName),
+            this.Style.TitleBar.Font = new(family: new FontFamily(PFKSettings.CurrentColorPallete.FontName),
                                            emSize: this.Style.TitleBar.Font.Size,
                                            style: FontStyle.Bold,
                                            unit: this.Style.TitleBar.Font.Unit);
 
-            this.Style.TitleBar.ForeColor = PFKSettings.currentColorPallete.Text;
-
-            // Style the graphs
-            CalculatorBatchComputeScottPlot.Plot.XAxis.TickLabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorBatchComputeScottPlot.Plot.XAxis.LabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorBatchComputeScottPlot.Plot.XAxis.Color(PFKSettings.currentColorPallete.Text);
-
-            CalculatorDamageDistributionScottPlot.Plot.XAxis.TickLabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorDamageDistributionScottPlot.Plot.XAxis.LabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorDamageDistributionScottPlot.Plot.XAxis.Color(PFKSettings.currentColorPallete.Text);
-
-            CalculatorDamageDistributionScottPlot.Plot.YAxis.TickLabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorDamageDistributionScottPlot.Plot.YAxis.LabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorDamageDistributionScottPlot.Plot.YAxis.Color(PFKSettings.currentColorPallete.Text);
-
-            CalculatorBatchComputeScottPlot.Plot.YAxis.TickLabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorBatchComputeScottPlot.Plot.YAxis.LabelStyle(fontName: PFKSettings.currentColorPallete.FontName);
-            CalculatorBatchComputeScottPlot.Plot.YAxis.Color(PFKSettings.currentColorPallete.Text);
+            this.Style.TitleBar.ForeColor = PFKSettings.CurrentColorPallete.Text;
 
             // Do every other sub-control's customizing
             int xHashCode = CalculatorBatchComputePopupXButton.GetHashCode();
@@ -3674,44 +3688,217 @@ namespace DamageCalculatorGUI
                             control.BackColor = Color.Transparent;
                             break;
                         case CheckBox checkBox:
-                            checkBox.BackColor = PFKSettings.currentColorPallete.CheckBoxUnticked;
+                            checkBox.BackColor = PFKSettings.CurrentColorPallete.CheckBoxUnticked;
                             break;
                         case Button button:
-                            control.BackColor = PFKSettings.currentColorPallete.ButtonBackground;
+                            control.BackColor = PFKSettings.CurrentColorPallete.ButtonBackground;
                             button.FlatAppearance.BorderColor = Color.Black;
                             break;
-                        case TextBox textBox:
+                        case TextBox:
                         case NumericUpDown:
-                            control.BackColor = PFKSettings.currentColorPallete.EntryNormal;
+                            control.BackColor = PFKSettings.CurrentColorPallete.EntryNormal;
+                            break;
+                        case FormsPlot formsPlot:
+                            formsPlot.Plot.Style(grid: PFKSettings.CurrentColorPallete.Border,
+                                                    axisLabel: PFKSettings.CurrentColorPallete.Text,
+                                                    dataBackground: PFKSettings.CurrentColorPallete.GraphBackground);
+
+                            if (CalculatorDamageDistributionScottPlotBarPlot is not null)
+                            {
+                                CalculatorDamageDistributionScottPlotBarPlot.Color = PFKSettings.CurrentColorPallete.GraphBackground;
+                                CalculatorDamageDistributionScottPlotBarPlot.FillColor = PFKSettings.CurrentColorPallete.GraphBars;
+                            }
                             break;
                         default:
-                            control.BackColor = PFKSettings.currentColorPallete.Background;
+                            control.BackColor = PFKSettings.CurrentColorPallete.Background;
                             break;
                     }
 
                     switch (control)
                     {
                         case TabPageAdv tab:
-                            tab.TabForeColor = PFKSettings.currentColorPallete.Text;
+                            tab.TabForeColor = PFKSettings.CurrentColorPallete.Text;
                             break;
                         case Button:
-                            control.ForeColor = PFKSettings.currentColorPallete.ButtonText;
+                            control.ForeColor = PFKSettings.CurrentColorPallete.ButtonText;
                             break;
-                        case CheckBox checkBox: // To-do: Fix checkboxes not applying the checkcolor properly
-                            checkBox.ForeColor = PFKSettings.currentColorPallete.CheckBoxCheck;
+                        case CheckBox checkBox:
+                            checkBox.ForeColor = PFKSettings.CurrentColorPallete.CheckBoxCheck;
+                            break;
+                        case FormsPlot formsPlot:
+                            // Style the X-Axis
+                            formsPlot.Plot.XAxis.TickLabelStyle(fontName: PFKSettings.CurrentColorPallete.FontName);
+                            formsPlot.Plot.XAxis.LabelStyle(fontName: PFKSettings.CurrentColorPallete.FontName,
+                                                            fontSize: 16 + PFKSettings.CurrentColorPallete.FontSizeOverride);
+                            formsPlot.Plot.XAxis.Color(PFKSettings.CurrentColorPallete.Text);
+
+                            // Style the Y-Axis
+                            formsPlot.Plot.YAxis.TickLabelStyle(fontName: PFKSettings.CurrentColorPallete.FontName);
+                            formsPlot.Plot.YAxis.LabelStyle(fontName: PFKSettings.CurrentColorPallete.FontName);
+                            formsPlot.Plot.YAxis.Color(PFKSettings.CurrentColorPallete.Text);
+
+                            // Style the legend
+                            if (CalculatorDamageDistributionScottPlotLegend is not null)
+                            {
+                                CalculatorDamageDistributionScottPlotLegend.FillColor = PFKSettings.CurrentColorPallete.Background;
+                                CalculatorDamageDistributionScottPlotLegend.FontColor = PFKSettings.CurrentColorPallete.Text;
+                            }
+
+                            // Style the Heatmap Colorbar
+                            if (CalculatorBatchComputeScottPlotColorbar is not null)
+                            {
+                                CalculatorBatchComputeScottPlotColorbar.TickMarkColor = PFKSettings.CurrentColorPallete.Text;
+                                CalculatorBatchComputeScottPlotColorbar.TickLabelFont.Color = PFKSettings.CurrentColorPallete.Text;
+                            }
                             break;
                         default:
-                            control.ForeColor = PFKSettings.currentColorPallete.Text;
+                            control.ForeColor = PFKSettings.CurrentColorPallete.Text;
                             break;
                     }
-                    control.Font = new(familyName: PFKSettings.currentColorPallete.FontName,
-                                       emSize: 9 + PFKSettings.currentColorPallete.FontSizeOverride,
+                    control.Font = new(familyName: PFKSettings.CurrentColorPallete.FontName,
+                                       emSize: 9 + PFKSettings.CurrentColorPallete.FontSizeOverride,
                                        style: control.Font.Style,
                                        unit: control.Font.Unit);
                 }
             }
 
+            // To-do: DONE - Fix scottplot yeeting away with the size change
+            // To-do: DONE - Fix batchmode scottplot not being right size
+            // To-do: DONE - Add font size override to scottplots
+            // To-do: DONE - Fix tickboxes not positioning correctly
+            float sizeChange = (float)CalculatorActionActionsPerRoundLabel.Size.Width / sizeInitial.Width;
+            ScaleForm(sizeChange);
+            CalculatorBatchComputeScottPlot.Size = new((int)(sizeScottPlotNormalInitial.Width * sizeChange),
+                                                        (int)(sizeScottPlotNormalInitial.Height * sizeChange));
+            CalculatorDamageDistributionScottPlot.Size = new((int)(sizeScottPlotBatchInitial.Width * sizeChange),
+                                                             (int)(sizeScottPlotBatchInitial.Height * sizeChange));
+
+            CalculatorDamageDistributionScottPlot.Location = new((int)(locationScottPlotNormalInitial.X * sizeChange),
+                                                                 (int)(locationScottPlotNormalInitial.Y * sizeChange));
+            CalculatorBatchComputeScottPlot.Location = new((int)(locationScottPlotBatchInitial.X * sizeChange),
+                                                                 (int)(locationScottPlotBatchInitial.Y * sizeChange));
+
+            // Shift tickboxes to match their labels and textboxes checkbox.location = (textbox.X, label.Y + 2) 
+            CalculatorAmmunitionMagazineSizeCheckBox.Location =
+                new(x: (CalculatorAmmunitionMagazineSizeLabel.Location.X
+                        + CalculatorAmmunitionMagazineSizeTextBox.Location.X
+                        + CalculatorAmmunitionMagazineSizeCheckBox.Size.Width) / 2 - 12,
+                    y: (CalculatorAmmunitionMagazineSizeLabel.Location.Y
+                        + CalculatorAmmunitionMagazineSizeTextBox.Location.Y
+                        + CalculatorAmmunitionMagazineSizeCheckBox.Size.Height) / 2 - 12);
+
+            CalculatorDamageBleedDieCheckBox.Location =
+                new(x: (CalculatorDamageBleedDieCountTextBox.Location.X
+                        + CalculatorDamageBleedDieLabel.Location.X
+                        + CalculatorDamageBleedDieCheckBox.Size.Width) / 2 - 12,
+                    y: (CalculatorDamageBleedDieCountTextBox.Location.Y
+                        + CalculatorDamageBleedDieLabel.Location.Y
+                        + CalculatorDamageBleedDieCheckBox.Size.Height) / 2 - 12);
+
+            CalculatorDamageCriticalBleedDieCheckBox.Location =
+                new(x: (CalculatorDamageCriticalBleedDieCountTextBox.Location.X
+                        + CalculatorDamageCriticalBleedDieLabel.Location.X
+                        + CalculatorDamageCriticalBleedDieCheckBox.Size.Width) / 2 - 12,
+                    y: (CalculatorDamageCriticalBleedDieCountTextBox.Location.Y
+                        + CalculatorDamageCriticalBleedDieLabel.Location.Y
+                        + CalculatorDamageCriticalBleedDieCheckBox.Size.Height) / 2 - 12);
+
+            CalculatorDamageCriticalDieCheckBox.Location =
+                new(x: (CalculatorDamageCriticalDieCountTextBox.Location.X
+                        + CalculatorDamageCriticalDieLabel.Location.X
+                        + CalculatorDamageCriticalDieCheckBox.Size.Width) / 2 - 12,
+                    y: (CalculatorDamageCriticalDieCountTextBox.Location.Y
+                        + CalculatorDamageCriticalDieLabel.Location.Y
+                        + CalculatorDamageCriticalDieCheckBox.Size.Width) / 2 - 12);
+
+            CalculatorEncounterEngagementRangeCheckBox.Location =
+                new(x: (CalculatorEncounterEngagementRangeTextBox.Location.X
+                        + CalculatorEncounterEngagementRangeLabel.Location.X
+                        + CalculatorEncounterEngagementRangeCheckBox.Size.Width) / 2 - 12,
+                    y: (CalculatorEncounterEngagementRangeTextBox.Location.Y
+                        + CalculatorEncounterEngagementRangeLabel.Location.Y
+                        + CalculatorEncounterEngagementRangeCheckBox.Size.Height) / 2 - 12);
+
+            CalculatorReachMovementSpeedCheckBox.Location =
+                new(x: (CalculatorReachMovementSpeedTextBox.Location.X
+                        + CalculatorReachMovementSpeedLabel.Location.X
+                        + CalculatorReachMovementSpeedCheckBox.Size.Width) / 2 - 12,
+                    y: (CalculatorReachMovementSpeedTextBox.Location.Y
+                        + CalculatorReachMovementSpeedLabel.Location.Y
+                        + CalculatorReachMovementSpeedCheckBox.Size.Height) / 2 - 12);
+
+            CalculatorReachRangeIncrementCheckBox.Location =
+                new(x: (CalculatorReachRangeIncrementTextBox.Location.X
+                        + CalculatorReachRangeIncrementLabel.Location.X
+                        + CalculatorReachRangeIncrementCheckBox.Size.Width) / 2 - 12,
+                    y: (CalculatorReachRangeIncrementTextBox.Location.Y
+                        + CalculatorReachRangeIncrementLabel.Location.Y
+                        + CalculatorReachRangeIncrementCheckBox.Size.Height) / 2 - 12);
+
+            CalculatorReachVolleyIncrementCheckBox.Location =
+                new(x: (CalculatorReachVolleyIncrementTextBox.Location.X
+                        + CalculatorReachVolleyIncrementLabel.Location.X
+                        + CalculatorReachVolleyIncrementCheckBox.Size.Width) / 2 - 12,
+                    y: (CalculatorReachVolleyIncrementTextBox.Location.Y
+                        + CalculatorReachVolleyIncrementLabel.Location.Y
+                        + CalculatorReachVolleyIncrementCheckBox.Size.Height) / 2 - 12);
+
+            SettingsThemeMockupWeaponTraitCheckbox.Location =
+                new(x: (SettingsThemeMockupWeaponTraitTextBox.Location.X
+                        + SettingsThemeMockupWeaponTraitLabel.Location.X
+                        + SettingsThemeMockupWeaponTraitCheckbox.Size.Width) / 2 - 12,
+                    y: (SettingsThemeMockupWeaponTraitTextBox.Location.Y
+                        + SettingsThemeMockupWeaponTraitLabel.Location.Y
+                        + SettingsThemeMockupWeaponTraitCheckbox.Size.Height) / 2 - 12);
+
             ReloadVisuals(currEncounterSettings);
+        }
+        private void ScaleForm(float scaleRatio)
+        {
+            // Get the current bounds of the form
+            Rectangle currentBounds = Bounds;
+
+            // Calculate the new bounds of the form based on the scale ratio
+            Rectangle newBounds = new(
+                currentBounds.X,
+                currentBounds.Y,
+                (int)(currentBounds.Width * scaleRatio),
+                (int)(currentBounds.Height * scaleRatio)
+            );
+
+            // Scale the form and all controls inside
+            this.Scale(new SizeF(scaleRatio, scaleRatio));
+
+            // Set the new size and position of the form
+            Bounds = newBounds;
+
+            // Rescale Graphs
+            // IDEAL LOCAT: (62%, 49%) % of page size
+            CalculatorDamageDistributionScottPlot.Location = new(x: (int)(CalculatorTabPage.Size.Width * 0.62),
+                                                                 y: (int)(CalculatorTabPage.Size.Height * 0.49));
+            // IDEAL SIZES: (36.5%, 40%) % of page size
+            CalculatorDamageDistributionScottPlot.Size = new(width: (int)(CalculatorTabPage.Size.Width * 0.365),
+                                                             height: (int)(CalculatorTabPage.Size.Height * 0.4));
+            if (CalculatorBatchComputeLayerViewControlGroupBox.Visible)
+            {
+                // IDEAL LOCAT: (62%, 33.333%) % of page size
+                CalculatorBatchComputeScottPlot.Location = new(x: (int)(CalculatorTabPage.Size.Width * 0.62),
+                                                               y: (int)(CalculatorTabPage.Size.Height * 0.333));
+                // IDEAL SIZES: (36.5%, 25.3%) % of page size
+                CalculatorBatchComputeScottPlot.Size = new(width: (int)(CalculatorTabPage.Size.Width * 0.365),
+                                                           height: (int)(CalculatorTabPage.Size.Height * 0.56));
+            }
+            else
+            {
+                // IDEAL LOCAT: (62%, 1.8%) % of page size
+                CalculatorBatchComputeScottPlot.Location = new(x: (int)(CalculatorTabPage.Size.Width * 0.62),
+                                                               y: (int)(CalculatorTabPage.Size.Height * 0.018));
+                // IDEAL SIZES: (36.5%, 87.4%)  % of page size
+                CalculatorBatchComputeScottPlot.Size = new(width: (int)(CalculatorTabPage.Size.Width * 0.365),
+                                                           height: (int)(CalculatorTabPage.Size.Height * 0.874));
+            }
+            CalculatorBatchComputeScottPlot.Refresh();
+            CalculatorDamageDistributionScottPlot.Refresh();
         }
 
         // SERIALIZATION
@@ -3721,7 +3908,14 @@ namespace DamageCalculatorGUI
             try
             {
                 string settingsJsonString = File.ReadAllText(filename);
-                PFKSettings = JsonSerializer.Deserialize<PFKSettings>(settingsJsonString)!;
+                var jsonOptions = new JsonSerializerOptions()
+                {
+                    WriteIndented = true,
+                    Converters = {
+                        new ColorJsonConverter()
+                    }
+                };
+                PFKSettings = JsonSerializer.Deserialize<PFKSettings>(settingsJsonString, jsonOptions)!;
                 return true;
             }
             catch
@@ -3732,8 +3926,17 @@ namespace DamageCalculatorGUI
         public void WriteSettings()
         { // Store the current settings
             string settingsFilename = "settings.json";
+
+            var jsonOptions = new JsonSerializerOptions()
+            {
+                WriteIndented = true,
+                Converters = {
+                    new ColorJsonConverter()
+                }
+            };
+
             string settingsJsonString = JsonSerializer.Serialize(value: PFKSettings,
-                                                                options: new JsonSerializerOptions { WriteIndented = true });
+                                                                options: jsonOptions);
             File.WriteAllText(path: settingsFilename, contents: settingsJsonString);
         }
 
@@ -3758,12 +3961,12 @@ namespace DamageCalculatorGUI
                 }
 
                 if (colorPalettes.Count == 0 || colorPalettes.Any(colorPalette =>
-                {
+                { // Check if any palettes read aren't the default colors
                     return !colorPalette.Key.Equals("pf2e")
-                        || !colorPalette.Key.Equals("pf2e")
-                        || !colorPalette.Key.Equals("dark");
+                        && !colorPalette.Key.Equals("light")
+                        && !colorPalette.Key.Equals("dark");
                 }))
-                { // No palettes valid, discarding this read
+                { // No palettes valid, discarding this read and returning false
                     return false;
                 }
 
@@ -3781,8 +3984,17 @@ namespace DamageCalculatorGUI
                 // Store the .json to a string
                 string currentReadTheme = File.ReadAllText(path);
 
+                var jsonOptions = new JsonSerializerOptions()
+                {
+                    WriteIndented = true,
+                    Converters = {
+                        new ColorJsonConverter()
+                    }
+                };
+
                 // Deserialize the string to an object
-                PFKColorPalette readPalette = JsonSerializer.Deserialize<PFKColorPalette>(currentReadTheme)!;
+                PFKColorPalette readPalette = JsonSerializer.Deserialize<PFKColorPalette>(json: currentReadTheme,
+                                                                                            options: jsonOptions)!;
 
                 // Replace any pre-existing 
                 colorPalettes.Remove(readPalette.PaletteName);
@@ -3803,34 +4015,44 @@ namespace DamageCalculatorGUI
             }
             foreach (var colorPalette in colorPalettes)
             { // Write each colorPalette
-                WriteColorPalette(colorPalette.Value);
+                WriteColorPalette(colorPalette.Value, colorPalette.Value.PaletteName);
             }
         }
-        public static void WriteColorPalette(PFKColorPalette palette)
+        public static void WriteColorPalette(PFKColorPalette palette, string paletteName)
         {
+            PFKColorPalette savedPalette = new(palette)
+            {
+                PaletteName = paletteName
+            };
+
             string themesFolder = Path.GetDirectoryName(Environment.ProcessPath) + @"\Themes\";
-            string settingsJsonString = JsonSerializer.Serialize(value: palette,
-                                                                options: new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(path: themesFolder + palette.PaletteName + ".json", contents: settingsJsonString);
+
+            var jsonOptions = new JsonSerializerOptions()
+            {
+                WriteIndented = true,
+                Converters = {
+                    new ColorJsonConverter()
+                }
+            };
+
+            string settingsJsonString = JsonSerializer.Serialize(value: savedPalette,
+                                                                options: jsonOptions);
+            File.WriteAllText(path: themesFolder + paletteName + ".json", contents: settingsJsonString);
         }
-        public static void EraseColorPalette(string palette)
+        public void EraseColorPalette(string palette)
         {
-            File.Delete(path: Path.GetDirectoryName(Environment.ProcessPath) + palette + ".json");
+            File.Delete(path: Environment.CurrentDirectory + @"\Themes\" + palette + ".json");
         }
 
 
         // THEME CONTROL FUNCTIONS
         //
-        private void tabControlAdv1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
         private void SettingsThemeColorPopupXButton_MouseClick(object sender, MouseEventArgs e)
         {
-            SettingsThemeColorPopupFirstColorPicker.SelectedColor = Color.Black;
-            SettingsThemeColorPopupSecondColorPicker.SelectedColor = Color.Black;
-            SettingsThemeColorPopupThirdColorPicker.SelectedColor = Color.Black;
-            SettingsThemeColorPopupFourthColorPicker.SelectedColor = Color.Black;
+            SettingsThemeColorPopupFirstColorPicker.SelectedColor = Color.Empty;
+            SettingsThemeColorPopupSecondColorPicker.SelectedColor = Color.Empty;
+            SettingsThemeColorPopupThirdColorPicker.SelectedColor = Color.Empty;
+            SettingsThemeColorPopupFourthColorPicker.SelectedColor = Color.Empty;
             HideColorPickerWindow();
         }
         private void SettingsThemeColorPopupOButton_MouseClick(object sender, MouseEventArgs e)
@@ -3841,102 +4063,100 @@ namespace DamageCalculatorGUI
                 case ColorPickedControl.Button:
                     // First Color
                     if (SettingsThemeColorPopupFirstColorPicker.SelectedColor != Color.Empty)
-                        PFKSettings.currentColorPallete.ButtonBackground = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
+                        PFKSettings.CurrentColorPallete.ButtonBackground = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
                     // Second Color
                     if (SettingsThemeColorPopupSecondColorPicker.SelectedColor != Color.Empty)
-                        PFKSettings.currentColorPallete.ButtonText = SettingsThemeColorPopupSecondColorPicker.SelectedColor;
+                        PFKSettings.CurrentColorPallete.ButtonText = SettingsThemeColorPopupSecondColorPicker.SelectedColor;
                     break;
                 case ColorPickedControl.ListBox:
                     // First Color
                     if (SettingsThemeColorPopupFirstColorPicker.SelectedColor != Color.Empty)
-                        PFKSettings.currentColorPallete.Background = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
+                        PFKSettings.CurrentColorPallete.Background = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
                     break;
                 case ColorPickedControl.NumericUpDown:
                     // First Color
                     if (SettingsThemeColorPopupFirstColorPicker.SelectedColor != Color.Empty)
-                        PFKSettings.currentColorPallete.EntryNormal = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
+                        PFKSettings.CurrentColorPallete.EntryNormal = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
                     break;
                 case ColorPickedControl.Label:
-                    // First Color
-                    // Save font info
+                    // Font Family
+                    if (SettingsThemeColorPopupFirstFontComboBox.SelectedItem is not null)
+                    {
+                        string selectedFont = SettingsThemeColorPopupFirstFontComboBox.SelectedItem.ToString();
+                        if (new InstalledFontCollection().Families.Any(font => font.Name.Equals(selectedFont)))
+                            PFKSettings.CurrentColorPallete.FontName = selectedFont;
+                    }
+                    // Font Size Mod
+                    if (SettingsThemeColorPopupThirdNumericUpDown.Value != PFKSettings.CurrentColorPallete.FontSizeOverride)
+                        PFKSettings.CurrentColorPallete.FontSizeOverride = (int)SettingsThemeColorPopupThirdNumericUpDown.Value;
+                    // Font Color
+                    if (SettingsThemeColorPopupFourthColorPicker.SelectedColor != Color.Empty)
+                        PFKSettings.CurrentColorPallete.Text = SettingsThemeColorPopupFourthColorPicker.SelectedColor;
                     break;
                 case ColorPickedControl.TextBox:
                     // First Color
                     if (SettingsThemeColorPopupFirstColorPicker.SelectedColor != Color.Empty)
-                        PFKSettings.currentColorPallete.EntryNormal = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
+                        PFKSettings.CurrentColorPallete.EntryNormal = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
                     // Second Color
                     if (SettingsThemeColorPopupSecondColorPicker.SelectedColor != Color.Empty)
-                        PFKSettings.currentColorPallete.EntryBatched = SettingsThemeColorPopupSecondColorPicker.SelectedColor;
+                        PFKSettings.CurrentColorPallete.EntryBatched = SettingsThemeColorPopupSecondColorPicker.SelectedColor;
                     break;
                 case ColorPickedControl.CheckBox:
                     // First Color
                     if (SettingsThemeColorPopupFirstColorPicker.SelectedColor != Color.Empty)
-                        PFKSettings.currentColorPallete.CheckBoxUnticked = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
+                        PFKSettings.CurrentColorPallete.CheckBoxUnticked = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
                     // Second Color
                     if (SettingsThemeColorPopupSecondColorPicker.SelectedColor != Color.Empty)
-                        PFKSettings.currentColorPallete.CheckBoxTicked = SettingsThemeColorPopupSecondColorPicker.SelectedColor;
+                        PFKSettings.CurrentColorPallete.CheckboxTicked = SettingsThemeColorPopupSecondColorPicker.SelectedColor;
                     // Third Color
                     if (SettingsThemeColorPopupThirdColorPicker.SelectedColor != Color.Empty)
-                        PFKSettings.currentColorPallete.CheckBoxPressed = SettingsThemeColorPopupThirdColorPicker.SelectedColor;
+                        PFKSettings.CurrentColorPallete.CheckBoxPressed = SettingsThemeColorPopupThirdColorPicker.SelectedColor;
                     break;
                 case ColorPickedControl.FormPlot:
                     // First Color
                     // To-do: Maybe custom graph color support for heatmap????
                     if (SettingsThemeColorPopupFirstColorPicker.SelectedColor != Color.Empty)
-                        PFKSettings.currentColorPallete.GraphBars = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
+                        PFKSettings.CurrentColorPallete.GraphBars = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
+                    if (SettingsThemeColorPopupSecondColorPicker.SelectedColor != Color.Empty)
+                        PFKSettings.CurrentColorPallete.GraphBackground = SettingsThemeColorPopupSecondColorPicker.SelectedColor;
                     break;
                 case ColorPickedControl.TabbedPage:
                     // First Color
                     if (SettingsThemeColorPopupFirstColorPicker.SelectedColor != Color.Empty)
-                        PFKSettings.currentColorPallete.Background = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
+                        PFKSettings.CurrentColorPallete.Background = SettingsThemeColorPopupFirstColorPicker.SelectedColor;
                     break;
             }
 
-            colorPalettes.Remove(PFKSettings.currentColorPallete.PaletteName);
-            colorPalettes.Add(PFKSettings.currentColorPallete.PaletteName, PFKSettings.currentColorPallete);
-            WriteColorPalette(PFKSettings.currentColorPallete);
             ApplyCurrentColorPallete();
             HideColorPickerWindow();
         }
         private void SettingsThemeNameAddButton_MouseClick(object sender, MouseEventArgs e)
         {
             string newColorPaletteName = SettingsThemeNameTextbox.Text;
-            if (!string.IsNullOrEmpty(newColorPaletteName))
-            { // Create a new default palette with the given name
+
+            try
+            {// Create a new default palette with the given name
+                CheckAddColorPaletteSaftey();
                 AddColorPelette(newColorPaletteName);
-                WriteColorPalette(colorPalettes[newColorPaletteName]);
                 UpdateSettingsThemesListbox();
             }
-            else
+            catch (Exception ex)
             {
-                Exception colorException = new();
-                colorException.Data.Add(1502, "Missing Data Exception: No palette name provided");
+                PushCreateNewThemeErrors(ex);
             }
         }
         private void SettingsColorMockupClicked(object sender, MouseEventArgs e)
         {
-            try
-            {
-                Control control = sender as Control;
+            Control control = sender as Control;
 
-                CheckShowColorPickerWindowSafety();
-                HideColorPickerWindow();
-                ShowColorPickerWindow(control);
-            }
-            catch (Exception ex)
-            {
-                PushShowColorPickerWindowErrors(ex);
-            }
+            HideColorPickerWindow();
+            ShowColorPickerWindow(control);
         }
         private void SettingsThemeNameListbox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ClearError(sender as Control);
 
-            if (SettingsThemeNameListbox.SelectedIndex != -1
-             && colorPalettes.TryGetValue(SettingsThemeNameListbox.Text, out var colorPalette))
-            {
-                LoadColorPallete(colorPalette);
-            }
+
         }
         private void SettingsThemeColorPopupColorPicker_ColorSelected(object sender, EventArgs e)
         {
@@ -3944,6 +4164,52 @@ namespace DamageCalculatorGUI
 
             control.BackColor = control.SelectedColor;
             control.ForeColor = HelperFunctions.GetContrastingBAWColor(control.SelectedColor);
+        }
+        private void SettingsThemeNameLoadButton_MouseClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                CheckLoadColorPaletteSafety();
+                if (SettingsThemeNameListbox.SelectedIndex != -1
+                    && colorPalettes.TryGetValue(SettingsThemeNameListbox.Text, out var colorPalette))
+                {
+                    LoadColorPallete(colorPalette);
+                }
+            }
+            catch (Exception ex)
+            {
+                PushLoadColorPaletteWindowErrors(ex);
+            }
+        }
+        private void SettingsThemeNameDeleteButton_MouseClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                CheckDeleteColorPaletteSafety();
+                DeleteColorPalette(PFKSettings.CurrentColorPallete.PaletteName);
+            }
+            catch (Exception ex)
+            {
+                PushDeleteThemeErrors(ex);
+            }
+        }
+        private void SettingsThemeNameSaveButton_MouseClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                CheckSaveColorPaletteSafety();
+                colorPalettes.Remove(SettingsThemeNameListbox.SelectedItem.ToString());
+                colorPalettes.Add(SettingsThemeNameListbox.SelectedItem.ToString(), PFKSettings.CurrentColorPallete);
+                WriteColorPalette(PFKSettings.CurrentColorPallete, SettingsThemeNameListbox.SelectedItem.ToString());
+            }
+            catch (Exception ex)
+            {
+                PushSaveThemeErrors(ex);
+            }
+        }
+        private void SettingsThemeMockupScottPlot_LeftClick(object sender, EventArgs e)
+        {
+            SettingsColorMockupClicked(sender: sender, null);
         }
 
         // To-do: Fix title not aliasing at all??????? WHYYYYY
@@ -3956,45 +4222,163 @@ namespace DamageCalculatorGUI
             // Clear the list
             SettingsThemeNameListbox.Items.Clear();
 
-            foreach (var theme in colorPalettes)
+            foreach (var theme in colorPalettes.OrderBy(paletteKVP => paletteKVP.Key))
             { // Populate the listbox with each color palette
                 SettingsThemeNameListbox.Items.Add(theme.Key);
             }
         }
         private void DeleteColorPalette(string paletteName)
         {
-            // Load a different palette if the deleted one is currently selected
-            if (PFKSettings.currentColorPallete.PaletteName.Equals(paletteName))
-            {
-                if (colorPalettes.Count > 1)
-                { // Other options available
-                    // Load the first non-selected palette
-                    LoadColorPallete(colorPalettes.Where(palette => !palette.Key.Equals(paletteName))
-                                                  .First().Value);
-                }
-                else
-                { // No other options available
-                    // Add a default palette
-                    colorPalettes.Add("gray", PFKColorPalette.GetDefaultPalette("gray"));
-                }
-            }
+            // Delete the palette file
+            colorPalettes.Remove(paletteName);
 
-            // Delete the old palette
+            // Update the listbox
+            UpdateSettingsThemesListbox();
+
+            // Erase the palette file
             EraseColorPalette(paletteName);
         }
         private void AddColorPelette(string paletteName)
         {
-            if (colorPalettes.ContainsKey(paletteName))
+            // Adds a new default "light" theme to the list with the given name
+            colorPalettes.Add(paletteName, PFKColorPalette.GetDefaultPalette(type: "light", name: paletteName));
+        }
+
+        // ERROR CHECKING
+        //
+        private void ClearColorPickerErrors()
+        {
+            PushError(SettingsThemeNameListbox, "", replace: true);
+        }
+        private void CheckLoadColorPaletteSafety()
+        {
+            Exception loadPaletteException = new();
+
+            // Throw an error if the popup can't be shown
+            if (SettingsThemeNameListbox.SelectedIndex == -1)
             {
-                // To-do: Add UI "duplicate name" error or something
-                Exception colorException = new();
-                colorException.Data.Add(1501, "Duplicate Data Exception: Duplicate color palette name");
-                throw colorException;
+                loadPaletteException.Data.Add(1503, "Missing Data Exception: No theme selected");
+            }
+
+            if (loadPaletteException.Data.Count > 0)
+            {
+                throw loadPaletteException;
+            }
+        }
+        private void CheckAddColorPaletteSaftey()
+        {
+            Exception addPaletteException = new();
+
+            string themeName = SettingsThemeNameTextbox.Text;
+
+            if (colorPalettes.ContainsKey(themeName))
+            { // Throw an error if the given palette name exists already
+                addPaletteException.Data.Add(1501, "Duplicate Data Exception: Duplicate color palette name");
+            }
+            if (string.IsNullOrEmpty(themeName))
+            { // Throw an error if the given palette name is not valid
+                addPaletteException.Data.Add(1502, "Missing Data Exception: No palette name provided");
+            }
+
+            if (addPaletteException.Data.Count > 0)
+            {
+                throw addPaletteException;
+            }
+        }
+        private void CheckDeleteColorPaletteSafety()
+        {
+            Exception deletePaletteException = new();
+
+            if (SettingsThemeNameListbox.SelectedIndex == -1)
+            { // Check if no theme is selected
+                deletePaletteException.Data.Add(1503, "Missing Data Exception: No theme selected!");
             }
             else
+            { // Check if the selected theme is
+                string selectedPalette = SettingsThemeNameListbox.SelectedItem.ToString();
+                if (!colorPalettes.ContainsKey(selectedPalette)
+                 && !File.Exists(Path.GetDirectoryName(Environment.ProcessPath) + selectedPalette + ".json"))
+                {
+                    deletePaletteException.Data.Add(1552, "Missing Data Exception: To-be-deleted theme not found!");
+                }
+            }
+
+            if (deletePaletteException.Data.Count > 0)
             {
-                // Adds a new default "gray" theme to the list with the given name
-                colorPalettes.Add(paletteName, PFKColorPalette.GetDefaultPalette("gray"));
+                throw deletePaletteException;
+            }
+        }
+        private void CheckSaveColorPaletteSafety()
+        {
+            Exception savePaletteException = new();
+
+            if (SettingsThemeNameListbox.SelectedIndex == -1)
+            { // Check if no theme is selected
+                savePaletteException.Data.Add(1503, "Missing Data Exception: No theme selected!");
+            }
+
+            if (savePaletteException.Data.Count > 0)
+            {
+                throw savePaletteException;
+            }
+        }
+        private void PushCreateNewThemeErrors(Exception ex)
+        {
+            ClearColorPickerErrors();
+            foreach (int errorCode in ex.Data.Keys)
+            {
+                switch (errorCode)
+                {
+                    case 1501: // Push
+                        PushError(SettingsThemeNameListbox, "Duplicate color palette name!");
+                        break;
+                    case 1502:
+                        PushError(SettingsThemeNameListbox, "No palette name provided!");
+                        break;
+                }
+            }
+        }
+        private void PushLoadColorPaletteWindowErrors(Exception ex)
+        {
+            // To-do: Add an emergency key to reset fontSizeOverride & fontName of the current theme to 0 & segue ui
+            ClearColorPickerErrors();
+            foreach (int errorCode in ex.Data.Keys)
+            {
+                switch (errorCode)
+                {
+                    case 1503: // Push
+                        PushError(SettingsThemeNameListbox, "No theme selected!");
+                        break;
+                }
+            }
+        }
+        private void PushDeleteThemeErrors(Exception ex)
+        {
+            ClearColorPickerErrors();
+            foreach (int errorCode in ex.Data.Keys)
+            {
+                switch (errorCode)
+                {
+                    case 1503: // Push
+                        PushError(SettingsThemeNameListbox, "No theme selected!");
+                        break;
+                    case 1552: // Push
+                        PushError(SettingsThemeNameListbox, "To-be-deleted theme not found!");
+                        break;
+                }
+            }
+        }
+        private void PushSaveThemeErrors(Exception ex)
+        {
+            ClearColorPickerErrors();
+            foreach (int errorCode in ex.Data.Keys)
+            {
+                switch (errorCode)
+                {
+                    case 1503: // Push
+                        PushError(SettingsThemeNameListbox, "No theme selected!");
+                        break;
+                }
             }
         }
 
@@ -4014,29 +4398,6 @@ namespace DamageCalculatorGUI
         public ColorPickedControl themePickedControl;
         public Dictionary<string, PFKColorPalette> colorPalettes = new();
 
-        private void CheckShowColorPickerWindowSafety()
-        {
-            // Throw an error if the popup can't be shown
-            if (SettingsThemeNameListbox.SelectedIndex == -1)
-            {
-                Exception ex = new();
-                ex.Data.Add(1503, "Bad Data Combination: No theme selected");
-                throw ex;
-            }
-        }
-        private void PushShowColorPickerWindowErrors(Exception ex)
-        {
-            ClearBatchErrorMessages();
-            foreach (int errorCode in ex.Data.Keys)
-            {
-                switch (errorCode)
-                {
-                    case 1503: // Push
-                        PushError(SettingsThemeNameListbox, "No theme selected!");
-                        break;
-                }
-            }
-        }
         private void ShowColorPickerWindow(Control control)
         { // Move and show the color picker popup to the given control
             // Move the popup
@@ -4067,58 +4428,69 @@ namespace DamageCalculatorGUI
                 TextBox => ColorPickedControl.TextBox,
                 CheckBox => ColorPickedControl.CheckBox,
                 FormsPlot => ColorPickedControl.FormPlot,
-                SfTabbedFormControl => ColorPickedControl.TabbedPage,
+                TabControlAdv => ColorPickedControl.TabbedPage,
             };
 
             themePickedControl = pickedControl;
             switch (themePickedControl)
             {
                 case ColorPickedControl.Button: // BUTTON RELATED COLORS
-                    ReconfigureColorPopup(firstLabel: "Button BG", firstColor: PFKSettings.currentColorPallete.ButtonBackground,
-                                          secondLabel: "Button Text", secondColor: PFKSettings.currentColorPallete.ButtonText);
+                    ReconfigureColorPopup(firstLabel: "Button BG", firstColor: PFKSettings.CurrentColorPallete.ButtonBackground,
+                                          secondLabel: "Button Text", secondColor: PFKSettings.CurrentColorPallete.ButtonText);
                     break;
                 case ColorPickedControl.ListBox:
-                    ReconfigureColorPopup(firstLabel: "Window BG", firstColor: PFKSettings.currentColorPallete.EntryNormal);
+                    ReconfigureColorPopup(firstLabel: "Window BG", firstColor: PFKSettings.CurrentColorPallete.Background);
                     break;
                 case ColorPickedControl.NumericUpDown:
-                    ReconfigureColorPopup(firstLabel: "Normal BG", firstColor: PFKSettings.currentColorPallete.EntryNormal);
+                    ReconfigureColorPopup(firstLabel: "Normal BG", firstColor: PFKSettings.CurrentColorPallete.EntryNormal);
                     break;
                 case ColorPickedControl.Label:
-                    ReconfigureColorPopup(firstLabel: "Font Name", isComboBox: true,
-                                          secondLabel: "Font Color", secondColor: PFKSettings.currentColorPallete.Text,
-                                          thirdLabel: "Font Size Increase", isNumericUpDown: true);
+                    ReconfigureColorPopup(firstLabel: "Font Name", selectedFont: PFKSettings.CurrentColorPallete.FontName,
+                                          thirdLabel: "Font Size Increase",
+                                          fourthLabel: "Font Color", fourthColor: PFKSettings.CurrentColorPallete.Text,
+                                          fontOverrideSize: PFKSettings.CurrentColorPallete.FontSizeOverride);
                     break;
                 case ColorPickedControl.TextBox:
-                    ReconfigureColorPopup(firstLabel: "Normal BG", firstColor: PFKSettings.currentColorPallete.EntryNormal,
-                                          secondLabel: "Batched BG", secondColor: PFKSettings.currentColorPallete.EntryBatched);
+                    ReconfigureColorPopup(firstLabel: "Normal BG", firstColor: PFKSettings.CurrentColorPallete.EntryNormal,
+                                          secondLabel: "Batched BG", secondColor: PFKSettings.CurrentColorPallete.EntryBatched);
                     break;
                 case ColorPickedControl.CheckBox:
-                    ReconfigureColorPopup(firstLabel: "Unticked Color", firstColor: PFKSettings.currentColorPallete.CheckBoxUnticked,
-                                          secondLabel: "Ticked Color", secondColor: PFKSettings.currentColorPallete.CheckBoxTicked,
-                                          thirdLabel: "Pressed Color", thirdColor: PFKSettings.currentColorPallete.CheckBoxPressed);
+                    ReconfigureColorPopup(firstLabel: "Unticked Color", firstColor: PFKSettings.CurrentColorPallete.CheckBoxUnticked,
+                                          secondLabel: "Ticked Color", secondColor: PFKSettings.CurrentColorPallete.CheckboxTicked,
+                                          thirdLabel: "Pressed Color", thirdColor: PFKSettings.CurrentColorPallete.CheckBoxPressed);
                     break;
                 case ColorPickedControl.FormPlot:
-                    ReconfigureColorPopup(firstLabel: "Bar Color", firstColor: PFKSettings.currentColorPallete.GraphBars,
-                                          secondLabel: "Graph BG", secondColor: PFKSettings.currentColorPallete.GraphBackground);
+                    ReconfigureColorPopup(firstLabel: "Bar Color", firstColor: PFKSettings.CurrentColorPallete.GraphBars,
+                                          secondLabel: "Graph BG", secondColor: PFKSettings.CurrentColorPallete.GraphBackground);
                     break;
                 case ColorPickedControl.TabbedPage:
-                    ReconfigureColorPopup(firstLabel: "Window BG", firstColor: PFKSettings.currentColorPallete.Background);
+                    ReconfigureColorPopup(firstLabel: "Window BG", firstColor: PFKSettings.CurrentColorPallete.Background);
                     break;
             }
         }
-        private void ReconfigureColorPopup(string? firstLabel = null, bool isComboBox = false, Color? firstColor = null,
+        private void ReconfigureColorPopup(string? firstLabel = null, Color? firstColor = null, string? selectedFont = null,
                                          string? secondLabel = null, Color? secondColor = null,
-                                         string? thirdLabel = null, bool isNumericUpDown = false, Color? thirdColor = null,
-                                         string? fourthLabel = null, Color? fourthColor = null)
+                                         string? thirdLabel = null, Color? thirdColor = null,
+                                         string? fourthLabel = null, Color? fourthColor = null, int? fontOverrideSize = null)
         {
             bool firstLabelVisible = firstLabel is not null;
             SettingsThemeColorPopupFirstLabel.Visible = firstLabelVisible;
             SettingsThemeColorPopupFirstLabel.Text = firstLabelVisible ? firstLabel : string.Empty;
-            SettingsThemeColorPopupFirstColorPicker.Visible = firstLabelVisible && !isComboBox;
-            SettingsThemeColorPopupFirstFontComboBox.Visible = firstLabelVisible && isComboBox;
+            SettingsThemeColorPopupFirstColorPicker.Visible = firstLabelVisible && selectedFont is null;
             SettingsThemeColorPopupFirstColorPicker.BackColor = (firstColor != null) ? (Color)firstColor : Color.Pink;
             SettingsThemeColorPopupFirstColorPicker.ForeColor = (firstColor != null) ? HelperFunctions.GetContrastingBAWColor((Color)firstColor) : Color.Pink;
 
+
+            // Populate the Font Dropdown
+            SettingsThemeColorPopupFirstFontComboBox.Items.Clear();
+            SettingsThemeColorPopupFirstFontComboBox.Items.AddRange(new InstalledFontCollection().Families.Select(font => font.Name).ToArray());
+            SettingsThemeColorPopupFirstFontComboBox.Visible = firstLabelVisible && selectedFont is not null;
+            SettingsThemeColorPopupFirstFontComboBox.SelectedItem = selectedFont is not null
+                                                                        ? new Font(familyName: PFKSettings.CurrentColorPallete.FontName,
+                                                                               emSize: 1,
+                                                                               style: Font.Style,
+                                                                               unit: Font.Unit).FontFamily.Name
+                                                                        : -1;
 
             bool secondLabelVisible = secondLabel is not null;
             SettingsThemeColorPopupSecondLabel.Visible = secondLabelVisible;
@@ -4130,10 +4502,14 @@ namespace DamageCalculatorGUI
             bool thirdLabelVisible = thirdLabel is not null;
             SettingsThemeColorPopupThirdLabel.Visible = thirdLabelVisible;
             SettingsThemeColorPopupThirdLabel.Text = thirdLabelVisible ? thirdLabel : string.Empty;
-            SettingsThemeColorPopupThirdColorPicker.Visible = thirdLabelVisible && !isNumericUpDown;
-            SettingsThemeColorPopupThirdNumericUpDown.Visible = thirdLabelVisible && isNumericUpDown;
+            SettingsThemeColorPopupThirdColorPicker.Visible = thirdLabelVisible && fontOverrideSize is null;
             SettingsThemeColorPopupThirdColorPicker.BackColor = (thirdColor != null) ? (Color)thirdColor : Color.Pink;
             SettingsThemeColorPopupThirdColorPicker.ForeColor = (thirdColor != null) ? HelperFunctions.GetContrastingBAWColor((Color)thirdColor) : Color.Pink;
+
+            SettingsThemeColorPopupThirdNumericUpDown.Visible = thirdLabelVisible && fontOverrideSize is not null;
+            SettingsThemeColorPopupThirdNumericUpDown.Value = fontOverrideSize is not null
+                                                                ? (int)fontOverrideSize
+                                                                : PFKSettings.CurrentColorPallete.FontSizeOverride;
 
             bool fourthLabelVisible = fourthLabel is not null;
             SettingsThemeColorPopupFourthLabel.Visible = fourthLabelVisible;

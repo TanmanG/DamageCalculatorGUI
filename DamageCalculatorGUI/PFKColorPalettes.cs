@@ -9,7 +9,12 @@ namespace Pickings_For_Kurtulmak
 {
     public class PFKSettings
     {
-        public PFKColorPalette currentColorPallete;
+        public PFKColorPalette CurrentColorPallete { get; set; }
+
+        public PFKSettings()
+        {
+            CurrentColorPallete = null;
+        }
     }
 
     public class PFKColorPalette
@@ -24,7 +29,7 @@ namespace Pickings_For_Kurtulmak
         public Color Text { get; set; }
 
         public Color CheckBoxUnticked { get; set; }
-        public Color CheckBoxTicked { get; set; }
+        public Color CheckboxTicked { get; set; }
         public Color CheckBoxPressed { get; set; }
         public Color CheckBoxCheck { get; set; }
 
@@ -62,7 +67,8 @@ namespace Pickings_For_Kurtulmak
             this.EntryBatched = entryBatched;
             this.Text = text;
 
-            this.CheckBoxTicked = checkboxChecked;
+            this.CheckBoxCheck = checkboxCheck;
+            this.CheckboxTicked = checkboxChecked;
             this.CheckBoxUnticked = checkboxUnchecked;
             this.CheckBoxPressed = checkboxPressed;
 
@@ -86,11 +92,80 @@ namespace Pickings_For_Kurtulmak
             this.GraphBackground = graphBackground;
         }
 
-        public static PFKColorPalette GetDefaultPalette(string type)
+        public PFKColorPalette(PFKColorPalette palette)
+        {
+            FontSizeOverride = palette.FontSizeOverride;
+            FontName = palette.FontName;
+            PaletteName = palette.PaletteName;
+            Background = palette.Background;
+            EntryNormal = palette.EntryNormal;
+            EntryDisabled = palette.EntryDisabled;
+            EntryBatched = palette.EntryBatched;
+            Text = palette.Text;
+
+            CheckBoxUnticked = palette.CheckBoxUnticked;
+            CheckboxTicked = palette.CheckboxTicked;
+            CheckBoxPressed = palette.CheckBoxPressed;
+            CheckBoxCheck = palette.CheckBoxCheck;
+
+            ButtonText = palette.ButtonText;
+            ButtonBackground = palette.ButtonBackground;
+
+            ExitButtonBackground = palette.ExitButtonBackground;
+            ExitButtonIdle = palette.ExitButtonIdle;
+            ExitButtonHovered = palette.ExitButtonHovered;
+            ExitButtonPressed = palette.ExitButtonPressed;
+
+            MinimizeButtonBackground = palette.MinimizeButtonBackground;
+            MinimizeButtonIdle = palette.MinimizeButtonIdle;
+            MinimizeButtonHovered = palette.MinimizeButtonHovered;
+            MinimizeButtonPressed = palette.MinimizeButtonPressed;
+
+            Border = palette.Border;
+            GraphBars = palette.GraphBars;
+            GraphBackground = palette.GraphBackground;
+        }
+
+        public PFKColorPalette()
+        {
+            PFKColorPalette defaultPalette = GetDefaultPalette("light");
+            FontSizeOverride = defaultPalette.FontSizeOverride;
+            FontName = defaultPalette.FontName;
+            PaletteName = defaultPalette.PaletteName;
+            Background = defaultPalette.Background;
+            EntryNormal = defaultPalette.EntryNormal;
+            EntryDisabled = defaultPalette.EntryDisabled;
+            EntryBatched = defaultPalette.EntryBatched;
+            Text = defaultPalette.Text;
+
+            CheckBoxUnticked = defaultPalette.CheckBoxUnticked;
+            CheckboxTicked = defaultPalette.CheckboxTicked;
+            CheckBoxPressed = defaultPalette.CheckBoxPressed;
+            CheckBoxCheck = defaultPalette.CheckBoxCheck;
+
+            ButtonText = defaultPalette.ButtonText;
+            ButtonBackground = defaultPalette.ButtonBackground;
+
+            ExitButtonBackground = defaultPalette.ExitButtonBackground;
+            ExitButtonIdle = defaultPalette.ExitButtonIdle;
+            ExitButtonHovered = defaultPalette.ExitButtonHovered;
+            ExitButtonPressed = defaultPalette.ExitButtonPressed;
+
+            MinimizeButtonBackground = defaultPalette.MinimizeButtonBackground;
+            MinimizeButtonIdle = defaultPalette.MinimizeButtonIdle;
+            MinimizeButtonHovered = defaultPalette.MinimizeButtonHovered;
+            MinimizeButtonPressed = defaultPalette.MinimizeButtonPressed;
+
+            Border = defaultPalette.Border;
+            GraphBars = defaultPalette.GraphBars;
+            GraphBackground = defaultPalette.GraphBackground;
+        }
+
+        public static PFKColorPalette GetDefaultPalette(string type, string name = null)
         {
             return type switch
             {
-                "pf2e" => new(palleteName: "pf2e",
+                "pf2e" => new(palleteName: name ?? "pf2e",
                                           background: Color.FromArgb(alpha: 255, red: 242, green: 233, blue: 231),
                                           entryNormal: Color.FromArgb(alpha: 255, red: 233, green: 227, blue: 222),
                                           entryNormalDark: Color.FromArgb(alpha: 255, red: 213, green: 207, blue: 202),
@@ -115,7 +190,7 @@ namespace Pickings_For_Kurtulmak
                                           border: Color.FromArgb(alpha: 255, red: 157, green: 151, blue: 148),
                                           graphBackground: Color.FromArgb(alpha: 255, red: 249, green: 240, blue: 238),
                                           graphBars: Color.FromArgb(alpha: 255, red: 214, green: 170, blue: 158)),
-                "gray" => new(palleteName: "gray",
+                "light" => new(palleteName: name ?? "light",
                                           background: SystemColors.Window,
                                           entryNormal: SystemColors.ControlLightLight,
                                           entryNormalDark: SystemColors.ControlLight,
@@ -140,7 +215,7 @@ namespace Pickings_For_Kurtulmak
                                           border: SystemColors.InactiveBorder,
                                           graphBackground: SystemColors.Window,
                                           graphBars: SystemColors.ButtonHighlight),
-                "dark" => new(palleteName: "dark",
+                "dark" => new(palleteName: name ?? "dark",
                                           background: Color.FromArgb(alpha: 255, red: 43, green: 42, blue: 51),
                                           entryNormal: Color.FromArgb(alpha: 255, red: 66, green: 65, blue: 77),
                                           entryNormalDark: Color.FromArgb(alpha: 255, red: 46, green: 45, blue: 57),
