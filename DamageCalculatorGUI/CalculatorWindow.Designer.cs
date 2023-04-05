@@ -171,6 +171,7 @@ namespace DamageCalculatorGUI
             CalculatorBatchComputeLayerViewControlValuesAtLayerListBox = new ListBox();
             CalculatorBatchComputeLayerViewControlLayerSelectListBox = new ListBox();
             MainTabControl = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
+            CalculatorTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             SettingsTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             SettingsThemeColorPopupGroupbox = new GroupBox();
             SettingsThemeColorPopupFirstFontComboBox = new Syncfusion.Windows.Forms.Tools.FontComboBox();
@@ -212,7 +213,6 @@ namespace DamageCalculatorGUI
             SettingsThemeNameDeleteButton = new Button();
             SettingsThemeNameAddButton = new Button();
             SettingsThemeNameListbox = new ListBox();
-            CalculatorTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             GeneratorTabPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             GeneratorGenerationSettingsGroupBox = new GroupBox();
             groupBox2 = new GroupBox();
@@ -257,6 +257,7 @@ namespace DamageCalculatorGUI
             CalculatorBatchComputeLayerViewControlGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)MainTabControl).BeginInit();
             MainTabControl.SuspendLayout();
+            CalculatorTabPage.SuspendLayout();
             SettingsTabPage.SuspendLayout();
             SettingsThemeColorPopupGroupbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)SettingsThemeColorPopupThirdNumericUpDown).BeginInit();
@@ -269,7 +270,6 @@ namespace DamageCalculatorGUI
             SettingsThemeMockupStatsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)SettingsThemeMockupCritDieCountNumericUpDown).BeginInit();
             panel2.SuspendLayout();
-            CalculatorTabPage.SuspendLayout();
             GeneratorTabPage.SuspendLayout();
             groupBox2.SuspendLayout();
             GeneratorEnabledWeaponTypesGroupBox.SuspendLayout();
@@ -1654,7 +1654,7 @@ namespace DamageCalculatorGUI
             CalculatorVersionLabel.RightToLeft = RightToLeft.No;
             CalculatorVersionLabel.Size = new Size(138, 23);
             CalculatorVersionLabel.TabIndex = 12;
-            CalculatorVersionLabel.Text = "PFK V2.1.1-proto-3";
+            CalculatorVersionLabel.Text = "PFK V2.2.0-proto-5";
             CalculatorVersionLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // CalculatorBatchComputePopupPanel
@@ -1930,8 +1930,8 @@ namespace DamageCalculatorGUI
             MainTabControl.BackColor = SystemColors.Control;
             MainTabControl.BeforeTouchSize = new Size(984, 471);
             MainTabControl.BorderWidth = 0;
-            MainTabControl.Controls.Add(SettingsTabPage);
             MainTabControl.Controls.Add(CalculatorTabPage);
+            MainTabControl.Controls.Add(SettingsTabPage);
             MainTabControl.Controls.Add(GeneratorTabPage);
             MainTabControl.Dock = DockStyle.Fill;
             MainTabControl.FocusOnTabClick = false;
@@ -1943,6 +1943,31 @@ namespace DamageCalculatorGUI
             MainTabControl.TabIndex = 0;
             MainTabControl.ThemeName = "TabRenderer3D";
             MainTabControl.ThemeStyle.PrimitiveButtonStyle.DisabledNextPageImage = null;
+            // 
+            // CalculatorTabPage
+            // 
+            CalculatorTabPage.Controls.Add(CalculatorVersionLabel);
+            CalculatorTabPage.Controls.Add(CalculatorEncounterStatisticsGroupBox);
+            CalculatorTabPage.Controls.Add(CalculatorMiscStatisticsGroupBox);
+            CalculatorTabPage.Controls.Add(CalculatorSettingsGroupBox);
+            CalculatorTabPage.Controls.Add(CalculatorBatchComputePopupPanel);
+            CalculatorTabPage.Controls.Add(CalculatorEMELabel);
+            CalculatorTabPage.Controls.Add(CalculatorBCLGLabel);
+            CalculatorTabPage.Controls.Add(CalculatorDamageDistributionScottPlot);
+            CalculatorTabPage.Controls.Add(CalculatorBatchComputeButton);
+            CalculatorTabPage.Controls.Add(CalculatorWarningLabel);
+            CalculatorTabPage.Controls.Add(CalculatorDefaultSettingsButton);
+            CalculatorTabPage.Controls.Add(CalculatorBatchComputeScottPlot);
+            CalculatorTabPage.Controls.Add(CalculatorBatchComputeLayerViewControlGroupBox);
+            CalculatorTabPage.Image = null;
+            CalculatorTabPage.ImageSize = new Size(16, 16);
+            CalculatorTabPage.Location = new Point(1, 25);
+            CalculatorTabPage.Name = "CalculatorTabPage";
+            CalculatorTabPage.ShowCloseButton = true;
+            CalculatorTabPage.Size = new Size(981, 444);
+            CalculatorTabPage.TabIndex = 1;
+            CalculatorTabPage.Text = "Calculator";
+            CalculatorTabPage.ThemesEnabled = false;
             // 
             // SettingsTabPage
             // 
@@ -2161,11 +2186,11 @@ namespace DamageCalculatorGUI
             SettingsThemeMockupCalculatorTabPage.Controls.Add(SettingsThemeMockupStatsGroupBox);
             SettingsThemeMockupCalculatorTabPage.Image = null;
             SettingsThemeMockupCalculatorTabPage.ImageSize = new Size(16, 16);
-            SettingsThemeMockupCalculatorTabPage.Location = new Point(1, 27);
+            SettingsThemeMockupCalculatorTabPage.Location = new Point(1, 0);
             SettingsThemeMockupCalculatorTabPage.Name = "SettingsThemeMockupCalculatorTabPage";
             SettingsThemeMockupCalculatorTabPage.Padding = new Padding(1);
             SettingsThemeMockupCalculatorTabPage.ShowCloseButton = true;
-            SettingsThemeMockupCalculatorTabPage.Size = new Size(355, 295);
+            SettingsThemeMockupCalculatorTabPage.Size = new Size(355, 322);
             SettingsThemeMockupCalculatorTabPage.TabIndex = 2;
             SettingsThemeMockupCalculatorTabPage.Text = "Calculator";
             SettingsThemeMockupCalculatorTabPage.ThemesEnabled = false;
@@ -2360,10 +2385,10 @@ namespace DamageCalculatorGUI
             // 
             SettingsThemeMockupSettingsTabPage.Image = null;
             SettingsThemeMockupSettingsTabPage.ImageSize = new Size(16, 16);
-            SettingsThemeMockupSettingsTabPage.Location = new Point(1, 27);
+            SettingsThemeMockupSettingsTabPage.Location = new Point(1, 0);
             SettingsThemeMockupSettingsTabPage.Name = "SettingsThemeMockupSettingsTabPage";
             SettingsThemeMockupSettingsTabPage.ShowCloseButton = true;
-            SettingsThemeMockupSettingsTabPage.Size = new Size(355, 295);
+            SettingsThemeMockupSettingsTabPage.Size = new Size(355, 322);
             SettingsThemeMockupSettingsTabPage.TabIndex = 1;
             SettingsThemeMockupSettingsTabPage.Text = "Settings";
             SettingsThemeMockupSettingsTabPage.ThemesEnabled = false;
@@ -2450,31 +2475,6 @@ namespace DamageCalculatorGUI
             SettingsThemeNameListbox.Size = new Size(127, 169);
             SettingsThemeNameListbox.TabIndex = 3;
             SettingsThemeNameListbox.SelectedIndexChanged += SettingsThemeNameListbox_SelectedIndexChanged;
-            // 
-            // CalculatorTabPage
-            // 
-            CalculatorTabPage.Controls.Add(CalculatorVersionLabel);
-            CalculatorTabPage.Controls.Add(CalculatorEncounterStatisticsGroupBox);
-            CalculatorTabPage.Controls.Add(CalculatorMiscStatisticsGroupBox);
-            CalculatorTabPage.Controls.Add(CalculatorSettingsGroupBox);
-            CalculatorTabPage.Controls.Add(CalculatorBatchComputePopupPanel);
-            CalculatorTabPage.Controls.Add(CalculatorEMELabel);
-            CalculatorTabPage.Controls.Add(CalculatorBCLGLabel);
-            CalculatorTabPage.Controls.Add(CalculatorDamageDistributionScottPlot);
-            CalculatorTabPage.Controls.Add(CalculatorBatchComputeButton);
-            CalculatorTabPage.Controls.Add(CalculatorWarningLabel);
-            CalculatorTabPage.Controls.Add(CalculatorDefaultSettingsButton);
-            CalculatorTabPage.Controls.Add(CalculatorBatchComputeScottPlot);
-            CalculatorTabPage.Controls.Add(CalculatorBatchComputeLayerViewControlGroupBox);
-            CalculatorTabPage.Image = null;
-            CalculatorTabPage.ImageSize = new Size(16, 16);
-            CalculatorTabPage.Location = new Point(1, 25);
-            CalculatorTabPage.Name = "CalculatorTabPage";
-            CalculatorTabPage.ShowCloseButton = true;
-            CalculatorTabPage.Size = new Size(981, 444);
-            CalculatorTabPage.TabIndex = 1;
-            CalculatorTabPage.Text = "Calculator";
-            CalculatorTabPage.ThemesEnabled = false;
             // 
             // GeneratorTabPage
             // 
@@ -2749,6 +2749,8 @@ namespace DamageCalculatorGUI
             ((System.ComponentModel.ISupportInitialize)MainTabControl).EndInit();
             MainTabControl.ResumeLayout(false);
             MainTabControl.PerformLayout();
+            CalculatorTabPage.ResumeLayout(false);
+            CalculatorTabPage.PerformLayout();
             SettingsTabPage.ResumeLayout(false);
             SettingsThemeColorPopupGroupbox.ResumeLayout(false);
             SettingsThemeColorPopupGroupbox.PerformLayout();
@@ -2768,8 +2770,6 @@ namespace DamageCalculatorGUI
             ((System.ComponentModel.ISupportInitialize)SettingsThemeMockupCritDieCountNumericUpDown).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            CalculatorTabPage.ResumeLayout(false);
-            CalculatorTabPage.PerformLayout();
             GeneratorTabPage.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();

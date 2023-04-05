@@ -3945,6 +3945,8 @@ namespace DamageCalculatorGUI
             // Get the themes folder
             string themesFolder = Path.GetDirectoryName(Environment.ProcessPath) + @"\Themes\";
 
+            Directory.CreateDirectory(themesFolder);
+
             try
             {
                 // Get all files in the themes folder filtered by .json only
@@ -4006,18 +4008,6 @@ namespace DamageCalculatorGUI
                 return false;
             }
         }
-        public void WriteColorPalettes()
-        {
-            string palettesDirectory = Environment.CurrentDirectory + @"\Themes\";
-            if (!Directory.Exists(palettesDirectory))
-            {
-                Directory.CreateDirectory(palettesDirectory);
-            }
-            foreach (var colorPalette in colorPalettes)
-            { // Write each colorPalette
-                WriteColorPalette(colorPalette.Value, colorPalette.Value.PaletteName);
-            }
-        }
         public static void WriteColorPalette(PFKColorPalette palette, string paletteName)
         {
             PFKColorPalette savedPalette = new(palette)
@@ -4037,6 +4027,7 @@ namespace DamageCalculatorGUI
 
             string settingsJsonString = JsonSerializer.Serialize(value: savedPalette,
                                                                 options: jsonOptions);
+
             File.WriteAllText(path: themesFolder + paletteName + ".json", contents: settingsJsonString);
         }
         public void EraseColorPalette(string palette)
