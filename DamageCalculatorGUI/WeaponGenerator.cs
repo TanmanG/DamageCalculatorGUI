@@ -26,12 +26,12 @@ namespace Pickings_For_Kurtulmak
         {
 
         }
-        public CalculatorWindow.EncounterSettings GenerateRandomWeaponStats(List<WeaponType> types = default)
+        public DamageCalculator.EncounterSettings GenerateRandomWeaponStats(List<WeaponType> types = default)
         {
             return (types.Equals(default)) ? GenerateRandomWeaponStats_RANDOM()
                                             : GenerateRandomWeaponStats_ARCHETYPAL(types[DamageCalculator.random.Next(types.Count)]);
         }
-        private CalculatorWindow.EncounterSettings GenerateRandomWeaponStats_ARCHETYPAL(WeaponType type)
+        private DamageCalculator.EncounterSettings GenerateRandomWeaponStats_ARCHETYPAL(WeaponType type)
         {
             int level = 1;
 
@@ -41,7 +41,7 @@ namespace Pickings_For_Kurtulmak
             // Trait X pairs
             Dictionary<WeaponTrait, WeaponTraitData> weapon_traits = new();
 
-            CalculatorWindow.EncounterSettings generatedSettings = new()
+            DamageCalculator.EncounterSettings generatedSettings = new()
             {
                 number_of_encounters = 500,
                 rounds_per_encounter = 6,
@@ -60,24 +60,15 @@ namespace Pickings_For_Kurtulmak
                                     : 0,
                 // To-do: Generator
                 // To-do: Finish rest of things here
-                // To-do: Finish modelling the following in the spreadsheet:
-                // 1. +DMG
-                // 2. +XD
-                // 3. Crit Damage variants of all above
-                // 4. All above but for bleed
-                // 5. MAP
-                // 6. Reach
-                // 7. Magazine, Reload, Long Reload
                 // Add: BaseGame Weapon Traits (Agile, Brutal XDY, etc)
                 // To-do: Serialization (saving & export, prolly to local txt then later CSV)
                 // To-do: Comparison (Compare two exported files to eachother, or loaded stats against other)
             };
             return generatedSettings;
         }
-        private CalculatorWindow.EncounterSettings GenerateRandomWeaponStats_RANDOM()
+        private DamageCalculator.EncounterSettings GenerateRandomWeaponStats_RANDOM()
         {
-            CalculatorWindow.EncounterSettings generatedSettings;
-
+            DamageCalculator.EncounterSettings generatedSettings;
 
             return generatedSettings = new();
         }

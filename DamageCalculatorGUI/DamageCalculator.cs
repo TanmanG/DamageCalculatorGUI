@@ -6,6 +6,52 @@ namespace DamageCalculatorGUI
     {
         public static readonly FastRandom random = new();
 
+        public struct EncounterSettings
+        {
+            // Damage Computation Variables
+            public int number_of_encounters = 10000; // Total rounds to simulate
+            public int rounds_per_encounter = 6; // Rounds per simulated encounter
+            public RoundActions actions_per_round = default; // Actions per round
+            public int magazine_size = 0; // Number of shots per Long Reload
+            public int reload = 0; // Actions to reload each shot
+            public int long_reload = 0; // Actions to reload the magazine.
+            public int draw = 0; // Actions to draw the weapon.
+            public List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>> damage_dice = new(); // List of <X, Y. Z> <M, N, O> where XDY+Z, on crit MDN+O
+            public int bonus_to_hit = 0; // Bonus added to-hit.
+            public int AC = 0; // AC to test against. Tie attack roll hits.
+            public int crit_threshhold = 0; // Raw attack roll at and above this critically strike.
+            public int MAP_modifier = 0; // Modifier applied to MAP. By default 0 and thus -5+(0), -10+(0) per strike.
+            public int engagement_range = 0; // Range to start the combat encounter at.
+            public int move_speed = 0; // Distance covered by Stride.
+            public bool seek_favorable_range = false; // Whether to Stride to an optimal firing position before firing.
+            public int range = 0; // Range increment. Past this and for every increment thereafter applies stacking -2 penalty to-hit.
+            public int volley = 0; // Minimum range increment. Firing within this applies a -2 penalty to-hit.
+            public List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>> damage_dice_DOT = new(); // DOT damage to apply on a hit/crit.
+
+            public EncounterSettings() { }
+            public void ResetSettings()
+            {
+                // Reset Settings
+                number_of_encounters = 10000;
+                rounds_per_encounter = 6;
+                actions_per_round = new();
+                magazine_size = 0;
+                reload = 1;
+                long_reload = 0;
+                draw = 1;
+                damage_dice = new() { new(new(1, 6, 0), new(1, 8, 1)) };
+                bonus_to_hit = 10;
+                AC = 21;
+                crit_threshhold = 20;
+                MAP_modifier = 0;
+                engagement_range = 30;
+                move_speed = 25;
+                seek_favorable_range = true;
+                range = 100;
+                volley = 0;
+                damage_dice_DOT = new() { new(new(0, 0, 0), new(0, 0, 0)) };
+            }
+        }
         public struct RoundActions
         {
             public int any = 3;

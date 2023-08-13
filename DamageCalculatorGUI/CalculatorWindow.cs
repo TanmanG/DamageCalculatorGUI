@@ -18,6 +18,7 @@ using ScottPlot.Plottable;
 using ScottPlot.Renderable;
 using ScottPlot.Drawing.Colormaps;
 using System.Text.Json.Serialization;
+using static System.Windows.Forms.AxHost;
 
 namespace DamageCalculatorGUI
 {
@@ -340,56 +341,11 @@ namespace DamageCalculatorGUI
         // Help Mode Variable
         public static bool help_mode_enabled;
         Dictionary<int, string> label_hashes_help = new();
-        public struct EncounterSettings
-        {
-            // Damage Computation Variables
-            public int number_of_encounters = 10000; // Total rounds to simulate
-            public int rounds_per_encounter = 6; // Rounds per simulated encounter
-            public RoundActions actions_per_round = default; // Actions per round
-            public int magazine_size = 0; // Number of shots per Long Reload
-            public int reload = 0; // Actions to reload each shot
-            public int long_reload = 0; // Actions to reload the magazine.
-            public int draw = 0; // Actions to draw the weapon.
-            public List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>> damage_dice = new(); // List of <X, Y. Z> <M, N, O> where XDY+Z, on crit MDN+O
-            public int bonus_to_hit = 0; // Bonus added to-hit.
-            public int AC = 0; // AC to test against. Tie attack roll hits.
-            public int crit_threshhold = 0; // Raw attack roll at and above this critically strike.
-            public int MAP_modifier = 0; // Modifier applied to MAP. By default 0 and thus -5+(0), -10+(0) per strike.
-            public int engagement_range = 0; // Range to start the combat encounter at.
-            public int move_speed = 0; // Distance covered by Stride.
-            public bool seek_favorable_range = false; // Whether to Stride to an optimal firing position before firing.
-            public int range = 0; // Range increment. Past this and for every increment thereafter applies stacking -2 penalty to-hit.
-            public int volley = 0; // Minimum range increment. Firing within this applies a -2 penalty to-hit.
-            public List<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>> damage_dice_DOT = new(); // DOT damage to apply on a hit/crit.
-
-            public EncounterSettings() { }
-            public void ResetSettings()
-            {
-                // Reset Settings
-                number_of_encounters = 10000;
-                rounds_per_encounter = 6;
-                actions_per_round = new();
-                magazine_size = 0;
-                reload = 1;
-                long_reload = 0;
-                draw = 1;
-                damage_dice = new() { new(new(1, 6, 0), new(1, 8, 1)) };
-                bonus_to_hit = 10;
-                AC = 21;
-                crit_threshhold = 20;
-                MAP_modifier = 0;
-                engagement_range = 30;
-                move_speed = 25;
-                seek_favorable_range = true;
-                range = 100;
-                volley = 0;
-                damage_dice_DOT = new() { new(new(0, 0, 0), new(0, 0, 0)) };
-            }
-        }
         EncounterSettings currEncounterSettings = new();
 
         public Dictionary<int, List<BatchModeSettings>> layerViewControlEncounterSettings = new();
 
+        public bool isBatchGraphSmall = false;
         private async void CalculateDamageStatsButton_MouseClick(object sender, MouseEventArgs e)
         {
 
@@ -434,8 +390,9 @@ namespace DamageCalculatorGUI
                         batch_view_selected_steps.AddRange(Enumerable.Repeat(element: 0, numberOfLayers));
 
                         // Adjust the graph size
-                        SetBatchGraphSizeSmall(numberOfLayers > 1);
-                        SetBatchLayerViewControlVisibility(numberOfLayers > 1);
+                        isBatchGraphSmall = numberOfLayers > 1;
+                        SetBatchGraphSizeSmall(isBatchGraphSmall);
+                        SetBatchLayerViewControlVisibility(isBatchGraphSmall);
 
                         // Update the graph
                         UpdateBatchGraph(damageStats_BATCH);
@@ -1283,7 +1240,6 @@ namespace DamageCalculatorGUI
             ReloadControl(CalculatorEncounterRoundsPerEncounterTextBox, encounterSettings.rounds_per_encounter.ToString());
             CalculatorEncounterEngagementRangeCheckBox.Checked = encounterSettings.engagement_range != GetDefaultSettingByControl(CalculatorEncounterEngagementRangeTextBox);
             ReloadControl(CalculatorEncounterEngagementRangeTextBox, encounterSettings.engagement_range.ToString());
-
 
             // Reload the Action GroupBox
             ReloadControl(CalculatorActionActionsPerRoundTextBox, encounterSettings.actions_per_round.any.ToString());
@@ -2226,7 +2182,6 @@ namespace DamageCalculatorGUI
             }
             SelectCheckBoxForToggle(CalculatorDamageBleedDieCheckBox);
 
-            // To-do: DONE - Fix unticking box auto-population not providing accurate numbers
             // To-do: Fix tick boxes not getting auto-darkened properly in damage die
             // To-do: Fix tickboxes being the wrong color when set to disabled/readonly
 
@@ -3762,21 +3717,8 @@ namespace DamageCalculatorGUI
                 }
             }
 
-            // To-do: DONE - Fix scottplot yeeting away with the size change
-            // To-do: DONE - Fix batchmode scottplot not being right size
-            // To-do: DONE - Add font size override to scottplots
-            // To-do: DONE - Fix tickboxes not positioning correctly
             float sizeChange = (float)CalculatorActionActionsPerRoundLabel.Size.Width / sizeInitial.Width;
             ScaleForm(sizeChange);
-            CalculatorBatchComputeScottPlot.Size = new((int)(sizeScottPlotNormalInitial.Width * sizeChange),
-                                                        (int)(sizeScottPlotNormalInitial.Height * sizeChange));
-            CalculatorDamageDistributionScottPlot.Size = new((int)(sizeScottPlotBatchInitial.Width * sizeChange),
-                                                             (int)(sizeScottPlotBatchInitial.Height * sizeChange));
-
-            CalculatorDamageDistributionScottPlot.Location = new((int)(locationScottPlotNormalInitial.X * sizeChange),
-                                                                 (int)(locationScottPlotNormalInitial.Y * sizeChange));
-            CalculatorBatchComputeScottPlot.Location = new((int)(locationScottPlotBatchInitial.X * sizeChange),
-                                                                 (int)(locationScottPlotBatchInitial.Y * sizeChange));
 
             // Shift tickboxes to match their labels and textboxes checkbox.location = (textbox.X, label.Y + 2) 
             CalculatorAmmunitionMagazineSizeCheckBox.Location =
@@ -3873,14 +3815,15 @@ namespace DamageCalculatorGUI
             Bounds = newBounds;
 
             // Rescale Graphs
-            // IDEAL LOCAT: (62%, 49%) % of page size
-            CalculatorDamageDistributionScottPlot.Location = new(x: (int)(CalculatorTabPage.Size.Width * 0.62),
-                                                                 y: (int)(CalculatorTabPage.Size.Height * 0.49));
-            // IDEAL SIZES: (36.5%, 40%) % of page size
-            CalculatorDamageDistributionScottPlot.Size = new(width: (int)(CalculatorTabPage.Size.Width * 0.365),
-                                                             height: (int)(CalculatorTabPage.Size.Height * 0.4));
-            if (CalculatorBatchComputeLayerViewControlGroupBox.Visible)
-            {
+            RescaleGraph();
+            CalculatorBatchComputeScottPlot.Refresh();
+            CalculatorDamageDistributionScottPlot.Refresh();
+        }
+        private void RescaleGraph()
+        {
+            if (isBatchGraphSmall)
+            { // SMALL
+                // Adjust graph size to accomodate the intrusion
                 // IDEAL LOCAT: (62%, 33.333%) % of page size
                 CalculatorBatchComputeScottPlot.Location = new(x: (int)(CalculatorTabPage.Size.Width * 0.62),
                                                                y: (int)(CalculatorTabPage.Size.Height * 0.333));
@@ -3889,7 +3832,8 @@ namespace DamageCalculatorGUI
                                                            height: (int)(CalculatorTabPage.Size.Height * 0.56));
             }
             else
-            {
+            { // BIG
+                // Adjust graph size to fill the gap
                 // IDEAL LOCAT: (62%, 1.8%) % of page size
                 CalculatorBatchComputeScottPlot.Location = new(x: (int)(CalculatorTabPage.Size.Width * 0.62),
                                                                y: (int)(CalculatorTabPage.Size.Height * 0.018));
@@ -3897,8 +3841,11 @@ namespace DamageCalculatorGUI
                 CalculatorBatchComputeScottPlot.Size = new(width: (int)(CalculatorTabPage.Size.Width * 0.365),
                                                            height: (int)(CalculatorTabPage.Size.Height * 0.874));
             }
-            CalculatorBatchComputeScottPlot.Refresh();
-            CalculatorDamageDistributionScottPlot.Refresh();
+
+            CalculatorBatchComputeScottPlot.Location = new(x: (int)(CalculatorTabPage.Size.Width * 0.62),
+                                                           y: (int)(CalculatorTabPage.Size.Height * 0.49));
+            CalculatorDamageDistributionScottPlot.Size = new(width: (int)(CalculatorTabPage.Size.Width * 0.365),
+                                                             height: (int)(CalculatorTabPage.Size.Height * 0.4));
         }
 
         // SERIALIZATION
@@ -4202,9 +4149,6 @@ namespace DamageCalculatorGUI
         {
             SettingsColorMockupClicked(sender: sender, null);
         }
-
-        // To-do: Fix title not aliasing at all??????? WHYYYYY
-
 
         /// SETTINGS MENU
         /// 
@@ -4510,6 +4454,14 @@ namespace DamageCalculatorGUI
             SettingsThemeColorPopupFourthColorPicker.ForeColor = (fourthColor != null) ? HelperFunctions.GetContrastingBAWColor((Color)fourthColor) : Color.Pink;
         }
 
+        private void CalculatorSaveStatsButton_MouseClick(object sender, MouseEventArgs e)
+        {
 
+        }
+
+        private void CalculatorLoadStatsButton_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 }
