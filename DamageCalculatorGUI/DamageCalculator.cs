@@ -378,11 +378,11 @@ namespace DamageCalculatorGUI
 
                             if (attacksThisRound > 0)
                             {
-                                MAPpenalty = 5 + MAP_modifier;
+                                MAPpenalty = MAP_modifier;
                             }
                             if (attacksThisRound > 1)
                             {
-                                MAPpenalty *= 2;
+                                MAPpenalty *= Math.Clamp(attacksThisRound, 1, 3);
                             }
 
                             int attackRollPostMod = attackRoll + bonus_to_hit - MAPpenalty - rangePenalty;
