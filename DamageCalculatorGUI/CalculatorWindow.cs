@@ -463,7 +463,7 @@ namespace DamageCalculatorGUI
             CollectionAddFromControlHash(label_hashes_help, CalculatorAttackBonusToHitLabel, "The total bonus to-hit. Around ~12 for a 4th level Gunslinger.");
             CollectionAddFromControlHash(label_hashes_help, CalculatorAttackCriticalHitMinimumLabel, "Minimum die roll to-hit in order to critically strike. Only way to crit other than getting 10 over the AC.");
             CollectionAddFromControlHash(label_hashes_help, CalculatorAttackACLabel, "Armor Class of the target to be tested against. Typically ~21 for a 4th level enemy.");
-            CollectionAddFromControlHash(label_hashes_help, CalculatorAttackMAPModifierLabel, "Modifier to the Multiple-Attack-Penalty. Typically 0 unless you are using an Agile weapon or have Agile Grace, in which this is equal to -1 and -2 respectively.");
+            CollectionAddFromControlHash(label_hashes_help, CalculatorAttackMAPModifierLabel, "The Multiple-Attack-Penalty. Typically 5 unless you are using an Agile weapon or have Agile Grace, in which this is equal to 4 and 3 respectively.");
             // Ammunition
             CollectionAddFromControlHash(label_hashes_help, CalculatorAmmunitionReloadLabel, "The number of Interact actions required to re-chamber a weapon after firing. I.e. a 3 action round would compose of Strike, Reload 1, Strike or Strike, Reload 2.");
             CollectionAddFromControlHash(label_hashes_help, CalculatorAmmunitionMagazineSizeLabel, "The number of Strike actions that can be done before requiring a Long Reload.");
